@@ -1,0 +1,201 @@
+ body {
+     font-family: 'Poppins';
+ }
+
+ .dancing-script {
+     font-family: "Dancing Script", cursive;
+     font-optical-sizing: auto;
+ }
+
+ header.style-2 .main-menu>ul>li>a {
+     display: flex !important;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     gap: 3px;
+     padding: 15px 15px !important;
+     font-weight: 500 !important;
+ }
+
+ header.style-2 .main-menu>ul>li>a>i {
+     font-size: 25px !important;
+ }
+
+ header.style-2 .header-logo {
+     /* width: 120px; */
+     height: 80px;
+     width: 100%;
+ }
+
+ header.style-2 .header-logo img {
+     height: 80px;
+ }
+
+ .home2-banner-section {
+     height: 370px;
+ }
+
+
+ .filter-wrapper {
+     position: relative;
+     margin-top: -175px;
+     z-index: 9;
+ }
+
+ .banner-content-wrap {
+     padding: 0 !important;
+ }
+
+ .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h1,
+ .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h2 {
+     font-size: 60px;
+     margin-bottom: 20px;
+     font-size: 28px;
+     font-weight: 500;
+     font-style: inherit;
+     padding-top: 25px
+ }
+
+ .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content p {
+     color: var(--white-color);
+     font-family: var(--font-roboto);
+     font-weight: 500;
+     font-size: 20px;
+     line-height: 28px;
+     margin-bottom: 0;
+ }
+
+ .home2-banner-section .banner-wrapper::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0 0 0 / 47%);
+     z-index: 1;
+ }
+
+ .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h1,
+ .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h2 {
+     font-size: 60px;
+     margin-bottom: 20px;
+     font-size: 45px;
+     font-weight: 500;
+     font-style: inherit;
+     padding-top: 25px;
+     font-family: 'Courgette';
+ }
+
+ .filter-wrapper .filter-input-wrap {
+     padding: 15px 15px 10px;
+     background-color: var(--white-color);
+     box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.08);
+     border-radius: 10px;
+ }
+
+ .filter-wrapper .filter-input-wrap .filter-input.show {
+     display: grid;
+     display: flex;
+     justify-content: space-between;
+     width: 100%;
+ }
+
+ .filter-input-wrap {
+     max-width: 650px;
+ }
+
+ .single-search-box .form-inner2 {
+     display: flex;
+     gap: 5px;
+     width: 100%;
+     height: 100%;
+     align-items: center;
+ }
+
+ .package-card .package-img-wrap .package-img img {
+     border-radius: 10px;
+     min-height: 250px;
+     -o-object-fit: cover;
+     object-fit: cover;
+     transition: all 0.5s ease-out;
+ }
+
+ .home2-package-slider-section {
+     background: none;
+ }
+
+ .section-title h2 {
+     color: var(--title-color);
+     font-family: var(--font-poppins);
+     font-size: 35px;
+     font-weight: 500;
+     line-height: 1.1;
+     margin-bottom: 0;
+ }
+
+ .section-title p {
+     color: var(--text-color);
+     font-family: var(--font-roboto);
+     font-size: 16px;
+     font-weight: 400;
+     line-height: 28px;
+     padding-top: 20px;
+     max-width: 700px;
+     width: 100%;
+     margin: 0 auto;
+     padding-top: 10px;
+ }
+
+ .filter-wrapper.bottom-card {
+     position: relative;
+     margin-top: 55px;
+     z-index: 9;
+ }
+
+ .filter-wrapper.bottom-card div {
+     cursor: pointer;
+ }
+
+ .filter-wrapper.bottom-card img {
+     width: 40px;
+     object-fit: fill;
+     border-radius: 50%;
+     height: 40px;
+ }
+
+ .filter-wrapper.bottom-card p {
+     font-weight: 600;
+     font-size: 14px;
+     color: #000;
+ }
+
+ p {
+     font-size: 16px;
+     font-weight: 400;
+     line-height: 28px;
+ }
+
+ .destination-card2 .destination-img img {
+     height: 250px;
+     width: 100%;
+ }
+
+ .destination-card2 .destination-img::before {
+     content: "";
+     background-color: #0000002e;
+     /* box-shadow: 5px 5px 10px #00000024; */
+     position: absolute;
+     width: 100%;
+     height: 100%;
+ }
+
+ .destination-card2 .destination-content span {
+     font-weight: 500;
+     font-size: 14px;
+ }
+
+ .destination-card2.four .destination-content h5 a {
+     font-size: 22px;
+     font-weight: 500;
+ }
