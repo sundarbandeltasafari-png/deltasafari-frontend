@@ -11,6 +11,7 @@ import Testimonial from '@/components/website/home/Testimonial'
 import DeltaSafari from '@/components/website/home/DeltaSafari'
 import HomeBlog from '@/components/website/home/HomeBlog'
 import Faq from '@/components/website/home/Faq'
+import HolidaysByTheme from '@/components/website/home/HolidaysByTheme'
 
 
 function page() {
@@ -20,6 +21,7 @@ function page() {
             <TopTrending />
             <TopDestination />
             <HolidayPackages />
+            <HolidaysByTheme />
             <HiddenGems />
             <LimiterOffer />
             <LastMinutesDeal />
