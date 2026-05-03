@@ -21,7 +21,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Santorini, Greece</a></h5>
-                                            <span>Tours (12)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Great Temple Jordan</a></h5>
-                                            <span>Tours (12)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Dubai Skyline, UAE</a></h5>
-                                            <span>Tours (12)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Austin Bridge, USA</a></h5>
-                                            <span>Tours (15)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Jungle Walkway, Indonesia</a></h5>
-                                            <span>Tours (17)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Athens Greece</a></h5>
-                                            <span>Tours (13)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Rome, Itlay</a></h5>
-                                            <span>Tours (10)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ function HiddenGems() {
                                         </a>
                                         <div className="destination-content">
                                             <h5><a href="destination-details.html">Silent Desert</a></h5>
-                                            <span>Tours (14)</span>
+                                            <span>Starting From ₹38,559</span>
                                         </div>
                                     </div>
                                 </div>

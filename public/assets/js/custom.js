@@ -1541,16 +1541,16 @@
   }
 
   // Language Btn
-  $(".language-btn, .search-btn").on("click", function (e) {
+  $(".language-btn, .search-btn, .login-btn").on("click", function (e) {
     let parent = $(this).parent();
-    parent.find(".language-list, .search-input").toggleClass("active");
+    parent.find(".language-list, .search-input, .login-input-box").toggleClass("active");
     e.stopPropagation();
   });
   $(document).on("click", function (e) {
     if (
-      !$(e.target).closest(".language-btn, .search-btn, .search-input").length
+      !$(e.target).closest(".language-btn, .search-btn, .search-input, .login-input-box").length
     ) {
-      $(".language-list, .search-input").removeClass("active");
+      $(".language-list, .search-input, .login-input-box").removeClass("active");
     }
   });
   $(".search-close").on("click", function (e) {

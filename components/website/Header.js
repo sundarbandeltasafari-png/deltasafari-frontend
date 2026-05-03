@@ -43,18 +43,18 @@ function Header() {
                   </span>
                 </a>
               </li>
-              <li className="menu-item-has-children position-inherit">
-                <a href="destination-01.html" className="drop-down">
-                  <i className="fa-regular fa-map"></i>
-                  <span>
-                    Destination
-                  </span>
-                </a>
-              </li>
               <li className="menu-item-has-children">
                 <a href="travel-package-01.html" className="drop-down">
                   <i className="fa-solid fa-suitcase-rolling"></i>
-                  Packages
+                  Package
+                </a>
+              </li>
+              <li className="menu-item-has-children position-inherit">
+                <a href="destination-01.html" className="drop-down">
+                  <i className="fa-solid fa-clipboard-user"></i>
+                  <span>
+                    Corporate
+                  </span>
                 </a>
               </li>
               <li className="menu-item-has-children">
@@ -65,14 +65,8 @@ function Header() {
               </li>
               <li className="menu-item-has-children">
                 <a href="travel-package-01.html" className="drop-down">
-                  <i className="fa-solid fa-person-hiking"></i>
-                  Activity
-                </a>
-              </li>
-              <li className="menu-item-has-children">
-                <a href="travel-package-01.html" className="drop-down">
-                  <i className="fa-solid fa-photo-film"></i>
-                  Gallery
+                  <i className="fa-solid fa-taxi"></i>
+                  Cab's
                 </a>
               </li>
               <li className="menu-item-has-children">
@@ -88,21 +82,7 @@ function Header() {
                 </a>
               </li>
             </ul>
-            <div className="contact-area d-xl-none d-flex">
-              <div className="icon">
-                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                  <g>
-                    <path
-                      d="M15.5646 11.7424L13.3317 9.50954C12.5343 8.7121 11.1786 9.03111 10.8596 10.0678C10.6204 10.7855 9.82296 11.1842 9.10526 11.0247C7.51037 10.626 5.35726 8.55261 4.95854 6.87797C4.71931 6.16024 5.19778 5.36279 5.91548 5.12359C6.95216 4.80461 7.27113 3.44895 6.47369 2.65151L4.24084 0.418659C3.60288 -0.139553 2.64595 -0.139553 2.08774 0.418659L0.572591 1.93381C-0.942555 3.5287 0.73208 7.75516 4.48007 11.5032C8.22807 15.2512 12.4545 17.0056 14.0494 15.4106L15.5646 13.8955C16.1228 13.2575 16.1228 12.3006 15.5646 11.7424Z" />
-                  </g>
-                </svg>
-              </div>
-              <div className="content">
-                <span>Need Help?</span>
-                <a href="tel:91345533865">+91 345 533 865</a>
-              </div>
-            </div>
-            <a href="#" className="primary-btn1 black-bg d-xl-none d-flex">
+            <a href="#" className="primary-btn1 login-btn black-bg d-xl-none d-flex">
               <span>
                 <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                   <g>
@@ -124,23 +104,7 @@ function Header() {
             </a>
           </div>
           <div className="nav-right">
-            <div className="contact-and-search-area">
-              <div className="contact-area d-xl-flex d-none">
-                <div className="icon">
-                  <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <path
-                        d="M15.5646 11.7424L13.3317 9.50954C12.5343 8.7121 11.1786 9.03111 10.8596 10.0678C10.6204 10.7855 9.82296 11.1842 9.10526 11.0247C7.51037 10.626 5.35726 8.55261 4.95854 6.87797C4.71931 6.16024 5.19778 5.36279 5.91548 5.12359C6.95216 4.80461 7.27113 3.44895 6.47369 2.65151L4.24084 0.418659C3.60288 -0.139553 2.64595 -0.139553 2.08774 0.418659L0.572591 1.93381C-0.942555 3.5287 0.73208 7.75516 4.48007 11.5032C8.22807 15.2512 12.4545 17.0056 14.0494 15.4106L15.5646 13.8955C16.1228 13.2575 16.1228 12.3006 15.5646 11.7424Z" />
-                    </g>
-                  </svg>
-                </div>
-                <div className="content">
-                  <span>Need Help?</span>
-                  <a href="tel:91345533865">+91 345 533 865</a>
-                </div>
-              </div>
-            </div>
-            <a href="#" className="primary-btn1 black-bg d-xl-flex d-none">
+            <a href="#" className="primary-btn1 login-btn black-bg d-xl-flex d-none">
               <span>
                 <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                   <g>
@@ -160,6 +124,29 @@ function Header() {
                 Login
               </span>
             </a>
+            <div className="login-input-box">
+              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer'>
+                <i className="fa-regular fa-user" style={{fontSize: "25px"}}></i>
+                <div>
+                  <h6 className='m-0'>Customer Login</h6>
+                  <span style={{fontSize: "14px"}}>Login and check bookings</span>
+                </div>
+              </div>
+              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer'>
+                <i className="fa-solid fa-briefcase" style={{fontSize: "25px"}}></i>
+                <div>
+                  <h6 className='m-0'>Corporate Login</h6>
+                  <span style={{fontSize: "14px"}}>Login corporate account</span>
+                </div>
+              </div>
+              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer'>
+                <i className="fa-solid fa-user-shield" style={{fontSize: "25px"}}></i>
+                <div>
+                  <h6 className='m-0'>Agent Login</h6>
+                  <span style={{fontSize: "14px"}}>Login your agent account</span>
+                </div>
+              </div>
+            </div>
             <div className="sidebar-button mobile-menu-btn">
               <svg width="20" height="18" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
                 <path

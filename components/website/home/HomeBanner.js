@@ -9,7 +9,7 @@ function HomeBanner() {
                         <div className="swiper-slide">
                             <div className="banner-wrapper">
                                 <div className="banner-video-area">
-                                    <video autoPlay loop muted playsInline src="assets/video/home2-banner-video.mp4"></video>
+                                    <img src="assets/img/home2/banner-img2.jpg" alt="" />
                                 </div>
                                 <div className="banner-content-wrap">
                                     <div className="container">
@@ -59,7 +59,7 @@ function HomeBanner() {
             </div>
             <div className="filter-wrapper">
                 <div className="container">
-                    <div className="filter-input-wrap m-auto">
+                    <div className="filter-input-wrap m-auto p-0">
                         <form className="filter-input show">
                             <div className="single-search-box w-100  p-0 ps-3 justify-content-between">
                                 <div className="form-inner2 p-0">
@@ -90,44 +90,6 @@ function HomeBanner() {
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-
-            <div className="filter-wrapper bottom-card">
-                <div className="container">
-                    <div className="filter-input-wrap m-auto d-flex justify-content-evenly gap-2 flex-wrap"
-                        style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", maxWidth: "800px", borderRadius: "30px", padding: "10px"}}>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 align-items-center">
-                                <img src="assets/img/home2/tour-package-img1.jpg" alt="" />
-                                <p className="m-0">Group Departure</p>
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 align-items-center">
-                                <img src="assets/img/home2/tour-package-img1.jpg" alt="" />
-                                <p className="m-0">Honeymoon</p>
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 align-items-center">
-                                <img src="assets/img/home2/tour-package-img1.jpg" alt="" />
-                                <p className="m-0">Pilgrimage</p>
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 align-items-center">
-                                <img src="assets/img/home2/tour-package-img1.jpg" alt="" />
-                                <p className="m-0">Luxury</p>
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex justify-content-between gap-2 align-items-center">
-                                <img src="assets/img/home2/tour-package-img1.jpg" alt="" />
-                                <p className="m-0">Adventure</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
