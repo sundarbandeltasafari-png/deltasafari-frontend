@@ -24,7 +24,6 @@ function page() {
             <HolidaysByTheme />
             <HiddenGems />
             <LimiterOffer />
-            <LastMinutesDeal />
             <AllTourActivity />
             <Testimonial />
             <DeltaSafari />

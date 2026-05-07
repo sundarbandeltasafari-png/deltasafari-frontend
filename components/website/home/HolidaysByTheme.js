@@ -17,7 +17,7 @@ function HolidaysByTheme() {
                     <div className="counter-wrapper row justify-content-evenly">
                         <div className="single-counter col-md-2">
                             <div className="content">
-                                <img src='/assets/img/svg/family-of-3-upper-body-svgrepo-com.svg' style={{ height: "50px" }} />
+                                <img src='/assets/img/svg/family-of-3-upper-body-svgrepo-com.svg' style={{ height: "50px", filter: "grayscale(100%)" }} />
                                 <h5>Family Retreat</h5>
                                 <p>Explore Now</p>
                             </div>

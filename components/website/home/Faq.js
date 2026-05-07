@@ -5,16 +5,16 @@ function Faq() {
     <>
     <div className="home4-faq-section mb-100">
         <div className="container">
-            <div className="row justify-content-center mb-50 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms'}}>
+            <div className="row justify-content-start mb-50 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms'}}>
                 <div className="col-xl-6 col-lg-8">
-                    <div className="section-title text-center">
+                    <div className="section-title text-start">
                         <h2>Questions &amp; Answer</h2>
-                        <p>We’re committed to offering more than just products—we provide exceptional experiences.</p>
+                        <p className='m-0'>We’re committed to offering more than just products—we provide exceptional experiences.</p>
                     </div>
                 </div>
             </div> 
-            <div className="row justify-content-center">
-                <div className="col-xl-8 col-lg-10">
+            <div className="row justify-content-start">
+                <div className="col-xl-12 col-lg-12">
                     <div className="faq-wrap two">
                         <div className="accordion accordion-flush" id="accordionFlushExample">
                             <div className="accordion-item wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms'}}>

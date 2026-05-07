@@ -1167,3 +1167,7 @@
          padding: 32px 24px;
      }
  }
+
+.accordion-item{
+    background: none !important;
+}

@@ -36,7 +36,6 @@ function LimiterOffer() {
                         <img src="assets/img/home2/vector/offer-banner-vector2.svg" alt="" className="vector2" />
                     </div>
                 </div>
-                <img src="assets/img/home2/vector/home2-offer-banner-vector.svg" alt="" className="vector" />
             </div>
         </>
     )

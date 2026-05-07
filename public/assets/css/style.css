@@ -149,13 +149,13 @@ Version: 1.0
   --font-billy-ohio: "Billy Ohio", sans-serif;
   --white-color: #fff;
   --white-color-opc: 255, 255, 255;
-  --black-color: #110F0F;
+  --black-color: #FF5722;
   --black-color-opc: 17, 15, 15;
   --title-color: #110F0F;
   --title-color-opc: 17, 15, 15;
   --title-color2: #F6F3BC;
   --title-color2-opc: 246, 243, 188;
-  --text-color: #525252;
+  --text-color: #000;
   --white-text-color: #AAAAAA;
   --primary-color1: #1781FE;
   --primary-color1-opc: 23, 129, 254;
@@ -622,6 +622,7 @@ img {
 
 a {
   text-decoration: none;
+  color: var(--text-color)
 }
 
 .pb-130 {
@@ -1077,12 +1078,12 @@ a {
 }
 
 .mb-50 {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 @media (max-width: 991px) {
   .mb-50 {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 }
 
@@ -1400,13 +1401,13 @@ body.tt-magic-cursor #magic-cursor {
 }
 
 .primary-btn1:hover>span {
-  transform: translateY(-150%);
-  opacity: 0;
+  /* transform: translateY(-150%);
+  opacity: 0; */
 }
 
 .primary-btn1:hover>span:nth-child(2) {
-  opacity: 1;
-  transform: translate(0%, -50%);
+  /* opacity: 1;
+  transform: translate(0%, -50%); */
 }
 
 .primary-btn1:hover::after {
@@ -11046,7 +11047,7 @@ header.style-3.three .nav-right .primary-btn1 {
   08. Home1 Travel Package Section CSS
 ========================================*/
 .package-card {
-  padding: 10px;
+  padding: 0cqw;
   border-radius: 20px;
   border: 1px solid var(--borders-color);
   background-color: var(--white-color);
@@ -11054,13 +11055,13 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .package-card {
-    padding: 5px;
+    padding: 0px;
   }
 }
 
 @media (max-width: 576px) {
   .package-card {
-    padding: 5px;
+    padding: 0px;
   }
 }
 
@@ -11503,9 +11504,9 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .package-card:hover .package-img-wrap .package-img::after {
-  height: 250%;
+  /* height: 250%;
   transition: all 600ms linear;
-  background-color: transparent;
+  background-color: transparent; */
 }
 
 .package-card:hover .package-img-wrap .slider-btn-grp .slider-btn {
@@ -12828,7 +12829,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .testimonial-card {
   padding: 40px 35px;
   background-color: var(--white-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -12852,7 +12853,7 @@ header.style-3.three .nav-right .primary-btn1 {
 @media (max-width: 576px) {
   .testimonial-card {
     padding: 30px 15px;
-    border-radius: 15px;
+    border-radius: 10px;
   }
 }
 
@@ -12935,7 +12936,7 @@ header.style-3.three .nav-right .primary-btn1 {
   color: var(--title-color);
   font-family: var(--font-poppins);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.3;
   margin-bottom: 3px;
 }
@@ -12973,12 +12974,12 @@ header.style-3.three .nav-right .primary-btn1 {
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 576px) {
   .testimonial-card .rating-area {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 }
 
@@ -12992,47 +12993,44 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .testimonial-card .rating-area.trustpilot li {
-  width: 15px;
-  height: 15px;
-  background-color: #00B67A;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .testimonial-card .rating-area.trustpilot li svg {
-  fill: var(--white-color);
+  fill: #f0b100;
 }
 
 .testimonial-card h5 {
   color: var(--title-color);
   font-family: var(--font-poppins);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .testimonial-card h5 {
-    font-size: 17px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 5px;
   }
 }
 
 @media (max-width: 576px) {
   .testimonial-card h5 {
-    font-size: 17px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 5px;
   }
 }
 
 .testimonial-card p {
   color: var(--text-color);
   font-family: var(--font-poppins);
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
   margin-bottom: 0;
 }
 
@@ -13374,11 +13372,11 @@ header.style-3.three .nav-right .primary-btn1 {
   align-items: center;
   justify-content: center;
   color: var(--text-color);
-  content: "\f229";
+  content: "\f286";
   font-family: bootstrap-icons;
   background-image: none;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 18px;
   right: 30px;
   transition: 0.5s;
 }
@@ -13393,7 +13391,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .faq-wrap .accordion .accordion-item .accordion-header .accordion-button:not(.collapsed)::after {
   font-family: bootstrap-icons !important;
-  content: "\f229";
+  content: "\f282";
   color: var(--primary-color1);
   border: none;
 }
@@ -21515,7 +21513,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home4-counter-section .counter-wrapper .single-counter .content svg {
-  fill: #D39B01;
+  /* fill: #D39B01; */
   margin-bottom: 25px;
 }
 
@@ -21645,7 +21643,7 @@ header.style-3.three .nav-right .primary-btn1 {
   font-weight: 600;
 }
 
-.home4-counter-section.style-2 .counter-wrapper .single-counter:first-child {
+/* .home4-counter-section.style-2 .counter-wrapper .single-counter:first-child {
   background-color: #F2F2FF;
 }
 
@@ -21655,7 +21653,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home4-counter-section.style-2 .counter-wrapper .single-counter:nth-child(3) {
   background-color: #FFF2E2;
-}
+} */
 
 .home4-counter-section.style-2 .vector1 {
   position: absolute;
@@ -46051,4 +46049,8 @@ p {
 .destination-card2.four .destination-content h5 a {
   font-size: 22px;
   font-weight: 500;
+}
+
+.login-btn {
+  padding: 10px !important;
 }
