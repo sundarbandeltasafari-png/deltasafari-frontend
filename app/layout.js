@@ -24,18 +24,18 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="assets/css/jquery-ui.css" rel="stylesheet" />
-        <link href="assets/css/bootstrap-icons.css" rel="stylesheet" />
-        <link href="assets/css/animate.min.css" rel="stylesheet" />
-        <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
-        {/* <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" /> */}
-        <link rel="stylesheet" href="assets/css/slick.css" />
-        <link rel="stylesheet" href="assets/css/slick-theme.css" />
-        <link rel="stylesheet" href="assets/css/daterangepicker.css" />
-        <link href="assets/css/boxicons.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <link rel="icon" href="assets/img/fav-icon.svg" type="image/gif" sizes="20x20" />
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/jquery-ui.css" rel="stylesheet" />
+        <link href="/assets/css/bootstrap-icons.css" rel="stylesheet" />
+        {/* <link href="/assets/css/animate.min.css" rel="stylesheet" /> */}
+        <link href="/assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+        {/* <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" /> */}
+        <link rel="stylesheet" href="/assets/css/slick.css" />
+        <link rel="stylesheet" href="/assets/css/slick-theme.css" />
+        <link rel="stylesheet" href="/assets/css/daterangepicker.css" />
+        <link href="/assets/css/boxicons.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="icon" href="/assets/img/fav-icon.svg" type="image/gif" sizes="20x20" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
           integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
           crossOrigin="anonymous" referrerPolicy="no-referrer" />
@@ -46,22 +46,23 @@ export default function RootLayout({ children }) {
           rel="stylesheet"></link>
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
-      <Script src="assets/js/jquery-3.7.1.min.js"></Script>
-      <Script src="assets/js/jquery-ui.js"></Script>
-      <Script src="assets/js/moment.min.js"></Script>
-      <Script src="assets/js/daterangepicker.min.js"></Script>
-      <Script src="assets/js/bootstrap.min.js"></Script>
-      <Script src="assets/js/popper.min.js"></Script>
-      {/* <Script src="assets/js/swiper-bundle.min.js"></Script> */}
-      <Script src="assets/js/slick.js"></Script>
-      <Script src="assets/js/waypoints.min.js"></Script>
-      <Script src="assets/js/jquery.counterup.min.js"></Script>
-      <Script src="assets/js/wow.min.js"></Script>
-      <Script src="assets/js/gsap.min.js"></Script>
-      <Script src="assets/js/ScrollTrigger.min.js"></Script>
-      <Script src="assets/js/jquery.fancybox.min.js"></Script>
-      <Script src="assets/js/select-dropdown.js"></Script>
-      {/* <Script src="assets/js/custom.js"></Script> */}
+      <Script src="/assets/js/jquery-3.7.1.min.js"></Script>
+      <Script src="/assets/js/jquery-ui.js"></Script>
+      <Script src="/assets/js/moment.min.js"></Script>
+      <Script src="/assets/js/daterangepicker.min.js"></Script>
+      <Script src="/assets/js/bootstrap.min.js"></Script>
+      <Script src="/assets/js/popper.min.js"></Script>
+      {/* <Script src="/assets/js/swiper-bundle.min.js"></Script> */}
+      <Script src="/assets/js/slick.js"></Script>
+      <Script src="/assets/js/waypoints.min.js"></Script>
+      <Script src="/assets/js/jquery.counterup.min.js"></Script>
+      {/* <Script src="/assets/js/wow.min.js"></Script> */}
+      <Script src="/assets/js/gsap.min.js"></Script>
+      <Script src="/assets/js/ScrollTrigger.min.js"></Script>
+      <Script src="/assets/js/jquery.fancybox.min.js"></Script>
+      <Script src="/assets/js/select-dropdown.js"></Script>
+      {/* <Script src="/assets/js/custom.js"></Script> */}
+      <Script src="/assets/js/custom2.js"></Script>
     </html>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-
+import "./contact.css"
 function page() {
     return (
         <>
-            <div className="breadcrumb-section" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/img/innerpages/breadcrumb-bg2.jpg)"}}>
+            {/* <div className="breadcrumb-section" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/img/innerpages/breadcrumb-bg2.jpg)" }}>
                 <div className="container">
                     <div className="banner-content">
                         <h1>Contact Us</h1>
@@ -13,130 +13,133 @@ function page() {
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div className="contact-page pt-100 mb-100">
-                <div className="container">
-                    <div className="row g-xl-4 g-lg-3 g-4 mb-100">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="single-contact">
-                                <div className="icon">
-                                    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.9981 1.125C15.0037 1.12887 12.133 2.32012 10.0156 4.4375C7.89824 6.55489 6.70699 9.42557 6.70313 12.42C6.70312 16.2056 10.7587 22.2638 13.92 26.4037C9.99937 27.0562 7.51875 28.6087 7.51875 30.4706C7.51875 32.9794 12.0244 34.875 17.9981 34.875C23.9719 34.875 28.4831 32.9794 28.4831 30.4706C28.4831 28.6087 26.0025 27.0562 22.0762 26.4037C25.2375 22.2581 29.2931 16.2056 29.2931 12.42C29.2893 9.42557 28.098 6.55489 25.9806 4.4375C23.8632 2.32012 20.9926 1.12887 17.9981 1.125ZM17.9981 29.6663C16.0237 27.3488 7.82812 17.415 7.82812 12.42C7.82812 9.72275 8.8996 7.13597 10.8068 5.22872C12.7141 3.32148 15.3009 2.25 17.9981 2.25C20.6954 2.25 23.2822 3.32148 25.1894 5.22872C27.0966 7.13597 28.1681 9.72275 28.1681 12.42C28.1681 17.415 19.9725 27.3488 17.9981 29.6663Z"></path>
-                                        <path d="M17.9966 18.1294C21.4853 18.1294 24.3134 15.3012 24.3134 11.8125C24.3134 8.3238 21.4853 5.49564 17.9966 5.49564C14.5078 5.49564 11.6797 8.3238 11.6797 11.8125C11.6797 15.3012 14.5078 18.1294 17.9966 18.1294Z"></path>
-                                    </svg>
-                                </div>
-                                <h4>United State</h4>
-                                <h6><span>Contact :</span> <a href="#">+1 (212) 555-7890</a></h6>
-                                <p>Skyline Plaza, 5th Floor, 123 Main Street Los Angeles, CA 90001, USA</p>
+            </div> */}
+            <section class="container">
+                <div class="tabs row">
+                    <div class="tab col-md-6">
+                        <div class="title">
+
+                            <h3>Call Us Directly</h3>
+                        </div>
+                        <p>Our team is available to assist you Monday to Saturday, 10 AM to 5 PM.</p>
+                        <div class="contact-info">
+                            <a href="tel:+918208159654">+91 8208159654</a>
+                            <a href="tel:+919609383772">+91 9609383772</a>
+                        </div>
+                    </div>
+                    <div class="tab col-md-6">
+                        <div class="title">
+
+                            <h3>Email Support</h3>
+                        </div>
+                        <p>Need assistance? Email us, and we'll get back to you as soon as possible!</p>
+                        <div class="contact-info">
+                            <a href="mailto:contact@sundarbanbubaitravels.com">contact@sundarbanbubaitravels.com</a>
+                        </div>
+                    </div>
+                    <div class="tab col-md-6">
+                        <div class="title">
+
+                            <h3>Chat Live</h3>
+                        </div>
+                        <p>We're available to assist you Monday to Saturday, 10 AM to 5 PM.</p>
+                        <div class="contact-info">
+                            <a href="https://wa.me/918208159654">Chat on WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="address">
+                    <h2>Our Offices</h2>
+                    <div class="tabs">
+                        <div class="tab">
+                            <div class="title">
+
+                                <h3>Head Office</h3>
+                            </div>
+                            <p>Canning Town, South 24 Parganas,<br />West Bengal - 743329, India</p>
+                            <div class="contact-info">
+                                <a href="#">Get Direction</a>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="single-contact two">
-                                <div className="icon">
-                                    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.9981 1.125C15.0037 1.12887 12.133 2.32012 10.0156 4.4375C7.89824 6.55489 6.70699 9.42557 6.70313 12.42C6.70312 16.2056 10.7587 22.2638 13.92 26.4037C9.99937 27.0562 7.51875 28.6087 7.51875 30.4706C7.51875 32.9794 12.0244 34.875 17.9981 34.875C23.9719 34.875 28.4831 32.9794 28.4831 30.4706C28.4831 28.6087 26.0025 27.0562 22.0762 26.4037C25.2375 22.2581 29.2931 16.2056 29.2931 12.42C29.2893 9.42557 28.098 6.55489 25.9806 4.4375C23.8632 2.32012 20.9926 1.12887 17.9981 1.125ZM17.9981 29.6663C16.0237 27.3488 7.82812 17.415 7.82812 12.42C7.82812 9.72275 8.8996 7.13597 10.8068 5.22872C12.7141 3.32148 15.3009 2.25 17.9981 2.25C20.6954 2.25 23.2822 3.32148 25.1894 5.22872C27.0966 7.13597 28.1681 9.72275 28.1681 12.42C28.1681 17.415 19.9725 27.3488 17.9981 29.6663Z"></path>
-                                        <path d="M17.9966 18.1294C21.4853 18.1294 24.3134 15.3012 24.3134 11.8125C24.3134 8.3238 21.4853 5.49564 17.9966 5.49564C14.5078 5.49564 11.6797 8.3238 11.6797 11.8125C11.6797 15.3012 14.5078 18.1294 17.9966 18.1294Z"></path>
-                                    </svg>
-                                </div>
-                                <h4>Dubai Office</h4>
-                                <h6><span>Contact :</span> <a href="#">+971 4 123 4567</a></h6>
-                                <p>Office No. 1203, 12th Floor, Bay Tower,  Al Abraj Street, Business Bay, Dubai, UAE</p>
+                        <div class="tab">
+                            <div class="title">
+
+                                <h3>Branch Office</h3>
+                            </div>
+                            <p>68/BS.N Banerjee Road, Opposite Sejuti Hospital, Kolkata - 700014, West Bengal, India</p>
+                            <div class="contact-info">
+                                <a href="#">Get Direction</a>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="single-contact three">
-                                <div className="icon">
-                                    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M17.9981 1.125C15.0037 1.12887 12.133 2.32012 10.0156 4.4375C7.89824 6.55489 6.70699 9.42557 6.70313 12.42C6.70312 16.2056 10.7587 22.2638 13.92 26.4037C9.99937 27.0562 7.51875 28.6087 7.51875 30.4706C7.51875 32.9794 12.0244 34.875 17.9981 34.875C23.9719 34.875 28.4831 32.9794 28.4831 30.4706C28.4831 28.6087 26.0025 27.0562 22.0762 26.4037C25.2375 22.2581 29.2931 16.2056 29.2931 12.42C29.2893 9.42557 28.098 6.55489 25.9806 4.4375C23.8632 2.32012 20.9926 1.12887 17.9981 1.125ZM17.9981 29.6663C16.0237 27.3488 7.82812 17.415 7.82812 12.42C7.82812 9.72275 8.8996 7.13597 10.8068 5.22872C12.7141 3.32148 15.3009 2.25 17.9981 2.25C20.6954 2.25 23.2822 3.32148 25.1894 5.22872C27.0966 7.13597 28.1681 9.72275 28.1681 12.42C28.1681 17.415 19.9725 27.3488 17.9981 29.6663Z"></path>
-                                        <path d="M17.9966 18.1294C21.4853 18.1294 24.3134 15.3012 24.3134 11.8125C24.3134 8.3238 21.4853 5.49564 17.9966 5.49564C14.5078 5.49564 11.6797 8.3238 11.6797 11.8125C11.6797 15.3012 14.5078 18.1294 17.9966 18.1294Z"></path>
-                                    </svg>
-                                </div>
-                                <h4>United Kingdom</h4>
-                                <h6><span>Contact :</span> <a href="#">+44 20 7946 1234</a></h6>
-                                <p>3rd Floor, 15 Bedford Street Covent Garden, London, WC2E 9HE, UK</p>
+                        <div class="tab">
+                            <div class="title">
+
+                                <h3>Branch Office</h3>
+                            </div>
+                            <p>Sonakhali Ferry Ghat, Basanti, South 24 Parganas, West Bengal - 743312, India</p>
+                            <div class="contact-info">
+                                <a href="#">Get Direction</a>
                             </div>
                         </div>
                     </div>
-                    <div className="contact-form">
-                        <div className="row justify-content-center">
-                            <div className="col-xl-8 col-lg-10">
-                                <div className="contact-form-wrap">
-                                    <div className="section-title text-center mb-60">
-                                        <h2>Get in Touch!</h2>
-                                        <p>We’re excited to hear from you! Whether you have a question about our services, want to discuss a new project.</p>
-                                    </div>
-                                    <form>
-                                        <div className="row g-4 mb-60">
-                                            <div className="col-md-6">
-                                                <div className="form-inner">
-                                                    <label>Full Name</label>
-                                                    <input type="text" placeholder="Wasington Mongla" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="form-inner">
-                                                    <label>Email Address</label>
-                                                    <input type="email" placeholder="info@example.com" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="form-inner">
-                                                    <label>Phone Number</label>
-                                                    <input type="text" placeholder="+92 567 *** ***" />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="form-inner">
-                                                    <label>Where are you going?</label>
-                                                    <select style={{ display: "none" }}>
-                                                        <option>Maldives </option>
-                                                        <option>France</option>
-                                                        <option>United States</option>
-                                                        <option>Thailand</option>
-                                                    </select><div className="nice-select" tabIndex="0"><span className="current">Maldives </span><ul className="list"><li data-value="Maldives" className="option selected">Maldives </li><li data-value="France" className="option">France</li><li data-value="United States" className="option">United States</li><li data-value="Thailand" className="option">Thailand</li></ul></div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="form-inner">
-                                                    <label>Brief/Message</label>
-                                                    <textarea placeholder="Write somethings about inquiry"></textarea>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-12">
-                                                <div className="form-inner2">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="checkbox" value="" id="contactCheck22" />
-                                                        <label className="form-check-label" htmlFor="contactCheck22">
-                                                            I will agree with yours privacy policy &amp; terms &amp; conditions.
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" className="primary-btn1">
-                                            <span>
-                                                Submit Now
-                                                <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                                                </svg>
-                                            </span>
-                                            <span>
-                                                Submit Now
-                                                <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </form>
-                                </div>
+
+                </div>
+                <div class="faqs p-3">
+                    <div class="child area">
+                        <div class="tab start">
+                            <h2 class="title">Frequently Asked Questions</h2>
+                            <p class="subtitle">Everything you need to know about us</p>
+
+                            <div class="contact-us">
+                                <p>If you still have any questions or need further clarification, feel free to reach out to us directly. We’re here to help!</p>
+                                <a href="/contact">Contact Us</a>
+                            </div>
+                        </div>
+                        <div class="tab end">
+                            <div class="faq">
+                                <p class="question">
+                                    <span>Why is the Sundarbans so important?</span>
+                                    <span class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
+                                            <path d="m12,17c-.935,0-1.813-.364-2.475-1.025L.148,6.684c-.196-.194-.198-.512-.004-.707.193-.196.512-.198.707-.004l9.379,9.293c.949.949,2.592.947,3.537.002l9.381-9.295c.194-.194.513-.192.707.004.194.195.192.513-.004.707l-9.379,9.293c-.659.659-1.538,1.023-2.473,1.023Z"></path>
+                                        </svg>
+                                    </span>
+                                </p>
+                                <p class="answer">
+                                    The Sundarban is famous for its <b>Royal Bengal Tigers</b>, dense mangrove forest, and rich wildlife. It is also a <b>UNESCO World Heritage Site</b> and the world’s largest mangrove ecosystem, attracting thousands of nature lovers and adventure seekers every year.
+                                </p>
+                            </div>
+                            <div class="faq">
+                                <p class="question">
+                                    <span>How to Book Sundarban Tour Packages?</span>
+                                    <span class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
+                                            <path d="m12,17c-.935,0-1.813-.364-2.475-1.025L.148,6.684c-.196-.194-.198-.512-.004-.707.193-.196.512-.198.707-.004l9.379,9.293c.949.949,2.592.947,3.537.002l9.381-9.295c.194-.194.513-.192.707.004.194.195.192.513-.004.707l-9.379,9.293c-.659.659-1.538,1.023-2.473,1.023Z"></path>
+                                        </svg>
+                                    </span>
+                                </p>
+                                <p class="answer">
+                                    You can book a Sundarban tour by selecting your <b>preferred packages &amp; dates</b>. Once you fill in the booking details, you’ll receive a <b>call back &amp; booking confirmation</b>. You can also book by contacting us through <b>phone/WhatsApp/email</b> and confirming your dates.
+                                </p>
+                            </div>
+                            <div class="faq">
+                                <p class="question">
+                                    <span>What is the best time to visit the Sundarban?</span>
+                                    <span class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24">
+                                            <path d="m12,17c-.935,0-1.813-.364-2.475-1.025L.148,6.684c-.196-.194-.198-.512-.004-.707.193-.196.512-.198.707-.004l9.379,9.293c.949.949,2.592.947,3.537.002l9.381-9.295c.194-.194.513-.192.707.004.194.195.192.513-.004.707l-9.379,9.293c-.659.659-1.538,1.023-2.473,1.023Z"></path>
+                                        </svg>
+                                    </span>
+                                </p>
+                                <p class="answer">
+                                    The best time to visit is <b>October to March</b>, when the weather is pleasant, wildlife sightings are more frequent, and boat tours are comfortable. If you want to experience the <b>Hilsa festival</b>, the best time is <b>June to September</b>.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="contact-map-section">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.5647631857846!2d90.36311167605992!3d23.83407118555764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c14c8682a473%3A0xa6c74743d52adb88!2sEgens%20Lab!5e0!3m2!1sen!2sbd!4v1700138349574!5m2!1sen!2sbd" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
-            </div>
+            </section>
         </>
     )
 }

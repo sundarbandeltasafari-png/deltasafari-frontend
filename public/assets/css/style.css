@@ -5098,8 +5098,14 @@ header.style-2 {
   width: 100%;
   z-index: 999;
   transition: all 0.8s ease-out 0s;
-  background-color: transparent;
+  background-color: #fff;
   padding: 0 70px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  position: sticky;
+  top: 0px;
+  /* z-index: 555; */
+  height: 90px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -5583,6 +5589,7 @@ header.style-2 .main-menu {
   display: inline-block;
 }
 
+
 header.style-2 .main-menu>ul {
   list-style: none;
   margin: 0;
@@ -5595,9 +5602,17 @@ header.style-2 .main-menu>ul>li {
   padding: 0;
 }
 
+header.style-2 .logo-and-menu-area .main-menu {
+  display: none !important;
+}
+
 @media (max-width: 1199px) {
   header.style-2 .main-menu>ul>li {
     padding: 0px 12px;
+  }
+
+  header.style-2 .logo-and-menu-area .main-menu {
+    display: inline-block !important;
   }
 }
 
@@ -8758,7 +8773,7 @@ header.style-3.three .nav-right .primary-btn1 {
   padding: 60px 40px 30px;
   background-color: var(--white-color);
   box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -8826,14 +8841,21 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .filter-wrapper .filter-input-wrap .filter-input .single-search-box {
-  padding: 8px 20px;
-  border: 1px solid var(--borders-color);
-  border-radius: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-right: 1px solid var(--borders-color);
+  border-radius: 0px;
   display: flex;
   align-items: center;
   gap: 10px;
   position: relative;
   min-height: 62px;
+  width: stretch;
+  margin: 5px;
+}
+
+.filter-input-wrap .search-btn {
+  width: 500px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -9535,6 +9557,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .filter-wrapper .filter-input-wrap .filter-input .primary-btn1 {
   padding: 20px 18px;
+  border-radius: 0px 10px 10px 0px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -9567,7 +9590,7 @@ header.style-3.three .nav-right .primary-btn1 {
 @media (max-width: 1399px) {
   .filter-wrapper .filter-input-wrap .filter-input.two {
     grid-template-columns: 23% 18% 18% 19% 14.5%;
-    gap: 20px;
+    gap: 5px;
   }
 }
 
@@ -9909,12 +9932,12 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .filter-wrapper.city .filter-input-wrap {
-  padding: 20px 40px;
+  padding: 15px 25px;
 }
 
 @media (max-width: 1399px) {
   .filter-wrapper.city .filter-input-wrap {
-    padding: 20px 30px;
+    padding: 15px 25px;
   }
 }
 
@@ -10196,7 +10219,7 @@ header.style-3.three .nav-right .primary-btn1 {
   05. Home1 Offer Section CSS
 ========================================*/
 .home1-offer-section img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -10294,7 +10317,7 @@ header.style-3.three .nav-right .primary-btn1 {
   width: 100%;
   height: 210px;
   transition: height 0.5s ease;
-  border-radius: 20px;
+  border-radius: 10px;
   -o-object-fit: cover;
   object-fit: cover;
   -o-object-position: center center;
@@ -10380,7 +10403,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-color: rgba(0, 0, 0, 0.381);
   width: 100%;
   height: 210px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .destination-card .destination-content .content p {
@@ -10406,7 +10429,7 @@ header.style-3.three .nav-right .primary-btn1 {
 ========================================*/
 .service-wrapper {
   padding: 60px 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #F2F2FF;
 }
 
@@ -11048,7 +11071,7 @@ header.style-3.three .nav-right .primary-btn1 {
 ========================================*/
 .package-card {
   padding: 0cqw;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--borders-color);
   background-color: var(--white-color);
 }
@@ -11966,7 +11989,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-size: cover;
   background-repeat: no-repeat;
   padding: 60px 40px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 991px) {
@@ -12020,7 +12043,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home1-location-search-section .location-search-wrapper .location-search-content .location-search-area {
   background-color: #24814D;
   border: 1px solid rgba(var(--white-color-opc), 0.2);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 10px;
   margin-bottom: 20px;
 }
@@ -12125,7 +12148,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home1-location-search-section .location-search-wrapper .location-search-content .location-search-area .search-area .dropdown .dropdown-list::-webkit-scrollbar-thumb {
   background-color: #ddd;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -12407,7 +12430,7 @@ header.style-3.three .nav-right .primary-btn1 {
   display: grid;
   grid-template-columns: 49% 51%;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -12439,7 +12462,7 @@ header.style-3.three .nav-right .primary-btn1 {
   position: relative;
   overflow: hidden;
   display: block;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -12449,7 +12472,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .blog-card .blog-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
   transition: all 0.5s ease-out;
 }
@@ -13677,7 +13700,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-image: url(../img/home3/home3-counter-bg.png), linear-gradient(180deg, #F0F0F0 0%, #F0F0F0 100%);
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -13810,7 +13833,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-image: url(../img/home9/home9-counter-bg.png), linear-gradient(180deg, #FFF2E2 0%, #FFF2E2 100%);
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -15244,7 +15267,7 @@ header.style-3.three .nav-right .primary-btn1 {
   position: relative;
   overflow: hidden;
   display: block;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -15254,7 +15277,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .destination-card2 .destination-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.5s ease-out;
 }
 
@@ -15316,7 +15339,7 @@ header.style-3.three .nav-right .primary-btn1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.371);
+  background-color: rgba(0, 0, 0, 0.15);
   z-index: 1;
   border-radius: 18px;
 }
@@ -15558,7 +15581,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .destination-card2.four {
   position: relative;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -15596,7 +15619,7 @@ header.style-3.three .nav-right .primary-btn1 {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%);
   display: flex;
   align-items: end;
@@ -16022,7 +16045,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home2-offer-banner-section .offer-banner-wrap {
   background-color: #99D5B0;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16411,7 +16434,7 @@ header.style-3.three .nav-right .primary-btn1 {
   height: 91%;
   border: 1px solid var(--borders-color);
   border-right: unset;
-  border-radius: 20px 0 0 20px;
+  border-radius: 10px 0 0 20px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -16525,7 +16548,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home2-award-banner-section.two .award-and-content img {
-  border-radius: 20px;
+  border-radius: 10px;
   margin-bottom: 40px;
 }
 
@@ -16590,7 +16613,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .blog-card2 {
   padding: 10px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -18356,7 +18379,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home3-offer-and-service-section .offer-area a img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -18794,7 +18817,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home3-about-section .about-content .review-area {
   max-width: 571px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--borders-color);
   display: flex;
   align-items: center;
@@ -19239,13 +19262,13 @@ header.style-3.three .nav-right .primary-btn1 {
 .tour-guide-card.two .guide-img-wrap .guide-img {
   width: unset;
   height: unset;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .tour-guide-card.two .guide-img-wrap .guide-img img {
   width: unset;
   height: unset;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .tour-guide-card.three .guide-img-wrap .guide-img {
@@ -19578,7 +19601,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-size: cover;
   background-repeat: no-repeat;
   padding: 45px 50px 55px;
-  border-radius: 20px;
+  border-radius: 10px;
   text-align: center;
   position: relative;
   margin-bottom: -145px;
@@ -19733,7 +19756,7 @@ header.style-3.three .nav-right .primary-btn1 {
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 20px 0 0 0;
+  border-radius: 10px 0 0 0;
   z-index: -1;
 }
 
@@ -19922,7 +19945,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (max-width: 576px) {
   .home4-banner-section .banner-video-area::before {
-    border-radius: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -20100,7 +20123,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home4-feature-section .feature-card {
   padding: 35px 40px 30px;
   background-color: #BDEBCE;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
 }
 
@@ -20443,7 +20466,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (max-width: 576px) {
   .home4-about-section {
-    border-radius: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -20874,7 +20897,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home4-offer-slider-section a img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 240px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -21094,7 +21117,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .why-choose-video-area .why-choose-video-wrap img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 400px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -21203,7 +21226,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (max-width: 767px) {
   .why-choose-video-area .why-choose-video-wrap .contact-wrap {
-    border-radius: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -21237,7 +21260,7 @@ header.style-3.three .nav-right .primary-btn1 {
   .why-choose-video-area .why-choose-video-wrap .contact-wrap .contact-area {
     padding: 15px;
     min-width: 275px;
-    border-radius: 20px;
+    border-radius: 10px;
     flex-wrap: wrap;
   }
 }
@@ -22509,7 +22532,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home5-offer-section img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -22616,7 +22639,7 @@ header.style-3.three .nav-right .primary-btn1 {
   padding: 25px 64px 0 50px;
   background-color: var(--white-color);
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -22956,7 +22979,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home5-about-section .about-video-area>img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1199px) {
@@ -23072,7 +23095,7 @@ header.style-3.three .nav-right .primary-btn1 {
   gap: 15px;
   padding: 28px 40px;
   background-color: var(--white-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -23310,7 +23333,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-repeat: no-repeat;
   padding: 45px 120px 80px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -23956,7 +23979,7 @@ header.style-3.three .nav-right .primary-btn1 {
 ========================================*/
 .destination-card3 {
   position: relative;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -23966,7 +23989,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .destination-card3 img {
-  border-radius: 20px;
+  border-radius: 10px;
   -o-object-fit: cover;
   object-fit: cover;
 }
@@ -23993,7 +24016,7 @@ header.style-3.three .nav-right .primary-btn1 {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -24293,7 +24316,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home6-offer-banner-section .banner-wrapper .banner-content-wrap .banner-content {
   text-align: center;
   padding: 45px 45px 65px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid rgba(var(--white-color-opc), 0.15);
   position: relative;
   z-index: 3;
@@ -24323,7 +24346,7 @@ header.style-3.three .nav-right .primary-btn1 {
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
   z-index: -1;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -24841,7 +24864,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home6-about-section .about-wrapper .about-img-area .single-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
@@ -25348,7 +25371,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home6-faq-section .faq-section-wrap {
   padding: 60px 0;
-  border-radius: 20px;
+  border-radius: 10px;
   background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
   -webkit-backdrop-filter: blur(300px);
   backdrop-filter: blur(300px);
@@ -25410,7 +25433,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-image: url(../img/home6/home6-newletter-bg.png), linear-gradient(180deg, #0EA9D0 0%, #0EA9D0 100%);
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
   position: relative;
   z-index: 1;
@@ -26375,7 +26398,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home7-destination-section .feature-wrapper {
   background-color: #FFF2E2;
   padding: 55px 50px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -27119,7 +27142,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home7-offer-banner-section .banner-wrapper {
   padding-left: 60px;
   background-color: var(--primary-color3);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -27449,7 +27472,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-color: var(--white-color);
   padding: 60px 120px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
 }
 
@@ -27692,7 +27715,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home7-testimonial-section.three .testimonail-wrapper-area .testimonial-wrapper {
   padding: 100px 0;
   background-color: #FFF2E2;
-  border-radius: 20px;
+  border-radius: 10px;
   border: unset;
 }
 
@@ -27763,7 +27786,7 @@ header.style-3.three .nav-right .primary-btn1 {
   width: 114px;
   height: 87px;
   border: 1px solid rgba(var(--title-color-opc), 0.15);
-  border-radius: 20px 0 0 0;
+  border-radius: 10px 0 0 0;
   border-right: unset;
   border-bottom: unset;
   position: absolute;
@@ -27888,7 +27911,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home7-activity-tab-section .activity-tab-wrapper .single-activity .activity-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 320px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -27903,7 +27926,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home7-activity-tab-section .activity-tab-wrapper .single-activity .activity-content {
   background-color: var(--white-color);
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 35px 110px;
   text-align: center;
   max-width: 870px;
@@ -28659,7 +28682,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home8-visa-slider-section .visa-card {
   padding: 10px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .home8-visa-slider-section .visa-card .visa-img {
@@ -29169,7 +29192,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home8-country-serve-section .single-item {
   padding: 40px 25px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -29355,7 +29378,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-size: cover;
   background-repeat: no-repeat;
   padding-left: 60px;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: end;
   justify-content: space-between;
@@ -30363,7 +30386,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .inspiration-details img {
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
   min-height: 200px;
   -o-object-fit: cover;
@@ -30632,7 +30655,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .inspiration-details .comment-and-form-area .inquiry-form {
   background: #C1E8CF;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
 }
 
@@ -30984,7 +31007,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .blog-sidebar-area .single-widget {
   padding: 35px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -31412,7 +31435,7 @@ header.style-3.three .nav-right .primary-btn1 {
   list-style: none;
   padding: 40px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 60px;
@@ -31529,7 +31552,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .package-details-page .package-details-warpper .highlights-tour-area .highlights-wrap {
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--borders-color);
 }
 
@@ -31722,7 +31745,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .package-details-page .package-details-warpper .tour-itinerary-area .itinerary-list .single-itinerary .tour-plan-wrap {
   padding: 40px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -32051,7 +32074,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .package-details-page .package-details-warpper .download-area img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 150px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -32071,7 +32094,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .package-details-page .package-details-sidebar .pricing-and-booking-area {
   padding: 40px 40px;
   background-color: #F2F2FF;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -32250,7 +32273,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .package-details-page .package-details-sidebar .customize-package-banner-wrap {
   padding: 40px 40px 50px;
   background-color: #BDEBCE;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -32693,11 +32716,11 @@ header.style-3.three .nav-right .primary-btn1 {
   position: relative;
   overflow: hidden;
   display: block;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .location-card .location-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 150px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -32797,7 +32820,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .location-details-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 0;
   position: relative;
 }
@@ -32934,7 +32957,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .location-details-modal .modal-dialog .modal-content .modal-body .single-activity {
   padding: 50px 30px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
 }
 
@@ -33031,7 +33054,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .location-details-modal .modal-dialog .modal-content .modal-body .content-wrapper {
   padding: 35px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 991px) {
@@ -33272,7 +33295,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .rating-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
   position: relative;
 }
@@ -33443,7 +33466,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .booking-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
   position: relative;
 }
@@ -34274,7 +34297,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .enquiry-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
   position: relative;
 }
@@ -34402,7 +34425,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .package-grid-page .package-grid-top-area {
   padding: 33px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34671,7 +34694,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .package-sidebar-area .sidebar-wrapper {
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 991px) {
@@ -35142,7 +35165,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .map-view-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 0px;
   position: relative;
   text-align: center;
@@ -35282,7 +35305,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .map-view-modal .modal-dialog .modal-content .modal-body .map-area #mapModal {
   height: 380px;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 767px) {
@@ -35441,7 +35464,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .destination-card4 {
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--borders-color);
 }
 
@@ -35454,7 +35477,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .destination-card4 .destination-img-wrap {
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -35948,7 +35971,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .destination-dt-why-choose-section .why-choose-card {
   padding: 50px 40px 45px;
   background-color: var(--white-color);
-  border-radius: 20px;
+  border-radius: 10px;
   text-align: center;
   transition: 0.5s;
 }
@@ -36121,7 +36144,7 @@ header.style-3.three .nav-right .primary-btn1 {
   width: 100%;
   max-height: 480px;
   min-height: 480px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -36148,7 +36171,7 @@ header.style-3.three .nav-right .primary-btn1 {
   object-fit: cover;
   width: 100%;
   height: 480px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -36180,7 +36203,7 @@ header.style-3.three .nav-right .primary-btn1 {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 25px 30px 40px;
   display: flex;
   flex-direction: column;
@@ -36309,7 +36332,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .destination-dt-travel-season-section .travel-season-card {
   padding: 10px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -36490,7 +36513,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .destination-dt-faq-video-area .video-wrap img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 400px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -36742,7 +36765,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .contact-page .contact-form .contact-form-wrap {
   padding: 60px;
   background-color: #F2F2FF;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -37055,7 +37078,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .shop-page .shop-sidebar .single-widgets {
   padding: 40px 30px 45px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 1399px) {
@@ -37413,12 +37436,12 @@ header.style-3.three .nav-right .primary-btn1 {
   position: relative;
   overflow: hidden;
   display: block;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.5s ease-out;
 }
 
 .product-card .product-card-img-wrap .product-card-img img {
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.5s ease-out;
 }
 
@@ -37552,7 +37575,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .product-details-page .product-details-img .product-details-tab-img img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 991px) {
@@ -39037,7 +39060,7 @@ header.style-3.three .nav-right .primary-btn1 {
   93. Guider Details Page CSS
 ========================================*/
 .guider-details-page .guider-img-wrap {
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   position: sticky;
   top: 20px;
@@ -39050,7 +39073,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .guider-details-page .guider-img-wrap img {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 576px) {
@@ -39062,7 +39085,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .guider-details-page .guider-img-wrap .guider-social-area {
   text-align: center;
   padding: 23px 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: var(--white-color);
   position: absolute;
   bottom: 30px;
@@ -39611,7 +39634,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .why-choose-visa-section .why-choose-card {
   padding: 40px 28px;
   background-color: #E6F5A9;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -39704,7 +39727,7 @@ header.style-3.three .nav-right .primary-btn1 {
   padding: 25px 15px 20px;
   background-color: #F2F2FF;
   border: 1px solid transparent;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -39802,7 +39825,7 @@ header.style-3.three .nav-right .primary-btn1 {
   list-style: none;
   padding: 25px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -39888,7 +39911,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .visa-details-page .visa-details-wrapper .visa-rejection-area {
   padding: 40px 30px 40px 40px;
   background-color: #F2F2FF;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -40012,7 +40035,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .visa-details-page .visa-dt-sidebar .visa-info-wrap {
   padding: 35px 40px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #F2F2FF;
   display: none;
 }
@@ -40175,7 +40198,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .visa-details-page .visa-dt-sidebar .visa-assistance-wrap {
   padding: 40px 22px 0;
   background-color: #BDEBCE;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -40389,7 +40412,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .visa-apply-modal .modal-dialog .modal-content {
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 55px 60px;
   position: relative;
 }
@@ -40654,7 +40677,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .hotel-grid-page .hotel-grid-top-area {
   padding: 33px 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40815,7 +40838,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .hotel-card {
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--borders-color);
   background-color: var(--white-color);
 }
@@ -40845,7 +40868,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .hotel-card .hotel-img-wrap .hotel-img img {
   border-radius: 10px;
-  min-height: 145px;
+  min-height: 100px;
   -o-object-fit: cover;
   object-fit: cover;
   transition: all 0.5s ease-out;
@@ -40983,6 +41006,7 @@ header.style-3.three .nav-right .primary-btn1 {
   align-items: center;
   gap: 25px;
   margin-bottom: 30px;
+  position: relative;
 }
 
 @media (max-width: 1199px) {
@@ -41004,7 +41028,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .hotel-card .hotel-content .location-area .location svg {
-  fill: var(--text-color);
+  fill: var(--black-color) !important;
   transition: 0.5s;
 }
 
@@ -41087,11 +41111,11 @@ header.style-3.three .nav-right .primary-btn1 {
   color: var(--text-color);
   font-family: var(--font-roboto);
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -41101,7 +41125,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .hotel-card .hotel-content .hotel-feature-list li svg {
-  fill: var(--primary-color1);
+  /* fill: var(--primary-color1); */
 }
 
 .hotel-card .hotel-content .hotel-feature-list li svg rect {
@@ -41237,7 +41261,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .hotel-dt-gallery-section .room-img-group {
-  border-radius: 20px;
+  border-radius: 10px;
   background: #FFF;
   padding: 10px;
   border: 1px solid var(--borders-color);
@@ -41477,7 +41501,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .hotel-details-page .hotel-details-wrapper .hotel-dt-facilities-area .facilities-wrap {
   padding: 30px;
   border: 1px solid var(--borders-color);
-  border-radius: 20px;
+  border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 60px;
@@ -42296,7 +42320,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .hotel-details-page .hotel-details-sidebar .pricing-and-booking-area {
   padding: 40px 40px;
   background-color: #F2F2FF;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -43045,7 +43069,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .about-why-choose-section .why-choose-card {
   padding: 40px 28px 35px;
   background-color: #E6F5A9;
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100%;
 }
 
@@ -43112,7 +43136,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .about-video-section .video-wrap img {
-  border-radius: 20px;
+  border-radius: 10px;
   min-height: 400px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -43367,7 +43391,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .banner-bottom-area .banner-bottom-area-wrapper {
   background-color: #1781FE;
   padding: 45px 70px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -43558,7 +43582,7 @@ header.style-3.three .nav-right .primary-btn1 {
   background-image: url(../img/home9/city-activities-bg-img.png), linear-gradient(180deg, #FFF2E2 0%, #FFF2E2 100%);
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (max-width: 767px) {
@@ -43657,32 +43681,25 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home9-banner-section .banner-video-area {
-  min-height: 583px;
-  height: 583px;
+  min-height: 250px;
+  height: 250px;
   position: relative;
 }
 
 @media (max-width: 767px) {
   .home9-banner-section .banner-video-area {
-    min-height: 620px;
-    height: 620px;
+    min-height: 320px;
+    height: 320px;
   }
 }
 
 .home9-banner-section .banner-video-area video {
   width: 100%;
-  min-height: 583px;
-  height: 583px;
+  height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
 }
 
-@media (max-width: 767px) {
-  .home9-banner-section .banner-video-area video {
-    min-height: 620px;
-    height: 620px;
-  }
-}
 
 .home9-banner-section .banner-video-area::before {
   content: "";
@@ -43698,7 +43715,7 @@ header.style-3.three .nav-right .primary-btn1 {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -55%);
   width: 100%;
   padding: 130px 0;
 }
@@ -43933,8 +43950,8 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home9-travel-package-section .package-card2 {
-  padding: 10px;
-  border-radius: 20px;
+  /* padding: 10px; */
+  border-radius: 10px;
   background-color: var(--white-color);
   box-shadow: 0px 4px 18px 0px rgba(0, 0, 0, 0.0784313725);
   border: 1px solid transparent;
@@ -43961,15 +43978,16 @@ header.style-3.three .nav-right .primary-btn1 {
   position: relative;
   overflow: hidden;
   display: block;
-  border-radius: 10px;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .home9-travel-package-section .package-card2 .package-img-wrap .package-img img {
-  border-radius: 10px;
-  min-height: 200px;
+  /* border-radius: 10px; */
+  height: 200px;
   -o-object-fit: cover;
   object-fit: cover;
   transition: all 0.5s ease-out;
+  width: 100%
 }
 
 .home9-travel-package-section .package-card2 .package-img-wrap .package-img::after {
@@ -44216,18 +44234,18 @@ header.style-3.three .nav-right .primary-btn1 {
   display: flex;
   gap: 15px;
   align-items: center;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 @media (max-width: 1199px) {
   .home9-travel-package-section .package-card2 .package-content .star-and-days {
-    margin-bottom: 35px;
+    /* margin-bottom: 35px; */
   }
 }
 
 @media (max-width: 767px) {
   .home9-travel-package-section .package-card2 .package-content .star-and-days {
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
   }
 }
 
@@ -44568,7 +44586,7 @@ header.style-3.three .nav-right .primary-btn1 {
   -o-object-fit: cover;
   object-fit: cover;
   min-height: 444px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 .home9-about-section .about-img-wrapper .icon {
@@ -44922,7 +44940,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home10-about-section .about-img-wrap img {
-  border-radius: 20px;
+  border-radius: 10px;
   -o-object-fit: cover;
   object-fit: cover;
 }
@@ -45052,7 +45070,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home10-feature-section .feature-card .single-feature-card {
   background-color: #F0F0F0;
   padding: 15px 15px 25px 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: background-color 0.4s ease;
   overflow: hidden;
   height: 100%;
@@ -45166,7 +45184,7 @@ header.style-3.three .nav-right .primary-btn1 {
   -o-object-fit: cover;
   object-fit: cover;
   min-height: 740px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -45219,7 +45237,7 @@ header.style-3.three .nav-right .primary-btn1 {
   max-height: 540px;
   -o-object-fit: cover;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
@@ -45485,7 +45503,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home10-hotel-and-room-section .hotel-and-room-slider-wrapper .hotel-room-card .hotel-room-img-area img {
-  border-radius: 20px;
+  border-radius: 10px;
   transition: 0.5s ease-in-out;
 }
 
@@ -45539,7 +45557,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home10-hotel-and-room-section .hotel-and-room-slider-wrapper .hotel-room-card .hotel-room-img-area .thumb-video {
   opacity: 0;
-  border-radius: 20px;
+  border-radius: 10px;
   line-height: 0;
   transition: 0.5s ease-in-out;
   position: absolute;
@@ -45952,8 +45970,16 @@ header.style-2 .header-logo img {
   width: 100%;
 }
 
-.filter-input-wrap {
+.filter-input-wrap.home {
   max-width: 650px;
+}
+
+.filter-input-wrap.package {
+  max-width: 750px;
+}
+
+.filter-input-wrap.hotel {
+  max-width: 1000px;
 }
 
 .single-search-box .form-inner2 {
@@ -46000,8 +46026,8 @@ header.style-2 .header-logo img {
 
 .filter-wrapper.bottom-card {
   position: relative;
-  margin-top: 55px;
-  z-index: 9;
+  margin-top: 75px;
+  z-index: 5;
 }
 
 .filter-wrapper.bottom-card div {
@@ -46053,4 +46079,98 @@ p {
 
 .login-btn {
   padding: 10px !important;
+}
+
+.copy-div {
+  padding: 0px 5px;
+  border: 1px dashed #bababa;
+  border-radius: 5px;
+}
+
+.breadcrumb-section .banner-content p {
+  color: var(--white-color);
+  font-family: var(--font-roboto);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  margin-bottom: 0;
+}
+
+.breadcrumb-section .banner-content {
+  max-width: 590px;
+}
+
+.breadcrumb-section .banner-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 47%);
+  z-index: 1;
+}
+
+.bottom-direction {
+  top: 0;
+  right: 0;
+}
+
+.banner-video-area img {
+  height: stretch;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 600px) {
+  .filter-wrapper {
+    margin-top: -130px !important;
+  }
+
+  .filter-wrapper-package {
+    margin-top: -250px !important;
+  }
+
+  .package-section .banner-content p {
+    display: none;
+  }
+
+  .filter-input-wrap.package .filter-input {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .filter-input-wrap.package .filter-input button {
+    width: 100% !important;
+    border-radius: 0px 0px 10px 10px !important; 
+  }
+
+  .filter-input-wrap.package .filter-input .single-search-box {
+    min-height: 52px;
+    padding: 8px 18px;
+    border-bottom: 1px solid gray !important;
+    border-right: 0px !important;
+    margin: 0;
+    padding: 15px;
+  }
+
+  .header-dropdown span {
+    display: none;
+  }
+
+  .filter-wrapper.bottom-card {
+    display: none !important;
+  }
+
+  .home2-banner-section .banner-content {
+    top: -75px
+  }
+}
+
+.home2-package-slider-section .swiper {
+  padding-bottom: 15px;
+}
+
+.home2-package-slider-section .swiper-pagination {
+  bottom: -10px;
 }

@@ -1,239 +1,534 @@
 import React from 'react'
-
+import "./referal.css"
 function page() {
-  return (
-    <>
-
-      <div className="page-header">
-        <div className="floating-plane"><i className="bi bi-airplane-fill"></i></div>
-        <div className="container">
-          <div className="header-badge"><i className="bi bi-gift-fill"></i> Exclusive Rewards Program</div>
-          <h1 className="mb-3">Refer Friends &amp; <span className="span-accent-color">Earn Rewards</span></h1>
-          <p className="mb-0">Share the joy of travel. Invite your friends to GoFly and earn ₹500 credits for every friend who completes a booking. No limits — earn as much as you want!</p>
-        </div>
-      </div>
-
-      <div className="container margin-top-offset">
-        <div className="row g-3">
-          <div className="col-6 col-md-3 fade-up">
-            <div className="stat-card">
-              <div className="icon-wrap bg-primary-light">
-                <i className="bi bi-people-fill"></i>
-              </div>
-              <div className="stat-value text-primary-color">24</div>
-              <div className="stat-label">Total Referrals</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>+3 this month</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d1">
-            <div className="stat-card">
-              <div className="icon-wrap bg-blue-light">
-                <i className="bi bi-bag-check-fill"></i>
-              </div>
-              <div className="stat-value text-blue-color">18</div>
-              <div className="stat-label">Successful Bookings</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>+2 this week</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d2">
-            <div className="stat-card">
-              <div className="icon-wrap bg-green-light">
-                <i className="bi bi-wallet2"></i>
-              </div>
-              <div className="stat-value text-green-color">₹9,000</div>
-              <div className="stat-label">Total Earned</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>₹1,000 pending</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d3">
-            <div className="stat-card">
-              <div className="icon-wrap bg-purple-light">
-                <i className="bi bi-star-fill"></i>
-              </div>
-              <div className="stat-value text-purple-color">Gold</div>
-              <div className="stat-label">Current Tier</div>
-              <div className="stat-change text-purple-color"><i className="bi bi-chevron-up"></i>6 more → Platinum</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container py-5">
-        <div className="row g-4">
-
-          <div className="col-lg-7">
-
-            <div className="referral-hero-card mb-4">
-              <div className="row align-items-center hero-inner-z">
-                <div className="col-md-7 mb-3 mb-md-0">
-                  <p className="mb-1 fw-600 hero-p-sub">Your Personal Referral Code</p>
-                  <div className="code-display my-3">
-                    <span className="code-text" id="refCode">GOFLY-RAJ500</span>
-                    <button className="btn-copy" id="copyCodeBtn">
-                      <i className="bi bi-clipboard" id="copyIcon"></i>
-                      <span id="copyText">Copy</span>
-                    </button>
-                  </div>
-                  <p className="hero-p-info">
-                    <i className="bi bi-info-circle me-1"></i>
-                    Share this code with your friends to earn ₹500 per booking
-                  </p>
-                </div>
-                <div className="col-md-5 text-center">
-                  <div className="friend-reward-box">
-                    <div className="reward-label-sub">You Receive</div>
-                    <div className="reward-value-main">₹500</div>
-                    <div className="reward-p-text">per successful booking</div>
-                    <div className="reward-divider">Friend Gets</div>
-                    <div className="reward-value-sub">₹250</div>
-                    <div className="reward-p-text">off their first booking</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="card-section mb-4">
-              <h6 className="fw-700 mb-3" style={{fontSize: ".9rem", textTransform: "uppercase", letterSpacing: ".5px", color: "var(--text-muted)"}}>
-                <i className="bi bi-link-45deg text-primary me-1"></i> Share Your Referral Link
-              </h6>
-              <div className="input-group share-input-group mb-3">
-                <input type="text" className="form-control" id="referralLink" value="https://gofly.com/ref/GOFLY-RAJ500" readOnly />
-                <button className="btn btn-primary-custom" >
-                  <i className="bi bi-clipboard2-check"></i> Copy Link
-                </button>
-              </div>
-              <p className="text-muted mb-4" style={{fontSize: ".82rem"}}>
-                <i className="bi bi-shield-check text-success me-1"></i>
-                Your referral link is unique and tracks all sign-ups automatically.
-              </p>
-
-              <p className="fw-700 mb-3" style={{fontSize: ".875rem"}}>Share via Social Media</p>
-              <div className="row g-2">
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn whatsapp"><i className="bi bi-whatsapp"></i> WhatsApp</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn facebook"><i className="bi bi-facebook"></i> Facebook</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn twitter"><i className="bi bi-twitter-x"></i> Twitter</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn email"><i className="bi bi-envelope-fill"></i> Email</a></div>
-              </div>
-            </div>
-
-            <div className="level-card mb-4">
-              <div className="row align-items-center">
-                <div className="col-md-8">
-                  <div className="d-flex align-items-center gap-3 mb-3">
-                    <div>
-                      <div className="level-badge mb-1"><i className="bi bi-trophy-fill me-1"></i> Gold Referrer</div>
-                      <h5 className="mb-0 text-white">6 more referrals to Platinum</h5>
+    return (
+        <>
+            <section className="hero-section mt-0">
+                <div className="hero-blob-1"></div>
+                <div className="hero-blob-2"></div>
+                <div className="container">
+                    <div className="row align-items-center g-5">
+                        <div className="col-lg-6">
+                            <div className="hero-content text-lg-start text-center">
+                                <div className="hero-eyebrow">
+                                    <span className="dot"></span>
+                                    Delta Safari Referral Program
+                                </div>
+                                <h1 className="hero-title">
+                                    Invite Friends &amp;<br />
+                                    Earn <span className="highlight">₹500</span><br />
+                                    Every Time
+                                </h1>
+                                <p className="hero-desc">
+                                    Share Delta Safari with your friends and family. Every time someone signs up with your code and books a trip, you both earn instant travel credits — no limits, no expiry.
+                                </p>
+                                <div className="hero-cta-group">
+                                    <a href="#" className="btn-hero-primary">
+                                        <i className="bi bi-gift-fill"></i> Start Referring Now
+                                    </a>
+                                    <a href="#how-it-works" className="btn-hero-secondary">
+                                        <i className="bi bi-play-circle"></i> See How It Works
+                                    </a>
+                                </div>
+                                <div className="hero-trust">
+                                    <span className="hero-trust-label">Why join?</span>
+                                    <span className="trust-pill"><i className="bi bi-check-circle-fill"></i> Instant Credits</span>
+                                    <span className="trust-pill"><i className="bi bi-infinity"></i> No Limit</span>
+                                    <span className="trust-pill"><i className="bi bi-shield-fill-check"></i> Trusted by 50K+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="hero-visual">
+                                <div className="hero-float-badge badge-top">
+                                    <i className="bi bi-lightning-charge-fill text-warning"></i>
+                                    Instant wallet credit!
+                                </div>
+                                <div className="hero-reward-card">
+                                    <div className="reward-card-badge">
+                                        <i className="bi bi-star-fill"></i> Refer &amp; Earn Rewards
+                                    </div>
+                                    <p className="reward-card-title">When your friend books their first trip:</p>
+                                    <div className="reward-split">
+                                        <div className="reward-box you">
+                                            <div className="reward-box-label">You Get</div>
+                                            <div className="reward-box-amount">₹500</div>
+                                            <div className="reward-box-desc">wallet credits</div>
+                                        </div>
+                                        <div className="reward-box friend">
+                                            <div className="reward-box-label">Friend Gets</div>
+                                            <div className="reward-box-amount">₹250</div>
+                                            <div className="reward-box-desc">off first booking</div>
+                                        </div>
+                                    </div>
+                                    <div className="reward-divider-row">
+                                        <div className="reward-divider-line"></div>
+                                        <div className="reward-divider-text">Program Statistics</div>
+                                        <div className="reward-divider-line"></div>
+                                    </div>
+                                    <div className="reward-stat-row">
+                                        <div className="reward-stat">
+                                            <div className="reward-stat-num">50K+</div>
+                                            <div className="reward-stat-label">Active Referrers</div>
+                                        </div>
+                                        <div className="reward-stat">
+                                            <div className="reward-stat-num">₹2.4Cr+</div>
+                                            <div className="reward-stat-label">Credits Distributed</div>
+                                        </div>
+                                        <div className="reward-stat">
+                                            <div className="reward-stat-num">4.9★</div>
+                                            <div className="reward-stat-label">Avg. Rating</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="hero-float-badge badge-bottom">
+                                    <span className="badge-dot"></span>
+                                    2,340 referrals made today
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div className="d-flex justify-content-between mb-1" style={{fontSize: ".8rem", color:"rgba(255,255,255,.7)"}}>
-                    <span>18 / 24 referrals</span>
-                    <span>75%</span>
-                  </div>
-                  <div className="progress progress-custom">
-                    <div className="progress-bar" style={{width: "75%"}}></div>
-                  </div>
-                  <div className="row g-2 mt-3 text-white-color" style={{opacity: "0.7"}}>
-                    <div className="col-4 text-center">
-                      <div style={{fontSize: ".7rem", textTransform: "uppercase",letterSpacing: ".4px"}}>Silver</div>
-                      <div style={{fontSize: ".8rem", fontWeight: "700"}}>5+ refs</div>
-                    </div>
-                    <div className="col-4 text-center" style={{borderLeft: "1px solid rgba(255,255,255,.15)", borderRight: "1px solid rgba(255,255,255,.15)"}}>
-                      <div style={{fontSize: ".7rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: ".4px"}}>Gold ✓</div>
-                      <div style={{fontSize: ".8rem", fontWeight: 700 , color: "var(--accent)"}}>15+ refs</div>
-                    </div>
-                    <div className="col-4 text-center">
-                      <div style={{fontSize: ".7rem", textTransform: "uppercase",letterSpacing: ".4px"}}>Platinum</div>
-                      <div style={{fontSize: ".8rem", fontWeight: "700"}}>24+ refs</div>
-                    </div>
-                  </div>
                 </div>
-                <div className="col-md-4 text-center mt-4 mt-md-0">
-                  <div style={{fontSize: "5rem", lineHeight: 1, filter: "dropShadow(0 4px 12px rgba(0,0,0,.3)"}}>🏆</div>
-                  <div style={{color: "var(--accent)", fontWeight: 700, fontSize: ".85rem", marginTop: "8px"}}>Platinum Bonus: ₹1000/ref</div>
+            </section>
+
+            <div className="stats-banner">
+                <div className="stats-banner-inner">
+                    <div className="stat-marquee-item"><i className="bi bi-people-fill"></i><strong>50,000+</strong> Active Referrers</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-wallet2"></i><strong>₹2.4 Crore+</strong> Rewards Paid Out</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-bag-check-fill"></i><strong>1.2 Lakh+</strong> Bookings via Referrals</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-lightning-charge-fill"></i><strong>Instant</strong> Credit on Booking</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-infinity"></i><strong>Unlimited</strong> Referrals Allowed</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-people-fill"></i><strong>50,000+</strong> Active Referrers</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-wallet2"></i><strong>₹2.4 Crore+</strong> Rewards Paid Out</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-bag-check-fill"></i><strong>1.2 Lakh+</strong> Bookings via Referrals</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-lightning-charge-fill"></i><strong>Instant</strong> Credit on Booking</div>
+                    <div className="stat-marquee-sep"></div>
+                    <div className="stat-marquee-item"><i className="bi bi-infinity"></i><strong>Unlimited</strong> Referrals Allowed</div>
                 </div>
-              </div>
             </div>
 
-            <div className="mb-4">
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <h5 className="mb-0 section-title-sm">Referral History</h5>
-                <a href="#" className="text-decoration-none text-primary-color" style={{fontSize: ".85rem", fontWeight: 600}}>View All <i className="bi bi-arrow-right"></i></a>
-              </div>
-              <div className="table-card">
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr><th>Friend</th><th>Joined</th><th>Status</th><th>Reward</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><div className="d-flex align-items-center gap-2"><div className="avatar-placeholder">PR</div><div><div className="fw-600" style={{fontSize: ".875rem"}}>Priya Raut</div><div style={{fontSize: ".75rem", color: "var(--text-muted)"}}>priya@email.com</div></div></div></td>
-                        <td><span style={{fontSize: ".82rem", color: "var(--text-muted)"}}>12 Apr 2025</span></td>
-                        <td><span className="badge-status badge-booked">Booked</span></td>
-                        <td><span className="fw-700 text-success-color">+₹500</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-5">
-
-            <div className="card-section mb-4">
-              <div className="section-tag">Simple Process</div>
-              <h5 className="section-title-md mb-1">How It Works</h5>
-              <p className="section-subtitle mb-4">Three easy steps to start earning travel credits</p>
-
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex gap-3 align-items-start p-3 bg-light-soft" style={{background: "var(--bg-soft)", borderRadius: "12px"}}>
-                  <div className="step-icon-fixed flex-shrink-0 bg-primary-light" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <i className="bi bi-share-fill"></i>
-                  </div>
-                  <div>
-                    <div className="d-flex align-items-center gap-2 mb-1">
-                      <span className="step-num-circle" style={{background: "var(--primary)", color: "white"}}>1</span>
-                      <h6 className="mb-0 step-title-fixed">Share Your Code</h6>
+            <section className="hiw-section section-pad" id="how-it-works">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <span className="section-eyebrow">Step by Step</span>
+                        <h2 className="section-heading mt-2">How Does It <span>Work?</span></h2>
+                        <p className="section-subheading center">It takes less than a minute to start earning. Here's everything you need to know.</p>
                     </div>
-                    <p className="mb-0 step-p-fixed">Copy your unique referral code or link and share it with friends via WhatsApp, email, or social media.</p>
-                  </div>
+                    <div className="row g-1 align-items-start">
+                        <div className="col-md-3 animUp">
+                            <div className="hiw-step">
+                                <div className="step-num-badge c1">1</div>
+                                <div className="step-icon-circle c1"><i className="bi bi-person-plus-fill"></i></div>
+                                <h5>Create Your Account</h5>
+                                <p>Sign up on Delta Safari in just 30 seconds. Your personal referral code is automatically generated and waiting for you.</p>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp anim-d1">
+                            <div className="hiw-step">
+                                <div className="step-num-badge c2">2</div>
+                                <div className="step-icon-circle c2"><i className="bi bi-share-fill"></i></div>
+                                <h5>Share Your Code</h5>
+                                <p>Copy your referral link or code and share it anywhere — WhatsApp, Instagram, Facebook, email, or even in person.</p>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp anim-d2">
+                            <div className="hiw-step">
+                                <div className="step-num-badge c3">3</div>
+                                <div className="step-icon-circle c3"><i className="bi bi-bag-check-fill"></i></div>
+                                <h5>Friend Books a Trip</h5>
+                                <p>Your friend signs up using your code and completes their first booking on Delta Safari. They enjoy ₹250 off instantly.</p>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp" style={{ height: "stretch" }}>
+                            <div className="hiw-step">
+                                <div className="step-num-badge c4">4</div>
+                                <div className="step-icon-circle c4"><i className="bi bi-wallet-fill"></i></div>
+                                <h5>You Earn ₹500</h5>
+                                <p>₹500 travel credit is instantly added to your Delta Safari wallet. Use it on any tour, flight, hotel, or visa service.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row mt-5">
+                        <div className="col-12">
+                            <div className="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                                <div className="d-flex align-items-center gap-2">
+                                    <div className="benefit-icon green" style={{ width: "40px", height: "40px", borderRadius: "10px", fontSize: "1rem", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <i className="bi bi-credit-card-fill"></i>
+                                    </div>
+                                    <span style={{ fontSize: ".875rem", color: "var(--text-muted)" }}>Credits usable on all Delta Safari services</span>
+                                </div>
+                                <span style={{ color: "var(--border)" }}>|</span>
+                                <div className="d-flex align-items-center gap-2">
+                                    <div className="benefit-icon orange" style={{ width: "40px", height: "40px", borderRadius: "10px", fontSize: "1rem", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <i className="bi bi-clock-fill"></i>
+                                    </div>
+                                    <span style={{ fontSize: ".875rem", color: "var(--text-muted)" }}>Credited within 24 hours of booking</span>
+                                </div>
+                                <span style={{ color: "var(--border)" }}>|</span>
+                                <div className="d-flex align-items-center gap-2">
+                                    <div className="benefit-icon blue" style={{ width: "40px", height: "40px", borderRadius: "10px", fontSize: "1rem", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <i className="bi bi-infinity"></i>
+                                    </div>
+                                    <span style={{ fontSize: ".875rem", color: "var(--text-muted)" }}>No cap — refer as many as you like</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
+            </section>
 
-            <div className="card-section mb-4 wallet-banner">
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                  <div className="section-tag section-tag-success">Wallet Balance</div>
-                  <h5 className="mb-0 section-title-md">Available Credits</h5>
+            <section className="calculator-section section-pad">
+                <div className="calc-blob calc-blob-1"></div>
+                <div className="calc-blob calc-blob-2"></div>
+                <div className="container" style={{ position: "relative", zIndex: "2" }}>
+                    <div className="row align-items-center g-5">
+                        <div className="col-lg-6">
+                            <span className="section-eyebrow blue">Potential Earnings</span>
+                            <h2 className="calc-heading mt-2">See How Much You Can <span>Earn</span></h2>
+                            <p className="calc-desc">The more friends you refer, the faster you climb tiers and earn bigger rewards. Here's a quick look at what your earnings could look like.</p>
+                            {/* <div className="earn-table">
+                                <div className="earn-table-header">
+                                    <span>Referrals</span>
+                                    <span>Tier</span>
+                                    <span>Rate</span>
+                                    <span>Total</span>
+                                </div>
+                                <div className="earn-table-row">
+                                    <span>5 friends</span>
+                                    <span><span className="tier-tag silver">Silver</span></span>
+                                    <span>₹500</span>
+                                    <span className="earn-val">₹2,500</span>
+                                </div>
+                                <div className="earn-table-row">
+                                    <span>10 friends</span>
+                                    <span><span className="tier-tag silver">Silver</span></span>
+                                    <span>₹500</span>
+                                    <span className="earn-val">₹5,000</span>
+                                </div>
+                                <div className="earn-table-row">
+                                    <span>20 friends</span>
+                                    <span><span className="tier-tag gold">Gold</span></span>
+                                    <span>₹500</span>
+                                    <span className="earn-val">₹10,000</span>
+                                </div>
+                                <div className="earn-table-row">
+                                    <span>30 friends</span>
+                                    <span><span className="tier-tag plat">Platinum</span></span>
+                                    <span>₹1,000</span>
+                                    <span className="earn-val">₹30,000</span>
+                                </div>
+                                <div className="earn-table-row">
+                                    <span>50 friends</span>
+                                    <span><span className="tier-tag plat">Platinum</span></span>
+                                    <span>₹1,000</span>
+                                    <span className="earn-val">₹50,000</span>
+                                </div>
+                            </div> */}
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="calc-widget">
+                                <div className="calc-widget-title">
+                                    <i className="bi bi-calculator-fill"></i> Earnings Calculator
+                                </div>
+                                <div className="calc-range-label">
+                                    Number of Referrals: <span id="referralCount">10</span>
+                                </div>
+                                <input type="range" className="custom-range" id="refRange" min="1" max="50" />
+                                <div className="calc-result-grid">
+                                    <div className="calc-result-box primary">
+                                        <div className="calc-result-label">Your Total Earnings</div>
+                                        <div className="calc-result-amount" id="totalEarnings">₹500</div>
+                                    </div>
+                                    <div className="calc-result-box accent">
+                                        <div className="calc-result-label">Friends Save</div>
+                                        <div className="calc-result-amount" id="friendSavings">₹250</div>
+                                    </div>
+                                </div>
+                                <div className="calc-tier-display">
+                                    <span style={{ fontSize: ".85rem", color: "var(--text-muted)" }}>Your current tier at this count:</span>
+                                    <span className="calc-tier-badge" id="calcTierBadge">🥈 Silver</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style={{fontSize: "2.5rem"}}>💰</div>
-              </div>
-              <div className="row g-3">
-                <div className="col-6"><div className="wallet-card-inner"><div className="wallet-amount-main">₹8,000</div><div className="wallet-p-small">Credited</div></div></div>
-                <div className="col-6"><div className="wallet-card-inner"><div className="wallet-amount-pending">₹1,000</div><div className="wallet-p-small">Pending</div></div></div>
-              </div>
-              <a href="#" className="btn-primary-custom mt-3 w-100 justify-content-center" style={{background: "var(--success)"}}>
-                <i className="bi bi-credit-card-2-front"></i> Redeem Now
-              </a>
-            </div>
+            </section>
 
-          </div>
-        </div>
-      </div>
+            <section className="benefits-section section-pad">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <span className="section-eyebrow green">Why Choose Delta Safari</span>
+                        <h2 className="section-heading mt-2">Everything You Love About <span>Our Referral Program</span></h2>
+                        <p className="section-subheading center">We've built one of India's most rewarding referral programs. Here's why thousands of travelers love it.</p>
+                    </div>
+                    <div className="row g-4">
+                        <div className="col-md-4 animUp">
+                            <div className="benefit-item">
+                                <div className="benefit-icon orange"><i className="bi bi-lightning-charge-fill"></i></div>
+                                <div>
+                                    <h5>Instant Credits</h5>
+                                    <p>No waiting period. As soon as your referred friend completes a booking, ₹500 is credited to your wallet within 24 hours.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4 animUp anim-d1">
+                            <div className="benefit-item">
+                                <div className="benefit-icon blue"><i className="bi bi-infinity"></i></div>
+                                <div>
+                                    <h5>No Cap on Referrals</h5>
+                                    <p>Refer 1 friend or 1,000 — there's absolutely no limit to how much you can earn. Every successful referral counts.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4 animUp anim-d2">
+                            <div className="benefit-item">
+                                <div className="benefit-icon green"><i className="bi bi-credit-card-2-front-fill"></i></div>
+                                <div>
+                                    <h5>Use Credits Anywhere</h5>
+                                    <p>Your Delta Safari wallet credits work on tours, flights, hotels, visa services, and holiday packages — zero restrictions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4 animUp anim-d1">
+                            <div className="benefit-item">
+                                <div className="benefit-icon purple"><i className="bi bi-trophy-fill"></i></div>
+                                <div>
+                                    <h5>Tier Progression</h5>
+                                    <p>The more you refer, the higher you climb. Platinum members earn ₹1,000 per referral — double the standard rate.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4 animUp anim-d2">
+                            <div className="benefit-item">
+                                <div className="benefit-icon amber"><i className="bi bi-share-fill"></i></div>
+                                <div>
+                                    <h5>Easy Sharing Tools</h5>
+                                    <p>Share via WhatsApp, Facebook, email, or copy your link. Built-in tracking shows you real-time referral status.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4 animUp anim-d3">
+                            <div className="benefit-item">
+                                <div className="benefit-icon navy"><i className="bi bi-shield-fill-check"></i></div>
+                                <div>
+                                    <h5>100% Transparent</h5>
+                                    <p>Every referral, every credit, every payout is tracked in real-time in your Delta Safari dashboard. Full transparency always.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-      <div className="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="copyToast" className="toast align-items-center text-white bg-success border-0" role="alert">
-          <div className="d-flex">
-            <div className="toast-body fw-600"><i className="bi bi-check-circle me-2"></i> Copied to clipboard!</div>
-            <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-          </div>
-        </div>
-      </div>
+            <section className="social-proof-section section-pad">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <span className="section-eyebrow purple">Real Referrers</span>
+                        <h2 className="section-heading mt-2">What Our <span>Members Say</span></h2>
+                        <p className="section-subheading center">Join thousands of happy Delta Safari members who are already earning by simply sharing what they love.</p>
+                    </div>
+                    <div className="row g-4">
+                        <div className="col-md-3 animUp">
+                            <div className="testimonial-card">
+                                <div className="t-stars">
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                </div>
+                                <p className="t-quote">I referred 12 friends in just 2 months and earned ₹6,000 in credits. Used it all on my Goa trip. Delta Safari's program is genuinely the best!</p>
+                                <div className="t-author">
+                                    <div className="t-avatar c1">PR</div>
+                                    <div>
+                                        <div className="t-author-name">Priya Raut</div>
+                                        <div className="t-author-earned">Earned ₹6,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp anim-d1">
+                            <div className="testimonial-card">
+                                <div className="t-stars">
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                </div>
+                                <p className="t-quote">I hit Platinum tier in 4 months. Now I earn ₹1,000 per referral. I've funded my last two vacations entirely through Delta Safari credits!</p>
+                                <div className="t-author">
+                                    <div className="t-avatar c2">AK</div>
+                                    <div>
+                                        <div className="t-author-name">Arjun Kumar</div>
+                                        <div className="t-author-earned">Earned ₹32,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp anim-d2">
+                            <div className="testimonial-card">
+                                <div className="t-stars">
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-half"></i>
+                                </div>
+                                <p className="t-quote">Sharing my referral code in my travel WhatsApp group was the best decision. Credits accumulated faster than I expected. Super easy!</p>
+                                <div className="t-author">
+                                    <div className="t-avatar c3">SM</div>
+                                    <div>
+                                        <div className="t-author-name">Sneha Mehta</div>
+                                        <div className="t-author-earned">Earned ₹11,500</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-3 animUp anim-d3">
+                            <div className="testimonial-card">
+                                <div className="t-stars">
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
+                                    <i className="bi bi-star-fill"></i>
+                                </div>
+                                <p className="t-quote">What I love most is how transparent everything is. I can see exactly who signed up, who booked, and every credit in real-time.</p>
+                                <div className="t-author">
+                                    <div className="t-avatar c4">NP</div>
+                                    <div>
+                                        <div className="t-author-name">Neha Patil</div>
+                                        <div className="t-author-earned">Earned ₹18,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    </>
-  )
+            <section className="faq-section section-pad" id="faq">
+                <div className="container">
+                    <div className="row g-5 align-items-start">
+                        <div className="col-lg-4">
+                            <span className="section-eyebrow">Have Questions?</span>
+                            <h2 className="section-heading mt-2">Frequently<br />Asked <span>Questions</span></h2>
+                            <p className="section-subheading mt-3">Can't find the answer you're looking for? Our support team is here to help.</p>
+                            <a href="#" className="d-inline-flex align-items-center gap-2 mt-4 text-decoration-none" style={{ color: "var(--primary)", fontWeight: "700", fontSize: ".9rem" }}>
+                                <i className="bi bi-chat-dots-fill"></i> Contact Support
+                            </a>
+                        </div>
+                        <div className="col-lg-8">
+                            <div id="faqContainer">
+
+                                <div className="faq-item">
+                                    <button className="faq-question open" onclick="toggleFaq(this)">
+                                        Who is eligible to participate in the referral program?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer open">
+                                        Any registered Delta Safari user can participate. You don't need to make a booking yourself first. Simply sign up, copy your referral code, and start sharing. The program is open to all users across India.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        When exactly will I receive my ₹500 reward?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        Your reward is credited within 24 hours after your referred friend's first booking payment is confirmed. You'll receive an in-app notification and email when the credit hits your wallet.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        Is there a limit to how many people I can refer?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        Absolutely no limit! You can refer 1 friend or 1,000 friends — every single successful booking earns you a reward. The more you refer, the higher your tier and the bigger your reward per booking.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        How do I move up to Gold or Platinum tier?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        Tiers are based on the number of successful referral bookings completed in a rolling 12-month window. Gold requires 15+ referrals, Platinum requires 24+. Your tier is automatically upgraded once you cross the threshold — no manual action needed.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        Where can I use my Delta Safari wallet credits?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        Delta Safari wallet credits can be used on all services available on the platform — domestic and international tour packages, flight bookings, hotel stays, visa assistance, and holiday packages. There are no restrictions.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        What happens if my referred friend cancels their booking?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        If a booking is cancelled within the cancellation window and a full refund is issued, the referral credit associated with that booking will be reversed from your wallet. This ensures the program remains fair for everyone.
+                                    </div>
+                                </div>
+
+                                <div className="faq-item">
+                                    <button className="faq-question" onclick="toggleFaq(this)">
+                                        Do wallet credits have an expiry date?
+                                        <i className="bi bi-chevron-down"></i>
+                                    </button>
+                                    <div className="faq-answer">
+                                        Silver tier credits expire in 12 months, Gold tier credits in 18 months, and Platinum tier credits never expire. Credits are always valid as long as your Delta Safari account remains active.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="terms-section section-pad-sm">
+                <div className="container">
+                    <div className="terms-card">
+                        <div className="row g-5">
+                            <div className="col-md-3">
+                                <span className="section-eyebrow">Legal</span>
+                                {/* <h5 className="mt-2" style="font-size:1.3rem;">Program<br/>Terms &amp;<br/>Conditions</h5>
+            <p style="font-size:.85rem;color:var(--text-muted);margin-top:10px;">Last updated May 2025</p>
+            <a href="#" style="color:var(--primary);font-size:.85rem;font-weight:700;text-decoration:none;">
+              Read Full T&amp;C <i className="bi bi-arrow-right"></i>
+            </a> */}
+                            </div>
+                            <div className="col-md-9">
+                                <ul className="terms-list">
+                                    <li><i className="bi bi-check-circle-fill"></i> Referral credits are awarded only after the referred user completes their first confirmed and paid booking on Delta Safari.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Self-referrals (referring yourself via a different account) are strictly prohibited and will result in forfeiture of all credits.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Each referred user can only be counted once. Duplicate referrals from the same email or phone number will not be credited.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Delta Safari reserves the right to withhold, suspend, or reverse credits in cases of suspected fraud, abuse, or violation of program terms.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Wallet credits cannot be converted to cash or transferred to another account under any circumstances.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Tier status is calculated on a 12-month rolling basis. Downgrading may occur if referral count drops below the threshold.</li>
+                                    <li><i className="bi bi-check-circle-fill"></i> Delta Safari reserves the right to modify or discontinue the referral program at any time with reasonable notice to participants.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </>
+    )
 }
 
 export default page

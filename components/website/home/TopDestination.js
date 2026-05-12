@@ -16,7 +16,7 @@ function TopDestination() {
                         </div>
                     </div>
                     <div className="row g-xl-4 g-lg-3 gy-4 m-0">
-                        <div className='col-lg-5 col-md-12 mt-0'>
+                        <div className='col-lg-5 col-md-12'>
                             <div className="row g-xl-4 g-lg-3 gy-4">
                                 <div className="col-md-12 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms"
                                     style={{ visibility: "visible", animationDuration: "1500m", animatiDDelay: "200s" }}>
@@ -62,7 +62,7 @@ function TopDestination() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3 col-md-4 mt-0 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms"
+                        <div className="col-lg-3 col-md-4 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms"
                             style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "600ms" }}>
                             <div className="destination-card2 four h-100">
                                 <div className="destination-img h-100">
@@ -76,7 +76,7 @@ function TopDestination() {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-lg-4 col-md-8 mt-0'>
+                        <div className='col-lg-4 col-md-8'>
                             <div className="row g-xl-4 g-lg-3 gy-4">
                                 <div className="col-md-12 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms"
                                     style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
