@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { phoneValidation, showMessage } from "../../../libs/commonHelper";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useParams  } from "next/navigation";
 import "../auth.css";
 import { Suspense } from "react";
 
@@ -10,7 +10,7 @@ function login() {
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [error, setError] = useState(null);
   const route = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useParams ();
 
   function submitLogin() {
     const params = new URLSearchParams(searchParams.toString());
