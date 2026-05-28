@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function Footer() {
@@ -28,42 +29,44 @@ function Footer() {
               <div className="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-md-end">
                 <div className="footer-widget">
                   <div className="widget-title">
-                    <h5>Top Destination</h5>
+                    <h5>Quick Links</h5>
                   </div>
                   <ul className="widget-list">
-                    <li><a href="travel-package-01.html">Maldives Tour</a></li>
-                    <li><a href="travel-package-01.html">Bali, Indonesia Tour</a></li>
-                    <li><a href="travel-package-01.html">Thailand Tour</a></li>
-                    <li><a href="travel-package-01.html">Philippines Tour</a></li>
-                    <li><a href="travel-package-01.html">Hawaii, USA Tour</a></li>
+                    <li><Link href="/login">Login or Signup</Link></li>
+                    <li><Link href="/corporate">Corporate Package</Link></li>
+                    <li><Link href="/referal">Refer & Earn</Link></li>
+                    <li><a>B2B Enquries</a></li>
+                    <li><Link href="/activities">Activities</Link></li>
+                    <li><Link href="/hotel">Hotels</Link></li>
                   </ul>
                 </div>
               </div>
               <div className="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-md-end">
                 <div className="footer-widget">
                   <div className="widget-title">
-                    <h5>Popular Search</h5>
+                    <h5>Information</h5>
                   </div>
                   <ul className="widget-list">
-                    <li><a href="travel-package-02.html">Adventure</a></li>
-                    <li><a href="travel-package-02.html">Hiking & Stiking</a></li>
-                    <li><a href="travel-package-02.html">Holiday Packages</a></li>
-                    <li><a href="travel-package-02.html">Flights And Hotels</a></li>
-                    <li><a href="travel-package-02.html">Honeymoon Trip</a></li>
+                    <li><Link href="/faq">FAQ's</Link></li>
+                    <li><Link href="/cancelation-policy">Cancelation Policy</Link></li>
+                    <li><Link href="/terms-condition">Terms Condition</Link></li>
+                    <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                    <li><Link href="/terms-condition">Terms Condition</Link></li>
+                    <li><Link href="/blogs">Blogs</Link></li>
                   </ul>
                 </div>
               </div>
               <div className="col-lg-3 col-sm-6 d-flex justify-content-lg-end">
                 <div className="footer-widget">
                   <div className="widget-title">
-                    <h5>Resources</h5>
+                    <h5>Popular Detination</h5>
                   </div>
                   <ul className="widget-list">
-                    <li><a href="about.html">About GoFly</a></li>
-                    <li><a href="#">Health & Safety Measure</a></li>
-                    <li><a href="visa.html">Visa Processing</a></li>
-                    <li><a href="contact.html">Customize Tour</a></li>
-                    <li><a href="travel-inspiration-01.html">Travel Inspirations</a></li>
+                    <li><a href="about.html">Group Packages</a></li>
+                    <li><a href="#">Domestic Packages</a></li>
+                    <li><a href="visa.html">Internation Packages</a></li>
+                    <li><a href="contact.html">Foreigner's Packages</a></li>
+                    <li><a href="travel-inspiration-01.html">Customizes Packages</a></li>
                   </ul>
                 </div>
               </div>

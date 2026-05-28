@@ -4,7 +4,7 @@ function page() {
   return (
     <>
 
-      <div className="page-header">
+      {/* <div className="page-header">
         <div className="floating-plane"><i className="bi bi-airplane-fill"></i></div>
         <div className="container">
           <div className="header-badge"><i className="bi bi-gift-fill"></i> Exclusive Rewards Program</div>
@@ -228,6 +228,38 @@ function page() {
           <div className="d-flex">
             <div className="toast-body fw-600"><i className="bi bi-check-circle me-2"></i> Copied to clipboard!</div>
             <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="col-lg-8 col-xl-9">
+        <div className="tab-content" id="v-pills-tabContent">
+          <div className="tab-pane fade show active" id="refer-panel" role="tabpanel">
+            <div className="gofly-card">
+              <h3 className="gofly-card-title">Invite Friends & Earn Rewards Together</h3>
+
+              <div className="row align-items-center mt-4 g-4">
+                <div className="col-md-7">
+                  <h5 className="fw-bold mb-2">Get $50 for every verified friend who signs up and books a trip package.</h5>
+                  <p className="text-muted small mb-4">There is no cap limit to your automated network cash bonus generation. Earn wallet balances seamlessly.</p>
+
+                  <label className="form-label d-block text-secondary">Your Personal Invite Link</label>
+                  <div className="referral-copy-field">
+                    <input type="text" className="form-control bg-transparent border-0 fw-bold text-primary py-1" value="https://gofly.com/invite/alex50m" readonly id="referralURL" />
+                    <button type="button" className="btn btn-dark btn-sm px-3 rounded-2 py-2" onclick="navigator.clipboard.writeText(document.getElementById('referralURL').value); alert('Link copied successfully!');">
+                      <i className="fa-regular fa-copy me-1"></i> Copy
+                    </button>
+                  </div>
+                </div>
+                <div className="col-md-5 text-center">
+                  <div className="p-4 bg-light border rounded-3">
+                    <i className="fa-solid fa-gift text-primary display-3 mb-2"></i>
+                    <div className="fw-bold text-dark fs-5">3 Friends Invited</div>
+                    <div className="text-muted small">Generated over <strong className="text-success">$150.00</strong> in credit points</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

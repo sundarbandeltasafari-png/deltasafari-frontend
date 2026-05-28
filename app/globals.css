@@ -24,3 +24,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.customer-service-header>.dropdown-toggle:hover~.dropdown-menu {
+  display: block;
+  width: max-content;
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translate3d(0px, 30px, 0px);
+  display: block;
+  animation: fade-up-custom 0.5s linear;
+}
+
+.customer-service-header>.dropdown-menu:hover {
+  display: block;
+  width: max-content;
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translate3d(0px, 30px, 0px);
+  display: block;
+}
+
+
+@keyframes fade-up-custom {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(30px);
+    visibility: visible;
+  }
+}

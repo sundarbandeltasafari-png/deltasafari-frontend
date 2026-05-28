@@ -510,7 +510,7 @@ function Header() {
           </div>
           <div className="nav-right d-flex flex-column gap-1 align-items-end">
             <div className='d-flex gap-3'>
-              <div className="btn-group">
+              <div className="btn-group customer-service-header">
                 <a className="dropdown-toggle header-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i className="fa-solid fa-headset"></i> 
                   <span>Customer Service</span>

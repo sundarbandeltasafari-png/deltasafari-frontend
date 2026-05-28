@@ -43,11 +43,11 @@ function login() {
 
                 <div className="input-group mb-4">
                   <span className="input-group-text p-0" id="inputGroup-sizing-default">
-                    {/* <ReactFlagsSelect
+                    <ReactFlagsSelect
                     selected={selected}
                     onSelect={(code) => setSelected(code)}
                     searchable
-                  /> */}
+                  />
                   </span>
                   <input type="number" pattern="[0-9]*" onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '')} onChange={(event) => { setPhoneNumber(event.target.value) }} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter Mobile Number" />
                 </div>

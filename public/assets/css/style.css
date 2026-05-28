@@ -1330,7 +1330,7 @@ body.tt-magic-cursor #magic-cursor {
   position: relative;
   align-items: center;
   display: inline-flex;
-  transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  /* transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); */
   overflow: hidden;
   z-index: 1;
   white-space: nowrap;
@@ -1372,7 +1372,7 @@ body.tt-magic-cursor #magic-cursor {
   height: 100%;
   background-size: 102% 102%;
   border-radius: inherit;
-  transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  /* transition: all 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); */
   opacity: 0;
   z-index: -1;
 }
@@ -1388,7 +1388,7 @@ body.tt-magic-cursor #magic-cursor {
   transform: translateY(110%);
   background-color: var(--black-color);
   overflow: hidden;
-  transition: opacity 0.5s, transform 0.5s;
+  /* transition: opacity 0.5s, transform 0.5s; */
   z-index: -1;
 }
 
@@ -1739,7 +1739,7 @@ body.tt-magic-cursor #magic-cursor {
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
-  padding-top: 20px;
+  padding-top: 0px !important;
   max-width: 545px;
   width: 100%;
   margin: 0 auto;
@@ -21485,6 +21485,7 @@ header.style-3.three .nav-right .primary-btn1 {
   padding: 30px 40px;
   border-radius: 50%;
   cursor: pointer;
+      background: #f3faff;
 }
 
 @media (max-width: 1399px) {
@@ -43067,35 +43068,39 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .about-why-choose-section .why-choose-card {
-  padding: 40px 28px 35px;
+  padding: 25px;
   background-color: #E6F5A9;
   border-radius: 10px;
   height: 100%;
 }
 
+.about-why-choose-section .why-choose-card p{
+  margin-bottom: 0px;
+}
+
 @media (min-width: 1200px) and (max-width: 1399px) {
   .about-why-choose-section .why-choose-card {
-    padding: 35px 20px 30px;
+    padding: 30px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .about-why-choose-section .why-choose-card {
-    padding: 35px 14px 30px;
+    padding: 25px;
     border-radius: 15px;
   }
 }
 
 @media (max-width: 767px) {
   .about-why-choose-section .why-choose-card {
-    padding: 35px 18px 30px;
+    padding: 25px;
     border-radius: 15px;
   }
 }
 
 .about-why-choose-section .why-choose-card svg {
   fill: var(--title-color);
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .about-why-choose-section .why-choose-card h5 {
@@ -46006,7 +46011,7 @@ header.style-2 .header-logo img {
   color: var(--title-color);
   font-family: var(--font-poppins);
   font-size: 35px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   margin-bottom: 0;
 }
@@ -46073,8 +46078,8 @@ p {
 }
 
 .destination-card2.four .destination-content h5 a {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .login-btn {

@@ -75,7 +75,7 @@ function Testimonial() {
                             <SwiperWraperTesimonial data={testimonialData} />
                         </div>
                     </div>
-                    <div className="review-and-slider-btn d-flex justify-content-center wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    {/* <div className="review-and-slider-btn d-flex justify-content-center wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div className="slider-btn-grp">
                             <div className="slider-btn testimonial-slider-prev">
                                 <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
@@ -96,7 +96,7 @@ function Testimonial() {
                                 </svg>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

@@ -329,85 +329,6 @@ function page() {
                 </div>
             </section>
 
-            <section className="social-proof-section section-pad">
-                <div className="container">
-                    <div className="text-center mb-5">
-                        <span className="section-eyebrow purple">Real Referrers</span>
-                        <h2 className="section-heading mt-2">What Our <span>Members Say</span></h2>
-                        <p className="section-subheading center">Join thousands of happy Delta Safari members who are already earning by simply sharing what they love.</p>
-                    </div>
-                    <div className="row g-4">
-                        <div className="col-md-3 animUp">
-                            <div className="testimonial-card">
-                                <div className="t-stars">
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                </div>
-                                <p className="t-quote">I referred 12 friends in just 2 months and earned ₹6,000 in credits. Used it all on my Goa trip. Delta Safari's program is genuinely the best!</p>
-                                <div className="t-author">
-                                    <div className="t-avatar c1">PR</div>
-                                    <div>
-                                        <div className="t-author-name">Priya Raut</div>
-                                        <div className="t-author-earned">Earned ₹6,000</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 animUp anim-d1">
-                            <div className="testimonial-card">
-                                <div className="t-stars">
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                </div>
-                                <p className="t-quote">I hit Platinum tier in 4 months. Now I earn ₹1,000 per referral. I've funded my last two vacations entirely through Delta Safari credits!</p>
-                                <div className="t-author">
-                                    <div className="t-avatar c2">AK</div>
-                                    <div>
-                                        <div className="t-author-name">Arjun Kumar</div>
-                                        <div className="t-author-earned">Earned ₹32,000</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 animUp anim-d2">
-                            <div className="testimonial-card">
-                                <div className="t-stars">
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-half"></i>
-                                </div>
-                                <p className="t-quote">Sharing my referral code in my travel WhatsApp group was the best decision. Credits accumulated faster than I expected. Super easy!</p>
-                                <div className="t-author">
-                                    <div className="t-avatar c3">SM</div>
-                                    <div>
-                                        <div className="t-author-name">Sneha Mehta</div>
-                                        <div className="t-author-earned">Earned ₹11,500</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-3 animUp anim-d3">
-                            <div className="testimonial-card">
-                                <div className="t-stars">
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i><i className="bi bi-star-fill"></i>
-                                    <i className="bi bi-star-fill"></i>
-                                </div>
-                                <p className="t-quote">What I love most is how transparent everything is. I can see exactly who signed up, who booked, and every credit in real-time.</p>
-                                <div className="t-author">
-                                    <div className="t-avatar c4">NP</div>
-                                    <div>
-                                        <div className="t-author-name">Neha Patil</div>
-                                        <div className="t-author-earned">Earned ₹18,000</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <section className="faq-section section-pad" id="faq">
                 <div className="container">
@@ -499,33 +420,6 @@ function page() {
                 </div>
             </section>
 
-            <section className="terms-section section-pad-sm">
-                <div className="container">
-                    <div className="terms-card">
-                        <div className="row g-5">
-                            <div className="col-md-3">
-                                <span className="section-eyebrow">Legal</span>
-                                {/* <h5 className="mt-2" style="font-size:1.3rem;">Program<br/>Terms &amp;<br/>Conditions</h5>
-            <p style="font-size:.85rem;color:var(--text-muted);margin-top:10px;">Last updated May 2025</p>
-            <a href="#" style="color:var(--primary);font-size:.85rem;font-weight:700;text-decoration:none;">
-              Read Full T&amp;C <i className="bi bi-arrow-right"></i>
-            </a> */}
-                            </div>
-                            <div className="col-md-9">
-                                <ul className="terms-list">
-                                    <li><i className="bi bi-check-circle-fill"></i> Referral credits are awarded only after the referred user completes their first confirmed and paid booking on Delta Safari.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Self-referrals (referring yourself via a different account) are strictly prohibited and will result in forfeiture of all credits.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Each referred user can only be counted once. Duplicate referrals from the same email or phone number will not be credited.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Delta Safari reserves the right to withhold, suspend, or reverse credits in cases of suspected fraud, abuse, or violation of program terms.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Wallet credits cannot be converted to cash or transferred to another account under any circumstances.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Tier status is calculated on a 12-month rolling basis. Downgrading may occur if referral count drops below the threshold.</li>
-                                    <li><i className="bi bi-check-circle-fill"></i> Delta Safari reserves the right to modify or discontinue the referral program at any time with reasonable notice to participants.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
         </>
     )

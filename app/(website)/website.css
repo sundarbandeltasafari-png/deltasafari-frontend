@@ -1,23 +1,23 @@
  :root {
-      --primary:       #ff6b35;
-      --primary-dark:  #e5561f;
-      --primary-light: #fff3ee;
-      --secondary:     #0d3b66;
-      --secondary-light:#e8f0fa;
-      --accent:        #ffc107;
-      --success:       #198754;
-      --text-dark:     #1a1a2e;
-      --text-muted:    #6b7280;
-      --border:        #e8ecf0;
-      --white:         #ffffff;
-      --bg-soft:       #f8f9fc;
-      --shadow-sm:     0 2px 12px rgba(0,0,0,.06);
-      --shadow-md:     0 8px 32px rgba(0,0,0,.10);
-      --shadow-lg:     0 20px 60px rgba(0,0,0,.12);
-      --radius:        16px;
-      --radius-sm:     10px;
-    }
- 
+     --primary: #ff6b35;
+     --primary-dark: #e5561f;
+     --primary-light: #fff3ee;
+     --secondary: #0d3b66;
+     --secondary-light: #e8f0fa;
+     --accent: #ffc107;
+     --success: #198754;
+     --text-dark: #1a1a2e;
+     --text-muted: #6b7280;
+     --border: #e8ecf0;
+     --white: #ffffff;
+     --bg-soft: #f8f9fc;
+     --shadow-sm: 0 2px 12px rgba(0, 0, 0, .06);
+     --shadow-md: 0 8px 32px rgba(0, 0, 0, .10);
+     --shadow-lg: 0 20px 60px rgba(0, 0, 0, .12);
+     --radius: 16px;
+     --radius-sm: 10px;
+ }
+
  body {
      font-family: 'Poppins';
  }
@@ -230,7 +230,7 @@
 
 
  .page-header {
-     background: linear-gradient(135deg,#0d3b66 0%, #1a5499 60%, #0d3b66 100%);
+     background: linear-gradient(135deg, #0d3b66 0%, #1a5499 60%, #0d3b66 100%);
      padding: 72px 0 56px;
      position: relative;
      overflow: hidden;
@@ -1168,6 +1168,7 @@
      }
  }
 
-.accordion-item{
-    background: none !important;
-}
+ .accordion-item {
+     background: none !important;
+ }
+
