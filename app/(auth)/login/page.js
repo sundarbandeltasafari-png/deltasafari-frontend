@@ -1,16 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { phoneValidation, showMessage } from "../../../libs/commonHelper";
-import { useRouter, useParams  } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import "../auth.css";
 import { Suspense } from "react";
+import ReactFlagsSelect from "react-flags-select";
 
 function login() {
   const [selected, setSelected] = useState("IN");
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [error, setError] = useState(null);
   const route = useRouter();
-  const searchParams = useParams ();
+  const searchParams = useParams();
 
   function submitLogin() {
     if (!phoneValidation(phoneNumber)) {
@@ -44,10 +45,10 @@ function login() {
                 <div className="input-group mb-4">
                   <span className="input-group-text p-0" id="inputGroup-sizing-default">
                     <ReactFlagsSelect
-                    selected={selected}
-                    onSelect={(code) => setSelected(code)}
-                    searchable
-                  />
+                      selected={selected}
+                      onSelect={(code) => setSelected(code)}
+                      searchable
+                    />
                   </span>
                   <input type="number" pattern="[0-9]*" onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '')} onChange={(event) => { setPhoneNumber(event.target.value) }} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter Mobile Number" />
                 </div>
