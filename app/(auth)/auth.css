@@ -779,3 +779,11 @@ input[type=number] {
   outline: 0 !important;
   box-shadow: 0 0 0 .10rem rgb(23 129 254 / 21%) !important;
 }
+
+.form-control, .form-select{
+  line-height: 2 !important;
+}
+
+.db-error span{
+  line-height: 1;
+}

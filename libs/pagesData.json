@@ -1,0 +1,41 @@
+[
+  {
+    "id": 9,
+    "page_name": "Cancelation Policy",
+    "slug": "cancelation-policy",
+    "icon_class": "bi bi-shield-x",
+    "icon_image": null,
+    "sort_order": 2,
+    "is_active": 1,
+    "type": 2,
+    "created_at": "2026-06-03 02:22:47",
+    "updated_at": "2026-06-03 02:22:47",
+    "content": "<h1>Cancelation Policy</h1><p>This is the Cancelation Policy content. Please review our terms regarding cancellations carefully.</p>"
+  },
+  {
+    "id": 10,
+    "page_name": "Privacy Policy",
+    "slug": "privacy-policy",
+    "icon_class": "bi bi-shield-lock",
+    "icon_image": null,
+    "sort_order": 3,
+    "is_active": 1,
+    "type": 2,
+    "created_at": "2026-06-03 02:23:42",
+    "updated_at": "2026-06-03 02:25:09",
+    "content": "<h1>Privacy Policy</h1><p>This is the Privacy Policy content. We value your privacy and protect your personal data.</p>"
+  },
+  {
+    "id": 11,
+    "page_name": "Terms Condition",
+    "slug": "terms-condition",
+    "icon_class": "bi bi-newspaper",
+    "icon_image": null,
+    "sort_order": 4,
+    "is_active": 1,
+    "type": 2,
+    "created_at": "2026-06-03 02:25:02",
+    "updated_at": "2026-06-03 02:25:02",
+    "content": "<h1>Terms Condition</h1><p>This is the Terms and Conditions content. By using our services, you agree to these terms.</p>"
+  }
+]

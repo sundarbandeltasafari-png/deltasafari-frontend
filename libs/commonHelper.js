@@ -3,6 +3,13 @@ import { Bounce, toast } from "react-toastify";
 export const phoneValidation = (number) => {
     return /^\d{10,10}$/.test(number);
 }
+export const emailValidation = (email) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+}
+
+export const passwordValidation = (email) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(email);
+}
 
 export const showMessage = (type, message) => {
     const toastOption = {
@@ -30,6 +37,6 @@ export const showMessage = (type, message) => {
             return toast.warn(message, toastOption);
             break;
         default:
-            return toast(message, toastOption);
+            return toast.warn(message, toastOption);
     }
 }

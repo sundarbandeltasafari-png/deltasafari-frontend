@@ -1,6 +1,7 @@
 import React from 'react'
 
-function TopDestination() {
+function TopDestination({ topDesination }) {
+    const topdest = [...topDesination].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
     return (
         <>
             <div className="home5-destination-section mb-60 pt-3">
@@ -18,21 +19,26 @@ function TopDestination() {
                     <div className="row g-xl-4 g-lg-3 gy-4 m-0">
                         <div className='col-lg-5 col-md-12'>
                             <div className="row g-xl-4 g-lg-3 gy-4">
-                                <div className="col-md-12 my-1 px-1 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms"
-                                    style={{ visibility: "visible", animationDuration: "1500m", animatiDDelay: "200s" }}>
-                                    <div className="destination-card2 four">
-                                        <div className="destination-img">
-                                            <img src="assets/img/home5/destination-img1.jpg" alt="" />
-                                        </div>
-                                        <div className="destination-content-wrap">
-                                            <div className="destination-content">
-                                                <h5><a href="destination-details.html">Rome, Itlay</a></h5>
-                                                <span>3 Nights / 5 Days</span>
+                                {
+                                    topdest?.map((elem, index) => {
+                                        return index < 3 && <div className={`col-md-${index == 0 ? 12 : 6} my-1 px-1 wow animate fadeInDown`} data-wow-delay="200ms" data-wow-duration="1500ms"
+                                            style={{ visibility: "visible", animationDuration: "1500m", animatiDDelay: "200s" }}>
+                                            <div className="destination-card2 four">
+                                                <div className="destination-img">
+                                                    <img src={process.env.NEXT_PUBLIC_SERVER_URL + elem?.image} alt={elem?.name} />
+                                                </div>
+                                                <div className="destination-content-wrap">
+                                                    <div className="destination-content">
+                                                        <h5><a href={"/destination/" + elem?.slug}>{elem?.name}</a></h5>
+                                                        <span>{elem?.showing_text}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6 my-1 px-1 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms"
+                                    })
+                                }
+
+                                {/* <div className="col-md-6 my-1 px-1 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms"
                                     style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
                                     <div className="destination-card2 four">
                                         <div className="destination-img">
@@ -59,53 +65,43 @@ function TopDestination() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="col-lg-3 my-1 px-1 col-md-4 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms"
                             style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "600ms" }}>
-                            <div className="destination-card2 four h-100">
+                            {topdest.length > 2 && <div className="destination-card2 four h-100">
                                 <div className="destination-img h-100">
-                                    <img src="assets/img/home5/destination-img4.jpg" className='h-100' alt=""style={{objectFit: "cover", maxHeight: '100%'}} />
+                                    <img src={process.env.NEXT_PUBLIC_SERVER_URL + topdest[3].image} alt={topdest[3].name} className='h-100' style={{ objectFit: "cover", maxHeight: '100%' }} />
                                 </div>
                                 <div className="destination-content-wrap">
                                     <div className="destination-content">
-                                        <h5><a href="destination-details.html">Swizerland</a></h5>
-                                        <span>5 Nights / 6 Days</span>
+                                        <h5><a href={"/destination/" + topdest[3]?.slug}>{topdest[3].name}</a></h5>
+                                        <span>{topdest[3].show_text}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                         <div className='col-lg-4 col-md-8'>
                             <div className="row g-xl-4 g-lg-3 gy-4">
-                                <div className="col-md-12 my-1 px-1 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms"
-                                    style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
-                                    <div className="destination-card2 four">
-                                        <div className="destination-img">
-                                            <img src="assets/img/home5/destination-img5.jpg" alt="" />
-                                        </div>
-                                        <div className="destination-content-wrap">
-                                            <div className="destination-content">
-                                                <h5><a href="destination-details.html">Santorini, Greece</a></h5>
-                                                <span>5 Nights / 6 Days</span>
+                                {
+                                    topdest?.map((elem, index) => {
+                                        return (index > 3 && index < 6) && <div className="col-md-12 my-1 px-1 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms"
+                                            style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
+                                            <div className="destination-card2 four">
+                                                <div className="destination-img">
+                                                    <img src={process.env.NEXT_PUBLIC_SERVER_URL + elem?.image} alt={elem?.name} />
+                                                </div>
+                                                <div className="destination-content-wrap">
+                                                    <div className="destination-content">
+                                                        <h5><a href={"/destination/" + elem?.slug}>{elem?.name}</a></h5>
+                                                        <span>{elem?.showing_text}</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-12 my-1 px-1 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms"
-                                    style={{ visibility: "visible", animationDuration: "1500m", animatiDDelay: "200s" }}>
-                                    <div className="destination-card2 four">
-                                        <div className="destination-img">
-                                            <img src="assets/img/home5/destination-img6.jpg" alt="" />
-                                        </div>
-                                        <div className="destination-content-wrap">
-                                            <div className="destination-content">
-                                                <h5><a href="destination-details.html">Machu Picchu of Peru</a></h5>
-                                                <span>5 Nights / 6 Days</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    })
+                                }
                             </div>
                         </div>
                     </div>

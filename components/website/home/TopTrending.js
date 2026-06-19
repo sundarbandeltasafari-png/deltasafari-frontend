@@ -1,49 +1,7 @@
 import React from 'react'
 import SwiperWrapperTopTrending from './swiper/SwiperWrapperTopTrending'
 
-function TopTrending() {
-    const trendingPackages = [
-        {
-            "id": 1,
-            "title": "Europe",
-            "detailsLink": "travel-package-details.html",
-            "images": "assets/img/home2/tour-package-img1.jpg",
-            "badge": "Sale on!",
-            "hasNestedSlider": false
-        },
-        {
-            "id": 2,
-            "title": "Andaman",
-            "detailsLink": "travel-package-details.html",
-            "images": "assets/img/home1/tour-package-img2.jpg",
-            "badge": "Hot Sale!",
-            "hasNestedSlider": true
-        },
-        {
-            "id": 3,
-            "title": "Bali",
-            "detailsLink": "travel-package-details.html",
-            "images": "assets/img/home2/tour-package-img2.jpg",
-            "badge": null,
-            "hasNestedSlider": false
-        },
-        {
-            "id": 4,
-            "title": "Kerala",
-            "detailsLink": "travel-package-details.html",
-            "images": "assets/img/home1/tour-package-img6.jpg",
-            "badge": "Hot Sale!",
-            "hasNestedSlider": false
-        },
-        {
-            "id": 5,
-            "title": "Thiland",
-            "detailsLink": "travel-package-details.html",
-            "images": "assets/img/home1/tour-package-img4.jpg",
-            "badge": null,
-            "hasNestedSlider": false
-        }
-    ]
+function TopTrending({ topTrending }) {
     return (
         <>
             <div className="home2-package-slider-section mb-100 pt-5 m-0 mt-3" style={{ top: '100px' }}>
@@ -59,7 +17,7 @@ function TopTrending() {
                     </div>
                     <div className="row mb-40">
                         <div className="col-lg-12">
-                            <SwiperWrapperTopTrending data={trendingPackages}/>
+                            <SwiperWrapperTopTrending data={topTrending} />
                         </div>
                     </div>
                     <div className="row">

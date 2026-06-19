@@ -6,29 +6,45 @@ import React from 'react'
 import HiddenGems from '@/components/website/home/HiddenGems'
 import LimiterOffer from '@/components/website/home/LimiterOffer'
 import AllTourActivity from '@/components/website/home/AllTourActivity'
-import LastMinutesDeal from '@/components/website/home/LastMinutesDeal'
 import Testimonial from '@/components/website/home/Testimonial'
-import DeltaSafari from '@/components/website/home/DeltaSafari'
 import HomeBlog from '@/components/website/home/HomeBlog'
 import Faq from '@/components/website/home/Faq'
 import HolidaysByTheme from '@/components/website/home/HolidaysByTheme'
+import HomeAbout from '@/components/website/home/HomeAbout'
+import axios from 'axios'
+import { homeDestinationURL } from '@/routes/homeRoutes'
 
 
-function page() {
+async function page() {
+    let topDesination = null;
+    let topTrending = null;
+    let faqs = null;
+    try {
+        const response = await axios.get(homeDestinationURL);
+        if (response.data?.status) {
+            topDesination = response.data?.topDesination
+            topTrending = response.data?.topTrending
+            faqs = response.data?.faqs
+        }
+    } catch (error) {
+        topDesination = null
+        topTrending = null
+        faqs = null
+    }
     return (
         <>
             <HomeBanner />
-            <TopTrending />
-            <TopDestination />
+            {topTrending && <TopTrending topTrending={topTrending} />}
+            {topDesination && <TopDestination topDesination={topDesination} />}
             <HolidayPackages />
             <HolidaysByTheme />
             <HiddenGems />
             <LimiterOffer />
             <AllTourActivity />
             <Testimonial />
-            <DeltaSafari />
+            <HomeAbout />
             <HomeBlog />
-            <Faq />
+            <Faq faqs={faqs} faqText={'We’re committed to offering more than just products—we provide exceptional experiences.'} />
         </>
     )
 }

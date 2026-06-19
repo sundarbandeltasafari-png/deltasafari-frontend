@@ -1,25 +1,92 @@
 "use client";
-import React, { useState } from "react";
-import { phoneValidation, showMessage } from "../../../libs/commonHelper";
+import React, { useState, Suspense } from "react";
+import { emailValidation, passwordValidation, showMessage } from "../../../libs/commonHelper";
 import { useRouter, useParams } from "next/navigation";
 import "../auth.css";
-import { Suspense } from "react";
-import ReactFlagsSelect from "react-flags-select";
+import { axiosNormalPost } from "@/libs/axiosHelper";
+import { loginURL, registerURL } from "@/routes/authRoutes";
 
-function login() {
-  const [selected, setSelected] = useState("IN");
-  const [phoneNumber, setPhoneNumber] = useState(null);
-  const [error, setError] = useState(null);
+function page() {
+  const [isLoginMode, setIsLoginMode] = useState(true); // Toggle between Login and Register
+  const [userData, setUserData] = useState({
+    first_name: '',
+    last_name: '',
+    gender: '',
+    email: '',
+    password: ''
+  });
+  
+  const [error, setError] = useState({
+    first_name: '',
+    last_name: '',
+    gender: '',
+    email: '',
+    password: ''
+  });
+  
+  const [viewPass, setViewPass] = useState(false);
   const route = useRouter();
   const searchParams = useParams();
 
-  function submitLogin() {
-    if (!phoneValidation(phoneNumber)) {
-      showMessage("error", "Please enter a valid phone number!");
-      setError("Please enter a valid phone number!");
+  // Reset errors when switching modes
+  const toggleMode = () => {
+    setIsLoginMode(!isLoginMode);
+    setError({ first_name: '', last_name: '', gender: '', email: '', password: '' });
+  };
+
+  function submitForm() {
+    let currentErrors = { first_name: '', last_name: '', gender: '', email: '', password: '' };
+    let hasError = false;
+
+    if (!isLoginMode) {
+      if (!userData.first_name) {
+        showMessage("error", "Please enter a valid first name!");
+        currentErrors.first_name = "Please enter a valid first name!";
+        hasError = true;
+      }
+      else if (!userData.last_name) {
+        showMessage("error", "Please enter a valid last name!");
+        currentErrors.last_name = "Please enter a valid last name!";
+        hasError = true;
+      }
+      else if (!userData.gender) {
+        showMessage("error", "Please enter a valid gender!");
+        currentErrors.gender = "Please choose a valid gender!";
+        hasError = true;
+      }
+    }
+    
+    if (!hasError && !emailValidation(userData.email)) {
+      showMessage("error", "Please enter a valid email!");
+      currentErrors.email = "Please enter a valid email!";
+      hasError = true;
+    }
+    else if (!hasError && !passwordValidation(userData.password)) {
+      showMessage("error", "Please enter a valid password!");
+      currentErrors.password = "At least 8 characters, 1 uppercase, 1 lowercase, 1 number";
+      hasError = true;
+    }
+
+    if (hasError) {
+      setError(currentErrors);
       return;
     }
-    route.push(`/otpvalidation?phone=${phoneNumber}`);
+
+    // API Payload configuration based on mode
+    const payload = isLoginMode 
+      ? { email: userData.email, password: userData.password }
+      : userData;
+
+    // Send data to endpoint (Adjust axios endpoint helper or method if needed for your backend)
+    axiosNormalPost(isLoginMode ? loginURL : registerURL, payload).then((res) => {
+      if (res.status) {
+        route.push(`/otpvalidation?token=${res.token}`);
+      } else {
+        showMessage('error', res.msg);
+      }
+    }).catch((err) => {
+      showMessage('error', 'Something went wrong, please try again later.');
+    });
   }
 
   return (
@@ -29,7 +96,7 @@ function login() {
           <div className="otp-card">
 
             <div className="otp-card-stripe">
-              <img src="/assets/img/logo_DS.png" style={{ width: "100%" }} />
+              <img src="/assets/img/logo_DS.png" style={{ width: "100%" }} alt="Logo" />
             </div>
 
             <div className="otp-card-body pb-0" id="cardBody">
@@ -40,26 +107,95 @@ function login() {
               </div>
 
               <div className="step active" id="step1">
-                <div className="step-label"><span>1</span> Enter Mobile Number</div>
-
-                <div className="input-group mb-4">
-                  <span className="input-group-text p-0" id="inputGroup-sizing-default">
-                    <ReactFlagsSelect
-                      selected={selected}
-                      onSelect={(code) => setSelected(code)}
-                      searchable
-                    />
-                  </span>
-                  <input type="number" pattern="[0-9]*" onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '')} onChange={(event) => { setPhoneNumber(event.target.value) }} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter Mobile Number" />
+                <div className="step-label">
+                  <span>1</span> {isLoginMode ? "Login to Your Account" : "Enter Your Valid Details"}
                 </div>
-                {error && <div className="db-error" id="phoneError">
-                  <i className="bi bi-exclamation-circle-fill"></i>
-                  <span id="phoneErrorMsg">{error}</span>
-                </div>}
+                
+                <div className="row">
+                  {/* Registration Fields (Hidden in Login Mode) */}
+                  {!isLoginMode && (
+                    <>
+                      <div className="col-md-6 pe-0">
+                        <div className="mb-3">
+                          <input 
+                            type="text" 
+                            value={userData.first_name}
+                            onChange={(e) => { setUserData({ ...userData, first_name: e.target.value }) }} 
+                            className="form-control" 
+                            placeholder="First Name" 
+                          />
+                          {error.first_name && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.first_name}</div>}
+                        </div>
+                      </div>
+                      
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <input 
+                            type="text" 
+                            value={userData.last_name}
+                            onChange={(e) => { setUserData({ ...userData, last_name: e.target.value }) }} 
+                            className="form-control" 
+                            placeholder="Last Name" 
+                          />
+                          {error.last_name && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.last_name}</div>}
+                        </div>
+                      </div>
 
-                <button onClick={submitLogin} className="db-btn-primary" id="sendOtpBtn">
-                  <i className="bi bi-send-fill"></i> Send OTP
+                      <div className="input-group mb-3 col-12">
+                        <select 
+                          className="form-select" 
+                          value={userData.gender}
+                          onChange={(e) => { setUserData({ ...userData, gender: e.target.value }) }}
+                        >
+                          <option value="">Gender</option>
+                          <option value="1">Male</option>
+                          <option value="2">Female</option>
+                          <option value="3">Others</option>
+                        </select>
+                        {error.gender && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.gender}</div>}
+                      </div>
+                    </>
+                  )}
+
+                  {/* Shared Fields (Email & Password) */}
+                  <div className="input-group mb-3 col-12">
+                    <input 
+                      type="email" 
+                      value={userData.email}
+                      onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }} 
+                      className="form-control" 
+                      placeholder="Email" 
+                    />
+                    {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
+                  </div>
+
+                  <div className="col-md-12 mb-4 position-relative">
+                    <input 
+                      type={viewPass ? "text" : "password"} 
+                      value={userData.password}
+                      onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }}
+                      className="form-control" 
+                      placeholder="Password" 
+                    />
+                    <div className="position-absolute" style={{ top: "10px", right: "30px", cursor: "pointer" }}>
+                      <i className={`fa-solid ${!viewPass ? "fa-eye-slash" : "fa-eye"}`} onClick={() => setViewPass(!viewPass)}></i>
+                    </div>
+                    {error.password && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.password}</div>}
+                  </div>
+                </div>
+
+                <button onClick={submitForm} className="db-btn-primary" id="sendOtpBtn">
+                  <i className="bi bi-send-fill"></i> {isLoginMode ? "Login" : "Send OTP"}
                 </button>
+
+                <div className="db-divider">or</div>
+
+                {/* Toggle Link */}
+                <div className="text-center mt-2 mb-3">
+                  <span style={{ cursor: "pointer", color: "#4285F4", fontWeight: "500" }} onClick={toggleMode}>
+                    {isLoginMode ? "Don't have an account? Register here" : "Already have an account? Login here"}
+                  </span>
+                </div>
 
                 <div className="db-divider">or continue with</div>
 
@@ -76,7 +212,7 @@ function login() {
 
             </div>
 
-            <div className="otp-footer mt-0">
+            <div className="otp-footer mt-4">
               By continuing, you agree to our
               <a href="#"> Terms of Service </a> &amp;
               <a href="#"> Privacy Policy</a>
@@ -86,7 +222,7 @@ function login() {
         </div>
       </Suspense>
     </>
-  )
+  );
 }
 
-export default login
+export default page;

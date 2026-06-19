@@ -1,12 +1,11 @@
-import Footer from "@/components/website/Footer";
-import Header from "@/components/website/Header";
+import ProviderStore from "@/services/ProviderStore";
 
 export default function AuthLayout({ children }) {
   return <>
-    <Header />
-    <section>
-      {children}
-    </section>
-    <Footer />
+    <ProviderStore>
+      <section>
+        {children}
+      </section>
+    </ProviderStore>
   </>
 }

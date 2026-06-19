@@ -4,10 +4,6 @@ import "./website.css";
 
 export default function WebsiteLayout({ children }) {
     return (
-        <>
-            <Header />
-            {children}
-            <Footer />
-        </>
+        <>{children}</>
     )
 }

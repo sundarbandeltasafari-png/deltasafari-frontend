@@ -61,3 +61,17 @@ body {
     visibility: visible;
   }
 }
+
+.home2-banner-section .banner-wrapper .banner-img-area img{
+  object-fit: fill !important;
+}
+
+.twoline {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limits text to 2 lines */
+    -webkit-box-orient: vertical;
+    /* Required for line-clamp to work */
+    overflow: hidden;
+    /* Hides the remaining text */
+}

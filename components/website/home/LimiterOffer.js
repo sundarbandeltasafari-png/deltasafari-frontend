@@ -10,7 +10,7 @@ function LimiterOffer() {
                             data-wow-duration="1500ms">
                             <span>Limited Offer</span>
                             <h2>Flash 50% off all tour packages</h2>
-                            <a href="travel-package-01.html" className="primary-btn1 two black-bg">
+                            <a href={"/"} className="primary-btn1 two black-bg">
                                 <span>
                                     Grab the Deal Now
                                     <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
@@ -29,11 +29,11 @@ function LimiterOffer() {
                                 </span>
                             </a>
                         </div>
-                        <div className="offer-banner-img">
-                            <img src="assets/img/home2/home2-offer-banner-img.png" alt="" />
+                        <div className="offer-banner-img" style={{ height: 'stretch'}}>
+                            <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/home2/home2-offer-banner-img.png"} alt="Limited Offer" style={{height: '100%', objectFit: 'cover'}} />
                         </div>
-                        <img src="assets/img/home2/vector/offer-banner-vector1.svg" alt="" className="vector1" />
-                        <img src="assets/img/home2/vector/offer-banner-vector2.svg" alt="" className="vector2" />
+                        <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/home2/vector/offer-banner-vector1.svg"} alt="Limited Offer Icons" className="vector1" />
+                        <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/home2/vector/offer-banner-vector2.svg"} alt="Limited Offer Icons" className="vector2" />
                     </div>
                 </div>
             </div>

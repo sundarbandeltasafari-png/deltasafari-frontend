@@ -42,17 +42,6 @@
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Jost', sans-serif;
-    background: var(--white);
-    color: var(--text-body);
-    overflow-x: hidden;
-    line-height: 1.6;
-}
 
 h1,
 h2,
@@ -1795,7 +1784,7 @@ h6 {
     }
 }
 
-section {
+section.hero-section {
     margin-top: 40px;
     margin-bottom: 20px;
 }

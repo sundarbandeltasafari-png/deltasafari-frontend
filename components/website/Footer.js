@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Link from 'next/link'
 import React from 'react'
 
@@ -11,7 +12,7 @@ function Footer() {
               <div className="col-lg-3 col-md-4 col-sm-6">
                 <div className="footer-logo-and-addition-info">
                   <a href="index.html" className="footer-logo">
-                    <img src="assets/img/logo_DS.png" alt="" style={{filter: "brightness(0) invert(1)"}} />
+                    <img src="/assets/img/logo_DS.png" alt="" style={{ filter: "brightness(0) invert(1)" }} />
                   </a>
                   <div className="address-area">
                     <span>Delta Safari Travel Agency</span>
@@ -48,10 +49,9 @@ function Footer() {
                   </div>
                   <ul className="widget-list">
                     <li><Link href="/faq">FAQ's</Link></li>
-                    <li><Link href="/cancelation-policy">Cancelation Policy</Link></li>
-                    <li><Link href="/terms-condition">Terms Condition</Link></li>
-                    <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-                    <li><Link href="/terms-condition">Terms Condition</Link></li>
+                    <li><Link href="/pages/cancelation-policy">Cancelation Policy</Link></li>
+                    <li><Link href="/pages/terms-condition">Terms & Condition</Link></li>
+                    <li><Link href="/pages/privacy-policy">Privacy Policy</Link></li>
                     <li><Link href="/blogs">Blogs</Link></li>
                   </ul>
                 </div>
@@ -62,11 +62,11 @@ function Footer() {
                     <h5>Popular Detination</h5>
                   </div>
                   <ul className="widget-list">
-                    <li><a href="about.html">Group Packages</a></li>
-                    <li><a href="#">Domestic Packages</a></li>
-                    <li><a href="visa.html">Internation Packages</a></li>
-                    <li><a href="contact.html">Foreigner's Packages</a></li>
-                    <li><a href="travel-inspiration-01.html">Customizes Packages</a></li>
+                    <li><Link href="/packages/group-packages">Group Packages</Link></li>
+                    <li><Link href="/packages/domestic-packages">Domestic Packages</Link></li>
+                    <li><Link href="/packages/international-packages">Internation Packages</Link></li>
+                    <li><Link href="/packages/foreigners-corner">Foreigner's Packages</Link></li>
+                    <li><a >Customizes Packages</a></li>
                   </ul>
                 </div>
               </div>

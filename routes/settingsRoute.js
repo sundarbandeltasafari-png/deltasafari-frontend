@@ -1,0 +1,1 @@
+export const getSiteSettingsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getSiteSettings`    

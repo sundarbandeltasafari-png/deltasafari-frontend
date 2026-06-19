@@ -4,59 +4,59 @@ import SwiperWrapperHiddenGems from './swiper/SwiperWrapperHiddenGems'
 function HiddenGems() {
     const hiddenGems = [
         {
-            "title": "Santorini, Greece",
+            "title": "Goa",
             "image": "assets/img/home9/destination-img1.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 8999,
             "currency": "₹"
         },
         {
-            "title": "Great Temple Jordan",
+            "title": "Rajasthan",
             "image": "assets/img/home9/destination-img3.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 12999,
             "currency": "₹"
         },
         {
-            "title": "Dubai Skyline, UAE",
+            "title": "Mumbai",
             "image": "assets/img/home9/destination-img2.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 10999,
             "currency": "₹"
         },
         {
-            "title": "Austin Bridge, USA",
+            "title": "Uttarakhand",
             "image": "assets/img/home9/destination-img8.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 14999,
             "currency": "₹"
         },
         {
-            "title": "Jungle Walkway, Indonesia",
+            "title": "Assam",
             "image": "assets/img/home9/destination-img6.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 12999,
             "currency": "₹"
         },
         {
-            "title": "Athens Greece",
+            "title": "Darjeeling",
             "image": "assets/img/home9/destination-img7.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 7999,
             "currency": "₹"
         },
         {
-            "title": "Rome, Italy",
+            "title": "Gujrat",
             "image": "assets/img/home9/destination-img5.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 11999,
             "currency": "₹"
         },
         {
-            "title": "Silent Desert",
+            "title": "Rajasthan",
             "image": "assets/img/home9/destination-img4.jpg",
-            "link": "destination-details.html",
-            "price": 38559,
+            "link": "/",
+            "price": 15999,
             "currency": "₹"
         }
     ]

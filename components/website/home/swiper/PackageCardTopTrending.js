@@ -7,13 +7,13 @@ function PackageCard({ pkg }) {
                 <div className="package-card">
                     <div className="package-img-wrap">
                         <a href="travel-package-details.html" className="package-img">
-                            <img src={pkg?.images} alt={pkg?.title} />
+                            <img src={pkg?.image ? process.env.NEXT_PUBLIC_SERVER_URL+pkg?.image: process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/noimage.jpg'} alt={pkg?.name} />
                         </a>
                         <div>
                         </div>
                     </div>
                 </div>
-                <h5 className='text-center mt-2'>{pkg?.title}</h5>
+                <h5 className='text-center mt-2'>{pkg?.name}</h5>
             </div>
         </>
     )
