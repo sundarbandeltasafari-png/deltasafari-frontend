@@ -26,7 +26,11 @@ async function page() {
             topTrending = response.data?.topTrending
             faqs = response.data?.faqs
         }
+        console.log(response.data);
+        
     } catch (error) {
+        console.log(error);
+        
         topDesination = null
         topTrending = null
         faqs = null
