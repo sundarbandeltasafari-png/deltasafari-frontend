@@ -33,6 +33,9 @@ async function page() {
         topTrending = null
         faqs = null
     }
+    console.log(homeDestinationURL);
+    console.log(topDesination);
+    
     return (
         <>
             <HomeBanner />
