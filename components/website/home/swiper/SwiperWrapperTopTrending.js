@@ -17,7 +17,7 @@ function SwiperWrapperTopTrending({ data }) {
         <Swiper
             // Forces re-initialization on page change to prevent "stuck" sliders
             key={pathname}
-            
+
             // Modules must be defined here
             modules={[Autoplay, Pagination]}
 
@@ -25,7 +25,7 @@ function SwiperWrapperTopTrending({ data }) {
             slidesPerView={5}
             speed={1500}
             spaceBetween={24}
-            loop={true} // Usually recommended for autoplay sliders
+            loop={data.lngth > 4} // Usually recommended for autoplay sliders
 
             // Autoplay Configuration
             autoplay={{
@@ -54,14 +54,15 @@ function SwiperWrapperTopTrending({ data }) {
                 1200: { slidesPerView: 4 },
                 1400: { slidesPerView: 5 }, // Matches your JS
             }}
-            
+
             // Fix for Next.js navigation issues
             observer={true}
             observeParents={true}
             className="home1-trip-slider"
+            observeSlideChildren={true}
         >
-            {data?.map((pkg, index) => (
-                <SwiperSlide key={pkg.id || index}>
+            {[...data, ...data]?.map((pkg, index) => (
+                <SwiperSlide key={index}>
                     <PackageCard pkg={pkg} />
                 </SwiperSlide>
             ))}

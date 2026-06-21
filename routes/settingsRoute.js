@@ -1,1 +1,2 @@
 export const getSiteSettingsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getSiteSettings`    
+export const getHomePackagesUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getHomePackages`    

@@ -3,7 +3,7 @@ import React from 'react'
 function Faq({ faqs, faqText }) {
     return (
         <>
-            <div className="home4-faq-section mb-100">
+           {faqs && faqs.length > 0 && <div className="home4-faq-section mb-100">
                 <div className="container">
                     <div className="row justify-content-start mb-50 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms' }}>
                         <div className="col-xl-6 col-lg-8">
@@ -36,7 +36,7 @@ function Faq({ faqs, faqText }) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     )
 }

@@ -17,20 +17,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-async function getSiteSettings() {
-  try {
-    const response = await axios.get(getSiteSettingsUrl);
-    if (response.data?.status) {
-      return response.data?.siteSettings;
-    }
-  } catch (error) {
-    console.error("Failed to fetch site settings:", error);
+let siteSettings = null;
+try {
+  const response = await axios.get(getSiteSettingsUrl);
+  if (response.data?.status) {
+    siteSettings = response.data?.siteSettings
   }
-  return null;
+} catch (error) {
+  siteSettings = null
 }
 
 export async function generateMetadata() {
-  const data = await getSiteSettings();
+  const data = siteSettings;
   const siteUrl = data?.canonical_url || "https://sundarbandeltasafari.com";
 
   return {
@@ -43,7 +41,7 @@ export async function generateMetadata() {
     },
     robots: data?.robots_meta || "index, follow",
     icons: {
-      icon: data?.site_favicon ?  process.env.NEXT_PUBLIC_SERVER_URL + `${data.site_favicon.replace(/\\/g, "/")}` :  process.env.NEXT_PUBLIC_PUBLIC_URL + "/assets/images/fav-icon.png",
+      icon: data?.site_favicon ? process.env.NEXT_PUBLIC_SERVER_URL + `${data.site_favicon.replace(/\\/g, "/")}` : process.env.NEXT_PUBLIC_PUBLIC_URL + "/assets/images/fav-icon.png",
     },
     openGraph: {
       title: data?.og_title || data?.site_title,
@@ -51,31 +49,22 @@ export async function generateMetadata() {
       url: data?.og_url || "/",
       siteName: data?.og_site_name || "Delta Safari",
       type: data?.og_type || "website",
-      images: data?.og_image 
-        ? [{ url: process.env.NEXT_PUBLIC_SERVER_URL + `${data.og_image.replace(/\\/g, "/")}` }] 
+      images: data?.og_image
+        ? [{ url: process.env.NEXT_PUBLIC_SERVER_URL + `${data.og_image.replace(/\\/g, "/")}` }]
         : [],
     },
     twitter: {
       card: data?.twitter_card || "summary_large_image",
       title: data?.twitter_title || data?.site_title,
       description: data?.twitter_description || data?.meta_description,
-      images: data?.twitter_image 
-        ? [ process.env.NEXT_PUBLIC_SERVER_URL + `${data.twitter_image.replace(/\\/g, "/")}`] 
+      images: data?.twitter_image
+        ? [process.env.NEXT_PUBLIC_SERVER_URL + `${data.twitter_image.replace(/\\/g, "/")}`]
         : [],
     },
   };
 }
 
 export default async function RootLayout({ children }) {
-  let siteSettings = null;
-  try {
-    const response = await axios.get(getSiteSettingsUrl);
-    if (response.data?.status) {
-      siteSettings = response.data?.siteSettings
-    }
-  } catch (error) {
-    siteSettings = null
-  }
   return (
     <html
       lang="en"
@@ -101,10 +90,10 @@ export default async function RootLayout({ children }) {
           rel="stylesheet"></link>
       </head>
       <body className="min-h-full flex flex-col">
-        <Header />
+        <Header siteSettings={siteSettings} />
         <ToastContainer />
         {children}
-        <Footer />
+        <Footer siteSettings={siteSettings} />
       </body>
       <Script src="/assets/js/jquery-3.7.1.min.js"></Script>
       <Script src="/assets/js/jquery-ui.js"></Script>
@@ -112,7 +101,7 @@ export default async function RootLayout({ children }) {
       <Script src="/assets/js/daterangepicker.min.js"></Script>
       <Script src="/assets/js/bootstrap.min.js"></Script>
       <Script src="/assets/js/popper.min.js"></Script>
-      <Script src="/assets/js/slick.js"></Script>
+      {/* <Script src="/assets/js/slick.js"></Script> */}
       <Script src="/assets/js/waypoints.min.js"></Script>
       <Script src="/assets/js/jquery.counterup.min.js"></Script>
       <Script src="/assets/js/gsap.min.js"></Script>

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function PackageCard({ pkg }) {
@@ -6,9 +7,9 @@ function PackageCard({ pkg }) {
             <div>
                 <div className="package-card">
                     <div className="package-img-wrap">
-                        <a href="travel-package-details.html" className="package-img">
+                        <Link href={"/packages/category/"+pkg?.slug} className="package-img">
                             <img src={pkg?.image ? process.env.NEXT_PUBLIC_SERVER_URL+pkg?.image: process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/noimage.jpg'} alt={pkg?.name} />
-                        </a>
+                        </Link>
                         <div>
                         </div>
                     </div>

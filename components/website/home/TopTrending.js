@@ -1,5 +1,10 @@
+"use client"
 import React from 'react'
-import SwiperWrapperTopTrending from './swiper/SwiperWrapperTopTrending'
+import dynamic from 'next/dynamic';
+const SwiperWrapperTopTrending = dynamic(
+  () => import('./swiper/SwiperWrapperTopTrending'),
+  { ssr: false }
+);
 
 function TopTrending({ topTrending }) {
     return (

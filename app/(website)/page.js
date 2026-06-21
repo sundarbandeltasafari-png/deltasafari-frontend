@@ -13,6 +13,8 @@ import HolidaysByTheme from '@/components/website/home/HolidaysByTheme'
 import HomeAbout from '@/components/website/home/HomeAbout'
 import axios from 'axios'
 import { homeDestinationURL } from '@/routes/homeRoutes'
+import Filter from '@/components/website/home/Filter'
+
 
 
 async function page() {
@@ -26,11 +28,7 @@ async function page() {
             topTrending = response.data?.topTrending
             faqs = response.data?.faqs
         }
-        console.log(response.data);
-        
     } catch (error) {
-        console.log(error);
-        
         topDesination = null
         topTrending = null
         faqs = null
@@ -38,6 +36,7 @@ async function page() {
     return (
         <>
             <HomeBanner />
+            <Filter />
             {topTrending && <TopTrending topTrending={topTrending} />}
             {topDesination && <TopDestination topDesination={topDesination} />}
             <HolidayPackages />

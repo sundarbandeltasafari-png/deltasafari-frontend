@@ -2,7 +2,7 @@ import axios from 'axios';
 import Link from 'next/link'
 import React from 'react'
 
-function Footer() {
+function Footer({ siteSettings }) {
   return (
     <>
       <footer className="footer-section">
@@ -12,11 +12,11 @@ function Footer() {
               <div className="col-lg-3 col-md-4 col-sm-6">
                 <div className="footer-logo-and-addition-info">
                   <a href="index.html" className="footer-logo">
-                    <img src="/assets/img/logo_DS.png" alt="" style={{ filter: "brightness(0) invert(1)" }} />
+                    <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="" style={{ filter: "brightness(0) invert(1)" }} />
                   </a>
                   <div className="address-area">
-                    <span>Delta Safari Travel Agency</span>
-                    <a href="#">Skyline Plaza, 5th Floor, 123 Main Street Los Angeles, CA 90001, USA</a>
+                    <span>{siteSettings?.site_title}</span>
+                    <a href={siteSettings?.offices?.map_direction_link}>{siteSettings?.offices?.address}</a>
                   </div>
                   <ul className="social-list">
                     <li><a href="https://www.facebook.com/"><i className="bx bxl-facebook"></i></a></li>

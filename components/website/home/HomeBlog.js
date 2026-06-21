@@ -15,7 +15,6 @@ async function HomeBlog() {
     } catch (error) {
         posts = null;
     }
-    console.log(posts);
 
     return (
         <>
