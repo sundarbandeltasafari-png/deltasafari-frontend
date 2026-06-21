@@ -46183,3 +46183,8 @@ p {
 .blog-card2 .blog-content {
     padding: 20px 20px 20px;
 }
+
+
+.active-booking-sidebar {
+  transform: translateX(0%) !important;
+}

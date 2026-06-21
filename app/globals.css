@@ -77,31 +77,36 @@ body {
 }
 
 .custom-strike {
-  text-decoration: line-through red 2px; 
+  text-decoration: line-through red 2px;
 }
 
 /* Global Custom Scrollbar Style */
 ::-webkit-scrollbar {
-  width: 6px;               /* Width of vertical scrollbar */
-  height: 6px;              /* Height of horizontal scrollbar */
+  width: 6px;
+  /* Width of vertical scrollbar */
+  height: 6px;
+  /* Height of horizontal scrollbar */
 }
 
 /* Scrollbar Track (Background) */
 ::-webkit-scrollbar-track {
-  background: #f1f3f7;      /* Clean background tint matching #E4E7EC */
+  background: #f1f3f7;
+  /* Clean background tint matching #E4E7EC */
   border-radius: 10px;
 }
 
 /* Scrollbar Handle (The Moving Strip) */
 ::-webkit-scrollbar-thumb {
-  background: #ff5c41;      /* Matches the secondary coral theme brand color */
+  background: #ff5c41;
+  /* Matches the secondary coral theme brand color */
   border-radius: 10px;
   transition: background 0.3s ease;
 }
 
 /* Scrollbar Handle Hover State */
 ::-webkit-scrollbar-thumb:hover {
-  background: #e04b32;      /* Slightly darker variant for active state tracking feedback */
+  background: #e04b32;
+  /* Slightly darker variant for active state tracking feedback */
 }
 
 /* Firefox Specific Support Fallback Properties */

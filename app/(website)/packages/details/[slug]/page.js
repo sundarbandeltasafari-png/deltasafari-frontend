@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Thumbs, EffectFade } from 'swiper/modules';
 
@@ -17,6 +17,7 @@ import LoadingComponent from '@/components/common/LoadingComponent';
 import { showMessage } from '@/libs/commonHelper';
 import Head from 'next/head';
 import { urlEncode } from '@/libs/urlHelper';
+import ShareButton from '@/components/common/ShareButton';
 
 export default function GoFlyPackageDetails() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -33,6 +34,7 @@ export default function GoFlyPackageDetails() {
   }
   const [ogImageUrl, setOgImageUrl] = useState();
   const siteUrl = process.env.NEXT_PUBLIC_PUBLIC_URL;
+  const sidebarRef = useRef()
 
   useEffect(() => {
     axiosNormalGet(`${getParticularPackageUrl}?id=${slug.split("-")[slug.split("-").length - 1]}`).then((res) => {
@@ -141,6 +143,15 @@ export default function GoFlyPackageDetails() {
     // Reset Form Fields & Close Modal
   };
 
+  const handleViewBooking = (type) => {
+    // 2. Add a class safely
+    if (type) {
+      sidebarRef.current?.classList.add('active-booking-sidebar');
+    } else {
+      sidebarRef.current?.classList.remove('active-booking-sidebar');
+    }
+  };
+
 
   return (
     <>
@@ -181,6 +192,11 @@ export default function GoFlyPackageDetails() {
                   <span className="badge mb-2" style={{ backgroundColor: '#ff5c41', color: '#fff', padding: '6px 14px', borderRadius: '4px', textTransform: 'uppercase', fontSize: '12px', fontWeight: '600' }}>
                     {packageDetails.package_type_name}
                   </span>
+                  <ShareButton
+                    title={packageDetails.title}
+                    text={packageDetails.meta_description}
+                    url={"/packages/details/" + packageDetails?.slug + "-" + urlEncode(packageDetails?.id)}
+                  />
                   <h2 style={{ fontSize: '36px', fontWeight: '700', color: '#0A132C', marginTop: '5px', marginBottom: '10px' }}>
                     {packageDetails.title}
                   </h2>
@@ -200,7 +216,9 @@ export default function GoFlyPackageDetails() {
               </div>
 
               <PackageBanner packageDetails={packageDetails} />
-
+              <button type="button" onClick={() => { handleViewBooking(true) }} className="primary-btn1 w-100 border-0 pt-3 pb-3 justify-content-center  d-flex d-md-none " style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700' }}>
+                Book Now
+              </button>
               {/* Content Layout & Interactive Sidebar Component Frame */}
               <div className="row">
                 <div className="col-lg-8">
@@ -263,10 +281,13 @@ export default function GoFlyPackageDetails() {
 
                 {/* GoFly Sidebar Context Form Layout Panel */}
                 <div className="col-lg-4">
-                  <div className="package-sidebar-area">
+                  <div ref={sidebarRef} className="package-sidebar-area">
                     <div className="sidebar-wrapper" style={{ position: 'sticky', top: '30px', background: '#fff', border: '1px solid #E4E7EC', padding: '30px', borderRadius: '12px' }}>
                       <div className="title-area mb-3 pb-2" style={{ borderBottom: '1px solid #E4E7EC' }}>
                         <h5 style={{ margin: 0, fontWeight: '700', color: '#0A132C' }}>Book This Package</h5>
+                        <button type="button" className='d-block d-md-none' onClick={() => handleViewBooking(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '22px', color: '#A0A6B5', cursor: 'pointer' }}>
+                          <i className="bi bi-x-lg"></i>
+                        </button>
                       </div>
                       <form className="d-flex flex-column gap-3">
                         <div>
@@ -280,7 +301,7 @@ export default function GoFlyPackageDetails() {
                         <div className="p-3" style={{ backgroundColor: '#F8F9FC', borderRadius: '8px', fontSize: '14px' }}>
                           <div className="d-flex justify-content-between mb-2"><span style={{ color: '#4A5264' }}>Total Cost</span><strong style={{ fontSize: '22px', color: '#ff5c41', fontWeight: '800' }}>{packageDetails.currency === 'INR' ? '₹' : '$'}{packageDetails.actual_price * guestsCount}</strong></div>
                         </div>
-                        <button type="button" onClick={() => { setIsModalOpen(true) }} className="primary-btn1 w-100 border-0 pt-3 pb-3 d-flex justify-content-center" style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700' }}>
+                        <button type="button" onClick={() => { setIsModalOpen(true); handleViewBooking(false) }} className="primary-btn1 w-100 border-0 pt-3 pb-3 d-flex justify-content-center" style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700' }}>
                           Book Now
                         </button>
                       </form>
