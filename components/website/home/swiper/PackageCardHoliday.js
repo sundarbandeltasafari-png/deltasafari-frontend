@@ -10,13 +10,13 @@ function PackageCardHoliday({ pkg }) {
                     <img src={pkg?.path ? process.env.NEXT_PUBLIC_SERVER_URL + pkg?.path : process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/noimage.jpg'} alt={pkg?.title} />
                 </a>
                 <div className="destination-content text-start">
-                    <a href={"/packages/details/" + pkg?.slug + "-" + urlEncode(pkg?.id)} className="title-area">
+                    <a href={"/packages/details/" + pkg?.slug + "-" + urlEncode(pkg?.id)} className="title-area twoline">
                         {pkg?.title}
                     </a>
-                    <div className="content m-0">
+                    <div className="content m-0 p-0">
                         {
                             <>
-                                <p>₹<span className='me-2 custom-strike'>{pkg?.base_price}</span> <span className='fs-3'>₹{pkg?.actual_price}</span></p>
+                                <p>₹<span className='custom-strike'>{pkg?.base_price}</span> <span className='fs-3'>₹{pkg?.actual_price}</span></p>
                             </>}
                     </div>
                 </div>

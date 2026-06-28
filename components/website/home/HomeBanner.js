@@ -65,8 +65,8 @@ function HomeBanner() {
                 >
                     {sliderData.map((slide) => (
                         <SwiperSlide key={slide.id}>
-                            <div className="banner-wrapper">
-                                <div className={slide.className}>
+                            <div className="banner-wrapper h-100">
+                                <div className={slide.className+" h-100"}>
                                     {/* Fixed path to point to Next.js public directory securely */}
                                     <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + slide.image} alt={slide.title} style={{width: "100%", objectFit: "fill"}} />
                                 </div>

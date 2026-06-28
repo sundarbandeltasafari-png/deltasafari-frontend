@@ -9,8 +9,9 @@ import 'swiper/css/autoplay';
 
 import { Autoplay, Pagination } from 'swiper/modules';
 import PackageCard from './PackageCardTopTrending';
+import BlogCard from './BlogCard';
 
-function SwiperWrapperTopTrending({ data }) {
+function SwiperWrapperBlog({ data }) {
     const pathname = usePathname();
 
     return (
@@ -19,10 +20,10 @@ function SwiperWrapperTopTrending({ data }) {
             key={pathname}
 
             // Modules must be defined here
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay]}
 
             // Settings from your JS snippet
-            slidesPerView={5}
+            slidesPerView={4}
             speed={1500}
             spaceBetween={24}
             loop={data.lngth > 5} // Usually recommended for autoplay sliders
@@ -34,25 +35,18 @@ function SwiperWrapperTopTrending({ data }) {
                 pauseOnMouseEnter: true, // Matches your JS setting
             }}
 
-            // Pagination Configuration
-            pagination={{
-                clickable: true,
-                // If you have a specific class for the dots:
-                // el: '.swiper-pagination2', 
-            }}
-
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{
                 280: { slidesPerView: 1 },
                 386: { slidesPerView: 1 },
-                576: { slidesPerView: 1 },
+                576: { slidesPerView: 2 },
                 768: {
                     slidesPerView: 3, // Matches your JS
                     spaceBetween: 15,
                 },
                 992: { slidesPerView: 4 },
                 1200: { slidesPerView: 4 },
-                1400: { slidesPerView: 5 }, // Matches your JS
+                1400: { slidesPerView: 4 }, // Matches your JS
             }}
 
             // Fix for Next.js navigation issues
@@ -61,13 +55,13 @@ function SwiperWrapperTopTrending({ data }) {
             className="home1-trip-slider"
             observeSlideChildren={true}
         >
-            {data?.map((pkg, index) => (
+            {data?.map((post, index) => (
                 <SwiperSlide key={index}>
-                    <PackageCard pkg={pkg} />
+                    <BlogCard post={post} />
                 </SwiperSlide>
             ))}
         </Swiper>
     )
 }
 
-export default SwiperWrapperTopTrending;
+export default SwiperWrapperBlog;

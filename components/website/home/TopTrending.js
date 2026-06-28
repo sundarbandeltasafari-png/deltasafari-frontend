@@ -9,9 +9,9 @@ const SwiperWrapperTopTrending = dynamic(
 function TopTrending({ topTrending }) {
     return (
         <>
-            <div className="home2-package-slider-section mb-100 pt-5 m-0 mt-3" style={{ top: '100px' }}>
+            <div className="home2-package-slider-section mb-0 pb-0 pt-5 m-0 mt-3">
                 <div className="container">
-                    <div className="row justify-content-start mb-30 wow animate fadeInDown" data-wow-delay="200ms"
+                    <div className="row justify-content-start mb-3 wow animate fadeInDown" data-wow-delay="200ms"
                         data-wow-duration="1500ms">
                         <div className="col-xl-6 col-lg-8">
                             <div className="section-title text-start">

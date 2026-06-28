@@ -19,7 +19,7 @@ function SwiperWrapperHiddenGems({ data }) {
             // Forces re-initialization on page change to prevent "stuck" sliders
             key={pathname}
 
-            modules={[EffectCoverflow, Navigation, Autoplay, Keyboard]}
+            modules={[EffectCoverflow, Autoplay, Keyboard]}
             loop={true}
             effect="coverflow"
             autoHeight={true}
@@ -40,10 +40,6 @@ function SwiperWrapperHiddenGems({ data }) {
                 depth: 100,
                 modifier: 1,
                 slideShadows: false,
-            }}
-            navigation={{
-                nextEl: ".destination-slider-next",
-                prevEl: ".destination-slider-prev",
             }}
             breakpoints={{
                 350: { slidesPerView: 1 },

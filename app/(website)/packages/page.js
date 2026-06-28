@@ -1,331 +1,290 @@
-"use client"
-import React, { useState } from 'react';
+'use client';
 
-// Mock data mapping the standard features of the GoFly travel package cards
-const initialPackages = [
+import React, { useState, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+// Mock Data representing GoFly's premium travel packages
+const INITIAL_PACKAGES = [
   {
     id: 1,
-    title: "Enchanting Paris & Versailles Exploration",
-    destination: "Paris, France",
-    duration: "06 Days",
-    rating: 4.8,
-    reviewsCount: 124,
-    price: 1350,
-    oldPrice: 1600,
-    category: "City Tour",
-    region: "Europe",
-    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80",
-    features: ["Crystal-Clear Waters", "Luxury Overwater Villas", "Dolphin Watching"]
+    title: 'Thailand Premium Beach & Culture Tour',
+    location: 'Bangkok, Phuket, Thailand',
+    duration: '5 Days / 4 Nights',
+    rating: 5,
+    reviews: 12,
+    price: 185.00,
+    badge: 'Best Seller',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 2,
-    title: "Tropical Bali Paradise Resort & Spa",
-    destination: "Indonesia",
-    duration: "07 Days",
-    rating: 4.9,
-    reviewsCount: 312,
-    price: 950,
-    oldPrice: 1200,
-    category: "Beach & Nature",
-    region: "Asia",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
-    features: ["Private Villa", "Breakfast Included", "Airport Transport"]
+    title: 'Switzerland Wonders & Ultimate Alps Train Journey',
+    location: 'Interlaken, Lucerne, Switzerland',
+    duration: '6 Days / 5 Nights',
+    rating: 5,
+    reviews: 18,
+    price: 345.00,
+    badge: 'Featured',
+    image: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 3,
-    title: "Switzerland Alpine Scenic Wonders",
-    destination: "Zermatt, Switzerland",
-    duration: "05 Days",
-    rating: 4.7,
-    reviewsCount: 89,
-    price: 1850,
-    oldPrice: 2100,
-    category: "Adventure",
-    region: "Europe",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
-    features: ["Train Pass Provided", "Mountain Resort", "Guided Hike"]
+    title: 'Bali Hidden Paradise & Volcanic Escape',
+    location: 'Ubud, Seminyak, Indonesia',
+    duration: '7 Days / 6 Nights',
+    rating: 4,
+    reviews: 9,
+    price: 148.00,
+    badge: '10% OFF',
+    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80',
   },
-  {
-    id: 4,
-    title: "The Ultimate Maldives Luxury Overwater Escape",
-    destination: "Maldives",
-    duration: "05 Days",
-    rating: 5.0,
-    reviewsCount: 418,
-    price: 2450,
-    category: "Beach & Nature",
-    region: "Asia",
-    image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=600&q=80",
-    features: ["Crystal-Clear Waters", "Luxury Overwater Villas", "Dolphin Watching"]
-  }
 ];
 
-export default function TravelPackages() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRegions, setSelectedRegions] = useState([]);
-  const [selectedDestinations, setSelectedDestinations] = useState([]);
-  const [priceRange, setPriceRange] = useState(2500);
-  const [sortBy, setSortBy] = useState("Default");
+export default function TravelPackageListPage() {
+  const [packages, setPackages] = useState(INITIAL_PACKAGES);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  // Filter and Sort Logic
-  const filteredPackages = initialPackages.filter(pkg => {
-    const matchesSearch = pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          pkg.destination.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesRegion = selectedRegions.length === 0 || selectedRegions.includes(pkg.region);
-    const matchesDestination = selectedDestinations.length === 0 || selectedDestinations.includes(pkg.destination);
-    const matchesPrice = pkg.price <= priceRange;
-
-    return matchesSearch && matchesRegion && matchesDestination && matchesPrice;
-  }).sort((a, b) => {
-    if (sortBy === "Price High") return b.price - a.price;
-    if (sortBy === "Price Low") return a.price - b.price;
-    return 0; // Default / latest
+  // Intersection observer trigger hook for infinite scroll tracking
+  const { ref, inView } = useInView({
+    threshold: 0.1,
   });
 
-  const handleRegionChange = (region) => {
-    if (selectedRegions.includes(region)) {
-      setSelectedRegions(selectedRegions.filter(r => r !== region));
-    } else {
-      setSelectedRegions([...selectedRegions, region]);
+  useEffect(() => {
+    if (inView && !loading && hasMore) {
+      loadMorePackages();
     }
-  };
+  }, [inView]);
 
-  const handleDestinationChange = (dest) => {
-    if (selectedDestinations.includes(dest)) {
-      setSelectedDestinations(selectedDestinations.filter(d => d !== dest));
-    } else {
-      setSelectedDestinations([...selectedDestinations, dest]);
-    }
-  };
+  // Simulate API lazy-loading additional packages
+  const loadMorePackages = () => {
+    setLoading(true);
+    setTimeout(() => {
+      const moreItems = [
+        {
+          id: packages.length + 1,
+          title: 'Romantic Paris City Guide & Seine Dinner Cruise',
+          location: 'Paris, France',
+          duration: '4 Days / 3 Nights',
+          rating: 5,
+          reviews: 24,
+          price: 299.00,
+          badge: 'Trending',
+          image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80',
+        },
+        {
+          id: packages.length + 2,
+          title: 'Maldives Overwater Premium Private Villa Stay',
+          location: 'Male, Maldives',
+          duration: '5 Days / 4 Nights',
+          rating: 5,
+          reviews: 31,
+          price: 450.00,
+          badge: 'Luxury Tour',
+          image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80',
+        }
+      ];
 
-  const clearAllFilters = () => {
-    setSearchQuery("");
-    setSelectedRegions([]);
-    setSelectedDestinations([]);
-    setPriceRange(2500);
-    setSortBy("Default");
+      setPackages((prev) => [...prev, ...moreItems]);
+      setLoading(false);
+
+      // Stop emulation after fetching a few times
+      if (packages.length >= 7) {
+        setHasMore(false);
+      }
+    }, 1200);
   };
 
   return (
-    <div className="package-grid-page pt-50 mb-100">
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-4">
-                    <div className="package-sidebar-area">
-                        <div className="sidebar-wrapper">
-                            <div className="title-area">
-                                <h5>Filter</h5>
-                                <span id="clear-filters" style={{ cursor: 'pointer' }} onClick={clearAllFilters}>Clear All</span>
-                            </div>
-
-                            {/* Search bar inside Sidebar */}
-                            <div className="single-widgets">
-                                <div className="widget-title">
-                                    <h5>Search Package</h5>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    className="form-control" 
-                                    placeholder="Search by title or place..." 
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ddd', width: '100%' }}
-                                />
-                            </div>
-
-                            <div className="single-widgets">
-                                <div className="widget-title">
-                                    <h5>Destinations</h5>
-                                </div>
-                                <div className="checkbox-container">
-                                    <ul>
-                                        <li className="sidebar-category-dropdown">
-                                            <label className="containerss">
-                                                <input 
-                                                    type="checkbox" 
-                                                    checked={selectedRegions.includes("Europe")} 
-                                                    onChange={() => handleRegionChange("Europe")} 
-                                                />
-                                                <span className="checkmark"></span>
-                                                <strong>Europe</strong>
-                                            </label>
-                                            <ul className="sub-category">
-                                                <li>
-                                                    <label className="containerss">
-                                                        <input 
-                                                            type="checkbox" 
-                                                            checked={selectedDestinations.includes("Paris, France")} 
-                                                            onChange={() => handleDestinationChange("Paris, France")}
-                                                        />
-                                                        <span className="checkmark"></span>
-                                                        <strong><span>Paris, France</span> <span>02</span></strong>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label className="containerss">
-                                                        <input 
-                                                            type="checkbox" 
-                                                            checked={selectedDestinations.includes("Zermatt, Switzerland")} 
-                                                            onChange={() => handleDestinationChange("Zermatt, Switzerland")}
-                                                        />
-                                                        <span className="checkmark"></span>
-                                                        <strong><span>Zermatt, Switzerland</span> <span>01</span></strong>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <i className="bi bi-caret-right-fill sidebar-category-icon active"></i>
-                                        </li>
-                                        <li className="sidebar-category-dropdown">
-                                            <label className="containerss">
-                                                <input 
-                                                    type="checkbox" 
-                                                    checked={selectedRegions.includes("Asia")} 
-                                                    onChange={() => handleRegionChange("Asia")} 
-                                                />
-                                                <span className="checkmark"></span>
-                                                <strong>Asia</strong>
-                                            </label>
-                                            <ul className="sub-category">
-                                                <li>
-                                                    <label className="containerss">
-                                                        <input 
-                                                            type="checkbox" 
-                                                            checked={selectedDestinations.includes("Indonesia")} 
-                                                            onChange={() => handleDestinationChange("Indonesia")}
-                                                        />
-                                                        <span className="checkmark"></span>
-                                                        <strong><span>Indonesia</span> <span>01</span></strong>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label className="containerss">
-                                                        <input 
-                                                            type="checkbox" 
-                                                            checked={selectedDestinations.includes("Maldives")} 
-                                                            onChange={() => handleDestinationChange("Maldives")}
-                                                        />
-                                                        <span className="checkmark"></span>
-                                                        <strong><span>Maldives</span> <span>01</span></strong>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                            <i className="bi bi-caret-right-fill sidebar-category-icon"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <div className="single-widgets">
-                                <div className="widget-title">
-                                    <h5>Pricing</h5>
-                                </div>
-                                <div className="range-wrap">
-                                    <div className="row">
-                                        <div className="col-sm-12">
-                                            <input 
-                                                type="range" 
-                                                min="500" 
-                                                max="3000" 
-                                                step="50"
-                                                value={priceRange} 
-                                                onChange={(e) => setPriceRange(Number(e.target.value))}
-                                                style={{ width: '100%', accentColor: '#ff5c41' }} 
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="slider-labels" style={{ marginTop: '10px' }}>
-                                        <div className="caption">
-                                            <span>Max Price: <strong>${priceRange}</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col-lg-8">
-                    <div className="package-grid-top-area">
-                        <span><strong>{filteredPackages.length}</strong> Unforgettable Journeys Await!</span>
-                        <div className="selector-and-list-grid-area">
-                            <div className="selector-area">
-                                <span>Sort By:</span>
-                                <select 
-                                    value={sortBy} 
-                                    onChange={(e) => setSortBy(e.target.value)} 
-                                    className="nice-select-custom"
-                                    style={{ padding: '5px 10px', borderRadius: '5px', border: '1px solid #ddd', marginLeft: '5px' }}
-                                >
-                                    <option value="Default">Default</option>
-                                    <option value="Price High">Price High</option>
-                                    <option value="Price Low">Price Low</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="list-grid-product-wrap column-2-wrapper">
-                        <div className="row gy-md-5 gy-4">
-                            {filteredPackages.map((pkg) => (
-                                <div key={pkg.id} className="col-md-6 item wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
-                                    <div className="package-card">
-                                        <div className="package-img-wrap">
-                                            <a href="#" className="package-img">
-                                                <img src={pkg.image} alt={pkg.title} style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
-                                            </a>
-                                            <div className="batch">
-                                                <span>Hot Sale!</span>
-                                            </div>
-                                        </div>
-                                        <div className="package-content">
-                                            <h5><a href="#">{pkg.title}</a></h5>
-                                            <div className="location-and-time">
-                                                <div className="location">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M6.83615 0C3.77766 0 1.28891 2.48879 1.28891 5.54892C1.28891 7.93837 4.6241 11.8351 6.05811 13.3994C6.25669 13.6175 6.54154 13.7411 6.83615 13.7411C7.13076 13.7411 7.41561 13.6175 7.6142 13.3994C9.04821 11.8351 12.3834 7.93833 12.3834 5.54892C12.3834 2.48879 9.89464 0 6.83615 0ZM7.31469 13.1243C7.18936 13.2594 7.02008 13.3342 6.83615 13.3342C6.65222 13.3342 6.48295 13.2594 6.35761 13.1243C4.95614 11.5959 1.69584 7.79515 1.69584 5.54896C1.69584 2.7134 4.00067 0.406933 6.83615 0.406933C9.67164 0.406933 11.9765 2.7134 11.9765 5.54896C11.9765 7.79515 8.71617 11.5959 7.31469 13.1243Z"></path>
-                                                        <path d="M6.83618 8.54554C8.4624 8.54554 9.7807 7.22723 9.7807 5.60102C9.7807 3.9748 8.4624 2.65649 6.83618 2.65649C5.20997 2.65649 3.89166 3.9748 3.89166 5.60102C3.89166 7.22723 5.20997 8.54554 6.83618 8.54554Z"></path>
-                                                    </svg>
-                                                    <a href="#">{pkg.destination}</a>
-                                                </div>
-                                                <svg className="arrow" width="25" height="6" viewBox="0 0 25 6" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M0 3L5 5.88675V0.113249L0 3ZM25 3L20 0.113249V5.88675L25 3ZM4.5 3.5H20.5V2.5H4.5V3.5Z"></path>
-                                                </svg>
-                                                <span>{pkg.duration}</span>
-                                            </div>
-                                            <ul className="package-info">
-                                                {pkg.features.map((feature, i) => (
-                                                    <li key={i}>
-                                                        <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect width="14" height="14" rx="7"></rect>
-                                                            <path d="M10.6947 5.45777L6.24644 9.90841C6.17556 9.97689 6.08572 10.0124 5.99596 10.0124C5.9494 10.0125 5.90328 10.0033 5.86027 9.98548C5.81727 9.96763 5.77822 9.94144 5.7454 9.90841L3.3038 7.46681C3.16436 7.32969 3.16436 7.10521 3.3038 6.96577L4.16652 6.10065C4.29892 5.96833 4.53524 5.96833 4.66764 6.10065L5.99596 7.42897L9.33092 4.09161C9.36377 4.05868 9.40278 4.03255 9.44573 4.01471C9.48868 3.99686 9.53473 3.98766 9.58124 3.98761C9.67572 3.98761 9.76556 4.02545 9.83172 4.09161L10.6944 4.95681C10.8341 5.09625 10.8341 5.32073 10.6947 5.45777Z"></path>
-                                                        </svg>
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <div className="btn-and-price-area">
-                                                <a href="#" className="primary-btn1">
-                                                    <span> Book Now 
-                                                        <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                                                        </svg>
-                                                    </span>
-                                                </a>
-                                                <div className="price">
-                                                    <span>${pkg.price}</span>
-                                                    {pkg.oldPrice && <del>${pkg.oldPrice}</del>}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+    <div className="bg-light py-5 min-vh-100">
+      <div className="container">
+        
+        {/* TOP FILTER BAR - GoFly Travel Package 01 Style */}
+        <div className="card border-0 shadow-sm p-4 bg-white rounded-4 mb-5">
+          <div className="row g-3 align-items-end">
+            <div className="col-md-3">
+              <label className="form-label small fw-bold text-secondary">Destination</label>
+              <div className="input-group">
+                <span className="input-group-text bg-light border-0"><i className="bi bi-geo-alt text-warning"></i></span>
+                <input type="text" className="form-control bg-light border-0" placeholder="Where are you going?" />
+              </div>
             </div>
+            <div className="col-md-3">
+              <label className="form-label small fw-bold text-secondary">Travel Type</label>
+              <select className="form-select bg-light border-0">
+                <option>Adventure Tour</option>
+                <option>Honeymoon Tour</option>
+                <option>Family Tour</option>
+              </select>
+            </div>
+            <div className="col-md-3">
+              <label className="form-label small fw-bold text-secondary">Duration</label>
+              <select className="form-select bg-light border-0">
+                <option>3-5 Days</option>
+                <option>5-7 Days</option>
+                <option>7+ Days</option>
+              </select>
+            </div>
+            <div className="col-md-3">
+              <button className="btn btn-warning w-100 fw-bold py-2 rounded-3 text-uppercase shadow-sm">
+                Find Package <i className="bi bi-search ms-2"></i>
+              </button>
+            </div>
+          </div>
         </div>
+
+        {/* MAIN BODY LAYOUT GRID */}
+        <div className="row g-4">
+          
+          {/* LEFT SIDEBAR - Sticky Filter Settings */}
+          <div className="col-lg-4 d-none d-lg-block">
+            <aside className="sticky-top" style={{ top: '24px', zIndex: 10 }}>
+              <div className="d-flex flex-column gap-4">
+                
+                {/* Categories Wrapper */}
+                <div className="card border-0 shadow-sm p-4 bg-white rounded-4">
+                  <h5 className="fw-bold mb-3 text-dark border-start  ps-2">Filter Category</h5>
+                  <div className="d-flex flex-column gap-2 mt-2">
+                    {['Adventure Tour', 'Honeymoon Tour', 'Family Holiday', 'Wildlife Safari', 'Cultural Exploration'].map((cat, i) => (
+                      <div key={i} className="form-check">
+                        <input className="form-check-input accent-warning" type="checkbox" id={`cat-${i}`} defaultChecked={i===0} />
+                        <label className="form-check-label text-secondary small fw-medium" htmlFor={`cat-${i}`}>{cat}</label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price Range Filter Widget */}
+                <div className="card border-0 shadow-sm p-4 bg-white rounded-4">
+                  <h5 className="fw-bold mb-3 text-dark border-start  ps-2">Filter Pricing</h5>
+                  <label htmlFor="priceRange" className="form-label text-muted small">Max Budget: $500</label>
+                  <input type="range" className="form-range" min="50" max="1000" id="priceRange" defaultValue="500" />
+                  <div className="d-flex justify-content-between text-muted small mt-1 fw-bold">
+                    <span>$50</span>
+                    <span>$1000</span>
+                  </div>
+                </div>
+
+                {/* Stars Rating Filter Widget */}
+                <div className="card border-0 shadow-sm p-4 bg-white rounded-4">
+                  <h5 className="fw-bold mb-3 text-dark border-start  ps-2">Review Ratings</h5>
+                  <div className="d-flex flex-column gap-2">
+                    {[5, 4, 3].map((star) => (
+                      <div key={star} className="form-check d-flex align-items-center gap-2">
+                        <input className="form-check-input accent-warning" type="checkbox" id={`star-${star}`} defaultChecked={star===5} />
+                        <label className="form-check-label text-warning small m-0" htmlFor={`star-${star}`}>
+                          {Array.from({ length: star }).map((_, i) => <i key={i} className="bi bi-star-fill me-1"></i>)}
+                          <span className="text-muted ms-1">({star} Stars)</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+          </div>
+
+          {/* RIGHT GRID - Live Travel Feed Stream */}
+          <div className="col-lg-8">
+            <div className="row g-4">
+              {packages.map((item) => (
+                <div key={item.id} className="col-md-6 col-12">
+                  <div className="card border-0 h-100 shadow-sm overflow-hidden bg-white package-card rounded-4">
+                    
+                    {/* Package Card Top Frame */}
+                    <div className="position-relative overflow-hidden" style={{ height: '230px' }}>
+                      <img src={item.image} alt={item.title} className="w-100 h-100 object-fit-cover package-img transition-all" />
+                      <span className="position-absolute top-0 start-0 m-3 bg-warning text-dark px-3 py-1 fw-bold rounded-pill text-uppercase text-xs shadow-sm">
+                        {item.badge}
+                      </span>
+                      <button className="position-absolute top-0 end-0 m-3 btn btn-white bg-white rounded-circle p-2 shadow-sm border-0 d-flex align-items-center justify-content-center" style={{ width: '36px', height: '36px' }}>
+                        <i className="bi bi-heart text-danger"></i>
+                      </button>
+                    </div>
+
+                    {/* Package Card Bottom Body Frame */}
+                    <div className="card-body p-4 d-flex flex-column justify-content-between">
+                      <div>
+                        {/* Geo Location + Duration Strip */}
+                        <div className="d-flex justify-content-between text-muted mb-2 text-xs fw-semibold">
+                          <span><i className="bi bi-geo-alt-fill text-warning me-1"></i> {item.location.split(',')[0]}</span>
+                          <span><i className="bi bi-clock-fill text-warning me-1"></i> {item.duration}</span>
+                        </div>
+                        {/* Main Title Heading link */}
+                        <h4 className="card-title h5 fw-bold text-dark mb-3 package-title-link line-clamp-2">
+                          <a href="#" className="text-decoration-none text-dark">{item.title}</a>
+                        </h4>
+                      </div>
+
+                      {/* Ratings and Pricing Row */}
+                      <div className="border-top pt-3 mt-2 d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center gap-1 text-warning small">
+                          <i className="bi bi-star-fill"></i>
+                          <span className="text-dark fw-bold ms-1">{item.rating}.0</span>
+                          <span className="text-muted text-xs">({item.reviews})</span>
+                        </div>
+                        <div>
+                          <span className="text-muted text-xs d-block text-end">From</span>
+                          <span className="h4 fw-extrabold text-primary m-0">${item.price.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              ))}
+
+              {/* INFINITE SCROLL BAR TRIGGER ZONE */}
+              <div ref={ref} className="col-12 text-center py-5">
+                {loading && (
+                  <div className="spinner-border text-warning" role="status">
+                    <span className="visually-hidden">Loading options...</span>
+                  </div>
+                )}
+                {!hasMore && (
+                  <div className="bg-white py-3 px-4 rounded-pill shadow-sm d-inline-block border">
+                    <p className="text-muted fw-bold m-0 small text-uppercase tracking-wide">
+                      <i className="bi bi-check-circle-fill text-success me-2"></i> All Holiday Packages Loaded
+                    </p>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Layout Enhancements */}
+      <style jsx global>{`
+        .fw-extrabold { font-weight: 800; }
+        .text-xs { font-size: 0.785rem; }
+        .accent-warning {
+          accent-color: #ffc107;
+        }
+        .form-range::-webkit-slider-thumb {
+          background: #ffc107;
+        }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;  
+          overflow: hidden;
+        }
+        .package-img {
+          transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .package-card:hover .package-img {
+          transform: scale(1.06);
+        }
+        .package-title-link a:hover {
+          color: #ffc107 !important;
+          transition: color 0.2s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

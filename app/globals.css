@@ -67,7 +67,7 @@ body {
 }
 
 .twoline {
-  display: -webkit-box;
+  display: -webkit-box !important;
   -webkit-line-clamp: 2;
   /* Limits text to 2 lines */
   -webkit-box-orient: vertical;
@@ -113,4 +113,166 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: #ff5c41 #f1f3f7;
+}
+
+.swiper {
+  height: 100% !important;
+}
+
+
+/* Top Destination */
+.destination-mosaic-grid {
+  display: grid;
+  gap: 20px;
+  grid-auto-rows: 240px;
+  /* 24-column template for ultra-precise horizontal balancing */
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-areas:
+    "andaman andaman andaman andaman andaman andaman andaman andaman andaman andaman thailand thailand thailand thailand thailand thailand vietnam vietnam vietnam vietnam vietnam vietnam vietnam vietnam"
+    "manali  manali  manali  manali  manali  gujarat gujarat gujarat gujarat gujarat thailand thailand thailand thailand thailand thailand malaysia malaysia malaysia malaysia malaysia malaysia malaysia malaysia";
+}
+
+/* Explicit placement definitions */
+.area-andaman {
+  grid-area: andaman;
+}
+
+.area-manali {
+  grid-area: manali;
+}
+
+.area-gujarat {
+  grid-area: gujarat;
+}
+
+.area-thailand {
+  grid-area: thailand;
+}
+
+.area-vietnam {
+  grid-area: vietnam;
+}
+
+.area-malaysia {
+  grid-area: malaysia;
+}
+
+.mosaic-item :global(.destination-card2) {
+  height: 100% !important;
+}
+
+/* Screen sizes smaller than 991px collapse smoothly into a clean vertical stack */
+@media (max-width: 991px) {
+  .destination-mosaic-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mosaic-item {
+    width: 100%;
+    height: 280px;
+  }
+}
+
+.destination-mosaic-grid {
+  display: grid;
+  gap: 20px;
+  grid-auto-rows: 240px;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-areas:
+    "andaman andaman andaman andaman andaman andaman andaman andaman andaman andaman thailand thailand thailand thailand thailand thailand vietnam vietnam vietnam vietnam vietnam vietnam vietnam vietnam"
+    "manali  manali  manali  manali  manali  gujarat gujarat gujarat gujarat gujarat thailand thailand thailand thailand thailand thailand malaysia malaysia malaysia malaysia malaysia malaysia malaysia malaysia";
+}
+
+.area-andaman {
+  grid-area: andaman;
+}
+
+.area-manali {
+  grid-area: manali;
+}
+
+.area-gujarat {
+  grid-area: gujarat;
+}
+
+.area-thailand {
+  grid-area: thailand;
+}
+
+.area-vietnam {
+  grid-area: vietnam;
+}
+
+.area-malaysia {
+  grid-area: malaysia;
+}
+
+.mosaic-item :global(.destination-card2) {
+  height: 100% !important;
+}
+
+/* --- Mobile Layout Pivot (Swiper Behavior Below 991px) --- */
+@media (max-width: 991px) {
+  .destination-mosaic-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* Prevents items from dropping to next line */
+    overflow-x: auto;
+    /* Enables horizontal scrolling slide action */
+    scroll-snap-type: x mandatory;
+    /* Makes cards snap exactly like a swiper slider */
+    gap: 16px;
+    padding-bottom: 15px;
+    /* Space for scrollbar visibility if native */
+
+    /* Hides standard desktop browser scrollbars for a clean look */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .destination-mosaic-grid::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+  }
+
+  .mosaic-item {
+    /* Disable CSS Grid Area layout blocks */
+    grid-area: unset !important;
+
+    /* Control sizing inside the flex slider row */
+    flex: 0 0 35%;
+    /* Each card takes 85% width so next card peeks in */
+    width: 85%;
+    height: 320px;
+    /* Clean visual height for mobile displays */
+
+    scroll-snap-align: start;
+    /* Target snap anchor point */
+  }
+}
+
+@media (max-width: 768px) {
+  .mosaic-item {
+    scroll-snap-align: start;
+    flex: 0 0 55%;
+    width: 74%;
+    height: 200px;
+    grid-area: unset !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home2-package-slider-section {
+    top: 35px;
+    padding-bottom: 20px !important;
+  }
+  .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h1, .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h2{
+    font-size: 25px !important;
+  }
+  .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content p{
+    font-size: 14px !important;
+  }
 }

@@ -1,7 +1,7 @@
 function HiddenGemsCard({pkg}) {
     return (
         <>
-            <div className="destination-card2 five">
+            <div className="destination-card2 hidden-gems five">
                 <a href={pkg?.link} className="destination-img">
                     <img src={pkg?.image} alt={pkg?.title} />
                 </a>
