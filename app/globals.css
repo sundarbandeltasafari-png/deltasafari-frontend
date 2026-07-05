@@ -276,3 +276,216 @@ body {
     font-size: 14px !important;
   }
 }
+
+.threeline {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box !important;
+}
+
+.social-list li{
+      border-radius: 30px;
+    width: 45px;
+    padding: 5px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.social-list li:hover{
+  background-color: var(--primary-color1);
+  color: #fff;
+}
+
+.login-btn{
+      background-color: var(--primary-color1) !important;
+}
+
+/* Desktop: Strip away default details/summary behaviors */
+@media (min-width: 768px) {
+  .footer-widget.mobile-accordion details summary {
+    list-style: none; /* Removes default arrow marker */
+    pointer-events: none; /* Disables clicking to close on desktop */
+  }
+  .footer-widget.mobile-accordion details summary::-webkit-details-marker {
+    display: none; /* Extra fallback for safari */
+  }
+}
+
+/* Mobile: Enable Accordion styling beneath 768px */
+@media (max-width: 767px) {
+  .footer-widget.mobile-accordion details {
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); Subtle separating line */
+    padding-bottom: 10px;
+  }
+  
+  /* Reset the default open attribute to closed state dynamically on mobile screen loading */
+  /* Note: Users can toggle this natively. */
+  .footer-widget.mobile-accordion details summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+  }
+
+  .footer-widget.mobile-accordion details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Custom animated chevron indicator */
+  .footer-widget.mobile-accordion details summary::after {
+    content: '\f282'; /* FontAwesome or Bootstrap Icon chevron down symbol code */
+    font-family: "bootstrap-icons", "Font Awesome 6 Free"; 
+    font-weight: 900;
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+  }
+
+  /* Rotate indicator when accordion expands */
+  .footer-widget.mobile-accordion details[open] summary::after {
+    transform: rotate(180deg);
+  }
+
+  .footer-widget.mobile-accordion .widget-list {
+    margin-top: 10px;
+    padding-left: 5px;
+  }
+}
+
+/* Homepage Scrolling Card Stylesheet */
+.home-scroll-card {
+  position: relative;
+  /* width: 280px; */
+  height: 190px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background-color: #f8f9fa;
+  flex-shrink: 0; /* Prevents compression inside horizontal flex sliders */
+}
+
+.home-scroll-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-link-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+}
+
+/* Image container & overlay gradient structure */
+.home-scroll-card .image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.home-scroll-card .image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.home-scroll-card:hover .image-container img {
+  transform: scale(1.03);
+}
+
+/* Scrim protection ensures text readability over light images */
+.card-gradient-scrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.4) 65%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+/* Duration badge matches image_ad362b.jpg */
+.duration-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #0d6efd;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  z-index: 2;
+  letter-spacing: 0.3px;
+}
+
+/* Overlay content container alignment */
+.card-overlay-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  z-index: 2;
+  display: flex;
+  flex-column: min-content;
+  gap: 4px;
+}
+
+/* Two-line title clamping configuration */
+.card-title-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Typography alignment for prices */
+.card-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.price-actual {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.price-strike {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+
+@media screen and (max-width: 767px) {
+  .footer-menu-wrap>.row>.col-lg-3{
+    margin-top: 10px !important;
+  }
+}

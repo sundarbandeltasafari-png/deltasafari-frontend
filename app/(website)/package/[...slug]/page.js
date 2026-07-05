@@ -19,7 +19,7 @@ import Head from 'next/head';
 import { urlEncode } from '@/libs/urlHelper';
 import ShareButton from '@/components/common/ShareButton';
 
-export default function GoFlyPackageDetails() {
+export default function page() {
   const [activeTab, setActiveTab] = useState("overview");
   const [openFaq, setOpenFaq] = useState(0);
   const [departure, setDeparture] = useState()
@@ -37,26 +37,32 @@ export default function GoFlyPackageDetails() {
   const sidebarRef = useRef()
 
   useEffect(() => {
-    axiosNormalGet(`${getParticularPackageUrl}?id=${slug.split("-")[slug.split("-").length - 1]}`).then((res) => {
-      if (res?.status) {
-        setPackageDetails(res?.package)
-        if (res?.package.assets.length > 0) {
-          let ogImage = null
-          res?.package.assets.forEach(element => {
-            if (element.type == 1 && !ogImage) {
-              ogImage = `${process.env.NEXT_PUBLIC_SERVER_URL}${element.path.replace(/\\/g, '/')}`
-              setOgImageUrl(ogImage)
-            }
-          });
-        } else {
-          setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/img/logo_DS.png`)
+    const pkgId = getPackageIdFromPath(slug);
+    if (pkgId) {
+      axiosNormalGet(`${getParticularPackageUrl}?id=${pkgId}`).then((res) => {
+        if (res?.status) {
+          setPackageDetails(res?.package)
+          if (res?.package.assets.length > 0) {
+            let ogImage = null
+            res?.package.assets.forEach(element => {
+              if (element.type == 1 && !ogImage) {
+                ogImage = `${process.env.NEXT_PUBLIC_SERVER_URL}${element.path.replace(/\\/g, '/')}`
+                setOgImageUrl(ogImage)
+              }
+            });
+          } else {
+            setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/img/logo_DS.png`)
+          }
+          setLoading(false)
+        }else{
+          showMessage('error', res?.msg)
         }
-        setLoading(false)
-      }
-      showMessage(res?.status ? 'success' : 'error', res?.msg)
-    }).catch((err) => {
-      showMessage('Something went wrong!  Please try again later.', 'error')
-    })
+      }).catch((err) => {
+        showMessage('error', 'Something went wrong!  Please try again later.')
+      }).finally(() => setLoading(false))
+    } else {
+      setLoading(false)
+    }
   }, [])
 
   function bookNow() {
@@ -396,4 +402,19 @@ export default function GoFlyPackageDetails() {
       }
     </>
   );
+}
+
+
+function getPackageIdFromPath(urlOrSlug) {
+  if (!urlOrSlug) return null;
+  let lastSegment = "";
+  if (Array.isArray(urlOrSlug)) {
+    lastSegment = urlOrSlug[urlOrSlug.length - 1];
+  }
+  else if (typeof urlOrSlug === 'string') {
+    const segments = urlOrSlug.split('/');
+    lastSegment = segments[segments.length - 1];
+  }
+  const parts = lastSegment.split('-');
+  return parts[parts.length - 1];
 }

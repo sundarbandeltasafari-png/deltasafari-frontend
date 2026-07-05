@@ -19,9 +19,11 @@ async function page() {
         faqs = null;
     }
 
+    console.log(offices)
+
     return (
         <>
-            <section className="container contact-us">
+            <section className="container contact-us mt-4">
                 <div className="tabs row">
                     <div className="tab col-md-6">
                         <div className="title">
@@ -60,7 +62,11 @@ async function page() {
                     <h2>Our Offices</h2>
                     <div className="tabs">
                         {
-                            offices && offices.length > 0 && offices.map((office, index) => {
+                            offices && offices.length > 0 && offices.sort((a, b) => {
+                                if (a.office_type == "Head Office") return -1;
+                                if (b.office_type == "Head Office") return 1;
+                                return 0;
+                            }).map((office, index) => {
                                 return <div key={index} className="tab">
                                     <div className="title">
                                         <h3>{office?.office_type}</h3>
@@ -81,7 +87,7 @@ async function page() {
                             <h2 className="title">Frequently Asked Questions</h2>
                             <p className="subtitle">Everything you need to know about us</p>
 
-                            <div className="contact-us" style={{maxWidth: "100%"}}>
+                            <div className="contact-us" style={{ maxWidth: "100%" }}>
                                 <p>If you still have any questions or need further clarification, feel free to reach out to us directly. We’re here to help!</p>
                                 <a href="/contact">Contact Us</a>
                             </div>
@@ -91,10 +97,10 @@ async function page() {
                                 {
                                     faqs && faqs.length > 0 && faqs?.map((faq, index) => {
                                         return <div key={index} className="accordion-item wow animate fadeInDown" data-wow-delay="800ms" data-wow-duration="1500ms" style={{ visibility: 'visible', animationDuration: '1500ms', animationDelay: '800ms' }}>
-                                            <h5 className="accordion-header" id={"flush-headingFour_"+faq?.id}>
-                                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#flush-collapseFour_"+faq?.id} aria-expanded="false" aria-controls={"flush-collapseFour_"+faq?.id}>{faq?.question}</button>
+                                            <h5 className="accordion-header" id={"flush-headingFour_" + faq?.id}>
+                                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#flush-collapseFour_" + faq?.id} aria-expanded="false" aria-controls={"flush-collapseFour_" + faq?.id}>{faq?.question}</button>
                                             </h5>
-                                            <div id={"flush-collapseFour_"+faq?.id} className="accordion-collapse collapse" aria-labelledby={"flush-headingFour_"+faq?.id} data-bs-parent="#accordionFlushExample">
+                                            <div id={"flush-collapseFour_" + faq?.id} className="accordion-collapse collapse" aria-labelledby={"flush-headingFour_" + faq?.id} data-bs-parent="#accordionFlushExample">
                                                 <div className="accordion-body">
                                                     {faq?.answer}
                                                 </div>

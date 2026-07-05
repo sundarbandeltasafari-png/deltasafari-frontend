@@ -1,3 +1,4 @@
+import { urlEncode } from '@/libs/urlHelper'
 import Link from 'next/link'
 import React from 'react'
 
@@ -7,7 +8,7 @@ function PackageCard({ pkg }) {
             <div>
                 <div className="package-card">
                     <div className="package-img-wrap">
-                        <Link href={"/packages/category/"+pkg?.slug} className="package-img">
+                        <Link href={"/package/"+pkg?.to_destination_slug+'/'+pkg?.slug+'-'+urlEncode(pkg?.id)} className="package-img">
                             <img src={pkg?.image ? process.env.NEXT_PUBLIC_SERVER_URL+pkg?.image: process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/noimage.jpg'} alt={pkg?.name} />
                         </Link>
                         <div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import "./referal.css"
+import ReferalCalculator from '@/components/referal/ReferalCalculator'
 function page() {
     return (
         <>
@@ -16,7 +17,7 @@ function page() {
                                 </div>
                                 <h1 className="hero-title">
                                     Invite Friends &amp;<br />
-                                    Earn <span className="highlight">₹500</span><br />
+                                    Earn <span className="highlight">₹200</span><br />
                                     Every Time
                                 </h1>
                                 <p className="hero-desc">
@@ -52,12 +53,12 @@ function page() {
                                     <div className="reward-split">
                                         <div className="reward-box you">
                                             <div className="reward-box-label">You Get</div>
-                                            <div className="reward-box-amount">₹500</div>
+                                            <div className="reward-box-amount">₹200</div>
                                             <div className="reward-box-desc">wallet credits</div>
                                         </div>
                                         <div className="reward-box friend">
                                             <div className="reward-box-label">Friend Gets</div>
-                                            <div className="reward-box-amount">₹250</div>
+                                            <div className="reward-box-amount">₹200</div>
                                             <div className="reward-box-desc">off first booking</div>
                                         </div>
                                     </div>
@@ -144,15 +145,15 @@ function page() {
                                 <div className="step-num-badge c3">3</div>
                                 <div className="step-icon-circle c3"><i className="bi bi-bag-check-fill"></i></div>
                                 <h5>Friend Books a Trip</h5>
-                                <p>Your friend signs up using your code and completes their first booking on Delta Safari. They enjoy ₹250 off instantly.</p>
+                                <p>Your friend signs up using your code and completes their first booking on Delta Safari. They enjoy ₹200 off instantly.</p>
                             </div>
                         </div>
                         <div className="col-md-3 animUp" style={{ height: "stretch" }}>
                             <div className="hiw-step">
                                 <div className="step-num-badge c4">4</div>
                                 <div className="step-icon-circle c4"><i className="bi bi-wallet-fill"></i></div>
-                                <h5>You Earn ₹500</h5>
-                                <p>₹500 travel credit is instantly added to your Delta Safari wallet. Use it on any tour, flight, hotel, or visa service.</p>
+                                <h5>You Earn ₹200</h5>
+                                <p>₹200 travel credit is instantly added to your Delta Safari wallet. Use it on any tour, flight, hotel, or visa service.</p>
                             </div>
                         </div>
                     </div>
@@ -205,19 +206,19 @@ function page() {
                                 <div className="earn-table-row">
                                     <span>5 friends</span>
                                     <span><span className="tier-tag silver">Silver</span></span>
-                                    <span>₹500</span>
-                                    <span className="earn-val">₹2,500</span>
+                                    <span>₹200</span>
+                                    <span className="earn-val">₹2,200</span>
                                 </div>
                                 <div className="earn-table-row">
                                     <span>10 friends</span>
                                     <span><span className="tier-tag silver">Silver</span></span>
-                                    <span>₹500</span>
+                                    <span>₹200</span>
                                     <span className="earn-val">₹5,000</span>
                                 </div>
                                 <div className="earn-table-row">
                                     <span>20 friends</span>
                                     <span><span className="tier-tag gold">Gold</span></span>
-                                    <span>₹500</span>
+                                    <span>₹200</span>
                                     <span className="earn-val">₹10,000</span>
                                 </div>
                                 <div className="earn-table-row">
@@ -235,29 +236,7 @@ function page() {
                             </div> */}
                         </div>
                         <div className="col-lg-6">
-                            <div className="calc-widget">
-                                <div className="calc-widget-title">
-                                    <i className="bi bi-calculator-fill"></i> Earnings Calculator
-                                </div>
-                                <div className="calc-range-label">
-                                    Number of Referrals: <span id="referralCount">10</span>
-                                </div>
-                                <input type="range" className="custom-range" id="refRange" min="1" max="50" />
-                                <div className="calc-result-grid">
-                                    <div className="calc-result-box primary">
-                                        <div className="calc-result-label">Your Total Earnings</div>
-                                        <div className="calc-result-amount" id="totalEarnings">₹500</div>
-                                    </div>
-                                    <div className="calc-result-box accent">
-                                        <div className="calc-result-label">Friends Save</div>
-                                        <div className="calc-result-amount" id="friendSavings">₹250</div>
-                                    </div>
-                                </div>
-                                <div className="calc-tier-display">
-                                    <span style={{ fontSize: ".85rem", color: "var(--text-muted)" }}>Your current tier at this count:</span>
-                                    <span className="calc-tier-badge" id="calcTierBadge">🥈 Silver</span>
-                                </div>
-                            </div>
+                            <ReferalCalculator />
                         </div>
                     </div>
                 </div>
@@ -276,7 +255,7 @@ function page() {
                                 <div className="benefit-icon orange"><i className="bi bi-lightning-charge-fill"></i></div>
                                 <div>
                                     <h5>Instant Credits</h5>
-                                    <p>No waiting period. As soon as your referred friend completes a booking, ₹500 is credited to your wallet within 24 hours.</p>
+                                    <p>No waiting period. As soon as your referred friend completes a booking, ₹200 is credited to your wallet within 24 hours.</p>
                                 </div>
                             </div>
                         </div>
@@ -333,84 +312,207 @@ function page() {
             <section className="faq-section section-pad" id="faq">
                 <div className="container">
                     <div className="row g-5 align-items-start">
+                        {/* Left Column: Heading Content */}
                         <div className="col-lg-4">
                             <span className="section-eyebrow">Have Questions?</span>
-                            <h2 className="section-heading mt-2">Frequently<br />Asked <span>Questions</span></h2>
-                            <p className="section-subheading mt-3">Can't find the answer you're looking for? Our support team is here to help.</p>
-                            <a href="#" className="d-inline-flex align-items-center gap-2 mt-4 text-decoration-none" style={{ color: "var(--primary)", fontWeight: "700", fontSize: ".9rem" }}>
+                            <h2 className="section-heading mt-2">
+                                Frequently<br />Asked <span>Questions</span>
+                            </h2>
+                            <p className="section-subheading mt-3">
+                                Can't find the answer you're looking for? Our support team is here to help.
+                            </p>
+                            <a
+                                href="#"
+                                className="d-inline-flex align-items-center gap-2 mt-4 text-decoration-none"
+                                style={{ color: "var(--primary)", fontWeight: "700", fontSize: ".9rem" }}
+                            >
                                 <i className="bi bi-chat-dots-fill"></i> Contact Support
                             </a>
                         </div>
+
+                        {/* Right Column: Bootstrap Accordion */}
                         <div className="col-lg-8">
-                            <div id="faqContainer">
+                            <div className="accordion" id="faqAccordion">
 
-                                <div className="faq-item">
-                                    <button className="faq-question open" onclick="toggleFaq(this)">
-                                        Who is eligible to participate in the referral program?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer open">
-                                        Any registered Delta Safari user can participate. You don't need to make a booking yourself first. Simply sign up, copy your referral code, and start sharing. The program is open to all users across India.
+                                {/* Item 1 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingOne">
+                                        <button
+                                            className="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne"
+                                        >
+                                            Who is eligible to participate in the referral program?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseOne"
+                                        className="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Any registered Delta Safari user can participate. You don't need to make a booking yourself first. Simply sign up, copy your referral code, and start sharing. The program is open to all users across India.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        When exactly will I receive my ₹500 reward?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        Your reward is credited within 24 hours after your referred friend's first booking payment is confirmed. You'll receive an in-app notification and email when the credit hits your wallet.
+                                {/* Item 2 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingTwo">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseTwo"
+                                            aria-expanded="false"
+                                            aria-controls="collapseTwo"
+                                        >
+                                            When exactly will I receive my ₹200 reward?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseTwo"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Your reward is credited within 24 hours after your referred friend's first booking payment is confirmed. You'll receive an in-app notification and email when the credit hits your wallet.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        Is there a limit to how many people I can refer?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        Absolutely no limit! You can refer 1 friend or 1,000 friends — every single successful booking earns you a reward. The more you refer, the higher your tier and the bigger your reward per booking.
+                                {/* Item 3 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingThree">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree"
+                                            aria-expanded="false"
+                                            aria-controls="collapseThree"
+                                        >
+                                            Is there a limit to how many people I can refer?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseThree"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingThree"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Absolutely no limit! You can refer 1 friend or 1,000 friends — every single successful booking earns you a reward. The more you refer, the higher your tier and the bigger your reward per booking.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        How do I move up to Gold or Platinum tier?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        Tiers are based on the number of successful referral bookings completed in a rolling 12-month window. Gold requires 15+ referrals, Platinum requires 24+. Your tier is automatically upgraded once you cross the threshold — no manual action needed.
+                                {/* Item 4 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingFour">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFour"
+                                            aria-expanded="false"
+                                            aria-controls="collapseFour"
+                                        >
+                                            How do I move up to Gold or Platinum tier?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFour"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingFour"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Tiers are based on the number of successful referral bookings completed in a rolling 12-month window. Gold requires 15+ referrals, Platinum requires 24+. Your tier is automatically upgraded once you cross the threshold — no manual action needed.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        Where can I use my Delta Safari wallet credits?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        Delta Safari wallet credits can be used on all services available on the platform — domestic and international tour packages, flight bookings, hotel stays, visa assistance, and holiday packages. There are no restrictions.
+                                {/* Item 5 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingFive">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFive"
+                                            aria-expanded="false"
+                                            aria-controls="collapseFive"
+                                        >
+                                            Where can I use my Delta Safari wallet credits?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFive"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingFive"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Delta Safari wallet credits can be used on all services available on the platform — domestic and international tour packages, flight bookings, hotel stays, visa assistance, and holiday packages. There are no restrictions.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        What happens if my referred friend cancels their booking?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        If a booking is cancelled within the cancellation window and a full refund is issued, the referral credit associated with that booking will be reversed from your wallet. This ensures the program remains fair for everyone.
+                                {/* Item 6 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingSix">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseSix"
+                                            aria-expanded="false"
+                                            aria-controls="collapseSix"
+                                        >
+                                            What happens if my referred friend cancels their booking?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseSix"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingSix"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            If a booking is cancelled within the cancellation window and a full refund is issued, the referral credit associated with that booking will be reversed from your wallet. This ensures the program remains fair for everyone.
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="faq-item">
-                                    <button className="faq-question" onclick="toggleFaq(this)">
-                                        Do wallet credits have an expiry date?
-                                        <i className="bi bi-chevron-down"></i>
-                                    </button>
-                                    <div className="faq-answer">
-                                        Silver tier credits expire in 12 months, Gold tier credits in 18 months, and Platinum tier credits never expire. Credits are always valid as long as your Delta Safari account remains active.
+                                {/* Item 7 */}
+                                <div className="accordion-item border-0 mb-3 shadow-sm">
+                                    <h2 className="accordion-header" id="headingSeven">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseSeven"
+                                            aria-expanded="false"
+                                            aria-controls="collapseSeven"
+                                        >
+                                            Do wallet credits have an expiry date?
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseSeven"
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby="headingSeven"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div className="accordion-body text-muted">
+                                            Silver tier credits expire in 12 months, Gold tier credits in 18 months, and Platinum tier credits never expire. Credits are always valid as long as your Delta Safari account remains active.
+                                        </div>
                                     </div>
                                 </div>
 

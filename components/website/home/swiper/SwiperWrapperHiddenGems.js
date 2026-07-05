@@ -42,8 +42,15 @@ function SwiperWrapperHiddenGems({ data }) {
                 slideShadows: false,
             }}
             breakpoints={{
-                350: { slidesPerView: 1 },
-                577: { slidesPerView: 1 },
+                0: { 
+                    slidesPerView: 1.3
+                },
+                430: { 
+                    slidesPerView: 1.45
+                },
+                576: { 
+                    slidesPerView: 2.2
+                },
                 768: { slidesPerView: 3 },
                 991: { slidesPerView: 3 },
                 1200: { slidesPerView: 4 },

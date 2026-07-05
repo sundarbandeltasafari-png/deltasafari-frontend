@@ -5,7 +5,7 @@ function FilterBottomCard() {
         <div className="filter-wrapper bottom-card">
             <div className="container">
                 <div className="filter-input-wrap m-auto d-flex justify-content-evenly gap-2 flex-wrap"
-                    style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", maxWidth: "800px", borderRadius: "30px", padding: "10px" }}>
+                    style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", maxWidth: "700px", borderRadius: "30px", padding: "10px" }}>
                     <div className="d-flex justify-content-between">
                         <div className="d-flex justify-content-between gap-2 align-items-center">
                             <img src={process.env.NEXT_PUBLIC_PUBLIC_URL+'assets/images/package/group-departure.png'} alt="" />

@@ -19,7 +19,7 @@ async function PackageDestinations() {
     }
     return (
         <>
-            {desination && desination.length > 0 && <div className="destination-page package-head-card pt-80 mb-50 ">
+            {desination && desination.length > 0 && <div className="destination-page package-head-card pt-50 mb-50 ">
                 <div className="container">
                     <div className="row gy-md-5 gy-4">
                         {

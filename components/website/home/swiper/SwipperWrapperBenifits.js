@@ -37,12 +37,11 @@ function SwipperWrapperBenifits() {
 
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{
-                280: { slidesPerView: 1 },
-                386: { slidesPerView: 1 },
-                576: { slidesPerView: 2 },
+                280: { slidesPerView: 2.2, spaceBetween: 10 },
+                386: { slidesPerView: 2.2, spaceBetween : 10 },
+                576: { slidesPerView: 3.2, spaceBetween: 10 },
                 768: {
-                    slidesPerView: 3, // Matches your JS
-                    spaceBetween: 15,
+                    slidesPerView: 3,
                 },
                 992: { slidesPerView: 4 },
                 1200: { slidesPerView: 4 },

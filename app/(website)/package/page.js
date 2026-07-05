@@ -243,7 +243,7 @@ function page() {
                             </div>
                         })};
                     </div>
-                    <div className="btn-and-price-area mt-4 d-flex justify-content-center">
+                    <div className="btn-and-price-area mt-0 d-flex justify-content-center">
                         <a href="hotel-details.html" className="primary-btn1">
                             <span>
                                 View More

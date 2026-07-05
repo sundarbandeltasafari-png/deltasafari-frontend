@@ -20,7 +20,7 @@ function SwiperWraperHolidayPackages({ data }) {
             key={pathname}
 
             // Modules must be defined here
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay]}
 
             // Settings from your JS snippet
             slidesPerView={5}
@@ -34,28 +34,38 @@ function SwiperWraperHolidayPackages({ data }) {
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true, // Matches your JS setting
             }}
-
-            // Pagination Configuration
-            pagination={{
-                clickable: true,
-                // If you have a specific class for the dots:
-                // el: '.swiper-pagination2', 
-            }}
-
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{
-                280: { slidesPerView: 1 },
-                386: { slidesPerView: 1 },
-                576: { slidesPerView: 1 },
-                768: {
-                    slidesPerView: 3, // Matches your JS
-                    spaceBetween: 15,
+                // Base Mobile layout: shows 1 full card and a 30% preview peek of the next slide
+                0: { 
+                    slidesPerView: 1.3, 
+                    spaceBetween: 14 
                 },
-                992: { slidesPerView: 4 },
-                1200: { slidesPerView: 4 },
-                1400: { slidesPerView: 4 }, // Matches your JS
+                // Large smartphones viewports
+                430: { 
+                    slidesPerView: 1.45, 
+                    spaceBetween: 16 
+                },
+                // Small tablets viewports
+                576: { 
+                    slidesPerView: 2.2, 
+                    spaceBetween: 16 
+                },
+                // Tablets layout
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 18,
+                },
+                // Desktop viewports
+                992: { 
+                    slidesPerView: 4, 
+                    spaceBetween: 20 
+                },
+                1400: { 
+                    slidesPerView: 4, 
+                    spaceBetween: 24 
+                },
             }}
-
             // Fix for Next.js navigation issues
             observer={true}
             observeParents={true}

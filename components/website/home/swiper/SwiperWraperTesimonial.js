@@ -38,9 +38,20 @@ function SwiperWraperTesimonial({ data }) {
 
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{
-                280: { slidesPerView: 1 },
-                386: { slidesPerView: 1 },
-                576: { slidesPerView: 1 },
+                 0: { 
+                    slidesPerView: 1.3, 
+                    spaceBetween: 14 
+                },
+                // Large smartphones viewports
+                430: { 
+                    slidesPerView: 1.45, 
+                    spaceBetween: 16 
+                },
+                // Small tablets viewports
+                576: { 
+                    slidesPerView: 2.2, 
+                    spaceBetween: 16 
+                },
                 768: {
                     slidesPerView: 3, // Matches your JS
                     spaceBetween: 15,

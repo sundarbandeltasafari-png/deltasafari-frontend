@@ -4,7 +4,7 @@ import React from 'react'
 function HomeAbout() {
   return (
     <>
-         <div className="home9-about-section mb-100 mt-5 pt-3">
+         <div className="home9-about-section mb-100 mt-3 pt-3">
         <div className="container">
             <div className="row justify-content-between">
                 <div className="col-xl-6 col-lg-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms" style={{visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms'}}>
@@ -21,12 +21,9 @@ function HomeAbout() {
                                 exploration.</p>
                         </div>
                         <div className="btn-and-review">
-                            <Link className="primary-btn1 transparent" href="/">
+                            <Link className="primary-btn1" href="/">
                                 <span>
-                                    Explore Gofly
-                                </span>
-                                <span>
-                                    Explore Gofly
+                                    Explore Deltasafari
                                 </span>
                             </Link>
                         </div>
