@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const permisionSlice = createSlice({
-    name: 'adminAuth',
+    name: 'permision',
     initialState: {
         permisions: [],
         fetched: false

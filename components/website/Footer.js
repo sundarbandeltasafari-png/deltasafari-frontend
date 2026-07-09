@@ -11,7 +11,7 @@ function Footer({ siteSettings }) {
             <div className="row gy-md-4 gy-5">
 
               {/* Column 1: Info & Logo */}
-              <div className="col-lg-3 col-md-4 col-sm-6">
+              <div className="col-lg-3 col-md-6 col-6">
                 <div className="footer-logo-and-addition-info">
                   <Link href="/" className="footer-logo">
                     <img
@@ -33,7 +33,7 @@ function Footer({ siteSettings }) {
               </div>
 
               {/* Column 2: Quick Links */}
-              <div className="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-md-end">
+              <div className="col-lg-3 col-md-6 col-6 d-flex justify-content-md-end">
                 <div className="footer-widget mobile-accordion">
                   <details className="w-100" open>
                     <summary className="widget-title">
@@ -52,9 +52,9 @@ function Footer({ siteSettings }) {
               </div>
 
               {/* Column 3: Information */}
-              <div className="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-md-end">
+              <div className="col-lg-3 col-md-6 col-6 d-flex justify-content-md-end">
                 <div className="footer-widget mobile-accordion">
-                  <details className="w-100">
+                  <details className="w-100" open>
                     <summary className="widget-title">
                       <h5>Information</h5>
                     </summary>
@@ -70,9 +70,9 @@ function Footer({ siteSettings }) {
               </div>
 
               {/* Column 4: Popular Destinations */}
-              <div className="col-lg-3 col-sm-6 d-flex justify-content-lg-end">
+              <div className="col-lg-3 col-md-6 col-6 d-flex justify-content-lg-end">
                 <div className="footer-widget mobile-accordion">
-                  <details className="w-100">
+                  <details className="w-100" open>
                     <summary className="widget-title">
                       <h5>Popular Destination</h5>
                     </summary>

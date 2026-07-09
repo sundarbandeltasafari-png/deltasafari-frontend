@@ -5531,7 +5531,7 @@ header.style-2 .nav-right .mobile-menu-btn {
   visibility: hidden;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 768px) {
   header.style-2 .nav-right .mobile-menu-btn {
     display: flex;
     align-items: center;
@@ -5543,6 +5543,7 @@ header.style-2 .nav-right .mobile-menu-btn {
     height: 30px;
     border-radius: 10px;
     border: 1px solid var(--borders-color);
+    display: none;
   }
 
   header.style-2 .nav-right .mobile-menu-btn svg {
@@ -5607,7 +5608,7 @@ header.style-2 .logo-and-menu-area .main-menu {
   display: none !important;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 768px) {
   header.style-2 .main-menu>ul>li {
     padding: 0px 12px;
   }
@@ -6138,7 +6139,7 @@ header.style-2 .mobile-logo-area .menu-close-btn:hover i {
   color: var(--white-color);
 }
 
-@media only screen and (max-width: 1199px) {
+@media only screen and (max-width: 768px) {
   header.style-2 .dropdown-icon {
     color: var(--white-color);
   }
@@ -10425,26 +10426,26 @@ header.style-3.three .nav-right .primary-btn1 {
   07. Home1 Service Section CSS
 ========================================*/
 .service-wrapper {
-  padding: 60px 50px;
+  padding: 15px;
   border-radius: 10px;
   background-color: #F2F2FF;
 }
 
 @media (max-width: 1399px) {
   .service-wrapper {
-    padding: 60px 25px;
+    padding: 15px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .service-wrapper {
-    padding: 50px 15px;
+    padding: 15px;
   }
 }
 
 @media (max-width: 576px) {
   .service-wrapper {
-    padding: 45px 15px;
+    padding: 15px;
     border-radius: 15px;
   }
 }
@@ -11098,7 +11099,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .package-card .package-img-wrap .package-img img {
   border-radius: 10px;
-  min-height: 200px;
+  min-height: 150px;
   -o-object-fit: cover;
   object-fit: cover;
   transition: all 0.5s ease-out;
@@ -12847,7 +12848,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .testimonial-card {
-  padding: 40px 35px;
+  padding: 10px 15px;
   background-color: var(--white-color);
   border-radius: 10px;
   height: 100%
@@ -13086,25 +13087,25 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .testimonial-card.three {
-    padding: 30px 20px;
+    padding: 10px 10px;
   }
 }
 
 @media (max-width: 991px) {
   .testimonial-card.three {
-    padding: 35px 25px;
+    padding: 10px 10px;
   }
 }
 
 @media (max-width: 767px) {
   .testimonial-card.three {
-    padding: 35px 30px;
+    padding: 10px 10px;
   }
 }
 
 @media (max-width: 576px) {
   .testimonial-card.three {
-    padding: 30px 15px;
+    padding: 10px 10px;
   }
 }
 
@@ -16476,10 +16477,11 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .blog-card2 .blog-img-wrap .blog-img img {
   border-radius: 10px;
-  min-height: 200px;
+  height: 150px;
   -o-object-fit: cover;
   object-fit: cover;
   transition: all 0.5s ease-out;
+  width: 100%;
 }
 
 .blog-card2 .blog-img-wrap .blog-img::after {
@@ -16584,32 +16586,10 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .blog-card2 .blog-content {
-  padding: 40px 20px 20px;
+  padding: 10px;
 }
 
-@media (max-width: 1399px) {
-  .blog-card2 .blog-content {
-    padding: 35px 12px 20px;
-  }
-}
 
-@media (min-width: 992px) and (max-width: 1199px) {
-  .blog-card2 .blog-content {
-    padding: 30px 5px 20px;
-  }
-}
-
-@media (max-width: 991px) {
-  .blog-card2 .blog-content {
-    padding: 30px 10px 20px;
-  }
-}
-
-@media (max-width: 576px) {
-  .blog-card2 .blog-content {
-    padding: 25px 5px 15px;
-  }
-}
 
 .blog-card2 .blog-content h4 {
   margin-bottom: 0;
@@ -22398,6 +22378,7 @@ header.style-3.three .nav-right .primary-btn1 {
 .home5-destination-section {
   position: relative;
   z-index: 1;
+  margin-top: 20px;
 }
 
 .home5-destination-section .vector1 {
@@ -45805,7 +45786,7 @@ header.style-2 .header-logo img {
 
 .package-card .package-img-wrap .package-img img {
   border-radius: 10px;
-  min-height: 200px;
+  min-height: 150px;
   -o-object-fit: cover;
   object-fit: cover;
   transition: all 0.5s ease-out;
@@ -45947,9 +45928,9 @@ p {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1199px) {
   .filter-wrapper {
-    margin-top: -85px !important;
+    margin-top: -85px;
   }
 
   .filter-wrapper-package {
@@ -45984,9 +45965,9 @@ p {
     display: none;
   }
 
-  .filter-wrapper.bottom-card {
+  /* .filter-wrapper.bottom-card {
     display: none !important;
-  }
+  } */
 
   .home2-banner-section .banner-content {
     top: -75px
@@ -45994,8 +45975,7 @@ p {
 
   .home2-package-slider-section {
     background: none;
-    padding-top: 0px !important;
-    padding-bottom: 20px !important;
+    padding-top: 10px !important;
   }
 
   .home2-banner-section {
@@ -46008,6 +45988,10 @@ p {
 
   .section-title h2 {
     font-size: 24px;
+  }
+
+  .filter-wrapper.bottom-card {
+    margin-top: 50px;
   }
 }
 
@@ -46030,7 +46014,7 @@ p {
 
 
 .destination-card2.hidden-gems .destination-img img {
-  height: 250px
+  height: 185px
 }
 
 .destination-card,
@@ -46047,8 +46031,8 @@ p {
   align-items: center;
   justify-content: center;
   color: var(--text-color);
-  content: "\f286";
-  font-family: bootstrap-icons;
+  /* content: "\f286"; */
+  /* font-family: bootstrap-icons; */
   background-image: none;
   font-weight: 600;
   font-size: 18px;
@@ -46065,8 +46049,8 @@ p {
 }
 
 .footer-section .footer-menu-wrap .footer-widget .widget-title:not(.collapsed)::after {
-  font-family: bootstrap-icons !important;
-  content: "\f282";
+  /* font-family: bootstrap-icons !important;
+  content: "\f282"; */
   color: #fff;
   border: none;
 }
@@ -46124,5 +46108,16 @@ p {
     font-weight: 400;
     line-height: 15px;
     margin: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  header.style-2 .header-logo img {
+    height: 68px;
+    width: 100px;
+  }
+
+  header.style-2 .main-menu>ul>li>a {
+    padding: 5px !important;
   }
 }

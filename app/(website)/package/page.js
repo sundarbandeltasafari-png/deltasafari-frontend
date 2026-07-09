@@ -3,12 +3,15 @@ import SwiperWrapper from '@/components/website/common/SwiperWrapper'
 import Faq from '@/components/website/home/Faq';
 import HomeBanner from '@/components/website/home/HomeBanner';
 import SwiperWrapperPackage from '@/components/website/package/SwiperWrapperPackage';
-import Filter from '@/components/website/packages/Filter';
+import Filter from '@/components/website/home/Filter';
 import FilterBottomCard from '@/components/website/packages/FilterBottomCard';
 import PackageDestinations from '@/components/website/packages/PackageDestinations';
+import { getCitiesUrl } from '@/routes/packageRoutes';
+import axios from 'axios';
+import Link from 'next/link';
 import React from 'react'
 
-function page() {
+async function page() {
     const packageData = [
         {
             "id": 1,
@@ -63,157 +66,46 @@ function page() {
             "priceLabel": "Per Person"
         }
     ];
-    const hotelCities = [
-        {
-            "name": "Delhi",
-            "image": "https://images.emtcontent.com/hotel-img/del-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Goa",
-            "image": "https://images.emtcontent.com/hotel-img/goa-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Mumbai",
-            "image": "https://images.emtcontent.com/hotel-img/mumb-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Shimla",
-            "image": "https://images.emtcontent.com/hotel-img/shimla-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Manali",
-            "image": "https://images.emtcontent.com/hotel-img/manali-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Hyderabad",
-            "image": "https://images.emtcontent.com/hotel-img/hyd-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Chennai",
-            "image": "https://images.emtcontent.com/hotel-img/chennai-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Kolkata",
-            "image": "https://images.emtcontent.com/hotel-img/kolkata-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Jaipur",
-            "image": "https://images.emtcontent.com/hotel-img/jaipur-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Pune",
-            "image": "https://images.emtcontent.com/hotel-img/pune-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Gurugram",
-            "image": "https://images.emtcontent.com/hotel-img/gurgrm-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
-        },
-        {
-            "name": "Ahmedabad",
-            "image": "https://images.emtcontent.com/hotel-img/ahmd-sm.webp",
-            "categories": [
-                "Hotels",
-                "Budget Hotels",
-                "3 Star Hotels",
-                "4 Star Hotels",
-                "5 Star Hotels"
-            ]
+
+    let cities = null;
+    let faqs = null;
+    try {
+        const response = await axios.post(getCitiesUrl, { condition: { show_in_package: 1 } });
+        if (response.data?.status) {
+            cities = response.data?.cities.map((elem) => {
+                return {
+                    ...elem, "categories": [
+                        "Hotels",
+                        "Budget Hotels",
+                        "3 Star Hotels",
+                        "4 Star Hotels",
+                        "5 Star Hotels"
+                    ]
+                }
+            })
         }
-    ]
+    } catch (error) {
+        cities = null
+        faqs = null
+    }
+
     return (
         <>
             <HomeBanner />
             <Filter />
             <FilterBottomCard />
-            <PackageDestinations/>
+            <PackageDestinations />
             <div className="destination-dt-travel-season-section mb-100 mt-5" id="scroll-section">
                 <div className="container">
                     <h2 className='mt-4 mb-3'>Book your Destinations</h2>
                     <div className="row g-1">
-                        {hotelCities.map((city, index) => {
+                        {cities.map((city, index) => {
                             return <div key={index} className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
                                 <div className="hotel-card row m-2">
                                     <div className="hotel-img-wrap p-0 col-md-5">
-                                        <a href="/" className="hotel-img">
-                                            <img src={city.image} alt={city.name} style={{ height: "90px", width: "100%" }} />
-                                        </a>
+                                        <Link href={"/packages/"+'city-'+city.slug} className="hotel-img">
+                                            <img src={process.env.NEXT_PUBLIC_SERVER_URL+city.city_image} alt={city.name} style={{ height: "90px", width: "100%" }} />
+                                        </Link>
                                     </div>
                                     <div className="hotel-content col-md-7 pb-0 pt-2">
                                         <div className="location-area flex-column mb-0 gap-1">
@@ -222,7 +114,7 @@ function page() {
                                                     <path d="M6.83615 0C3.77766 0 1.28891 2.48879 1.28891 5.54892C1.28891 7.93837 4.6241 11.8351 6.05811 13.3994C6.25669 13.6175 6.54154 13.7411 6.83615 13.7411C7.13076 13.7411 7.41561 13.6175 7.6142 13.3994C9.04821 11.8351 12.3834 7.93833 12.3834 5.54892C12.3834 2.48879 9.89464 0 6.83615 0ZM7.31469 13.1243C7.18936 13.2594 7.02008 13.3342 6.83615 13.3342C6.65222 13.3342 6.48295 13.2594 6.35761 13.1243C4.95614 11.5959 1.69584 7.79515 1.69584 5.54896C1.69584 2.7134 4.00067 0.406933 6.83615 0.406933C9.67164 0.406933 11.9765 2.7134 11.9765 5.54896C11.9765 7.79515 8.71617 11.5959 7.31469 13.1243Z"></path>
                                                     <path d="M6.83618 8.54554C8.4624 8.54554 9.7807 7.22723 9.7807 5.60102C9.7807 3.9748 8.4624 2.65649 6.83618 2.65649C5.20997 2.65649 3.89166 3.9748 3.89166 5.60102C3.89166 7.22723 5.20997 8.54554 6.83618 8.54554Z"></path>
                                                 </svg>
-                                                <a style={{ fontSize: "19px" }} href="/">{city.name}</a>
+                                                <Link href={"/packages/"+'city-'+city.slug} style={{ fontSize: "19px" }} >{city.name}</Link>
                                             </div>
                                             <ul className="hotel-feature-list mb-0">
                                                 {/* {city.categories.map((cat, index) => {
@@ -243,7 +135,7 @@ function page() {
                             </div>
                         })};
                     </div>
-                    <div className="btn-and-price-area mt-0 d-flex justify-content-center">
+                    {/* <div className="btn-and-price-area mt-0 d-flex justify-content-center">
                         <a href="hotel-details.html" className="primary-btn1">
                             <span>
                                 View More
@@ -258,7 +150,7 @@ function page() {
                                 </svg>
                             </span>
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="destination-dt-travel-season-section mb-100" id="scroll-section">

@@ -415,7 +415,7 @@ export default function TravelPackageListPage() {
                   <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
                     
                     {/* Top Media Window */}
-                    <Link href={"/package/"+pkg?.to_destination_slug+'/'+pkg?.slug+'-'+urlEncode(pkg?.id)} className="position-relative" style={{ height: '200px' }}>
+                    <div href={"/package/"+pkg?.to_destination_slug+'/'+pkg?.slug+'-'+urlEncode(pkg?.id)} className="position-relative" style={{ height: '200px' }}>
                       <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
                       
                       {/* Interactive Selection Checkbox Overlay */}
@@ -439,7 +439,7 @@ export default function TravelPackageListPage() {
                       <div className="position-absolute bottom-0 start-0 w-100 bg-primary opacity-90 text-white px-3 py-1 text-xs fw-semibold">
                         {pkg.duration_nights || 0}N / {pkg.duration_days || 0}D | {pkg.package_type_name || 'Special'} Departure
                       </div>
-                    </Link>
+                    </div>
 
                     {/* Content Area */}
                     <div className="card-body p-3 d-flex flex-column justify-content-between">

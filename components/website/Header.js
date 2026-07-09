@@ -7,9 +7,9 @@ function Header({ siteSettings }) {
   const pathname = usePathname();
   const route = useRouter();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  useEffect(()=>{
+  useEffect(() => {
     setOpenMobileMenu(false)
-  },[pathname])
+  }, [pathname])
   return (
     <>
       <div id="magic-cursor">
@@ -34,7 +34,7 @@ function Header({ siteSettings }) {
               <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
             </Link>
             <div className={`main-menu ${openMobileMenu && 'show-menu'}`}>
-              <div className="mobile-logo-area d-xl-none d-flex align-items-center justify-content-between">
+              <div className="mobile-logo-area d-md-none d-flex align-items-center justify-content-between">
                 <a href="index.html" className="mobile-logo-wrap">
                   <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
                 </a>
@@ -80,13 +80,13 @@ function Header({ siteSettings }) {
                   </Link>
                 </li>
                 <li className={pathname.includes("/contact") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
-                 <i className="fa-solid fa-headset"></i>
+                  <i className="fa-solid fa-headset"></i>
                   <Link href="/contact" className="drop-down">
                     Contact Us
                   </Link>
                 </li>
               </ul>
-              <div className="contact-area mb-3 d-xl-none d-flex">
+              <div className="contact-area mb-3 d-md-none d-flex">
                 <div className="icon">
                   <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                     <g>
@@ -99,7 +99,7 @@ function Header({ siteSettings }) {
                   <a href={`tel:${siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}`}>{siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}</a>
                 </div>
               </div>
-              <a className="primary-btn1 login-btn black-bg d-xl-none d-flex">
+              <a className="primary-btn1 login-btn black-bg d-md-none d-flex">
                 <span>
                   <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                     <g>
@@ -112,7 +112,7 @@ function Header({ siteSettings }) {
             </div>
           </div>
           <div className="main-menu">
-            <div className="mobile-logo-area d-xl-none d-flex align-items-center justify-content-between">
+            <div className="mobile-logo-area d-md-none d-flex align-items-center justify-content-between">
               <Link href="/" className="mobile-logo-wrap">
                 <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
               </Link>
@@ -168,7 +168,7 @@ function Header({ siteSettings }) {
                 </Link>
               </li>
             </ul>
-            <a className="primary-btn1 login-btn black-bg d-xl-none d-flex">
+            <a className="primary-btn1 login-btn black-bg d-md-none d-flex">
               <span>
                 <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                   <g>
@@ -228,7 +228,7 @@ function Header({ siteSettings }) {
                 </ul>
               </div>
             </div>
-            <a className="primary-btn1 login-btn black-bg d-xl-flex d-none">
+            <a className="primary-btn1 login-btn black-bg ">
               <span>
                 <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                   <g>
@@ -278,6 +278,54 @@ function Header({ siteSettings }) {
           </div>
         </div>
       </header>
+      <div className="mobile-bottom-nav justify-content-around align-items-center fixed-bottom bg-white border-top py-2 pt-3 shadow-lg">
+
+        {/* Home */}
+        <Link
+          href="/"
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname === "/" ? "active" : ""}`}
+        >
+          <i className="fa-regular fa-house mb-1 fs-5"></i>
+          <span className="nav-label">Home</span>
+        </Link>
+
+        {/* Package */}
+        <Link
+          href="/package"
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/package") ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-suitcase-rolling mb-1 fs-5"></i>
+          <span className="nav-label">Package</span>
+        </Link>
+
+        {/* Corporate */}
+        <Link
+          href="/corporate"
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/corporate") ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-clipboard-user mb-1 fs-5"></i>
+          <span className="nav-label">Corporate</span>
+        </Link>
+
+        {/* Refer */}
+        <Link
+          href="/referal"
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/referal") ? "active" : ""}`}
+        >
+          <i className="fa-regular fa-handshake mb-1 fs-5"></i>
+          <span className="nav-label">Referal</span>
+        </Link>
+
+        {/* Profile / Login */}
+        <Link
+          href="/login"
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/login") ? "active" : ""}`}
+        >
+          <i className="fa-regular fa-user mb-1 fs-5"></i>
+          <span className="nav-label">Profile</span>
+        </Link>
+
+      </div>
     </>
   )
 }
