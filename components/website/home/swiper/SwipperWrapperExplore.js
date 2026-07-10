@@ -63,7 +63,7 @@ function SwipperWrapperExplore({ packageType }) {
                         <div className="content">
                             <img src={process.env.NEXT_PUBLIC_SERVER_URL+pkgType?.image} style={{ height: "50px", filter: "grayscale(100%)" }} />
                             <h5>{pkgType?.name}</h5>
-                            <p>Explore Now</p>
+                            <p style={{fontSize: '12px', lineHeight: '5px'}}>Explore Now</p>
                         </div>
                     </Link>
                 </SwiperSlide>

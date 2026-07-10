@@ -1,17 +1,25 @@
-import React from 'react'
+'use client'
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react'
 
 function Filter() {
+    const [searchText, setSearchText] = useState();
+    const router = useRouter();
+    function handleSearch(e){
+        e.preventDefault()
+        router.push('/packages/name-'+encodeURI(searchText))
+    }
     return (
         <div className="filter-wrapper">
             <div className="container">
                 <div className="filter-input-wrap home m-auto p-0">
-                    <form className="filter-input show">
+                    <form onSubmit={(e)=> handleSearch()} className="filter-input show">
                         <div className="single-search-box w-100  p-0 ps-3 m-0 justify-content-between border-0">
                             <div className="form-inner2 p-0">
                                 <i className="bi bi-search"></i>
-                                <input type="text" className="w-100 h-100" placeholder="Enter your dream destination" />
+                                <input type="text" value={searchText} onChange={(e)=>{setSearchText(e.target.value)}} className="w-100 h-100" placeholder="Enter your dream destination" />
                             </div>
-                            <button type="submit" className="primary-btn1 h-100">
+                            <button onClick={handleSearch} type="submit" className="primary-btn1 h-100">
                                 <span>
                                     <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
                                         <g>

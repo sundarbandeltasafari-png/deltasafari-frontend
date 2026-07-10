@@ -77,10 +77,10 @@ function Footer({ siteSettings }) {
                       <h5>Popular Destination</h5>
                     </summary>
                     <ul className="widget-list">
-                      <li><Link href="/packages/group-packages">Group Packages</Link></li>
-                      <li><Link href="/packages/domestic-packages">Domestic Packages</Link></li>
-                      <li><Link href="/packages/international-packages">International Packages</Link></li>
-                      <li><Link href="/packages/foreigners-corner">Foreigner's Packages</Link></li>
+                      <li><Link href="/packages/category-group-packages">Group Packages</Link></li>
+                      <li><Link href="/packages/category-domestic-packages">Domestic Packages</Link></li>
+                      <li><Link href="/packages/category-international-packages">International Packages</Link></li>
+                      <li><Link href="/packages/category-foreigners-corner">Foreigner's Packages</Link></li>
                       <li><a>Customized Packages</a></li>
                     </ul>
                   </details>

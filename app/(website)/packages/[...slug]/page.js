@@ -6,7 +6,6 @@ import { axiosNormalPost } from '@/libs/axiosHelper';
 import { getFilterPackages } from '@/routes/packageRoutes';
 import './page.css';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { urlEncode } from '@/libs/urlHelper';
 
 export default function TravelPackageListPage() {
@@ -46,8 +45,7 @@ export default function TravelPackageListPage() {
   // --- FETCH DATA ---
   useEffect(() => {
     setLoading(true);
-    const filter  = params.slug && parseSlugFilters(params.slug)
-    console.log(filter);
+    const filter = params.slug && parseSlugFilters(params.slug);
     axiosNormalPost(getFilterPackages, filter)
       .then((res) => {
         if (res && res.packages) {
@@ -108,7 +106,7 @@ export default function TravelPackageListPage() {
   };
 
   const toggleCompare = (id) => {
-    setCompareIds(prev => 
+    setCompareIds(prev =>
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };
@@ -138,7 +136,7 @@ export default function TravelPackageListPage() {
     return (
       <div className="bg-white min-vh-100 py-4 text-dark font-sans">
         <div className="container">
-          
+
           {/* Header element directly matching image_ab5565.jpg */}
           <div className="d-flex align-items-center justify-content-between mb-4">
             <button className="btn btn-link text-dark fw-bold h4 text-decoration-none p-0 d-flex align-items-center gap-2" onClick={() => setIsComparing(false)}>
@@ -174,7 +172,7 @@ export default function TravelPackageListPage() {
                   <tr>
                     <td className="fw-bold text-secondary small">Picture</td>
                     {comparedPackages.map(pkg => {
-                      const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL+`${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
+                      const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL + `${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
                       return (
                         <td key={pkg.id} className="text-center p-2">
                           <img src={imgUrl} alt="package" className="rounded-3 object-fit-cover" style={{ width: '100%', maxHeight: '160px', maxWidth: '280px' }} />
@@ -182,7 +180,7 @@ export default function TravelPackageListPage() {
                       );
                     })}
                   </tr>
-                  
+
                   {/* Row: No. of Nights */}
                   <tr>
                     <td className="fw-bold text-secondary small">No. of Nights</td>
@@ -275,12 +273,12 @@ export default function TravelPackageListPage() {
   // --- STANDARD PACKAGES FEED MODULE ---
   return (
     <div className="bg-light min-vh-100 py-4 font-sans text-dark position-relative">
-      
+
       {/* STICKY FLOATING COMPARE ACTION TRIGGER STRIP */}
       {compareIds.length > 0 && (
         <div className="position-fixed bottom-0 start-50 translate-middle-x mb-4 shadow-lg bg-dark text-white rounded-pill px-4 py-3 d-flex align-items-center gap-4 border border-secondary transition-all" style={{ zIndex: 1050 }}>
           <span className="text-xs fw-semibold">
-            <i className="bi bi-layers-half text-warning me-2"></i> 
+            <i className="bi bi-layers-half text-warning me-2"></i>
             {compareIds.length} Package{compareIds.length > 1 ? 's' : ''} Selected
           </span>
           <div className="d-flex gap-2">
@@ -297,10 +295,10 @@ export default function TravelPackageListPage() {
       <div className="container">
 
         {/* TOP COMPACT BRAND SEARCH & DROPDOWNS BAR */}
-        <div className="card border-0 shadow-xs px-4 py-3 bg-white rounded-4 mb-3" style={{position: 'sticky', top: "10%", zIndex: 555, borderRadius: '5px !important'}}>
+        <div className="card border-0 shadow-xs px-4 py-3 bg-white rounded-4 mb-3" style={{ position: 'sticky', top: "10%", zIndex: 555, borderRadius: '5px !important' }}>
           <div className="d-flex flex-wrap align-items-center justify-content-between gap-2">
             <div className="d-flex flex-wrap align-items-center gap-2">
-              
+
               <div className="dropdown">
                 <button className="btn btn-light bg-white border rounded-pill dropdown-toggle text-xs px-3" type="button" data-bs-toggle="dropdown">
                   Sort By: <span className="fw-semibold text-primary">{sortBy === 'Default' ? 'Select' : sortBy}</span>
@@ -406,24 +404,24 @@ export default function TravelPackageListPage() {
           <div className="row g-4">
             {displayedPackages.map((pkg) => {
               const inclusions = safeParseJSON(pkg.inclusions);
-              const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL+`${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
+              const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL + `${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
 
               const isCheckedForComparison = compareIds.includes(pkg.id);
 
               return (
                 <div key={pkg.id} className="col-lg-4 col-md-6 col-12">
                   <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
-                    
+
                     {/* Top Media Window */}
-                    <div href={"/package/"+pkg?.to_destination_slug+'/'+pkg?.slug+'-'+urlEncode(pkg?.id)} className="position-relative" style={{ height: '200px' }}>
+                    <div href={"/package/" + pkg?.to_destination_slug + '/' + pkg?.slug + '-' + urlEncode(pkg?.id)} className="position-relative" style={{ height: '200px' }}>
                       <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
-                      
+
                       {/* Interactive Selection Checkbox Overlay */}
                       <span className="position-absolute top-0 start-0 m-2 bg-dark opacity-85 text-white px-2 py-1 text-2xs rounded d-flex align-items-center gap-1 user-select-none">
-                        <input 
-                          type="checkbox" 
-                          className="form-check-input m-0 cursor-pointer accent-warning" 
-                          id={`comp-${pkg.id}`} 
+                        <input
+                          type="checkbox"
+                          className="form-check-input m-0 cursor-pointer accent-warning"
+                          id={`comp-${pkg.id}`}
                           checked={isCheckedForComparison}
                           onChange={() => toggleCompare(pkg.id)}
                         />
@@ -454,10 +452,10 @@ export default function TravelPackageListPage() {
                         </div>
 
                         <div className="d-flex gap-3 align-items-center my-1 text-muted text-center border-top border-bottom py-2">
-                          <div className="flex-fill"><i className="bi bi-building d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{lineHeight: '15px'}}>Hotel</span></div>
-                          <div className="flex-fill"><i className="bi bi-binoculars d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{lineHeight: '15px'}}>Sightseeing</span></div>
-                          <div className="flex-fill"><i className="bi bi-car-front d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{lineHeight: '15px'}}>Transfer</span></div>
-                          <div className="flex-fill"><i className="bi bi-egg-fried d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{lineHeight: '15px'}}>Meals</span></div>
+                          <div className="flex-fill"><i className="bi bi-building d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Hotel</span></div>
+                          <div className="flex-fill"><i className="bi bi-binoculars d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Sightseeing</span></div>
+                          <div className="flex-fill"><i className="bi bi-car-front d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Transfer</span></div>
+                          <div className="flex-fill"><i className="bi bi-egg-fried d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Meals</span></div>
                         </div>
 
                         {inclusions.length > 0 && (
@@ -474,16 +472,16 @@ export default function TravelPackageListPage() {
                       {/* Footer Rates Block */}
                       <div className="border-top pt-1 d-flex align-items-end justify-content-between mt-2">
                         <div>
-                          <span className="text-3xs text-muted d-block line-height-1 mb-1" style={{lineHeight: '15px'}}>Starting From</span>
+                          <span className="text-3xs text-muted d-block line-height-1 mb-1" style={{ lineHeight: '15px' }}>Starting From</span>
                           {pkg.base_price > pkg.actual_price && (
-                            <span className="text-2xs text-muted text-decoration-line-through me-1 d-block" style={{lineHeight: '15px'}}>
+                            <span className="text-2xs text-muted text-decoration-line-through me-1 d-block" style={{ lineHeight: '15px' }}>
                               ₹{Number(pkg.base_price).toLocaleString('en-IN')}
                             </span>
                           )}
-                          <span className="h4 fw-extrabold text-dark mb-0" style={{fontWeight: 700}}>
+                          <span className="h4 fw-extrabold text-dark mb-0" style={{ fontWeight: 700 }}>
                             ₹{Number(pkg.actual_price || 0).toLocaleString('en-IN')}
                           </span>
-                          <span className="text-3xs text-muted d-block text-nowrap" style={{lineHeight: '15px'}}>Per Person on twin sharing</span>
+                          <span className="text-3xs text-muted d-block text-nowrap" style={{ lineHeight: '15px' }}>Per Person on twin sharing</span>
                         </div>
 
                         <div>
@@ -522,12 +520,15 @@ function parseSlugFilters(slugs) {
     // Find the index of the first hyphen
     const hyphenIndex = slug.indexOf('-');
     // If there is no hyphen, skip this slug
-    if (hyphenIndex === -1) return;
+    if (hyphenIndex === -1) {
+      filters['name'] = decodeURI(slug);
+      return;
+    }
     // Extract the key (everything before first hyphen) and value (everything after)
     const key = slug.substring(0, hyphenIndex);
     const value = slug.substring(hyphenIndex + 1);
     if (key && value) {
-      filters[key] = value;
+      filters[key] = decodeURI(value);
     }
   });
   return filters;

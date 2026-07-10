@@ -40,16 +40,9 @@ async function HolidayPackages() {
                     <div className="tab-content" id="pills-tabContent">
                         <div className="tab-pane fade show active" id="pills-europe" role="tabpanel" aria-labelledby="pills-europe-tab">
                             {domestic && domestic.length > 0 &&  <SwiperWraperHolidayPackages data={domestic} />}
-
-                            <div className="slider-pagi-wrap">
-                                <div className="home1-destination-pagi paginations"></div>
-                            </div>
                         </div>
                         <div className="tab-pane fade" id="pills-asia" role="tabpanel" aria-labelledby="pills-asia-tab">
                             {international && international.length > 0 && <SwiperWraperHolidayPackages data={international} />}
-                            <div className="slider-pagi-wrap">
-                                <div className="home1-destination-pagi paginations"></div>
-                            </div>
                         </div>
                     </div>
                 </div>

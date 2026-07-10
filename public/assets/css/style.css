@@ -15902,21 +15902,21 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home2-offer-banner-section .offer-banner-wrap .offer-banner-content {
-  padding: 55px 0 55px 60px;
+  padding: 10px;
   max-width: 482px;
   width: 100%;
 }
 
 @media (max-width: 1199px) {
   .home2-offer-banner-section .offer-banner-wrap .offer-banner-content {
-    padding: 55px 0 55px 30px;
+    padding: 10px;
     max-width: 437px;
   }
 }
 
 @media (max-width: 991px) {
   .home2-offer-banner-section .offer-banner-wrap .offer-banner-content {
-    padding: 50px 0 50px 25px;
+    padding: 10px;
     max-width: 300px;
   }
 }
@@ -15930,7 +15930,7 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (max-width: 576px) {
   .home2-offer-banner-section .offer-banner-wrap .offer-banner-content {
-    padding: 60px 15px 60px 15px;
+    padding: 10px;
   }
 }
 
@@ -15984,7 +15984,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home2-offer-banner-section .offer-banner-wrap .offer-banner-content .primary-btn1 {
-  padding: 17px 22px;
+  padding: 15px;
 }
 
 @media (max-width: 767px) {
@@ -42857,7 +42857,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .about-why-choose-section .why-choose-card {
-  padding: 25px;
+  padding: 10px;
   background-color: #E6F5A9;
   border-radius: 10px;
   height: 100%;
@@ -42869,20 +42869,20 @@ header.style-3.three .nav-right .primary-btn1 {
 
 @media (min-width: 1200px) and (max-width: 1399px) {
   .about-why-choose-section .why-choose-card {
-    padding: 30px;
+    padding: 10px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .about-why-choose-section .why-choose-card {
-    padding: 25px;
+    padding: 15px;
     border-radius: 15px;
   }
 }
 
 @media (max-width: 767px) {
   .about-why-choose-section .why-choose-card {
-    padding: 15px;
+    padding: 10px;
     border-radius: 15px;
   }
 }
@@ -44277,12 +44277,12 @@ header.style-3.three .nav-right .primary-btn1 {
 
 .home9-about-section .btn-and-review .primary-btn1 {
   border-radius: 100px;
-  padding: 19px 32px;
+  padding: 15px 25px;
 }
 
 @media (max-width: 767px) {
   .home9-about-section .btn-and-review .primary-btn1 {
-    padding: 16px 28px;
+    padding: 15px 25px;
   }
 }
 
