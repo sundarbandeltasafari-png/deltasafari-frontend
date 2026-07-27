@@ -13,7 +13,7 @@ import 'swiper/css/effect-fade';
 function PackageBanner({ packageDetails }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     return (
-        <div className="row mb-5">
+        <div className="row mb-3">
             <div className="col-12">
                 <div className="gofly-swiper-wrapper">
                     <Swiper

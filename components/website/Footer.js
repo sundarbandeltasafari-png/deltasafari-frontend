@@ -63,6 +63,7 @@ function Footer({ siteSettings }) {
                       <li><Link href="/pages/cancelation-policy">Cancellation Policy</Link></li>
                       <li><Link href="/pages/terms-condition">Terms & Condition</Link></li>
                       <li><Link href="/pages/privacy-policy">Privacy Policy</Link></li>
+                      <li><Link href="/pages/refund-policy">Refund Policy</Link></li>
                       <li><Link href="/blogs">Blogs</Link></li>
                     </ul>
                   </details>
@@ -81,7 +82,7 @@ function Footer({ siteSettings }) {
                       <li><Link href="/packages/category-domestic-packages">Domestic Packages</Link></li>
                       <li><Link href="/packages/category-international-packages">International Packages</Link></li>
                       <li><Link href="/packages/category-foreigners-corner">Foreigner's Packages</Link></li>
-                      <li><a>Customized Packages</a></li>
+                      <li><Link href={'/customized-package'}>Customized Packages</Link></li>
                     </ul>
                   </details>
                 </div>

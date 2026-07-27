@@ -61,7 +61,7 @@ function Header({ siteSettings }) {
                     Corporate
                   </Link>
                 </li>
-                <li className={pathname.includes("/hotel") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
+                {/* <li className={pathname.includes("/hotel") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
                   <i className="fa-solid fa-hotel"></i>
                   <Link href="/hotel" className="drop-down">
                     Hotel
@@ -72,7 +72,7 @@ function Header({ siteSettings }) {
                   <Link href="/cab" className="drop-down">
                     Cab
                   </Link>
-                </li>
+                </li> */}
                 <li className={pathname.includes("/referal") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
                   <i className="fa-regular fa-handshake"></i>
                   <Link href="/referal" className="drop-down">
@@ -143,7 +143,7 @@ function Header({ siteSettings }) {
                   </span>
                 </Link>
               </li>
-              <li className={pathname.includes("/hotel") ? "active" : ''}>
+              {/* <li className={pathname.includes("/hotel") ? "active" : ''}>
                 <Link href="/hotel" >
                   <i className="fa-solid fa-hotel"></i>
                   Hotel
@@ -154,7 +154,7 @@ function Header({ siteSettings }) {
                   <i className="fa-solid fa-taxi"></i>
                   Cab's
                 </Link>
-              </li>
+              </li> */}
               <li className={pathname.includes("/referal") ? "active" : ''}>
                 <Link href="/referal" >
                   <i className="fa-regular fa-handshake"></i>

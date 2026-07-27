@@ -1,12 +1,15 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { axiosNormalPost } from '@/libs/axiosHelper';
 import { getFilterPackages } from '@/routes/packageRoutes';
 import './page.css';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { urlEncode } from '@/libs/urlHelper';
+import HomeBanner from '@/components/website/home/HomeBanner';
+import Filter from '@/components/website/home/Filter';
+import Link from 'next/link';
 
 export default function TravelPackageListPage() {
   const params = useParams();
@@ -14,6 +17,7 @@ export default function TravelPackageListPage() {
   const [dbPackages, setDbPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
+  const router = useRouter()
 
   // --- CEILING PRICE DETERMINATION ---
   const maxAvailablePrice = useMemo(() => {
@@ -28,6 +32,24 @@ export default function TravelPackageListPage() {
   const [durationFilter, setDurationFilter] = useState('All');
   const [activeTab, setActiveTab] = useState('All Packages');
   const [sortBy, setSortBy] = useState('Default');
+
+  // --- DROPDOWN CONTROL STATE ---
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const filterBarRef = useRef(null);
+
+  const toggleDropdown = (name) => {
+    setOpenDropdown(prev => prev === name ? null : name);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (filterBarRef.current && !filterBarRef.current.contains(e.target)) {
+        setOpenDropdown(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // --- COMPARE STATES ---
   const [compareIds, setCompareIds] = useState([]);
@@ -137,13 +159,13 @@ export default function TravelPackageListPage() {
       <div className="bg-white min-vh-100 py-4 text-dark font-sans">
         <div className="container">
 
-          {/* Header element directly matching image_ab5565.jpg */}
+          {/* Header */}
           <div className="d-flex align-items-center justify-content-between mb-4">
             <button className="btn btn-link text-dark fw-bold h4 text-decoration-none p-0 d-flex align-items-center gap-2" onClick={() => setIsComparing(false)}>
-              <i className="bi bi-arrow-left"></i> Compare Packages
+              <i className="bi bi-arrow-left"></i> Compare Packages ({comparedPackages.length})
             </button>
             <button className="btn btn-outline-primary text-xs rounded-3 px-3 py-2 fw-medium" onClick={() => setIsComparing(false)}>
-              Add Packages +
+              Back to List
             </button>
           </div>
 
@@ -159,10 +181,15 @@ export default function TravelPackageListPage() {
               <table className="table table-bordered mb-0 align-middle compare-table">
                 <thead className="table-light text-center">
                   <tr>
-                    <th className="text-start bg-light text-secondary small fw-bold" style={{ width: '20%' }}>Items</th>
+                    <th className="text-start bg-light text-secondary small fw-bold" style={{ width: '18%' }}>Features</th>
                     {comparedPackages.map(pkg => (
-                      <th key={pkg.id} className="text-uppercase text-xs fw-bold text-dark py-3" style={{ width: `${80 / comparedPackages.length}%` }}>
-                        {pkg.title}
+                      <th key={pkg.id} className="text-start text-xs fw-bold text-dark py-3" style={{ width: `${82 / comparedPackages.length}%` }}>
+                        <div className="d-flex align-items-center justify-content-between gap-2">
+                          <span className="text-truncate">{pkg.title}</span>
+                          <button className="btn btn-link text-danger p-0 ms-2" title="Remove" onClick={() => toggleCompare(pkg.id)}>
+                            <i className="bi bi-x-circle-fill"></i>
+                          </button>
+                        </div>
                       </th>
                     ))}
                   </tr>
@@ -170,96 +197,100 @@ export default function TravelPackageListPage() {
                 <tbody>
                   {/* Row: Picture */}
                   <tr>
-                    <td className="fw-bold text-secondary small">Picture</td>
+                    <td className="fw-bold text-secondary small">Package Preview</td>
                     {comparedPackages.map(pkg => {
                       const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL + `${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
                       return (
                         <td key={pkg.id} className="text-center p-2">
-                          <img src={imgUrl} alt="package" className="rounded-3 object-fit-cover" style={{ width: '100%', maxHeight: '160px', maxWidth: '280px' }} />
+                          <div className="position-relative overflow-hidden rounded-3" style={{ height: '140px' }}>
+                            <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
+                            {pkg.package_type_name && (
+                              <span className="position-absolute top-0 end-0 m-2 badge bg-primary text-2xs">
+                                {pkg.package_type_name}
+                              </span>
+                            )}
+                          </div>
                         </td>
                       );
                     })}
                   </tr>
 
-                  {/* Row: No. of Nights */}
+                  {/* Row: Duration */}
                   <tr>
-                    <td className="fw-bold text-secondary small">No. of Nights</td>
+                    <td className="fw-bold text-secondary small">Duration</td>
                     {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="text-center fw-semibold text-sm">{pkg.duration_nights || 0}</td>
-                    ))}
-                  </tr>
-
-                  {/* Row: Flight */}
-                  <tr>
-                    <td className="fw-bold text-secondary small">Flight</td>
-                    {comparedPackages.map(pkg => {
-                      const inclusionsStr = String(pkg.inclusions || '').toLowerCase();
-                      const hasFlight = inclusionsStr.includes('flight') || inclusionsStr.includes('airfare');
-                      return <td key={pkg.id} className="text-center text-sm">{hasFlight ? 'Included' : 'No'}</td>;
-                    })}
-                  </tr>
-
-                  {/* Row: Hotels */}
-                  <tr>
-                    <td className="fw-bold text-secondary small">Hotels</td>
-                    {comparedPackages.map(pkg => {
-                      const inclusionsStr = String(pkg.inclusions || '').toLowerCase();
-                      let tier = "Standard Stay";
-                      if (inclusionsStr.includes('luxury') || inclusionsStr.includes('resort')) tier = "5 Star";
-                      else if (inclusionsStr.includes('ac')) tier = "3 Star";
-                      return <td key={pkg.id} className="text-center text-sm">{tier}</td>;
-                    })}
-                  </tr>
-
-                  {/* Row: Transfer */}
-                  <tr>
-                    <td className="fw-bold text-secondary small">Transfer</td>
-                    {comparedPackages.map(pkg => {
-                      const inclusionsStr = String(pkg.inclusions || '').toLowerCase();
-                      const hasTransfer = inclusionsStr.includes('pickup') || inclusionsStr.includes('transfer') || inclusionsStr.includes('drop');
-                      return <td key={pkg.id} className="text-center text-sm">{hasTransfer ? 'Yes' : 'No'}</td>;
-                    })}
-                  </tr>
-
-                  {/* Row: Visa */}
-                  <tr>
-                    <td className="fw-bold text-secondary small">Visa</td>
-                    {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="text-center text-sm">No</td>
-                    ))}
-                  </tr>
-
-                  {/* Row: City Includes */}
-                  <tr>
-                    <td className="fw-bold text-secondary small">City Includes</td>
-                    {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="text-center text-xs text-muted fw-medium">
-                        {pkg.duration_nights}N {pkg.to_destination_name || 'Sightseeing'}
+                      <td key={pkg.id} className="text-center fw-semibold text-xs">
+                        <i className="bi bi-clock text-warning me-1"></i>
+                        {pkg.duration_days || 1} Days / {pkg.duration_nights || 0} Nights
                       </td>
                     ))}
+                  </tr>
+
+                  {/* Row: Destination / Route */}
+                  <tr>
+                    <td className="fw-bold text-secondary small">Route & Cities</td>
+                    {comparedPackages.map(pkg => (
+                      <td key={pkg.id} className="text-center text-xs fw-medium text-primary">
+                        {pkg.from_destination_name ? `${pkg.from_destination_name} ➔ ` : ''}
+                        {pkg.to_destination_name || 'Destination'}
+                      </td>
+                    ))}
+                  </tr>
+
+                  {/* Row: Inclusions */}
+                  <tr>
+                    <td className="fw-bold text-secondary small">Inclusions</td>
+                    {comparedPackages.map(pkg => {
+                      const incList = safeParseJSON(pkg.inclusions);
+                      return (
+                        <td key={pkg.id} className="p-3 align-top text-xs">
+                          {incList && incList.length > 0 ? (
+                            <ul className="list-unstyled mb-0 d-flex flex-column gap-1">
+                              {incList.map((inc, i) => (
+                                <li key={i} className="d-flex align-items-center gap-1.5">
+                                  <i className="bi bi-check-circle-fill text-success me-1"></i>
+                                  <span>{typeof inc === 'object' ? (inc.name || JSON.stringify(inc)) : inc}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <span className="text-muted italic">Standard Holiday Inclusions</span>
+                          )}
+                        </td>
+                      );
+                    })}
                   </tr>
 
                   {/* Row: Price Per Person */}
                   <tr>
-                    <td className="fw-bold text-secondary small">Price Per Person</td>
-                    {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="text-center text-primary fw-bold h5 py-3">
-                        ₹{Number(pkg.actual_price || 0).toLocaleString('en-IN')}
-                      </td>
-                    ))}
+                    <td className="fw-bold text-secondary small">Price</td>
+                    {comparedPackages.map(pkg => {
+                      const priceText = pkg.actual_price ? `₹${Number(pkg.actual_price).toLocaleString('en-IN')}` : 'Contact Us';
+                      const mrpText = pkg.mrp_price ? `₹${Number(pkg.mrp_price).toLocaleString('en-IN')}` : null;
+                      return (
+                        <td key={pkg.id} className="text-center py-3">
+                          <div className="h5 fw-bold text-primary mb-0">{priceText}</div>
+                          {mrpText && <small className="text-muted text-decoration-line-through me-2 text-2xs">{mrpText}</small>}
+                          <span className="text-2xs text-muted d-block mt-0.5">Per Person</span>
+                        </td>
+                      );
+                    })}
                   </tr>
 
                   {/* Row: Action Controls Footer */}
                   <tr>
                     <td className="bg-light"></td>
-                    {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="p-3">
-                        <div className="d-flex flex-column gap-2 mx-auto" style={{ maxWidth: '240px' }}>
-                          <button className="btn btn-orange text-white fw-bold py-2 text-xs rounded-2">View Package</button>
-                          <button className="btn btn-outline-danger py-1 text-xs rounded-2" onClick={() => toggleCompare(pkg.id)}>Remove</button>
-                        </div>
-                      </td>
-                    ))}
+                    {comparedPackages.map(pkg => {
+                      const detailsUrl = `/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`;
+                      return (
+                        <td key={pkg.id} className="p-3 text-center">
+                          <Link href={detailsUrl} className="primary-btn1 py-2 px-3 text-xs d-inline-block">
+                            <span>Book Now</span>
+                            <span>Book Now</span>
+                          </Link>
+                        </td>
+                      );
+                    })}
                   </tr>
                 </tbody>
               </table>
@@ -272,95 +303,162 @@ export default function TravelPackageListPage() {
 
   // --- STANDARD PACKAGES FEED MODULE ---
   return (
-    <div className="bg-light min-vh-100 py-4 font-sans text-dark position-relative">
+    <>
+      <HomeBanner />
+      <Filter />
+      <div className="bg-light min-vh-100 py-4 font-sans text-dark position-relative">
 
-      {/* STICKY FLOATING COMPARE ACTION TRIGGER STRIP */}
-      {compareIds.length > 0 && (
-        <div className="position-fixed bottom-0 start-50 translate-middle-x mb-4 shadow-lg bg-dark text-white rounded-pill px-4 py-3 d-flex align-items-center gap-4 border border-secondary transition-all" style={{ zIndex: 1050 }}>
-          <span className="text-xs fw-semibold">
-            <i className="bi bi-layers-half text-warning me-2"></i>
-            {compareIds.length} Package{compareIds.length > 1 ? 's' : ''} Selected
-          </span>
-          <div className="d-flex gap-2">
-            <button className="btn btn-sm btn-warning rounded-pill px-3 py-1 text-xs fw-bold" onClick={() => setIsComparing(true)}>
-              Compare Packages <i className="bi bi-chevron-right small ms-1"></i>
-            </button>
-            <button className="btn btn-sm btn-outline-light rounded-pill p-1 px-2 text-2xs" onClick={() => setCompareIds([])}>
-              Clear
-            </button>
+        {/* STICKY FLOATING COMPARE ACTION TRIGGER STRIP */}
+        {compareIds.length > 0 && (
+          <div className="position-fixed bottom-0 start-50 translate-middle-x mb-4 shadow-lg bg-dark text-white rounded-pill px-4 py-3 d-flex align-items-center gap-4 border border-secondary transition-all" style={{ zIndex: 1050 }}>
+            <span className="text-xs fw-semibold">
+              <i className="bi bi-layers-half text-warning me-2"></i>
+              {compareIds.length} Package{compareIds.length > 1 ? 's' : ''} Selected
+            </span>
+            <div className="d-flex gap-2">
+              <button className="btn btn-sm btn-warning rounded-pill px-3 py-1 text-xs fw-bold" onClick={() => setIsComparing(true)}>
+                Compare Packages <i className="bi bi-chevron-right small ms-1"></i>
+              </button>
+              <button className="btn btn-sm btn-outline-light rounded-pill p-1 px-2 text-2xs" onClick={() => setCompareIds([])}>
+                Clear
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="container">
+        <div className="container">
 
-        {/* TOP COMPACT BRAND SEARCH & DROPDOWNS BAR */}
-        <div className="card border-0 shadow-xs px-4 py-3 bg-white rounded-4 mb-3" style={{ position: 'sticky', top: "10%", zIndex: 555, borderRadius: '5px !important' }}>
-          <div className="d-flex flex-wrap align-items-center justify-content-between gap-2">
-            <div className="d-flex flex-wrap align-items-center gap-2">
+          {/* TOP EASEMYTRIP-STYLE FILTER BAR (SINGLE ROW HORIZONTAL SCROLL ON MOBILE) */}
+          <div className="card border-0 shadow-xs px-3 py-2 bg-white rounded-4 mb-4 position-relative" style={{ zIndex: 500, overflow: 'visible' }} ref={filterBarRef}>
+            <div className="d-flex align-items-center justify-content-between gap-2">
+              
+              {/* Single-row horizontal scrolling container for filter pills */}
+              <div className="d-flex flex-nowrap align-items-center gap-2 overflow-x-auto scroll-x-single-row py-1 flex-grow-1">
 
-              <div className="dropdown">
-                <button className="btn btn-light bg-white border rounded-pill dropdown-toggle text-xs px-3" type="button" data-bs-toggle="dropdown">
-                  Sort By: <span className="fw-semibold text-primary">{sortBy === 'Default' ? 'Select' : sortBy}</span>
+                {/* Sort By Pill */}
+                <button 
+                  className={`btn text-xs rounded-pill px-3 py-1.5 border d-flex align-items-center gap-1 flex-shrink-0 ${sortBy !== 'Default' ? 'btn-primary text-white border-primary' : 'btn-light bg-white text-dark'}`} 
+                  type="button"
+                  onClick={() => toggleDropdown('sort')}
+                >
+                  <i className="bi bi-arrow-down-up me-1"></i>
+                  Sort By: <span className="fw-semibold ms-1">{sortBy === 'Default' ? 'Default' : sortBy === 'PriceLowHigh' ? 'Price: Low to High' : 'Price: High to Low'}</span>
+                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
                 </button>
-                <ul className="dropdown-menu shadow-sm text-sm">
-                  <li><button className="dropdown-item" onClick={() => setSortBy('Default')}>Default</button></li>
-                  <li><button className="dropdown-item" onClick={() => setSortBy('PriceLowHigh')}>Price: Low to High</button></li>
-                  <li><button className="dropdown-item" onClick={() => setSortBy('PriceHighLow')}>Price: High to Low</button></li>
-                </ul>
+
+                {/* Package Type Pill */}
+                <button 
+                  className={`btn text-xs rounded-pill px-3 py-1.5 border d-flex align-items-center gap-1 flex-shrink-0 ${selectedPackageType !== 'All' ? 'btn-primary text-white border-primary' : 'btn-light bg-white text-dark'}`} 
+                  type="button"
+                  onClick={() => toggleDropdown('type')}
+                >
+                  <i className="bi bi-funnel me-1"></i>
+                  Type: <span className="fw-semibold ms-1">{selectedPackageType}</span>
+                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                </button>
+
+                {/* Budget Pill */}
+                <button 
+                  className={`btn text-xs rounded-pill px-3 py-1.5 border d-flex align-items-center gap-1 flex-shrink-0 ${(minPrice > 0 || maxPrice < maxAvailablePrice) ? 'btn-primary text-white border-primary' : 'btn-light bg-white text-dark'}`} 
+                  type="button"
+                  onClick={() => toggleDropdown('price')}
+                >
+                  <i className="bi bi-currency-rupee me-1"></i>
+                  Budget: <span className="fw-semibold ms-1">₹{minPrice.toLocaleString('en-IN')} - ₹{maxPrice.toLocaleString('en-IN')}</span>
+                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                </button>
+
+                {/* Duration Pill */}
+                <button 
+                  className={`btn text-xs rounded-pill px-3 py-1.5 border d-flex align-items-center gap-1 flex-shrink-0 ${durationFilter !== 'All' ? 'btn-primary text-white border-primary' : 'btn-light bg-white text-dark'}`} 
+                  type="button"
+                  onClick={() => toggleDropdown('duration')}
+                >
+                  <i className="bi bi-clock me-1"></i>
+                  Duration: <span className="fw-semibold ms-1">{durationFilter === 'All' ? 'All' : `${durationFilter} Days`}</span>
+                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                </button>
+
               </div>
 
-              <div className="dropdown">
-                <button className="btn btn-light bg-white border rounded-pill dropdown-toggle text-xs px-3" type="button" data-bs-toggle="dropdown">
-                  Package Type: <span className="fw-semibold text-primary">{selectedPackageType}</span>
-                </button>
-                <ul className="dropdown-menu shadow-sm text-sm">
-                  {availableTypes.map((type, i) => (
-                    <li key={i}><button className="dropdown-item" onClick={() => setSelectedPackageType(type)}>{type}</button></li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* DUAL SCROLL RANGE INPUT PANEL */}
-              <div className="dropdown">
-                <button className="btn btn-light bg-white border rounded-pill dropdown-toggle text-xs px-3" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                  Price: <span className="fw-semibold text-primary">₹{minPrice} - ₹{maxPrice}</span>
-                </button>
-                <div className="dropdown-menu p-3 shadow-sm text-sm" style={{ width: '260px' }}>
-                  <div className="mb-2">
-                    <label className="text-2xs text-muted d-block mb-1">Min Price: <strong>₹{minPrice.toLocaleString('en-IN')}</strong></label>
-                    <input type="range" className="form-range" min="0" max={maxAvailablePrice} value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} />
-                  </div>
-                  <div>
-                    <label className="text-2xs text-muted d-block mb-1">Max Price: <strong>₹{maxPrice.toLocaleString('en-IN')}</strong></label>
-                    <input type="range" className="form-range" min="0" max={maxAvailablePrice} value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} />
-                  </div>
-                  <div className="d-flex justify-content-between text-3xs text-muted border-top pt-2 mt-2">
-                    <span>Min: ₹0</span>
-                    <span>Max: ₹{maxAvailablePrice.toLocaleString('en-IN')}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="dropdown">
-                <button className="btn btn-light bg-white border rounded-pill dropdown-toggle text-xs px-3" type="button" data-bs-toggle="dropdown">
-                  Duration: <span className="fw-semibold text-primary">{durationFilter === 'All' ? 'All' : `${durationFilter} Days`}</span>
-                </button>
-                <ul className="dropdown-menu shadow-sm text-sm">
-                  <li><button className="dropdown-item" onClick={() => setDurationFilter('All')}>All Durations</button></li>
-                  <li><button className="dropdown-item" onClick={() => setDurationFilter('1-3')}>1 - 3 Days</button></li>
-                  <li><button className="dropdown-item" onClick={() => setDurationFilter('4-7')}>4 - 7 Days</button></li>
-                  <li><button className="dropdown-item" onClick={() => setDurationFilter('8+')}>8+ Days</button></li>
-                </ul>
-              </div>
-
+              {/* Reset Button */}
+              <button className="btn btn-link text-danger text-xs fw-semibold text-decoration-none px-2 flex-shrink-0 ms-auto" onClick={() => { handleResetAll(); setOpenDropdown(null); }}>
+                <i className="bi bi-arrow-counterclockwise me-1"></i> Reset
+              </button>
             </div>
 
-            <button className="btn btn-link text-danger text-xs fw-semibold text-decoration-none p-0" onClick={handleResetAll}>
-              Reset All
-            </button>
+            {/* UNCLIPPED FLOATING DROPDOWN MENUS POSITIONED TO FILTER CARD */}
+            {openDropdown === 'sort' && (
+              <div className="position-absolute start-0 top-100 mt-2 bg-white rounded-3 shadow-lg border p-2 text-xs" style={{ zIndex: 1050, minWidth: '220px', marginLeft: '12px' }}>
+                <div className="fw-bold px-3 py-1.5 text-muted border-bottom text-2xs text-uppercase mb-1">Sort Packages</div>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${sortBy === 'Default' ? 'active fw-bold' : ''}`} onClick={() => { setSortBy('Default'); setOpenDropdown(null); }}>
+                  Default Sort {sortBy === 'Default' && <i className="bi bi-check2"></i>}
+                </button>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${sortBy === 'PriceLowHigh' ? 'active fw-bold' : ''}`} onClick={() => { setSortBy('PriceLowHigh'); setOpenDropdown(null); }}>
+                  Price: Low to High {sortBy === 'PriceLowHigh' && <i className="bi bi-check2"></i>}
+                </button>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${sortBy === 'PriceHighLow' ? 'active fw-bold' : ''}`} onClick={() => { setSortBy('PriceHighLow'); setOpenDropdown(null); }}>
+                  Price: High to Low {sortBy === 'PriceHighLow' && <i className="bi bi-check2"></i>}
+                </button>
+              </div>
+            )}
+
+            {openDropdown === 'type' && (
+              <div className="position-absolute start-0 top-100 mt-2 bg-white rounded-3 shadow-lg border p-2 text-xs" style={{ zIndex: 1050, minWidth: '240px', maxHeight: '280px', overflowY: 'auto', marginLeft: '120px' }}>
+                <div className="fw-bold px-3 py-1.5 text-muted border-bottom text-2xs text-uppercase mb-1">Package Type</div>
+                {availableTypes.map((type, i) => (
+                  <button key={i} className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${selectedPackageType === type ? 'active fw-bold' : ''}`} onClick={() => { setSelectedPackageType(type); setOpenDropdown(null); }}>
+                    {type} {selectedPackageType === type && <i className="bi bi-check2"></i>}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {openDropdown === 'price' && (
+              <div className="position-absolute start-0 top-100 mt-2 bg-white rounded-3 shadow-lg border p-3 text-xs" style={{ zIndex: 1050, width: '300px', marginLeft: '200px' }}>
+                <div className="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                  <h6 className="fw-bold mb-0 text-dark text-xs">Filter By Price Range</h6>
+                  <button className="btn-close btn-sm" onClick={() => setOpenDropdown(null)}></button>
+                </div>
+                <div className="mb-3">
+                  <div className="d-flex justify-content-between text-2xs text-muted mb-1">
+                    <span>Min Price</span>
+                    <strong className="text-primary">₹{minPrice.toLocaleString('en-IN')}</strong>
+                  </div>
+                  <input type="range" className="form-range" min="0" max={maxAvailablePrice} step="500" value={minPrice} onChange={(e) => setMinPrice(Number(e.target.value))} />
+                </div>
+                <div className="mb-2">
+                  <div className="d-flex justify-content-between text-2xs text-muted mb-1">
+                    <span>Max Price</span>
+                    <strong className="text-primary">₹{maxPrice.toLocaleString('en-IN')}</strong>
+                  </div>
+                  <input type="range" className="form-range" min="0" max={maxAvailablePrice} step="500" value={maxPrice} onChange={(e) => setMaxPrice(Number(e.target.value))} />
+                </div>
+                <div className="d-flex justify-content-between text-2xs text-muted border-top pt-2 mt-2">
+                  <span>Min: ₹0</span>
+                  <span>Max: ₹{maxAvailablePrice.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+            )}
+
+            {openDropdown === 'duration' && (
+              <div className="position-absolute start-0 top-100 mt-2 bg-white rounded-3 shadow-lg border p-2 text-xs" style={{ zIndex: 1050, minWidth: '200px', marginLeft: '300px' }}>
+                <div className="fw-bold px-3 py-1.5 text-muted border-bottom text-2xs text-uppercase mb-1">Duration</div>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${durationFilter === 'All' ? 'active fw-bold' : ''}`} onClick={() => { setDurationFilter('All'); setOpenDropdown(null); }}>
+                  All Durations {durationFilter === 'All' && <i className="bi bi-check2"></i>}
+                </button>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${durationFilter === '1-3' ? 'active fw-bold' : ''}`} onClick={() => { setDurationFilter('1-3'); setOpenDropdown(null); }}>
+                  1 - 3 Days {durationFilter === '1-3' && <i className="bi bi-check2"></i>}
+                </button>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${durationFilter === '4-7' ? 'active fw-bold' : ''}`} onClick={() => { setDurationFilter('4-7'); setOpenDropdown(null); }}>
+                  4 - 7 Days {durationFilter === '4-7' && <i className="bi bi-check2"></i>}
+                </button>
+                <button className={`dropdown-item rounded-2 py-2 px-3 d-flex align-items-center justify-content-between ${durationFilter === '8+' ? 'active fw-bold' : ''}`} onClick={() => { setDurationFilter('8+'); setOpenDropdown(null); }}>
+                  8+ Days {durationFilter === '8+' && <i className="bi bi-check2"></i>}
+                </button>
+              </div>
+            )}
           </div>
-        </div>
 
         {/* HORIZONTAL SUB-TABS LINKS */}
         {/* <div className="card border-0 shadow-xs bg-white rounded-3 mb-4 overflow-hidden">
@@ -413,19 +511,34 @@ export default function TravelPackageListPage() {
                   <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
 
                     {/* Top Media Window */}
-                    <div href={"/package/" + pkg?.to_destination_slug + '/' + pkg?.slug + '-' + urlEncode(pkg?.id)} className="position-relative" style={{ height: '200px' }}>
-                      <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
+                    <div className="position-relative overflow-hidden" style={{ height: '200px' }}>
+                      <Link href={`/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`} className="d-block w-100 h-100">
+                        <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
+                      </Link>
 
                       {/* Interactive Selection Checkbox Overlay */}
-                      <span className="position-absolute top-0 start-0 m-2 bg-dark opacity-85 text-white px-2 py-1 text-2xs rounded d-flex align-items-center gap-1 user-select-none">
+                      <span 
+                        onClick={(e) => { e.stopPropagation(); }} 
+                        className="position-absolute top-0 start-0 m-2 bg-dark opacity-85 text-white px-2 py-1 text-2xs rounded d-flex align-items-center gap-1 user-select-none" 
+                        style={{ zIndex: 55 }}
+                      >
                         <input
                           type="checkbox"
                           className="form-check-input m-0 cursor-pointer accent-warning"
                           id={`comp-${pkg.id}`}
                           checked={isCheckedForComparison}
-                          onChange={() => toggleCompare(pkg.id)}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            toggleCompare(pkg.id);
+                          }}
                         />
-                        <label htmlFor={`comp-${pkg.id}`} className="m-0 cursor-pointer fw-medium">Add to Compare</label>
+                        <label 
+                          htmlFor={`comp-${pkg.id}`} 
+                          className="m-0 cursor-pointer fw-medium"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Add to Compare
+                        </label>
                       </span>
 
                       {pkg.package_type_name && (
@@ -485,9 +598,9 @@ export default function TravelPackageListPage() {
                         </div>
 
                         <div>
-                          <button className="btn btn-primary text-white fw-bold px-4 py-2 rounded-pill text-xs shadow-xs">
+                          <Link href={`/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`} className="btn btn-primary text-white fw-bold px-4 py-2 rounded-pill text-xs shadow-xs">
                             Book Now <i className="bi bi-arrow-right-short ms-1 text-sm"></i>
-                          </button>
+                          </Link>
                         </div>
                       </div>
 
@@ -508,6 +621,7 @@ export default function TravelPackageListPage() {
 
       </div>
     </div>
+  </>
   );
 }
 

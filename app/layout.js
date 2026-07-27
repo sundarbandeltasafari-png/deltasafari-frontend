@@ -4,6 +4,7 @@ import Script from "next/script";
 import { ToastContainer } from "react-toastify";
 import Header from "@/components/website/Header";
 import Footer from "@/components/website/Footer";
+import CustomPackageWidget from "@/components/website/CustomPackageWidget";
 import axios from "axios";
 import { getSiteSettingsUrl } from "@/routes/settingsRoute";
 
@@ -86,6 +87,7 @@ export default async function RootLayout({ children }) {
         <ToastContainer />
         {children}
         <Footer siteSettings={siteSettings} />
+        <CustomPackageWidget />
       </body>
 
       <Script src={process.env.NEXT_PUBLIC_PUBLIC_URL+ "assets/js/bootstrap.min.js"}></Script>

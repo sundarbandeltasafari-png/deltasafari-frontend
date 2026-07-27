@@ -2,6 +2,8 @@ import React from 'react'
 import "./contact.css"
 import axios from 'axios';
 import { contactDetailsURL } from '@/routes/homeRoutes';
+import ContactForm from '@/components/website/contact/ContactForm';
+
 async function page() {
     let contacts = null;
     let offices = null;
@@ -27,18 +29,16 @@ async function page() {
                 <div className="tabs row">
                     <div className="tab col-md-6">
                         <div className="title">
-
                             <h3>Call Us Directly</h3>
                         </div>
                         <p>Our team is available to assist you Monday to Saturday, 10 AM to 5 PM.</p>
                         <div className="contact-info">
-                            {contacts?.phone_1 && <a href={`"tel:${contacts.phone_1.replaceAll(" ", "")}`}>{contacts?.phone_1}</a>}
-                            {contacts?.phone_2 && <a href={`"tel:${contacts.phone_2.replaceAll(" ", "")}`}>{contacts?.phone_2}</a>}
+                            {contacts?.phone_1 && <a href={`tel:${contacts.phone_1.replaceAll(" ", "")}`}>{contacts?.phone_1}</a>}
+                            {contacts?.phone_2 && <a href={`tel:${contacts.phone_2.replaceAll(" ", "")}`}>{contacts?.phone_2}</a>}
                         </div>
                     </div>
                     <div className="tab col-md-6">
                         <div className="title">
-
                             <h3>Email Support</h3>
                         </div>
                         <p>Need assistance? Email us, and we'll get back to you as soon as possible!</p>
@@ -48,7 +48,6 @@ async function page() {
                     </div>
                     <div className="tab col-md-6">
                         <div className="title">
-
                             <h3>Chat Live</h3>
                         </div>
                         <p>We're available to assist you Monday to Saturday, 10 AM to 5 PM.</p>
@@ -58,7 +57,7 @@ async function page() {
                     </div>
                 </div>
 
-                <div className="address">
+                <div className="address mb-5">
                     <h2>Our Offices</h2>
                     <div className="tabs">
                         {
@@ -79,8 +78,15 @@ async function page() {
                             })
                         }
                     </div>
-
                 </div>
+
+                {/* Contact Form Section - Placed before FAQ */}
+                <div className="row mb-5">
+                    <div className="col-12">
+                        <ContactForm />
+                    </div>
+                </div>
+
                 <div className="faqs p-3">
                     <div className="child area row">
                         <div className="tab start col-md-8">
@@ -89,7 +95,7 @@ async function page() {
 
                             <div className="contact-us" style={{ maxWidth: "100%" }}>
                                 <p>If you still have any questions or need further clarification, feel free to reach out to us directly. We’re here to help!</p>
-                                <a href="/contact">Contact Us</a>
+                                <a href="#contact-form-section">Contact Us</a>
                             </div>
                         </div>
                         <div className="faq-wrap two col-md-8">
@@ -113,6 +119,7 @@ async function page() {
                     </div>
                 </div>
             </section>
+
         </>
     )
 }

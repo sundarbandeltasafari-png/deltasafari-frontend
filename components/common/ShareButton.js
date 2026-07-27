@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function ShareButton({ title, text, url }) {
+export default function ShareButton({ title, text, url, className, style, wrapperStyle }) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
@@ -36,25 +36,17 @@ export default function ShareButton({ title, text, url }) {
     }
   };
 
+  const defaultClassName = "btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs";
+  const defaultStyle = { color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' };
+
   return (
-    <div style={{ position: 'relative', display: 'inline-block', marginLeft: '10px' }}>
+    <div style={{ position: 'relative', display: 'inline-block', marginLeft: '5px', ...wrapperStyle }}>
       <button
         onClick={handleShare}
-        style={{
-          background: '#ff5c41',
-          color: '#fff',
-          border: 'none',
-          padding: '0px 10px',
-          borderRadius: '6px',
-          fontWeight: '600',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontSize: '12px'
-        }}
+        className={className !== undefined ? className : defaultClassName}
+        style={style !== undefined ? style : defaultStyle}
       >
-        <i className="bi bi-share-fill"></i> {/* Assuming bootstrap icons are used */}
+        <i className="bi bi-share-fill"></i>
         {copied ? 'Link Copied!' : 'Share'}
       </button>
 
@@ -72,6 +64,7 @@ export default function ShareButton({ title, text, url }) {
             padding: '4px 8px',
             borderRadius: '4px',
             whiteSpace: 'nowrap',
+            zIndex: 1000
           }}
         >
           Copied to clipboard!
@@ -79,4 +72,4 @@ export default function ShareButton({ title, text, url }) {
       )}
     </div>
   );
-}
+}

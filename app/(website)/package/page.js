@@ -3,10 +3,13 @@ import SwiperWrapper from '@/components/website/common/SwiperWrapper'
 import Faq from '@/components/website/home/Faq';
 import HomeBanner from '@/components/website/home/HomeBanner';
 import SwiperWrapperPackage from '@/components/website/package/SwiperWrapperPackage';
+import SwiperCities from '@/components/website/package/SwiperCities';
+import SwiperBestPackages from '@/components/website/package/SwiperBestPackages';
 import Filter from '@/components/website/home/Filter';
 import FilterBottomCard from '@/components/website/packages/FilterBottomCard';
 import PackageDestinations from '@/components/website/packages/PackageDestinations';
-import { getCitiesUrl } from '@/routes/packageRoutes';
+import { getCitiesUrl, getFilterPackages } from '@/routes/packageRoutes';
+import { urlEncode } from '@/libs/urlHelper';
 import axios from 'axios';
 import Link from 'next/link';
 import React from 'react'
@@ -69,6 +72,7 @@ async function page() {
 
     let cities = null;
     let faqs = null;
+    let packagesList = [];
     try {
         const response = await axios.post(getCitiesUrl, { condition: { show_in_package: 1 } });
         if (response.data?.status) {
@@ -89,17 +93,28 @@ async function page() {
         faqs = null
     }
 
+    try {
+        const packageRes = await axios.post(getFilterPackages, {});
+        if (packageRes.data?.status && Array.isArray(packageRes.data?.packages)) {
+            packagesList = packageRes.data.packages;
+        }
+    } catch (error) {
+        packagesList = [];
+    }
+
     return (
         <>
             <HomeBanner />
             <Filter />
             <FilterBottomCard />
             <PackageDestinations />
-            <div className="destination-dt-travel-season-section mb-100 mt-5" id="scroll-section">
+            <div className="destination-dt-travel-season-section mb-100" id="scroll-section">
                 <div className="container">
                     <h2 className='mt-4 mb-3'>Book your Destinations</h2>
-                    <div className="row g-1">
-                        {cities.map((city, index) => {
+                    
+                    {/* Desktop View: Multi-column Grid */}
+                    <div className="d-none d-md-flex row g-1">
+                        {cities && cities.map((city, index) => {
                             return <div key={index} className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
                                 <div className="hotel-card row m-2">
                                     <div className="hotel-img-wrap p-0 col-md-5">
@@ -117,11 +132,6 @@ async function page() {
                                                 <Link href={"/packages/"+'city-'+city.slug} style={{ fontSize: "19px" }} >{city.name}</Link>
                                             </div>
                                             <ul className="hotel-feature-list mb-0">
-                                                {/* {city.categories.map((cat, index) => {
-                                                    return <li key={index}>
-                                                        <a>{cat}</a>
-                                                    </li>
-                                                })} */}
                                                 <li>
                                                     <span>Best Packages</span>
                                                 </li>
@@ -133,24 +143,32 @@ async function page() {
                                     </div>
                                 </div>
                             </div>
-                        })};
+                        })}
                     </div>
-                    {/* <div className="btn-and-price-area mt-0 d-flex justify-content-center">
-                        <a href="hotel-details.html" className="primary-btn1">
-                            <span>
-                                View More
-                                <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                                </svg>
-                            </span>
-                            <span>
-                                View More
-                                <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                                </svg>
-                            </span>
-                        </a>
-                    </div> */}
+
+                    {/* Mobile View: Swiper Carousel */}
+                    <div className="d-block d-md-none">
+                        <SwiperCities cities={cities} />
+                    </div>
+
+                    {cities && cities.length > 0 && (
+                        <div className="btn-and-price-area mt-4 d-flex justify-content-center">
+                            <Link href="/cities" className="primary-btn1">
+                                <span>
+                                    View More
+                                    <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
+                                    </svg>
+                                </span>
+                                <span>
+                                    View More
+                                    <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
+                                    </svg>
+                                </span>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="destination-dt-travel-season-section mb-100" id="scroll-section">
@@ -159,103 +177,86 @@ async function page() {
                         <h2>Best Package For You</h2>
                         <p className='m-0'>A curated list of the most popular travel packages based on different destinations.</p>
                     </div>
-                    <div className="row g-4">
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img1.jpg" alt="" />
+
+                    {/* Desktop View: Multi-column Grid */}
+                    <div className="d-none d-md-flex row g-4">
+                        {packagesList && packagesList.length > 0 ? (
+                            packagesList.map((pkg, index) => {
+                                const imgUrl = pkg.path
+                                    ? `${process.env.NEXT_PUBLIC_SERVER_URL}${pkg.path.replace(/\\/g, '/')}`
+                                    : '/assets/images/noimage.jpg';
+                                const detailsUrl = `/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`;
+                                const durationText = pkg.duration_nights
+                                    ? `${pkg.duration_nights}N / ${pkg.duration_days}D`
+                                    : `${pkg.duration_days || 1} Days`;
+                                const priceText = pkg.actual_price ? `₹${Number(pkg.actual_price).toLocaleString('en-IN')}` : '';
+
+                                return (
+                                    <div key={pkg.id || index} className="col-12 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay={`${((index % 3) + 1) * 200}ms`} data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms" }}>
+                                        <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
+                                            {/* Media Banner */}
+                                            <div className="position-relative overflow-hidden" style={{ height: '200px' }}>
+                                                <img 
+                                                    src={imgUrl} 
+                                                    alt={pkg.title || 'Travel Package'} 
+                                                    className="w-100 h-100 object-fit-cover"
+                                                />
+                                                {/* Floating Duration Badge */}
+                                                <span 
+                                                    className="position-absolute top-0 end-0 m-3 px-3 py-1 text-xs fw-semibold rounded-pill shadow-sm"
+                                                    style={{ background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(4px)', color: '#fff' }}
+                                                >
+                                                    <i className="fa-solid fa-clock text-warning me-1"></i> {durationText}
+                                                </span>
+                                            </div>
+
+                                            {/* Body & Details */}
+                                            <div className="card-body p-4 d-flex flex-column justify-content-between">
+                                                <div>
+                                                    <h3 className="h6 fw-bold mb-3 text-dark text-truncate-2" style={{ minHeight: '40px', lineHeight: '1.4' }}>
+                                                        {pkg.title}
+                                                    </h3>
+                                                </div>
+
+                                                {/* Footer Price & Action */}
+                                                <div className="d-flex align-items-center justify-content-between pt-3 border-top mt-2">
+                                                    <div>
+                                                        <span className="text-muted text-xs d-block" style={{ fontSize: '11px' }}>Price</span>
+                                                        <strong className="h5 fw-extrabold text-primary mb-0" style={{ fontWeight: 800 }}>
+                                                            {priceText || 'Contact Us'}
+                                                        </strong>
+                                                    </div>
+
+                                                    <Link href={detailsUrl} className="primary-btn1">
+                                                        <span>
+                                                            Book Now
+                                                            <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <span>
+                                                            Book Now
+                                                            <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="travel-season-content">
-                                        <h6>Spring (March–May)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 12–20°C / 53–68°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                                );
+                            })
+                        ) : (
+                            <div className="col-12 text-center py-4">
+                                <p className="text-muted">No packages available at the moment.</p>
                             </div>
-                        </div>
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img2.jpg" alt="" />
-                                    </div>
-                                    <div className="travel-season-content">
-                                        <h6>Summer (June–August)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 20–30°C / 68–86°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "600ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img3.jpg" alt="" />
-                                    </div>
-                                    <div className="travel-season-content">
-                                        <h6>Autumn (Sep to Nov)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 0–18°C / 50–64°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "600ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img4.jpg" alt="" />
-                                    </div>
-                                    <div className="travel-season-content">
-                                        <h6>Winter (Dec to Feb)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 3–8°C / 37–46°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img1.jpg" alt="" />
-                                    </div>
-                                    <div className="travel-season-content">
-                                        <h6>Spring (March–May)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 12–20°C / 53–68°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-6 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "400ms" }}>
-                            <div className="travel-season-card">
-                                <div className="travel-season-top-area gap-3 position-relative">
-                                    <div className="travel-season-img">
-                                        <img src="assets/img/innerpages/travel-season-img2.jpg" alt="" />
-                                    </div>
-                                    <div className="travel-season-content">
-                                        <h6>Summer (June–August)</h6>
-                                        <span style={{ fontSize: '14px' }}>Weather: 20–30°C / 68–86°F</span>
-                                        <button className='btn btn-primary pacBookBtn'>
-                                            Book Now <i className="fa-solid fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        )}
+                    </div>
+
+                    {/* Mobile View: Swiper Carousel */}
+                    <div className="d-block d-md-none">
+                        <SwiperBestPackages packagesList={packagesList} />
                     </div>
                 </div>
             </div>

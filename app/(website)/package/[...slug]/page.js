@@ -1,14 +1,5 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Thumbs, EffectFade } from 'swiper/modules';
-
-// Comprehensive Swiper CSS Imports 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/thumbs';
-import 'swiper/css/effect-fade';
 import PackageBanner from '@/components/website/packages/PackageBanner';
 import { axiosNormalGet, axiosNormalPost } from '@/libs/axiosHelper';
 import { useParams, useRouter } from 'next/navigation';
@@ -22,58 +13,56 @@ import ShareButton from '@/components/common/ShareButton';
 export default function page() {
   const [activeTab, setActiveTab] = useState("overview");
   const [openFaq, setOpenFaq] = useState(0);
-  const [departure, setDeparture] = useState()
+  const [departure, setDeparture] = useState('');
   const [guestsCount, setGuestsCount] = useState(1);
   const [packageDetails, setPackageDetails] = useState(null);
   const params = useParams();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const { slug } = params;
-  const route = useRouter()
-  if (!slug && !slug.split("-").length > 1) {
-    route.back()
+  const route = useRouter();
+
+  if (!slug && !(slug && slug.split("-").length > 1)) {
+    route.back();
   }
+
   const [ogImageUrl, setOgImageUrl] = useState();
   const siteUrl = process.env.NEXT_PUBLIC_PUBLIC_URL;
-  const sidebarRef = useRef()
+  const sidebarRef = useRef();
 
   useEffect(() => {
     const pkgId = getPackageIdFromPath(slug);
     if (pkgId) {
-      axiosNormalGet(`${getParticularPackageUrl}?id=${pkgId}`).then((res) => {
-        if (res?.status) {
-          setPackageDetails(res?.package)
-          if (res?.package.assets.length > 0) {
-            let ogImage = null
-            res?.package.assets.forEach(element => {
-              if (element.type == 1 && !ogImage) {
-                ogImage = `${process.env.NEXT_PUBLIC_SERVER_URL}${element.path.replace(/\\/g, '/')}`
-                setOgImageUrl(ogImage)
-              }
-            });
+      axiosNormalGet(`${getParticularPackageUrl}?id=${pkgId}`)
+        .then((res) => {
+          if (res?.status) {
+            setPackageDetails(res?.package);
+            if (res?.package?.assets?.length > 0) {
+              let ogImage = null;
+              res?.package.assets.forEach((element) => {
+                if (element.type == 1 && !ogImage) {
+                  ogImage = `${process.env.NEXT_PUBLIC_SERVER_URL}${element.path.replace(/\\/g, '/')}`;
+                  setOgImageUrl(ogImage);
+                }
+              });
+            } else {
+              setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/img/logo_DS.png`);
+            }
+            setLoading(false);
           } else {
-            setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/img/logo_DS.png`)
+            showMessage('error', res?.msg);
           }
-          setLoading(false)
-        }else{
-          showMessage('error', res?.msg)
-        }
-      }).catch((err) => {
-        showMessage('error', 'Something went wrong!  Please try again later.')
-      }).finally(() => setLoading(false))
+        })
+        .catch((err) => {
+          showMessage('error', 'Something went wrong! Please try again later.');
+        })
+        .finally(() => setLoading(false));
     } else {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [])
-
-  function bookNow() {
-    axiosNormalPost().then((res) => {
-
-    }).catch((err) => {
-
-    })
-  }
+  }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('book'); // 'book' or 'enquire'
 
   // Form Fields State
   const [formData, setFormData] = useState({
@@ -89,10 +78,9 @@ export default function page() {
   // Input Change Handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear validation error dynamically when user types
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -101,12 +89,10 @@ export default function page() {
     e.preventDefault();
     const newErrors = {};
 
-    // Name Validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
 
-    // Phone Validation (10 Digit Mobile Regex pattern)
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
@@ -114,7 +100,6 @@ export default function page() {
       newErrors.phone = 'Please enter a valid 10-digit mobile number';
     }
 
-    // Email Validation (Optional field - validate only if text is provided)
     if (formData.email.trim()) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
@@ -127,7 +112,6 @@ export default function page() {
       return;
     }
 
-    // Final clean object ready for backend submission API integration
     axiosNormalPost(createBookingsUrl, {
       package_id: packageDetails.id,
       total_travelers: guestsCount,
@@ -137,20 +121,20 @@ export default function page() {
       customer_email: formData?.email,
       customer_phone: formData?.phone,
       customer_comment: formData?.comment,
-      departure_date: departure
-    }).then((res) => {
-      setFormData({ name: '', phone: '', email: '', comment: '' });
-      showMessage('success', 'Booking request registered successfully!')
-      setIsModalOpen(false);
-    }).catch((err) => {
-      showMessage('error', 'Something went wrong! Please try again later')
+      departure_date: departure,
+      request_type: modalType
     })
-
-    // Reset Form Fields & Close Modal
+      .then((res) => {
+        setFormData({ name: '', phone: '', email: '', comment: '' });
+        showMessage('success', modalType === 'book' ? 'Booking request registered successfully!' : 'Inquiry request submitted successfully!');
+        setIsModalOpen(false);
+      })
+      .catch((err) => {
+        showMessage('error', 'Something went wrong! Please try again later');
+      });
   };
 
   const handleViewBooking = (type) => {
-    // 2. Add a class safely
     if (type) {
       sidebarRef.current?.classList.add('active-booking-sidebar');
     } else {
@@ -158,260 +142,712 @@ export default function page() {
     }
   };
 
+  const handleDownloadPdf = () => {
+    window.print();
+  };
+
+  const parseSafeJSON = (dataStr) => {
+    try {
+      if (!dataStr) return [];
+      if (Array.isArray(dataStr)) return dataStr;
+      return JSON.parse(dataStr);
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const getItineraryDays = () => {
+    if (packageDetails?.itinerary && Array.isArray(packageDetails.itinerary) && packageDetails.itinerary.length > 0) {
+      return packageDetails.itinerary;
+    }
+    if (packageDetails?.itinararys && Array.isArray(packageDetails.itinararys) && packageDetails.itinararys.length > 0) {
+      return packageDetails.itinararys;
+    }
+
+    const days = packageDetails?.duration_days || 3;
+    const defaultDays = [
+      {
+        dayNumber: 1,
+        title: `Day 1: Arrival & Scenic Cruise to ${packageDetails?.to_destination_name || 'Sundarban'}`,
+        description: `Departure from Kolkata/Canning to Godkhali Jetty. Board the comfortable safari boat with welcome beverages. Sail along the scenic rivers into the tranquil Sundarban mangroves. Check-in at Eco-Resort / Boat cabin. Evening experience includes local Baul folk music, evening tea, and snacks.`
+      },
+      {
+        dayNumber: 2,
+        title: `Day 2: Core Mangrove Forest & Watchtower Safari`,
+        description: `Full day boat safari through the Sajnekhali Tiger Reserve. Visit Sajnekhali Watch Tower & Interpretation Centre, Sudhanyakhali Watch Tower, and Dobanki Canopy Walk. Enjoy delicious traditional fresh Hilsa / Fish lunch served on board. Keep an eye out for Royal Bengal Tigers, Estuarine Crocodiles, and rare birds.`
+      },
+      {
+        dayNumber: 3,
+        title: `Day 3: Village Tour, Craft Exploration & Return`,
+        description: `Morning visit to a traditional riverine village to witness honey-collecting culture and local lifestyle. Breakfast served on board as you cruise through Panchamukhi (5 Rivers Junction). Sail back to Godkhali Jetty and transfer back with memorable experiences.`
+      }
+    ];
+
+    return defaultDays.slice(0, Math.max(days, 1));
+  };
+
+  const inclusions = parseSafeJSON(packageDetails?.inclusions);
+  const exclusions = parseSafeJSON(packageDetails?.exclusions);
+  const itineraryDays = packageDetails ? getItineraryDays() : [];
+
+  const scrollToSection = (sectionId) => {
+    setActiveTab(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const yOffset = -90;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
-      {loading ?
+      {loading ? (
         <LoadingComponent />
-        :
+      ) : (
         <>
           <Head>
-            {/* Regular SEO Tags */}
             <title>{packageDetails.meta_title || packageDetails.title}</title>
             <meta name="description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
             {packageDetails.tags && <meta name="keywords" content={packageDetails.tags} />}
-            <link rel="canonical" href={`${siteUrl}/packages/details/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
+            <link rel="canonical" href={`${siteUrl}/package/${packageDetails?.to_destination_slug || 'sundarban'}/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
 
-            {/* Open Graph (Facebook / LinkedIn / WhatsApp) */}
             <meta property="og:type" content="website" />
             <meta property="og:title" content={packageDetails.title} />
             <meta property="og:description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
-            <meta property="og:url" content={`${siteUrl}/packages/details/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
-            <meta property="og:site_name" content="Your Travel Agency Brand" />
+            <meta property="og:url" content={`${siteUrl}/package/${packageDetails?.to_destination_slug || 'sundarban'}/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
+            <meta property="og:site_name" content="Sundarban Delta Safari" />
             <meta property="og:image" content={ogImageUrl} />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
             <meta property="og:image:alt" content={packageDetails.title} />
             <meta property="og:locale" content="en_IN" />
 
-            {/* Twitter Card Layout */}
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={packageDetails.title} />
             <meta name="twitter:description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
             <meta name="twitter:image" content={ogImageUrl} />
           </Head>
-          <div className="package-details-section pt-50 mb-100" style={{ fontFamily: 'sans-serif', paddingBottom: '80px' }}>
+
+          <div className="emt-package-details-wrapper bg-light pb-5 pt-3" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             <div className="container">
-              {/* Title Area */}
-              <div className="row mb-4 align-items-center">
-                <div className="col-md-8">
-                  <span className="badge mb-2" style={{ backgroundColor: '#ff5c41', color: '#fff', padding: '6px 14px', borderRadius: '4px', textTransform: 'uppercase', fontSize: '12px', fontWeight: '600' }}>
-                    {packageDetails.package_type_name}
-                  </span>
-                  <ShareButton
-                    title={packageDetails.title}
-                    text={packageDetails.meta_description}
-                    url={"/packages/details/" + packageDetails?.slug + "-" + urlEncode(packageDetails?.id)}
-                  />
-                  <h2 style={{ fontSize: '36px', fontWeight: '700', color: '#0A132C', marginTop: '5px', marginBottom: '10px' }}>
+
+              {/* EASEMYTRIP BREADCRUMB BAR */}
+              <nav aria-label="breadcrumb" className="mb-3">
+                <ol className="breadcrumb text-xs mb-0 bg-transparent p-0">
+                  <li className="breadcrumb-item"><a href="/" className="text-secondary text-decoration-none">Home</a></li>
+                  <li className="breadcrumb-item"><a href="/package" className="text-secondary text-decoration-none">Holidays</a></li>
+                  <li className="breadcrumb-item active fw-semibold text-dark text-truncate" style={{ maxWidth: '300px' }} aria-current="page">
                     {packageDetails.title}
-                  </h2>
-                  <div className="d-flex flex-wrap align-items-center gap-4" style={{ fontSize: '14px', color: '#4A5264' }}>
-                    <div><i className="bi bi-geo-alt" style={{ color: '#ff5c41', marginRight: '5px' }}></i>{packageDetails.from_destination_name} to {packageDetails.to_destination_name}</div>
-                    <div><i className="bi bi-clock" style={{ color: '#ff5c41', marginRight: '5px' }}></i>{packageDetails.duration_days} Days / {packageDetails.duration_nights} Nights</div>
-                    <div><i className="bi bi-star-fill" style={{ color: '#FBBF24', marginRight: '5px' }}></i>4.8 (Highly Rated)</div>
-                  </div>
-                </div>
-                <div className="col-md-4 text-md-end mt-3 mt-md-0">
-                  <span style={{ fontSize: '14px', color: '#4A5264', display: 'block' }}>Starting From</span>
-                  <h3 style={{ fontSize: '38px', fontWeight: '800', color: '#ff5c41', margin: 0 }}>
-                    {packageDetails.currency === 'INR' ? '₹' : '$'}{packageDetails.actual_price}
-                    {packageDetails.base_price && <del style={{ fontSize: '18px', color: '#A0A6B5', marginLeft: '10px', fontWeight: '400' }}>{packageDetails.currency === 'INR' ? '₹' : '$'}{packageDetails.base_price}</del>}
-                  </h3>
-                </div>
-              </div>
+                  </li>
+                </ol>
+              </nav>
 
-              <PackageBanner packageDetails={packageDetails} />
-              <button type="button" onClick={() => { handleViewBooking(true) }} className="primary-btn1 w-100 border-0 pt-3 pb-3 justify-content-center  d-flex d-md-none " style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700' }}>
-                Book Now
-              </button>
-              {/* Content Layout & Interactive Sidebar Component Frame */}
-              <div className="row">
-                <div className="col-lg-8">
-                  {/* Tabs System Navigation Header */}
-                  <div className="gofly-tabs-container mb-4" style={{ display: 'flex', borderBottom: '2px solid #E4E7EC', gap: '30px' }}>
-                    {["overview", "inclusions", "policies"].map((tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        style={{
-                          padding: '15px 5px', fontSize: '15px', fontWeight: '700',
-                          color: activeTab === tab ? '#ff5c41' : '#4A5264', background: 'none', border: 'none',
-                          borderBottom: activeTab === tab ? '3px solid #ff5c41' : '3px solid transparent',
-                          textTransform: 'uppercase', cursor: 'pointer', transition: 'all 0.3s'
-                        }}
-                      >
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
+              {/* EASEMYTRIP TITLE & QUICK ACTIONS HEADER */}
+              <div className="card border-0 shadow-sm bg-white p-4 rounded-4 mb-4">
+                <div className="row align-items-center g-3">
+                  <div className="col-lg-8">
+                    <div className="d-flex flex-wrap align-items-center gap-2 mb-2">
+                      <span className="badge px-3 py-2 rounded-pill text-uppercase text-xs fw-bold" style={{ backgroundColor: '#ff5c41', color: '#fff' }}>
+                        {packageDetails.package_type_name || 'Group Special'}
+                      </span>
+                      <span className="badge bg-light text-dark border px-3 py-2 rounded-pill text-xs fw-semibold">
+                        <i className="bi bi-clock text-danger me-1"></i>
+                        {packageDetails.duration_nights || (packageDetails.duration_days - 1)} Nights / {packageDetails.duration_days} Days
+                      </span>
+                      <span className="badge bg-warning bg-opacity-10 text-warning text-dark border border-warning border-opacity-25 px-3 py-2 rounded-pill text-xs fw-bold">
+                        <i className="bi bi-star-fill text-warning me-1"></i> 4.9 Superb (340+ reviews)
+                      </span>
+                    </div>
 
-                  {/* Tab Pane Active Card Rendering Viewport */}
-                  <div className="tab-content-wrapper p-4 mb-5" style={{ background: '#fff', borderRadius: '12px', border: '1px solid #E4E7EC' }}>
-                    {activeTab === 'overview' && (
+                    <h1 className="h3 fw-extrabold text-dark mb-2" style={{ fontWeight: 800, color: '#0F172A', lineHeight: '1.25' }}>
+                      {packageDetails.title}
+                    </h1>
+
+                    <div className="d-flex flex-wrap align-items-center gap-3 text-secondary text-xs">
                       <div>
-                        <h4 style={{ fontWeight: '700', color: '#0A132C', marginBottom: '12px' }}>Tour Description</h4>
-                        <p style={{ color: '#4A5264', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{packageDetails.description}</p>
-                        <h4 className="mt-4 mb-3" style={{ fontWeight: '700', color: '#0A132C' }}>Tour Tags</h4>
-                        <ul style={{ paddingLeft: '20px', color: '#4A5264', lineHeight: '2', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                          {packageDetails.tags?.split(',').map((tag, i) => <li className='badge text-bg-secondary d-flex' key={i}>{tag.trim()}</li>)}
-                        </ul>
+                        <i className="bi bi-geo-alt-fill text-danger me-1"></i>
+                        <strong>Route:</strong> {packageDetails.from_destination_name || 'Kolkata'} ➔ {packageDetails.to_destination_name || 'Sundarban'} ➔ {packageDetails.from_destination_name || 'Kolkata'}
                       </div>
-                    )}
-                    {activeTab === 'inclusions' && (
-                      <div className="row">
-                        <div className="col-md-6">
-                          <h5 className="mb-3" style={{ color: '#10B981', fontWeight: '700' }}>Included</h5>
-                          {JSON.parse(packageDetails.inclusions || '[]').map((item, i) => <div key={i} className="mb-2" style={{ color: '#4A5264' }}><i className="bi bi-check2 text-success me-2"></i>{item}</div>)}
-                        </div>
-                        <div className="col-md-6">
-                          <h5 className="mb-3" style={{ color: '#EF4444', fontWeight: '700' }}>Excluded</h5>
-                          {JSON.parse(packageDetails.exclusions || '[]').map((item, i) => <div key={i} className="mb-2" style={{ color: '#4A5264' }}><i className="bi bi-x text-danger me-2"></i>{item}</div>)}
-                        </div>
+                      <div className="vr d-none d-md-block" style={{ height: '14px' }}></div>
+                      <div>
+                        <i className="bi bi-check-circle-fill text-success me-1"></i> Instant Booking Confirmation Available
                       </div>
-                    )}
-                    {activeTab === 'policies' && (
-                      <div className="policies-timeline">
-                        {packageDetails.policies?.map((policy, i) => (
-                          <div key={i} className="mb-4">
-                            <h5 style={{ fontWeight: '700', color: '#0A132C' }}>{policy.title}</h5>
-                            <ul style={{ paddingLeft: '20px', color: '#4A5264', lineHeight: '1.8' }}>
-                              {JSON.parse(policy.bullets || '[]').map((bullet, idx) => <li key={idx}>{bullet}</li>)}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* GoFly Sidebar Context Form Layout Panel */}
-                <div className="col-lg-4">
-                  <div ref={sidebarRef} className="package-sidebar-area">
-                    <div className="sidebar-wrapper" style={{ position: 'sticky', top: '30px', background: '#fff', border: '1px solid #E4E7EC', padding: '30px', borderRadius: '12px' }}>
-                      <div className="title-area mb-3 pb-2" style={{ borderBottom: '1px solid #E4E7EC' }}>
-                        <h5 style={{ margin: 0, fontWeight: '700', color: '#0A132C' }}>Book This Package</h5>
-                        <button type="button" className='d-block d-md-none' onClick={() => handleViewBooking(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '22px', color: '#A0A6B5', cursor: 'pointer' }}>
-                          <i className="bi bi-x-lg"></i>
-                        </button>
-                      </div>
-                      <form className="d-flex flex-column gap-3">
-                        <div>
-                          <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Departure Date</label>
-                          <input type="date" className="form-control" onChange={(e) => setDeparture(e.target.value)} style={{ padding: '11px', borderRadius: '6px', border: '1px solid #D4D7DF', width: '100%' }} />
-                        </div>
-                        <div>
-                          <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Total Travelers</label>
-                          <input type="number" min="1" value={guestsCount} onChange={(e) => setGuestsCount(Math.max(1, parseInt(e.target.value) || 1))} className="form-control" style={{ padding: '11px', borderRadius: '6px', border: '1px solid #D4D7DF', width: '100%' }} />
-                        </div>
-                        <div className="p-3" style={{ backgroundColor: '#F8F9FC', borderRadius: '8px', fontSize: '14px' }}>
-                          <div className="d-flex justify-content-between mb-2"><span style={{ color: '#4A5264' }}>Total Cost</span><strong style={{ fontSize: '22px', color: '#ff5c41', fontWeight: '800' }}>{packageDetails.currency === 'INR' ? '₹' : '$'}{packageDetails.actual_price * guestsCount}</strong></div>
-                        </div>
-                        <button type="button" onClick={() => { setIsModalOpen(true); handleViewBooking(false) }} className="primary-btn1 w-100 border-0 pt-3 pb-3 d-flex justify-content-center" style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700' }}>
-                          Book Now
-                        </button>
-                      </form>
                     </div>
                   </div>
+
+                  <div className="col-lg-4 text-lg-end d-flex flex-wrap align-items-center justify-content-lg-end gap-2">
+                    <button onClick={handleDownloadPdf} className="btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs hover-lift" style={{ color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' }}>
+                      <i className="bi bi-file-earmark-pdf text-danger fs-6"></i> Download PDF
+                    </button>
+                    <ShareButton
+                      title={packageDetails.title}
+                      text={packageDetails.meta_description}
+                      url={"/package/" + (packageDetails?.to_destination_slug || 'sundarban') + "/" + packageDetails?.slug + "-" + urlEncode(packageDetails?.id)}
+                      className="btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs hover-lift"
+                      style={{ color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' }}
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Accordion FAQ Area Component Block */}
-              <div className="faq-section mb-5">
-                <h3 className="mb-4" style={{ fontWeight: '700', color: '#0A132C' }}>Policies & Guidelines</h3>
-                <div className="accordion-wrapper d-flex flex-column gap-3">
-                  {packageDetails.policies?.map((policy, index) => (
-                    <div key={index} style={{ border: '1px solid #E4E7EC', borderRadius: '8px', background: '#fff', overflow: 'hidden' }}>
-                      <button
-                        type="button"
-                        onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
-                        className="w-100 text-start d-flex justify-content-between align-items-center p-3"
-                        style={{ background: 'none', border: 'none', fontWeight: '700', color: '#0A132C', cursor: 'pointer', outline: 'none' }}
-                      >
-                        <span>{policy.title}</span>
-                        <span style={{ color: '#ff5c41', transition: 'transform 0.2s', transform: openFaq === index ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                          <i className="bi bi-chevron-down"></i>
-                        </span>
-                      </button>
-                      {openFaq === index && (
-                        <div className="p-3 border-top" style={{ color: '#4A5264', fontSize: '14px', lineHeight: '1.6', background: '#F8F9FC' }}>
-                          <ul style={{ paddingLeft: '20px', margin: 0 }}>
-                            {JSON.parse(policy.bullets || '[]').map((bullet, idx) => <li key={idx} className="mb-1">{bullet}</li>)}
+              {/* MEDIA GALLERY BANNER */}
+
+              {/* MAIN CONTENT GRID WITH STICKY SIDEBAR */}
+              <div className="row g-4">
+                {/* LEFT CONTENT COLUMN */}
+                <div className="col-lg-8">
+                  <PackageBanner packageDetails={packageDetails} />
+
+                  {/* STICKY QUICK NAVIGATION TABS */}
+                  <div className="card border-0 shadow-sm bg-white rounded-4 mb-4 position-sticky" style={{ top: '80px', zIndex: 100 }}>
+                    <div className="d-flex overflow-auto text-nowrap px-3 py-2 gap-2 border-bottom">
+                      {[
+                        { id: 'overview', label: 'Overview', icon: 'bi-info-circle' },
+                        { id: 'itinerary', label: 'Day wise Itinerary', icon: 'bi-calendar3' },
+                        { id: 'inclusions', label: 'Inclusions & Exclusions', icon: 'bi-check2-circle' },
+                        { id: 'policies', label: 'Policies & FAQs', icon: 'bi-file-text' },
+                      ].map((tab) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => scrollToSection(tab.id)}
+                          className={`btn btn-sm rounded-pill px-3 py-2 text-xs fw-bold transition-all border-0 ${activeTab === tab.id
+                              ? 'text-white'
+                              : 'text-secondary hover-bg-light'
+                            }`}
+                          style={{
+                            backgroundColor: activeTab === tab.id ? '#ff5c41' : 'transparent',
+                          }}
+                        >
+                          <i className={`bi ${tab.icon} me-1`}></i>
+                          {tab.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* SECTION 1: OVERVIEW */}
+                  <div id="overview" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
+                    <h3 className="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+                      <i className="bi bi-card-text text-danger"></i> Package Overview
+                    </h3>
+                    <p className="text-secondary text-sm leading-relaxed mb-4" style={{ whiteSpace: 'pre-line', lineHeight: '1.8' }}>
+                      {packageDetails.description}
+                    </p>
+
+                    {packageDetails.tags && (
+                      <div className="border-top pt-3">
+                        <h4 className="text-xs text-uppercase text-muted fw-bold mb-2">Package Highlights & Themes:</h4>
+                        <div className="d-flex flex-wrap gap-2">
+                          {packageDetails.tags.split(',').map((tag, i) => (
+                            <span key={i} className="badge bg-light text-secondary border px-3 py-2 rounded-pill text-xs fw-medium">
+                              #{tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* SECTION 2: DAY WISE ITINERARY */}
+                  <div id="itinerary" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
+                    <div className="d-flex align-items-center justify-content-between mb-4">
+                      <h3 className="h5 fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                        <i className="bi bi-map-fill text-danger"></i> Detailed Day-Wise Itinerary
+                      </h3>
+                      <span className="badge bg-danger bg-opacity-10 text-danger px-3 py-1 rounded-pill text-xs fw-bold">
+                        {packageDetails.duration_days} Days Covered
+                      </span>
+                    </div>
+
+                    <div className="timeline-container position-relative ps-4 ms-2 border-start border-2 border-danger border-opacity-25">
+                      {itineraryDays.map((day, index) => (
+                        <div key={index} className="timeline-item mb-4 position-relative">
+                          {/* TIMELINE NUMBER BADGE CIRCLE */}
+                          <div
+                            className="position-absolute rounded-circle bg-danger text-white fw-bold d-flex align-items-center justify-content-center text-xs shadow-sm"
+                            style={{ width: '36px', height: '36px', left: '-42px', top: '0px' }}
+                          >
+                            D{day.dayNumber || (index + 1)}
+                          </div>
+
+                          <div className="card border rounded-3 p-3 bg-light hover-shadow transition-all">
+                            <h4 className="h6 fw-bold text-dark mb-2 d-flex align-items-center justify-content-between">
+                              <span>{day.title || `Day ${day.dayNumber || (index + 1)}: Exploration & Sightseeing`}</span>
+                              <span className="badge bg-white text-secondary border text-xs fw-medium">
+                                Day {day.dayNumber || (index + 1)}
+                              </span>
+                            </h4>
+                            <p className="text-secondary text-xs leading-relaxed mb-0" style={{ lineHeight: '1.75' }}>
+                              {day.description || day.itinararyDescription || 'Detailed day plan including boat cruise, sightseeing, watchtower visit and traditional meals.'}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* SECTION 3: INCLUSIONS & EXCLUSIONS */}
+                  <div id="inclusions" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
+                    <h3 className="h5 fw-bold text-dark mb-4 d-flex align-items-center gap-2">
+                      <i className="bi bi-list-check text-danger"></i> Inclusions & Exclusions
+                    </h3>
+
+                    <div className="row g-3">
+                      {/* INCLUSIONS COLUMN */}
+                      <div className="col-md-6">
+                        <div className="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 h-100">
+                          <h4 className="h6 fw-bold text-success mb-3 d-flex align-items-center gap-2">
+                            <i className="bi bi-check-circle-fill text-success fs-5"></i> What's Included
+                          </h4>
+                          <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-xs text-dark">
+                            {inclusions.length > 0 ? (
+                              inclusions.map((item, i) => (
+                                <li key={i} className="d-flex align-items-start gap-2">
+                                  <i className="bi bi-check2 text-success fw-bold fs-6 mt-n1"></i>
+                                  <span>{item}</span>
+                                </li>
+                              ))
+                            ) : (
+                              <>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> All meals (Breakfast, Lunch, Evening Snacks & Dinner)</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> AC Room Hotel/Resort Stay</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> Exclusive Boat Cruise & Jungle Permit</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> Tour Manager & Experienced Local Guide</li>
+                              </>
+                            )}
                           </ul>
                         </div>
+                      </div>
+
+                      {/* EXCLUSIONS COLUMN */}
+                      <div className="col-md-6">
+                        <div className="p-3 rounded-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 h-100">
+                          <h4 className="h6 fw-bold text-danger mb-3 d-flex align-items-center gap-2">
+                            <i className="bi bi-x-circle-fill text-danger fs-5"></i> What's Excluded
+                          </h4>
+                          <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-xs text-dark">
+                            {exclusions.length > 0 ? (
+                              exclusions.map((item, i) => (
+                                <li key={i} className="d-flex align-items-start gap-2">
+                                  <i className="bi bi-x text-danger fw-bold fs-6 mt-n1"></i>
+                                  <span>{item}</span>
+                                </li>
+                              ))
+                            ) : (
+                              <>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Personal expenses (Laundry, Camera Fees)</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Any optional activity or video camera charges</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Anything not mentioned in inclusions</li>
+                              </>
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* SECTION 4: HOTELS & ACCOMMODATION */}
+                  {/* <div id="hotels" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
+                    <h3 className="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+                      <i className="bi bi-house-door-fill text-danger"></i> Hotel & Stay Details
+                    </h3>
+
+                    <div className="border rounded-3 p-3 bg-light">
+                      <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <div className="d-flex align-items-center gap-2">
+                          <h4 className="h6 fw-bold text-dark mb-0">Sundarban Eco Resort / Luxury Boat Cruise</h4>
+                          <span className="badge bg-warning text-dark text-2xs">★ 4 Star Rated</span>
+                        </div>
+                        <span className="badge bg-success text-white text-xs">Verified Partner Stay</span>
+                      </div>
+                      <p className="text-secondary text-xs mb-3">
+                        Experience serene nature staying in deluxe air-conditioned eco-friendly rooms or river boat cabins with attached modern washrooms, 24/7 power backup, and fresh gourmet dining.
+                      </p>
+                      <div className="d-flex flex-wrap gap-2 text-2xs text-secondary">
+                        <span className="badge bg-white text-dark border"><i className="bi bi-wind me-1 text-primary"></i> Air Conditioned</span>
+                        <span className="badge bg-white text-dark border"><i className="bi bi-wifi me-1 text-primary"></i> WiFi in Lounge</span>
+                        <span className="badge bg-white text-dark border"><i className="bi bi-cup-hot me-1 text-primary"></i> Dining Hall</span>
+                        <span className="badge bg-white text-dark border"><i className="bi bi-lightning-charge me-1 text-primary"></i> 24/7 Power Backup</span>
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* SECTION 5: POLICIES & ACCORDION FAQS */}
+                  <div id="policies" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
+                    <h3 className="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+                      <i className="bi bi-shield-lock-fill text-danger"></i> Terms, Cancellation & Policies
+                    </h3>
+
+                    <div className="accordion accordion-flush" id="policyAccordion">
+                      {packageDetails.policies && packageDetails.policies.length > 0 ? (
+                        packageDetails.policies.map((policy, index) => (
+                          <div key={index} className="accordion-item border rounded-3 mb-2 overflow-hidden">
+                            <h2 className="accordion-header" id={`heading${index}`}>
+                              <button
+                                className={`accordion-button text-dark fw-bold text-xs ${openFaq === index ? '' : 'collapsed'}`}
+                                type="button"
+                                onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
+                              >
+                                {policy.title}
+                              </button>
+                            </h2>
+                            <div className={`accordion-collapse collapse ${openFaq === index ? 'show' : ''}`}>
+                              <div className="accordion-body text-xs text-secondary bg-light">
+                                <ul className="ps-3 mb-0">
+                                  {parseSafeJSON(policy.bullets).map((bullet, idx) => (
+                                    <li key={idx} className="mb-1">{bullet}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <>
+                          <div className="border rounded-3 p-3 bg-light mb-2">
+                            <h5 className="fw-bold text-dark text-xs mb-1">Cancellation & Refund Policy</h5>
+                            <p className="text-secondary text-2xs mb-0">Full refund available up to 7 days prior to departure date. 50% refund between 3 to 7 days.</p>
+                          </div>
+                          <div className="border rounded-3 p-3 bg-light">
+                            <h5 className="fw-bold text-dark text-xs mb-1">Important Travel Guidelines</h5>
+                            <p className="text-secondary text-2xs mb-0">Government photo ID proof (Aadhaar / Voter ID / Passport) is mandatory for boat safari permits.</p>
+                          </div>
+                        </>
                       )}
                     </div>
-                  ))}
+                  </div>
+
+                </div>
+
+                {/* RIGHT COLUMN (STICKY EASEMYTRIP PRICING SIDEBAR) */}
+                <div className="col-lg-4">
+                  <div ref={sidebarRef} className="position-sticky" style={{ top: '80px' }}>
+
+                    {/* PRICING CARD */}
+                    <div className="card border-0 shadow-sm bg-white rounded-4 overflow-hidden mb-4">
+
+                      {/* HEADER PRICE BLOCK */}
+                      <div className="p-4 border-bottom text-white" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
+                        <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Starting From</span>
+                        <div className="d-flex align-items-baseline gap-2">
+                          <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
+                            {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
+                          </h2>
+                          {packageDetails.base_price && (
+                            <del className="text-light opacity-50 text-sm fw-normal">
+                              {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.base_price).toLocaleString('en-IN')}
+                            </del>
+                          )}
+                        </div>
+                        <small className="text-light opacity-75 text-3xs d-block mt-1">
+                          Per Person on twin sharing basis (Taxes included)
+                        </small>
+                      </div>
+
+                      {/* BOOKING ACTION BLOCK */}
+                      <div className="card-body p-4">
+                        <div className="d-flex flex-column gap-3">
+
+                          {/* PACKAGE INCLUDES ICON MATRIX */}
+                          <div>
+                            <small className="text-2xs text-uppercase text-muted fw-bold d-block mb-2">Package Includes:</small>
+                            <div className="d-flex justify-content-between text-center text-muted border-top border-bottom py-2" style={{ fontSize: '11px' }}>
+                              <div><i className="bi bi-building d-block fs-5 text-secondary"></i>Hotel</div>
+                              <div><i className="bi bi-binoculars d-block fs-5 text-secondary"></i>Safari</div>
+                              <div><i className="bi bi-car-front d-block fs-5 text-secondary"></i>Transfer</div>
+                              <div><i className="bi bi-egg-fried d-block fs-5 text-secondary"></i>Meals</div>
+                            </div>
+                          </div>
+
+                          {/* CTA BUTTONS */}
+                          <button
+                            type="button"
+                            onClick={() => { setModalType('book'); setIsModalOpen(true); }}
+                            className="btn btn-danger w-100 py-3 text-sm fw-bold rounded-3 shadow-sm hover-lift text-uppercase tracking-wider border-0"
+                            style={{ backgroundColor: '#ff5c41' }}
+                          >
+                            <i className="bi bi-lightning-charge-fill me-1"></i> Book Now
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => { setModalType('enquire'); setIsModalOpen(true); }}
+                            className="btn btn-outline-dark w-100 py-2.5 text-xs fw-bold rounded-3"
+                          >
+                            <i className="bi bi-envelope me-1"></i> Send Free Inquiry
+                          </button>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* PROMO / COUPON CARD */}
+                    {/* <div className="card border-0 shadow-2xs rounded-4 p-3 mb-4 text-white" style={{ background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)' }}>
+                      <div className="d-flex align-items-center gap-3">
+                        <i className="bi bi-ticket-perforated-fill fs-2"></i>
+                        <div>
+                          <span className="badge bg-white text-danger text-2xs font-bold uppercase mb-1">Special Offer</span>
+                          <p className="text-xs fw-bold mb-0">Use Code: <span className="text-warning bg-dark px-2 py-0.5 rounded">DELTA500</span></p>
+                          <small className="text-3xs text-white opacity-90">Get instant ₹500 discount on group reservations!</small>
+                        </div>
+                      </div>
+                    </div> */}
+
+                    {/* HELP & SUPPORT BOX */}
+                    <div className="card border-0 shadow-sm bg-white rounded-4 p-3">
+                      <div className="d-flex align-items-center gap-3">
+                        <div className="bg-danger bg-opacity-10 p-3 rounded-circle text-danger">
+                          <i className="bi bi-headset fs-3"></i>
+                        </div>
+                        <div>
+                          <h5 className="fw-bold text-dark text-xs mb-1">Need Expert Assistance?</h5>
+                          <p className="text-secondary text-2xs mb-1">Speak directly with our Sundarban Tour Specialist.</p>
+                          <a href="tel:+919876543210" className="text-danger fw-bold text-xs text-decoration-none d-block">
+                            <i className="bi bi-telephone-fill me-1"></i> +91 98765 43210 / 033-2410-0000
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
 
             </div>
-            {/* Dynamic Pop-up Booking Lead Form Modal Overlay */}
+
+            {/* MOBILE BOTTOM FLOATING STICKY BOOKING BAR */}
+            <div className="d-block d-lg-none position-fixed bottom-0 start-0 w-100 bg-white border-top shadow-lg p-3" style={{ zIndex: 9999 }}>
+              <div className="d-flex align-items-center justify-content-between">
+                <div>
+                  <span className="text-3xs text-muted d-block">Starting from</span>
+                  <strong className="h5 fw-bold text-danger mb-0">
+                    {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
+                  </strong>
+                  <span className="text-3xs text-muted d-block">/ person</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setModalType('book'); setIsModalOpen(true); }}
+                  className="btn btn-danger px-4 py-2 text-xs fw-bold rounded-pill shadow-sm"
+                  style={{ backgroundColor: '#ff5c41' }}
+                >
+                  Book Now
+                </button>
+              </div>
+            </div>
+
+            {/* INTERACTIVE BOOKING & INQUIRY MODAL (WITH DATE & TRAVELERS SELECTOR) */}
             {isModalOpen && (
-              <div className="booking-modal-overlay" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(10, 19, 44, 0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 9999, padding: '20px' }}>
-                <div className="booking-modal-card" style={{ background: '#fff', width: '100%', maxWidth: '500px', borderRadius: '12px', padding: '30px', boxShadow: '0 10px 25px rgba(0,0,0,0.1)', position: 'relative', maxHeight: '90vh', overflowY: 'auto' }}>
+              <div
+                className="modal-backdrop-custom"
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100vw',
+                  height: '100vh',
+                  backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: 10000,
+                  padding: '16px'
+                }}
+              >
+                <div
+                  className="bg-white rounded-4 shadow-lg p-4 position-relative w-100"
+                  style={{ maxWidth: '520px', maxHeight: '90vh', overflowY: 'auto' }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="btn-close position-absolute top-0 end-0 m-3"
+                    aria-label="Close"
+                  ></button>
 
-                  <button type="button" onClick={() => setIsModalOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '22px', color: '#A0A6B5', cursor: 'pointer' }}>
-                    <i className="bi bi-x-lg"></i>
-                  </button>
-
-                  <h4 style={{ fontWeight: '700', color: '#0A132C', marginBottom: '5px' }}>Traveler Details</h4>
-                  <p style={{ fontSize: '13px', color: '#4A5264', marginBottom: '20px' }}>Provide details to complete the booking workflow reservation query for {packageDetails.title}</p>
+                  <h4 className="fw-extrabold text-dark h5 mb-1">
+                    {modalType === 'book' ? 'Complete Your Booking Query' : 'Enquire About Package'}
+                  </h4>
+                  <p className="text-secondary text-xs mb-3">
+                    {packageDetails.title} ({packageDetails.duration_days} Days / {packageDetails.duration_nights || (packageDetails.duration_days - 1)} Nights)
+                  </p>
 
                   <form onSubmit={handleBookingSubmit} className="d-flex flex-column gap-3">
+
+                    {/* DEPARTURE DATE SELECTOR IN MODAL */}
                     <div>
-                      <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Full Name <span style={{ color: '#EF4444' }}>*</span></label>
-                      <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="form-control" style={{ padding: '11px', borderRadius: '6px', border: `1px solid ${errors.name ? '#EF4444' : '#D4D7DF'}`, width: '100%' }} placeholder="" />
-                      {errors.name && <small style={{ color: '#EF4444', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.name}</small>}
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">
+                        <i className="bi bi-calendar-event me-1 text-danger"></i> Departure Date <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        className="form-control text-xs py-2 px-3 rounded-3"
+                        value={departure}
+                        onChange={(e) => setDeparture(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    {/* TOTAL TRAVELERS SELECTOR IN MODAL */}
+                    <div>
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">
+                        <i className="bi bi-people me-1 text-danger"></i> Total Travelers <span className="text-danger">*</span>
+                      </label>
+                      <div className="input-group">
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary text-xs px-3"
+                          onClick={() => setGuestsCount(Math.max(1, guestsCount - 1))}
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          className="form-control text-center text-xs font-bold"
+                          value={guestsCount}
+                          onChange={(e) => setGuestsCount(Math.max(1, parseInt(e.target.value) || 1))}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary text-xs px-3"
+                          onClick={() => setGuestsCount(guestsCount + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Phone Number <span style={{ color: '#EF4444' }}>*</span></label>
-                      <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className="form-control" style={{ padding: '11px', borderRadius: '6px', border: `1px solid ${errors.phone ? '#EF4444' : '#D4D7DF'}`, width: '100%' }} placeholder="9876xxxxxx" />
-                      {errors.phone && <small style={{ color: '#EF4444', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.phone}</small>}
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">
+                        Full Name <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className={`form-control text-xs py-2 ${errors.name ? 'is-invalid' : ''}`}
+                        placeholder="Enter your full name"
+                      />
+                      {errors.name && <div className="invalid-feedback text-2xs">{errors.name}</div>}
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Email Address <span style={{ color: '#A0A6B5', fontWeight: 'normal' }}>(Optional)</span></label>
-                      <input type="text" name="email" value={formData.email} onChange={handleInputChange} className="form-control" style={{ padding: '11px', borderRadius: '6px', border: `1px solid ${errors.email ? '#EF4444' : '#D4D7DF'}`, width: '100%' }} placeholder="joxxxxxxx@example.com" />
-                      {errors.email && <small style={{ color: '#EF4444', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.email}</small>}
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">
+                        Phone Number <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className={`form-control text-xs py-2 ${errors.phone ? 'is-invalid' : ''}`}
+                        placeholder="10-digit mobile number"
+                      />
+                      {errors.phone && <div className="invalid-feedback text-2xs">{errors.phone}</div>}
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '13px', fontWeight: '600', color: '#4A5264', marginBottom: '6px', display: 'block' }}>Comments / Special Requirements</label>
-                      <textarea name="comment" rows="3" value={formData.comment} onChange={handleInputChange} className="form-control" style={{ padding: '11px', borderRadius: '6px', border: '1px solid #D4D7DF', width: '100%', resize: 'none' }} placeholder="Any food preferences, seat allocations or specific assistance needs..."></textarea>
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">
+                        Email Address <span className="text-muted fw-normal">(Optional)</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className={`form-control text-xs py-2 ${errors.email ? 'is-invalid' : ''}`}
+                        placeholder="yourname@example.com"
+                      />
+                      {errors.email && <div className="invalid-feedback text-2xs">{errors.email}</div>}
                     </div>
 
-                    <div className="mt-2 pt-2" style={{ borderTop: '1px solid #E4E7EC' }}>
-                      <button type="submit" className="primary-btn1 w-100 border-0 pt-3 pb-3 d-flex justify-content-center" style={{ background: '#ff5c41', color: '#fff', borderRadius: '6px', fontWeight: '700', cursor: 'pointer' }}>
-                        Book Now
-                      </button>
+                    <div>
+                      <label className="text-xs fw-bold text-dark mb-1 d-block">Special Requests / Comments</label>
+                      <textarea
+                        name="comment"
+                        rows="3"
+                        value={formData.comment}
+                        onChange={handleInputChange}
+                        className="form-control text-xs py-2"
+                        placeholder="Any food preferences, pickup points, or travel queries..."
+                      ></textarea>
                     </div>
+
+                    <div className="p-3 bg-light rounded-3 border">
+                      <div className="d-flex justify-content-between align-items-center text-xs">
+                        <span className="text-secondary">Estimated Total ({guestsCount} Travelers):</span>
+                        <strong className="text-danger fs-6 fw-bold">
+                          {packageDetails.currency === 'INR' ? '₹' : '$'}{(packageDetails.actual_price * guestsCount).toLocaleString('en-IN')}
+                        </strong>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-danger w-100 py-3 text-sm fw-bold rounded-3 text-uppercase border-0 shadow-sm"
+                      style={{ backgroundColor: '#ff5c41' }}
+                    >
+                      Submit Reservation Request
+                    </button>
                   </form>
-
                 </div>
               </div>
             )}
-            {/* Styled Scoped Overrides Sheet */}
+
+            {/* STYLESHEET OVERRIDES FOR SCOPED UTILITIES */}
             <style jsx global>{`
-          .single-package-card:hover { transform: translateY(-5px); }
-          .swiper-nav-arrows div:hover { background: #ff5c41 !important; color: #fff !important; border-color: #ff5c41 !important; }
-        `}</style>
+              .scroll-margin-top {
+                scroll-margin-top: 100px;
+              }
+              .hover-lift {
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+              }
+              .hover-lift:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+              }
+              .text-2xs {
+                font-size: 11px;
+              }
+              .text-3xs {
+                font-size: 10px;
+              }
+              @media print {
+                body * {
+                  visibility: hidden;
+                }
+                .emt-package-details-wrapper, .emt-package-details-wrapper * {
+                  visibility: visible;
+                }
+                .emt-package-details-wrapper {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  width: 100%;
+                }
+                .btn, button, .modal-backdrop-custom {
+                  display: none !important;
+                }
+              }
+            `}</style>
+
           </div>
         </>
-      }
+      )}
     </>
   );
 }
-
 
 function getPackageIdFromPath(urlOrSlug) {
   if (!urlOrSlug) return null;
   let lastSegment = "";
   if (Array.isArray(urlOrSlug)) {
     lastSegment = urlOrSlug[urlOrSlug.length - 1];
-  }
-  else if (typeof urlOrSlug === 'string') {
+  } else if (typeof urlOrSlug === 'string') {
     const segments = urlOrSlug.split('/');
     lastSegment = segments[segments.length - 1];
   }

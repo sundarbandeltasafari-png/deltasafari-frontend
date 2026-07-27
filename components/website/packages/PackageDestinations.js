@@ -21,7 +21,7 @@ async function PackageDestinations() {
         <>
             {desination && desination.length > 0 && <div className="destination-page package-head-card pt-50 mb-50 ">
                 <div className="container">
-                    <div className="row gy-md-5 gy-4">
+                    <div className="row package-dest gy-md-5 gy-4">
                         {
                             desination.map((dest, index) => {
                                 return <div key={index} className="col-lg-3 col-md-4 col-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
@@ -31,7 +31,7 @@ async function PackageDestinations() {
                                         </div>
                                         <div className="destination-content position-absolute bottom-0">
                                             <h5 className='text-left text-white'>{dest?.name}</h5>
-                                            <p className='text-start' style={{ fontSize: '14px' }}>View More <i className="fa-solid fa-arrow-right"></i></p>
+                                            <p className='text-start' style={{ fontSize: '14px' }}>{dest?.showing_text}</p>
                                         </div>
                                     </Link>
                                 </div>

@@ -1,24 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap"); */
 
 :root {
   /* ---- Delta Safari brand tokens ---- */
-  --ds-green-900: #0633fb;
-  --ds-green-700: #2d53fe;
-  --ds-green-600: #5271ff;
-  --ds-green-100: #e4f1ec;
-  --ds-orange-500: #f2941e;
-  --ds-orange-600: #d97b06;
-  --ds-orange-100: #fef1de;
-  --ds-sand-50: #faf7f0;
-  --ds-sand-100: #f2ecdd;
-  --ds-ink-900: #5271ff;
-  --ds-ink-600: #526158;
-  --ds-line: #e4ddca;
+  --ds-green-900: #0b1d3a;
+  --ds-green-700: #174385;
+  --ds-green-600: #1781fe;
+  --ds-green-100: #e8f1fd;
+  --ds-orange-500: #ff5c41;
+  --ds-orange-600: #e0482e;
+  --ds-orange-100: #ffece8;
+  --ds-sand-50: #f8fafc;
+  --ds-sand-100: #e2e8f0;
+  --ds-ink-900: #0b1d3a;
+  --ds-ink-600: #475569;
+  --ds-line: #e2e8f0;
   --ds-white: #ffffff;
 
   --ds-radius: 16px;
-  --ds-shadow: 0 10px 30px -12px rgba(10, 61, 49, 0.18);
+  --ds-shadow: 0 10px 30px -12px rgba(11, 29, 58, 0.18);
 }
+
+
 
 
 .ds-container {
@@ -47,14 +49,16 @@
 }
 
 .ds-section {
-  padding: 72px 0;
+  padding: 36px 0;
+      background: #f8fafc;
 }
 
 @media (max-width: 767.98px) {
   .ds-section {
-    padding: 48px 0;
+    padding: 24px 0;
   }
 }
+
 
 .ds-bg-sand {
   background-color: var(--ds-sand-50);
@@ -687,12 +691,13 @@
 }
 
 .ds-cta-band {
-  background: linear-gradient(120deg, var(--ds-green-900), var(--ds-green-700));
-  border-radius: 24px;
-  padding: 48px;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
+    background: linear-gradient(120deg, #ffffff, #ffffff);
+    color: #000000;
+    border-radius: 24px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
 }
 .ds-cta-band::before {
   content: "";
@@ -704,8 +709,8 @@
   background: rgba(242,148,30,0.2);
   border-radius: 50%;
 }
-.ds-cta-band h3 { color: #fff; }
-.ds-cta-band p { color: rgba(255,255,255,0.8); }
+.ds-cta-band h3 { color: #000; }
+.ds-cta-band p { color: #000; }
 
 /* =========================================================
    FOOTER

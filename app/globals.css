@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bs-breadcrumb-divider: '/'
 }
 
 @theme inline {
@@ -551,7 +552,136 @@ body {
   }
 }
 
-.bottom-card-swiper{
+.bottom-card-swiper {
   width: max-content !important;
   margin-right: 5px !important;
+}
+
+/* --- Fixed Bottom-Right Floating Button for Custom Package --- */
+.custom-package-float-btn {
+  position: fixed !important;
+  bottom: 28px !important;
+  right: 28px !important;
+  z-index: 999999 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, #ff5c41 0%, #d4381e 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(255, 92, 65, 0.45);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  animation: custom-pkg-float 3s ease-in-out infinite;
+  text-decoration: none !important;
+}
+
+.custom-package-float-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 14px 32px rgba(255, 92, 65, 0.65);
+  color: #ffffff;
+}
+
+.custom-package-float-btn::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 54px;
+  border: 2px solid #ff5c41;
+  animation: custom-pkg-pulse 2s infinite;
+  pointer-events: none;
+}
+
+.custom-pkg-icon {
+  font-size: 16px;
+  animation: custom-pkg-spin 4s linear infinite;
+}
+
+.custom-pkg-badge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes custom-pkg-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes custom-pkg-pulse {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes custom-pkg-spin {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(15deg) scale(1.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-package-float-btn {
+    bottom: 80px !important;
+    right: 16px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+.custom-package-fixed {
+  position: fixed;
+  right: 0;
+  bottom: 20px;
+  z-index: 5555;
+}
+
+@media screen and (max-width: 998px) {
+  .package-dest {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    flex-flow: row !important;
+    gap: 16px;
+    padding-bottom: 15px;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .package-dest .col-lg-3{
+    padding: 0px !important
+  }
 }
