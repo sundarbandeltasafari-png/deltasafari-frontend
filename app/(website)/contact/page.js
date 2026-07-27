@@ -15,6 +15,7 @@ async function page() {
             offices = response.data?.offices;
             faqs = response.data?.faqs;
         }
+        console.log(response);
     } catch (error) {
         contacts = null;
         offices = null;
