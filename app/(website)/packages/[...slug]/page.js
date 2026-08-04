@@ -9,7 +9,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { urlEncode } from '@/libs/urlHelper';
 import HomeBanner from '@/components/website/home/HomeBanner';
 import Filter from '@/components/website/home/Filter';
+import Faq from '@/components/website/home/Faq';
 import Link from 'next/link';
+import CustomPackageWizardForm from '@/components/website/CustomPackageWizardForm';
 
 export default function TravelPackageListPage() {
   const params = useParams();
@@ -17,6 +19,7 @@ export default function TravelPackageListPage() {
   const [dbPackages, setDbPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [customiseModalPkg, setCustomiseModalPkg] = useState(null);
   const router = useRouter()
 
   // --- CEILING PRICE DETERMINATION ---
@@ -281,7 +284,7 @@ export default function TravelPackageListPage() {
                   <tr>
                     <td className="bg-light"></td>
                     {comparedPackages.map(pkg => {
-                      const detailsUrl = `/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`;
+                      const detailsUrl = `/package/${pkg.slug}`;
                       return (
                         <td key={pkg.id} className="p-3 text-center">
                           <Link href={detailsUrl} className="primary-btn1 py-2 px-3 text-xs d-inline-block">
@@ -327,9 +330,8 @@ export default function TravelPackageListPage() {
         )}
 
         <div className="container">
-
-          {/* TOP EASEMYTRIP-STYLE FILTER BAR (SINGLE ROW HORIZONTAL SCROLL ON MOBILE) */}
-          <div className="card border-0 shadow-xs px-3 py-2 bg-white rounded-4 mb-4 position-relative" style={{ zIndex: 500, overflow: 'visible' }} ref={filterBarRef}>
+          {/* TOP EASEMYTRIP-STYLE FILTER BAR */}
+          <div className="card border-0 shadow-xs px-3 py-2 bg-white rounded-4 mb-3 position-relative" style={{ zIndex: 500, overflow: 'visible' }} ref={filterBarRef}>
             <div className="d-flex align-items-center justify-content-between gap-2">
               
               {/* Single-row horizontal scrolling container for filter pills */}
@@ -341,9 +343,9 @@ export default function TravelPackageListPage() {
                   type="button"
                   onClick={() => toggleDropdown('sort')}
                 >
-                  <i className="bi bi-arrow-down-up me-1"></i>
+                  <i className="fa-solid fa-arrow-down-up me-1"></i>
                   Sort By: <span className="fw-semibold ms-1">{sortBy === 'Default' ? 'Default' : sortBy === 'PriceLowHigh' ? 'Price: Low to High' : 'Price: High to Low'}</span>
-                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                  <i className="fa-solid fa-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
                 </button>
 
                 {/* Package Type Pill */}
@@ -352,9 +354,9 @@ export default function TravelPackageListPage() {
                   type="button"
                   onClick={() => toggleDropdown('type')}
                 >
-                  <i className="bi bi-funnel me-1"></i>
+                  <i className="fa-solid fa-filter me-1"></i>
                   Type: <span className="fw-semibold ms-1">{selectedPackageType}</span>
-                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                  <i className="fa-solid fa-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
                 </button>
 
                 {/* Budget Pill */}
@@ -363,9 +365,9 @@ export default function TravelPackageListPage() {
                   type="button"
                   onClick={() => toggleDropdown('price')}
                 >
-                  <i className="bi bi-currency-rupee me-1"></i>
+                  <i className="fa-solid fa-indian-rupee-sign me-1"></i>
                   Budget: <span className="fw-semibold ms-1">₹{minPrice.toLocaleString('en-IN')} - ₹{maxPrice.toLocaleString('en-IN')}</span>
-                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                  <i className="fa-solid fa-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
                 </button>
 
                 {/* Duration Pill */}
@@ -374,20 +376,42 @@ export default function TravelPackageListPage() {
                   type="button"
                   onClick={() => toggleDropdown('duration')}
                 >
-                  <i className="bi bi-clock me-1"></i>
+                  <i className="fa-solid fa-clock me-1"></i>
                   Duration: <span className="fw-semibold ms-1">{durationFilter === 'All' ? 'All' : `${durationFilter} Days`}</span>
-                  <i className="bi bi-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
+                  <i className="fa-solid fa-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
                 </button>
+
+                {/* Reset Filters Pill */}
+                {(selectedPackageType !== 'All' || minPrice > 0 || maxPrice < maxAvailablePrice || durationFilter !== 'All' || sortBy !== 'Default') && (
+                  <button 
+                    className="btn btn-outline-danger text-xs rounded-pill px-3 py-1.5 border d-flex align-items-center gap-1 flex-shrink-0"
+                    type="button"
+                    onClick={() => {
+                      setSelectedPackageType('All');
+                      setMinPrice(0);
+                      setMaxPrice(maxAvailablePrice);
+                      setDurationFilter('All');
+                      setSortBy('Default');
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    <i className="fa-solid fa-rotate-left me-1"></i>
+                    Reset Filters
+                  </button>
+                )}
 
               </div>
 
-              {/* Reset Button */}
-              <button className="btn btn-link text-danger text-xs fw-semibold text-decoration-none px-2 flex-shrink-0 ms-auto" onClick={() => { handleResetAll(); setOpenDropdown(null); }}>
-                <i className="bi bi-arrow-counterclockwise me-1"></i> Reset
-              </button>
+              {/* Package Counter Badge */}
+              <div className="d-none d-md-flex align-items-center gap-1 flex-shrink-0">
+                <span className="badge bg-primary bg-opacity-10 text-primary text-xs px-3 py-2 rounded-pill fw-bold border border-primary border-opacity-20">
+                  {filteredPackages.length} Packages Found
+                </span>
+              </div>
+
             </div>
 
-            {/* UNCLIPPED FLOATING DROPDOWN MENUS POSITIONED TO FILTER CARD */}
+            {/* SORT BY DROPDOWN PANEL */}
             {openDropdown === 'sort' && (
               <div className="position-absolute start-0 top-100 mt-2 bg-white rounded-3 shadow-lg border p-2 text-xs" style={{ zIndex: 1050, minWidth: '220px', marginLeft: '12px' }}>
                 <div className="fw-bold px-3 py-1.5 text-muted border-bottom text-2xs text-uppercase mb-1">Sort Packages</div>
@@ -503,23 +527,23 @@ export default function TravelPackageListPage() {
             {displayedPackages.map((pkg) => {
               const inclusions = safeParseJSON(pkg.inclusions);
               const imgUrl = pkg.path ? process.env.NEXT_PUBLIC_SERVER_URL + `${pkg.path.replace(/\\/g, '/')}` : '/assets/images/noimage.jpg';
-
               const isCheckedForComparison = compareIds.includes(pkg.id);
+              const detailsUrl = `/package/${pkg.slug}`;
 
               return (
                 <div key={pkg.id} className="col-lg-4 col-md-6 col-12">
                   <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
 
                     {/* Top Media Window */}
-                    <div className="position-relative overflow-hidden" style={{ height: '200px' }}>
-                      <Link href={`/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`} className="d-block w-100 h-100">
-                        <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover" />
+                    <div className="position-relative overflow-hidden" style={{ height: '210px' }}>
+                      <Link href={detailsUrl} className="d-block w-100 h-100">
+                        <img src={imgUrl} alt={pkg.title} className="w-100 h-100 object-fit-cover package-img" />
                       </Link>
 
                       {/* Interactive Selection Checkbox Overlay */}
                       <span 
                         onClick={(e) => { e.stopPropagation(); }} 
-                        className="position-absolute top-0 start-0 m-2 bg-dark opacity-85 text-white px-2 py-1 text-2xs rounded d-flex align-items-center gap-1 user-select-none" 
+                        className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 user-select-none shadow-xs" 
                         style={{ zIndex: 55 }}
                       >
                         <input
@@ -541,65 +565,101 @@ export default function TravelPackageListPage() {
                         </label>
                       </span>
 
+                      {/* Package Type Tag */}
                       {pkg.package_type_name && (
-                        <span className="position-absolute top-0 end-0 m-2 badge bg-primary text-uppercase text-2xs px-2 py-1 rounded">
-                          {pkg.package_type_name} Tour
+                        <span className="position-absolute top-0 end-0 m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs fw-bold" style={{ backgroundColor: '#ef6614' }}>
+                          {pkg.package_type_name}
                         </span>
                       )}
 
-                      <div className="position-absolute bottom-0 start-0 w-100 bg-primary opacity-90 text-white px-3 py-1 text-xs fw-semibold">
-                        {pkg.duration_nights || 0}N / {pkg.duration_days || 0}D | {pkg.package_type_name || 'Special'} Departure
+                      {/* Duration Banner */}
+                      <div className="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white px-3 py-1.5 text-xs fw-semibold d-flex align-items-center justify-content-between">
+                        <span><i className="fa-solid fa-clock text-warning me-1"></i>{pkg.duration_nights || 0}N / {pkg.duration_days || 1}D</span>
+                        <span className="text-3xs text-white-50">Customizable</span>
                       </div>
                     </div>
 
                     {/* Content Area */}
                     <div className="card-body p-3 d-flex flex-column justify-content-between">
                       <div>
-                        <h3 className="h6 fw-bold mb-1 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35' }}>
-                          {pkg.title}
-                        </h3>
+                        <Link href={detailsUrl} className="text-decoration-none">
+                          <h3 className="h6 fw-bold mb-1 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35' }}>
+                            {pkg.title}
+                          </h3>
+                        </Link>
 
-                        <div className="text-2xs text-primary fw-medium mb-1">
-                          {pkg.from_destination_name && `${pkg.from_destination_name} `}
+                        <div className="text-xs text-primary fw-semibold mb-2">
+                          <i className="fa-solid fa-location-dot text-danger me-1"></i>
+                          {pkg.from_destination_name ? `${pkg.from_destination_name} ` : ''}
                           {pkg.to_destination_name && `➔ ${pkg.to_destination_name}`}
                         </div>
 
-                        <div className="d-flex gap-3 align-items-center my-1 text-muted text-center border-top border-bottom py-2">
-                          <div className="flex-fill"><i className="bi bi-building d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Hotel</span></div>
-                          <div className="flex-fill"><i className="bi bi-binoculars d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Sightseeing</span></div>
-                          <div className="flex-fill"><i className="bi bi-car-front d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Transfer</span></div>
-                          <div className="flex-fill"><i className="bi bi-egg-fried d-block text-base mb-1 text-secondary"></i><span className="text-3xs d-block" style={{ lineHeight: '15px' }}>Meals</span></div>
+                        {/* Inclusion Icons Row - Centered with Bigger Icons & Text */}
+                        <div className="d-flex gap-2 align-items-center justify-content-center my-2.5 text-muted text-center bg-light rounded-3 py-2.5 px-2 border">
+                          <div className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                            <i className="fa-solid fa-hotel fs-5 text-primary mb-1"></i>
+                            <span className="text-2xs fw-semibold text-dark">Hotel</span>
+                          </div>
+                          <div className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                            <i className="fa-solid fa-camera fs-5 text-primary mb-1"></i>
+                            <span className="text-2xs fw-semibold text-dark">Sightseeing</span>
+                          </div>
+                          <div className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                            <i className="fa-solid fa-bus fs-5 text-primary mb-1"></i>
+                            <span className="text-2xs fw-semibold text-dark">Transfer</span>
+                          </div>
+                          <div className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                            <i className="fa-solid fa-utensils fs-5 text-primary mb-1"></i>
+                            <span className="text-2xs fw-semibold text-dark">Meals</span>
+                          </div>
                         </div>
 
-                        {inclusions.length > 0 && (
-                          <ul className="list-unstyled d-flex flex-column gap-1 mb-1 text-xs text-secondary ms-1">
+                        {/* Highlights */}
+                        {inclusions.length > 0 ? (
+                          <ul className="list-unstyled d-flex flex-column gap-1.5 mb-2 text-xs text-secondary ms-1">
                             {inclusions.slice(0, 3).map((inc, index) => (
-                              <li key={index} className="text-truncate">
-                                <i className="bi bi-check-lg text-success me-1 fw-bold"></i> {inc}
+                              <li key={index} className="text-truncate d-flex align-items-center gap-1.5 text-xs">
+                                <i className="fa-solid fa-circle-check text-success"></i>
+                                <span>{typeof inc === 'object' ? (inc.name || JSON.stringify(inc)) : inc}</span>
                               </li>
                             ))}
                           </ul>
+                        ) : (
+                          <div className="text-xs text-muted mb-2">
+                            <i className="fa-solid fa-circle-check text-success me-1"></i> Eco-Resort Stay & Boat Safari Included
+                          </div>
                         )}
                       </div>
 
-                      {/* Footer Rates Block */}
-                      <div className="border-top pt-1 d-flex align-items-end justify-content-between mt-2">
+                      {/* Footer Rates & Action Block */}
+                      <div className="border-top pt-2 d-flex align-items-end justify-content-between mt-2">
                         <div>
-                          <span className="text-3xs text-muted d-block line-height-1 mb-1" style={{ lineHeight: '15px' }}>Starting From</span>
+                          <span className="text-3xs text-muted d-block" style={{ lineHeight: '14px' }}>Starting From</span>
                           {pkg.base_price > pkg.actual_price && (
-                            <span className="text-2xs text-muted text-decoration-line-through me-1 d-block" style={{ lineHeight: '15px' }}>
+                            <span className="text-2xs text-muted text-decoration-line-through me-1 d-block" style={{ lineHeight: '14px' }}>
                               ₹{Number(pkg.base_price).toLocaleString('en-IN')}
                             </span>
                           )}
-                          <span className="h4 fw-extrabold text-dark mb-0" style={{ fontWeight: 700 }}>
+                          <span className="h4 fw-extrabold mb-0" style={{ fontWeight: 800, color: '#ef6614' }}>
                             ₹{Number(pkg.actual_price || 0).toLocaleString('en-IN')}
                           </span>
-                          <span className="text-3xs text-muted d-block text-nowrap" style={{ lineHeight: '15px' }}>Per Person on twin sharing</span>
+                          <span className="text-3xs text-muted d-block text-nowrap" style={{ lineHeight: '14px' }}>Per Person</span>
                         </div>
 
-                        <div>
-                          <Link href={`/package/${pkg.to_destination_slug || 'destination'}/${pkg.slug}-${urlEncode(pkg.id)}`} className="btn btn-primary text-white fw-bold px-4 py-2 rounded-pill text-xs shadow-xs">
-                            Book Now <i className="bi bi-arrow-right-short ms-1 text-sm"></i>
+                        <div className="d-flex flex-column gap-1.5 align-items-stretch" style={{ minWidth: '110px' }}>
+                          <button 
+                            type="button" 
+                            className="btn btn-outline-primary fw-bold py-1.5 px-2.5 rounded-3 text-xs shadow-xs d-flex align-items-center justify-content-center gap-1 border-primary w-100"
+                            onClick={() => setCustomiseModalPkg(pkg)}
+                            title="Customise Package"
+                          >
+                            <i className="fa-solid fa-wand-magic-sparkles text-primary"></i>
+                            <span>Customise</span>
+                          </button>
+
+                          <Link href={detailsUrl} className="btn btn-orange text-white fw-bold py-1.5 px-2.5 rounded-3 text-xs shadow-xs text-decoration-none d-flex align-items-center justify-content-center gap-1 w-100">
+                            <span>Book Now</span>
+                            <i className="fa-solid fa-chevron-right text-3xs ms-0.5"></i>
                           </Link>
                         </div>
                       </div>
@@ -613,14 +673,106 @@ export default function TravelPackageListPage() {
           </div>
         )}
 
-        <div ref={ref} className="text-center py-5">
-          {visibleCount < filteredPackages.length && (
-            <div className="spinner-border text-primary spinner-border-sm" role="status"></div>
-          )}
+        {/* NEW ENHANCEMENT 3: CURATED DESTINATION TRAVEL INSIGHTS & FAQS */}
+        <div className="card border-0 shadow-sm bg-white rounded-4 p-4 mt-5">
+          <div className="d-flex align-items-center gap-2 mb-3">
+            <span className="badge bg-primary bg-opacity-10 text-primary p-2 rounded-circle">
+              <i className="fa-solid fa-compass fs-5"></i>
+            </span>
+            <div>
+              <h4 className="fw-bold text-dark h6 mb-0" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Traveler&apos;s Guide &amp; Destination Insights
+              </h4>
+              <small className="text-muted text-xs">Everything you need to know before booking your tour package.</small>
+            </div>
+          </div>
+
+          <div className="row g-3">
+            <div className="col-md-6">
+              <div className="p-3 bg-light rounded-3 border h-100">
+                <h6 className="fw-bold text-dark text-xs mb-1 d-flex align-items-center gap-1.5">
+                  <i className="fa-solid fa-calendar-days text-danger"></i> Best Time to Visit &amp; Weather
+                </h6>
+                <p className="text-secondary text-xs mb-0" style={{ lineHeight: '1.6' }}>
+                  October through March offers pleasant weather, clear boat safari cruising, and maximum tiger &amp; bird sighting probabilities.
+                </p>
+              </div>
+            </div>
+
+            <div className="col-md-6">
+              <div className="p-3 bg-light rounded-3 border h-100">
+                <h6 className="fw-bold text-dark text-xs mb-1 d-flex align-items-center gap-1.5">
+                  <i className="fa-solid fa-shield-halved text-success"></i> 100% Safety &amp; Certified Guides
+                </h6>
+                <p className="text-secondary text-xs mb-0" style={{ lineHeight: '1.6' }}>
+                  All packages include licensed forest department naturalists, GPS-tracked boats, and life jackets for every guest.
+                </p>
+              </div>
+            </div>
+
+            <div className="col-md-6">
+              <div className="p-3 bg-light rounded-3 border h-100">
+                <h6 className="fw-bold text-dark text-xs mb-1 d-flex align-items-center gap-1.5">
+                  <i className="fa-solid fa-sliders text-primary"></i> Customizable Itineraries
+                </h6>
+                <p className="text-secondary text-xs mb-0" style={{ lineHeight: '1.6' }}>
+                  Want extra nights, private resort upgrades, or specialized meal plans? Click <strong>Customise</strong> on any card to tailor your plan!
+                </p>
+              </div>
+            </div>
+
+            <div className="col-md-6">
+              <div className="p-3 bg-light rounded-3 border h-100">
+                <h6 className="fw-bold text-dark text-xs mb-1 d-flex align-items-center gap-1.5">
+                  <i className="fa-solid fa-tags text-warning"></i> Best Price &amp; Flexible Booking
+                </h6>
+                <p className="text-secondary text-xs mb-0" style={{ lineHeight: '1.6' }}>
+                  Direct operator rates with zero hidden charges. Flexible date changes and instant query response within 1 hour.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* FREQUENTLY ASKED QUESTIONS SECTION AT THE END */}
+        <div className="mt-5">
+          <Faq />
         </div>
 
       </div>
     </div>
+
+    {/* CUSTOM PACKAGE WIZARD MODAL */}
+    {customiseModalPkg && (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(15, 23, 42, 0.85)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000001,
+          padding: "16px"
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setCustomiseModalPkg(null);
+        }}
+      >
+        <div className="position-relative w-100" style={{ maxWidth: "980px", maxHeight: "92vh", overflowY: "auto" }}>
+          <CustomPackageWizardForm 
+            isModal={true} 
+            onClose={() => setCustomiseModalPkg(null)} 
+            preselectedPackage={customiseModalPkg}
+          />
+        </div>
+      </div>
+    )}
   </>
   );
 }

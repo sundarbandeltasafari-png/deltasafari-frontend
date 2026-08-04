@@ -40,7 +40,7 @@ function FilterBottomCard() {
                 <div className="filter-wrapper bottom-card">
                     <div className="container">
                         <div className="filter-input-wrap m-auto d-flex justify-content-evenly flex-wrap"
-                            style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", maxWidth: "615px", borderRadius: "30px", padding: "10px", gap: '5px' }}>
+                            style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", maxWidth: "525px", borderRadius: "30px", padding: "10px", gap: '5px' }}>
                             <Swiper
                                 // Forces re-initialization on page change to prevent "stuck" sliders
                                 key={pathname}

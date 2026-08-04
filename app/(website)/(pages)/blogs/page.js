@@ -8,6 +8,11 @@ import InfiniteScrollBlogComponent from '@/components/blog/InfiniteScrollBlogCom
 import Link from 'next/link';
 import BlogSearch from '@/components/blog/BlogSearch';
 import BlogSearchResults from '@/components/blog/BlogSearchResults';
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('blogs');
+}
 
 
 export default async function page() {

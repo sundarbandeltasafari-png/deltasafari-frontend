@@ -2,88 +2,102 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-
-// Import Nested Swiper Styles
-import 'swiper/css';
-import 'swiper/css/pagination';
+import { urlEncode } from '@/libs/urlHelper';
 
 export default function PackageCard({ pkg }) {
+    if (!pkg) return null;
+
+    const imgUrl = pkg.path
+        ? `${process.env.NEXT_PUBLIC_SERVER_URL}${pkg.path.replace(/\\/g, '/')}`
+        : (Array.isArray(pkg.gallery) && pkg.gallery[0] ? (pkg.gallery[0].src || pkg.gallery[0]) : '/assets/images/noimage.jpg');
+    
+    const detailsUrl = pkg.detailsUrl || `/package/${pkg.slug}`;
+    const durationText = pkg.duration_nights
+        ? `${pkg.duration_nights}N / ${pkg.duration_days}D`
+        : (pkg.duration || `${pkg.duration_days || 1} Days`);
+    
+    const actualPrice = pkg.actual_price ? Number(pkg.actual_price) : (pkg.price ? Number(pkg.price) : null);
+    const mrpPrice = pkg.mrp_price ? Number(pkg.mrp_price) : (actualPrice ? Math.round(actualPrice * 1.25) : null);
+    const priceText = actualPrice ? `₹${actualPrice.toLocaleString('en-IN')}` : null;
+    const mrpText = mrpPrice && mrpPrice > (actualPrice || 0) ? `₹${mrpPrice.toLocaleString('en-IN')}` : null;
+    const discountPercent = (mrpPrice && actualPrice && mrpPrice > actualPrice) 
+        ? Math.round(((mrpPrice - actualPrice) / mrpPrice) * 100)
+        : 0;
+
+    const destinationName = pkg.to_destination_name || pkg.destination_name || (typeof pkg.location === 'object' ? pkg.location.name : 'Sundarban');
+    const categoryName = pkg.package_type_name || pkg.category_name || 'Holiday Tour';
 
     return (
-        <div className="package-card">
-            <div className="package-img-wrap">
-                <Swiper
-                    className="package-card-img-slider"
-                    modules={[Pagination, Autoplay]}
-                    pagination={{
-                        clickable: true,
-                        el: '.package-card-img-pagi',
-                    }}
-                    autoplay={{
-                        delay: 2000
-                    }}
-                >
-                    {pkg.gallery.map((img, index) => (
-                        <SwiperSlide key={index}>
-                            <Link href={pkg.detailsUrl} className="package-img">
-                                <img src={img.src || img} alt={img.alt || pkg.title} />
-                            </Link>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+        <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
+            {/* Media Banner */}
+            <div className="position-relative overflow-hidden" style={{ height: '200px' }}>
+                <Link href={detailsUrl} className="d-block w-100 h-100">
+                    <img 
+                        src={imgUrl} 
+                        alt={pkg.title || 'Travel Package'} 
+                        className="w-100 h-100 object-fit-cover"
+                    />
+                </Link>
 
-                <div className="slider-pagi-wrap">
-                    <div className="package-card-img-pagi paginations"></div>
+                {/* Location Badge (Top Start) */}
+                <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs fw-semibold" style={{ zIndex: 10 }}>
+                    <i className="fa-solid fa-location-dot text-danger me-0.5"></i>
+                    {destinationName}
+                </span>
+
+                {/* Category Badge (Top End) */}
+                <span className="position-absolute top-0 end-0 m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs fw-bold" style={{ backgroundColor: '#ef6614', zIndex: 10 }}>
+                    {categoryName}
+                </span>
+
+                {/* Duration & Discount Overlay Banner */}
+                <div className="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white px-3 py-1.5 text-xs fw-semibold d-flex align-items-center justify-content-between" style={{ zIndex: 10 }}>
+                    <span><i className="fa-solid fa-clock text-warning me-1"></i>{durationText}</span>
+                    {discountPercent > 0 && (
+                        <span className="badge bg-danger text-white text-3xs px-2 py-0.5 rounded-pill fw-bold">
+                            {discountPercent}% OFF
+                        </span>
+                    )}
                 </div>
-
-                {pkg.badge && (
-                    <div className="batch">
-                        <span>{pkg.badge}</span>
-                    </div>
-                )}
             </div>
 
-            <div className="package-content">
-                <h5>
-                    <Link href={pkg.detailsUrl}>{pkg.title}</Link>
-                </h5>
-                <div className="location-and-time">
-                    <div className="location">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6.83615 0C3.77766 0 1.28891 2.48879 1.28891 5.54892C1.28891 7.93837 4.6241 11.8351 6.05811 13.3994C6.25669 13.6175 6.54154 13.7411 6.83615 13.7411C7.13076 13.7411 7.41561 13.6175 7.6142 13.3994C9.04821 11.8351 12.3834 7.93833 12.3834 5.54892C12.3834 2.48879 9.89464 0 6.83615 0ZM7.31469 13.1243C7.18936 13.2594 7.02008 13.3342 6.83615 13.3342C6.65222 13.3342 6.48295 13.2594 6.35761 13.1243C4.95614 11.5959 1.69584 7.79515 1.69584 5.54896C1.69584 2.7134 4.00067 0.406933 6.83615 0.406933C9.67164 0.406933 11.9765 2.7134 11.9765 5.54896C11.9765 7.79515 8.71617 11.5959 7.31469 13.1243Z" fill="currentColor" />
-                            <path d="M6.83618 8.54554C8.4624 8.54554 9.7807 7.22723 9.7807 5.60102C9.7807 3.9748 8.4624 2.65649 6.83618 2.65649C5.20997 2.65649 3.89166 3.9748 3.89166 5.60102C3.89166 7.22723 5.20997 8.54554 6.83618 8.54554Z" fill="currentColor" />
-                        </svg>
-                        <Link href={pkg.location.url}>{pkg.location.name}</Link>
+            {/* Body & Details */}
+            <div className="card-body p-3.5 d-flex flex-column justify-content-between">
+                <div>
+                    <h3 className="h6 fw-bold mb-1.5 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35', fontFamily: "'Poppins', sans-serif" }}>
+                        <Link href={detailsUrl} className="text-dark text-decoration-none hover-text-primary">
+                            {pkg.title}
+                        </Link>
+                    </h3>
+
+                    <div className="d-flex align-items-center justify-content-between text-2xs text-muted mb-2">
+                        <span><i className="fa-solid fa-map-pin text-primary me-1"></i>{destinationName}</span>
+                        <span className="badge bg-light text-secondary border text-2xs">{categoryName}</span>
                     </div>
-                    <svg className="arrow" width="25" height="6" viewBox="0 0 25 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 3L5 5.88675V0.113249L0 3ZM25 3L20 0.113249V5.88675L25 3ZM4.5 3.5H20.5V2.5H4.5V3.5Z" fill="currentColor" />
-                    </svg>
-                    <span>{pkg.duration}</span>
                 </div>
-                <div className="btn-and-price-area">
-                    <Link href={pkg.detailsUrl} className="primary-btn1">
-                        <span>
-                            Book Now
-                            <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                            </svg>
-                        </span>
-                        <span>
-                            Book Now
-                            <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.73535 1.14746C9.57033 1.97255 9.32924 3.26406 9.24902 4.66797C9.16817 6.08312 9.25559 7.5453 9.70214 8.73633C9.84754 9.12406 9.65129 9.55659 9.26367 9.70215C8.9001 9.83849 8.4969 9.67455 8.32812 9.33398L8.29785 9.26367L8.19921 8.98438C7.73487 7.5758 7.67054 5.98959 7.75097 4.58203C7.77875 4.09598 7.82525 3.62422 7.87988 3.17969L1.53027 9.53027C1.23738 9.82317 0.762615 9.82317 0.469722 9.53027C0.176829 9.23738 0.176829 8.76262 0.469722 8.46973L6.83593 2.10254C6.3319 2.16472 5.79596 2.21841 5.25 2.24902C3.8302 2.32862 2.2474 2.26906 0.958003 1.79102L0.704097 1.68945L0.635738 1.65527C0.303274 1.47099 0.157578 1.06102 0.310542 0.704102C0.463655 0.347333 0.860941 0.170391 1.22363 0.28418L1.29589 0.310547L1.48828 0.387695C2.47399 0.751207 3.79966 0.827571 5.16601 0.750977C6.60111 0.670504 7.97842 0.428235 8.86132 0.262695L9.95312 0.0585938L9.73535 1.14746Z"></path>
-                            </svg>
-                        </span>
-                    </Link>
-                    <div className="price-area">
-                        <h6>{pkg.priceLabel}</h6>
-                        <span>₹{pkg.price}</span>
+
+                {/* Footer Price & Action */}
+                <div className="d-flex align-items-end justify-content-between pt-2.5 border-top mt-2">
+                    <div>
+                        <span className="text-muted text-3xs d-block" style={{ fontSize: '11px', lineHeight: '14px' }}>Starting From</span>
+                        <div className="d-flex align-items-baseline gap-2">
+                            {mrpText && (
+                                <span className="text-muted text-decoration-line-through text-nowrap" style={{ fontSize: '13px' }}>
+                                    {mrpText}
+                                </span>
+                            )}
+                            <strong className="fw-extrabold mb-0 text-nowrap" style={{ fontSize: '20px', fontWeight: 800, color: '#ef6614' }}>
+                                {priceText || 'Contact Us'}
+                            </strong>
+                        </div>
                     </div>
+
+                    <Link href={detailsUrl} className="primary-btn1 py-1.5 px-3 text-xs">
+                        <span>Book Now</span>
+                        <span>Book Now</span>
+                    </Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }

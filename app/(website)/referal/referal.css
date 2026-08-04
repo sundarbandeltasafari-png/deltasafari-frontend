@@ -1,11 +1,11 @@
 
 :root {
-    --primary: #ff6b35;
-    --primary-dark: #e5561f;
+    --primary: #ef6614;
+    --primary-dark: #d95509;
     --primary-light: #fff3ee;
-    --primary-mid: #ff8c5a;
-    --secondary: #0d3b66;
-    --secondary-mid: #1a5499;
+    --primary-mid: #f07428;
+    --secondary: #0b1d3a;
+    --secondary-mid: #174385;
     --accent: #ffc107;
     --accent-dark: #e6ac00;
     --success: #198754;
@@ -16,7 +16,7 @@
     --purple-light: #f3e5f5;
     --amber: #f57f17;
     --amber-light: #fff8e1;
-    --text-dark: #1a1a2e;
+    --text-dark: #0b1d3a;
     --text-body: #374151;
     --text-muted: #6b7280;
     --border: #e8ecf0;
@@ -27,11 +27,17 @@
     --shadow-sm: 0 2px 12px rgba(0, 0, 0, .07);
     --shadow-md: 0 8px 32px rgba(0, 0, 0, .10);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, .13);
-    --shadow-orange: 0 12px 40px rgba(255, 107, 53, .30);
-    --shadow-navy: 0 12px 40px rgba(13, 59, 102, .28);
+    --shadow-orange: 0 12px 40px rgba(239, 102, 20, .30);
+    --shadow-navy: 0 12px 40px rgba(11, 29, 58, .28);
     --radius: 18px;
     --radius-sm: 10px;
     --radius-xs: 6px;
+    --font-display: 'Poppins', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+body, button, input, select, textarea {
+    font-family: 'Poppins', sans-serif !important;
 }
 
 *,
@@ -42,17 +48,16 @@
     padding: 0;
 }
 
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     font-weight: 700;
     color: var(--text-dark);
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .site-nav {

@@ -30,9 +30,19 @@ export default function page() {
   const sidebarRef = useRef();
 
   useEffect(() => {
-    const pkgId = getPackageIdFromPath(slug);
-    if (pkgId) {
-      axiosNormalGet(`${getParticularPackageUrl}?id=${pkgId}`)
+    const { cleanSlug, pkgId } = parsePackageRouteParam(slug);
+    let queryStr = "";
+    if (cleanSlug) {
+      queryStr = `slug=${encodeURIComponent(cleanSlug)}`;
+      if (pkgId) {
+        queryStr += `&id=${encodeURIComponent(pkgId)}`;
+      }
+    } else if (pkgId) {
+      queryStr = `id=${encodeURIComponent(pkgId)}`;
+    }
+
+    if (queryStr) {
+      axiosNormalGet(`${getParticularPackageUrl}?${queryStr}`)
         .then((res) => {
           if (res?.status) {
             setPackageDetails(res?.package);
@@ -59,7 +69,55 @@ export default function page() {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [slug]);
+
+  // Comprehensive SEO & Meta Tags Handler
+  useEffect(() => {
+    if (packageDetails) {
+      const pageTitle = packageDetails.meta_title || `${packageDetails.title} | Sundarban Delta Safari`;
+      document.title = pageTitle;
+
+      const metaDesc = packageDetails.meta_description || packageDetails.description?.substring(0, 160) || `Book ${packageDetails.title} with Sundarban Delta Safari. Enjoy mangrove boat cruise, watchtower safari & traditional meals.`;
+      const fullUrl = `${siteUrl}/package/${packageDetails.slug}`;
+      const imageBanner = ogImageUrl || `${siteUrl}/assets/img/logo_DS.png`;
+
+      const updateMetaTag = (attrName, attrVal, content) => {
+        if (!content) return;
+        let element = document.querySelector(`meta[${attrName}="${attrVal}"]`);
+        if (!element) {
+          element = document.createElement('meta');
+          element.setAttribute(attrName, attrVal);
+          document.head.appendChild(element);
+        }
+        element.setAttribute('content', content);
+      };
+
+      updateMetaTag('name', 'description', metaDesc);
+      updateMetaTag('name', 'keywords', packageDetails.tags || `${packageDetails.title}, Sundarban tour package, Sundarban package, Delta Safari`);
+      updateMetaTag('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1');
+
+      updateMetaTag('property', 'og:title', pageTitle);
+      updateMetaTag('property', 'og:description', metaDesc);
+      updateMetaTag('property', 'og:url', fullUrl);
+      updateMetaTag('property', 'og:type', 'website');
+      updateMetaTag('property', 'og:site_name', 'Sundarban Delta Safari');
+      updateMetaTag('property', 'og:image', imageBanner);
+      updateMetaTag('property', 'og:locale', 'en_IN');
+
+      updateMetaTag('name', 'twitter:card', 'summary_large_image');
+      updateMetaTag('name', 'twitter:title', pageTitle);
+      updateMetaTag('name', 'twitter:description', metaDesc);
+      updateMetaTag('name', 'twitter:image', imageBanner);
+
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalLink);
+      }
+      canonicalLink.setAttribute('href', fullUrl);
+    }
+  }, [packageDetails, ogImageUrl, siteUrl]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('book'); // 'book' or 'enquire'
@@ -156,6 +214,26 @@ export default function page() {
     }
   };
 
+  const getFormattedDescription = (desc) => {
+    if (!desc) return '';
+    if (typeof desc === 'object' && desc?.type === 'Buffer' && Array.isArray(desc?.data)) {
+      desc = Buffer.from(desc.data).toString('utf8');
+    } else if (typeof desc === 'object' && Buffer.isBuffer(desc)) {
+      desc = desc.toString('utf8');
+    }
+    if (typeof desc !== 'string') return String(desc || '');
+    const hasHtml = /<[a-z][\s\S]*>/i.test(desc);
+    if (hasHtml) {
+      return desc;
+    }
+    return desc
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line !== '')
+      .map(line => `<p>${line}</p>`)
+      .join('');
+  };
+
   const getItineraryDays = () => {
     if (packageDetails?.itinerary && Array.isArray(packageDetails.itinerary) && packageDetails.itinerary.length > 0) {
       return packageDetails.itinerary;
@@ -200,6 +278,58 @@ export default function page() {
     }
   };
 
+  const jsonLdTrip = packageDetails ? {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": packageDetails.title,
+    "description": packageDetails.meta_description || packageDetails.description?.substring(0, 250),
+    "touristType": [packageDetails.package_type_name || "Holiday Package", "Wildlife Tour", "Eco Tourism"],
+    "offers": {
+      "@type": "Offer",
+      "price": packageDetails.actual_price || packageDetails.price || 0,
+      "priceCurrency": packageDetails.currency || "INR",
+      "availability": "https://schema.org/InStock",
+      "url": `${siteUrl}/package/${packageDetails.slug}`
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "Sundarban Delta Safari",
+      "url": siteUrl,
+      "logo": `${siteUrl}/assets/img/logo_DS.png`
+    },
+    "itinerary": itineraryDays.map((day, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "name": day.title || `Day ${day.dayNumber || idx + 1}`,
+      "description": day.description || day.itinararyDescription || ""
+    }))
+  } : null;
+
+  const jsonLdBreadcrumbs = packageDetails ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Holidays",
+        "item": `${siteUrl}/package`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": packageDetails.title,
+        "item": `${siteUrl}/package/${packageDetails.slug}`
+      }
+    ]
+  } : null;
+
   return (
     <>
       {loading ? (
@@ -207,15 +337,16 @@ export default function page() {
       ) : (
         <>
           <Head>
-            <title>{packageDetails.meta_title || packageDetails.title}</title>
+            <title>{packageDetails.meta_title || `${packageDetails.title} | Sundarban Delta Safari`}</title>
             <meta name="description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
             {packageDetails.tags && <meta name="keywords" content={packageDetails.tags} />}
-            <link rel="canonical" href={`${siteUrl}/package/${packageDetails?.to_destination_slug || 'sundarban'}/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
+            <link rel="canonical" href={`${siteUrl}/package/${packageDetails?.slug}`} />
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 
             <meta property="og:type" content="website" />
-            <meta property="og:title" content={packageDetails.title} />
+            <meta property="og:title" content={packageDetails.meta_title || packageDetails.title} />
             <meta property="og:description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
-            <meta property="og:url" content={`${siteUrl}/package/${packageDetails?.to_destination_slug || 'sundarban'}/${packageDetails?.slug}-${urlEncode(packageDetails?.id)}`} />
+            <meta property="og:url" content={`${siteUrl}/package/${packageDetails?.slug}`} />
             <meta property="og:site_name" content="Sundarban Delta Safari" />
             <meta property="og:image" content={ogImageUrl} />
             <meta property="og:image:width" content="1200" />
@@ -224,10 +355,24 @@ export default function page() {
             <meta property="og:locale" content="en_IN" />
 
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={packageDetails.title} />
+            <meta name="twitter:title" content={packageDetails.meta_title || packageDetails.title} />
             <meta name="twitter:description" content={packageDetails.meta_description || packageDetails.description?.substring(0, 160)} />
             <meta name="twitter:image" content={ogImageUrl} />
           </Head>
+
+          {/* JSON-LD Structured Data for Google Rich Snippets */}
+          {jsonLdTrip && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdTrip) }}
+            />
+          )}
+          {jsonLdBreadcrumbs && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumbs) }}
+            />
+          )}
 
           <div className="emt-package-details-wrapper bg-light pb-5 pt-3" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             <div className="container">
@@ -283,7 +428,7 @@ export default function page() {
                     <ShareButton
                       title={packageDetails.title}
                       text={packageDetails.meta_description}
-                      url={"/package/" + (packageDetails?.to_destination_slug || 'sundarban') + "/" + packageDetails?.slug + "-" + urlEncode(packageDetails?.id)}
+                      url={"/package/" + packageDetails?.slug}
                       className="btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs hover-lift"
                       style={{ color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' }}
                     />
@@ -331,9 +476,11 @@ export default function page() {
                     <h3 className="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
                       <i className="bi bi-card-text text-danger"></i> Package Overview
                     </h3>
-                    <p className="text-secondary text-sm leading-relaxed mb-4" style={{ whiteSpace: 'pre-line', lineHeight: '1.8' }}>
-                      {packageDetails.description}
-                    </p>
+                    <div
+                      className="text-secondary text-sm leading-relaxed mb-4 package-description-content"
+                      style={{ lineHeight: '1.8' }}
+                      dangerouslySetInnerHTML={{ __html: getFormattedDescription(packageDetails?.description) }}
+                    />
 
                     {packageDetails.tags && (
                       <div className="border-top pt-3">
@@ -528,7 +675,12 @@ export default function page() {
                     <div className="card border-0 shadow-sm bg-white rounded-4 overflow-hidden mb-4">
 
                       {/* HEADER PRICE BLOCK */}
-                      <div className="p-4 border-bottom text-white" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
+                      <div
+                        className="p-4 border-bottom text-white position-relative overflow-hidden"
+                        style={{
+                          background: 'linear-gradient(135deg, #2e266d 0%, #17123d 100%)'
+                        }}
+                      >
                         <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Starting From</span>
                         <div className="d-flex align-items-baseline gap-2">
                           <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
@@ -842,15 +994,37 @@ export default function page() {
   );
 }
 
-function getPackageIdFromPath(urlOrSlug) {
-  if (!urlOrSlug) return null;
-  let lastSegment = "";
+function parsePackageRouteParam(urlOrSlug) {
+  if (!urlOrSlug) return { cleanSlug: null, pkgId: null, raw: "" };
+
+  let raw = "";
   if (Array.isArray(urlOrSlug)) {
-    lastSegment = urlOrSlug[urlOrSlug.length - 1];
+    raw = urlOrSlug[urlOrSlug.length - 1];
   } else if (typeof urlOrSlug === 'string') {
     const segments = urlOrSlug.split('/');
-    lastSegment = segments[segments.length - 1];
+    raw = segments[segments.length - 1];
   }
-  const parts = lastSegment.split('-');
-  return parts[parts.length - 1];
+
+  const parts = raw.split('-');
+  let pkgId = null;
+  let cleanSlug = raw;
+
+  if (parts.length > 1) {
+    const possibleId = parts[parts.length - 1];
+    try {
+      const decoded = urlDecode(possibleId);
+      if (decoded && !isNaN(decoded) && Number(decoded) > 0) {
+        pkgId = possibleId;
+        cleanSlug = parts.slice(0, -1).join('-');
+      }
+    } catch (e) {
+      // not a base64 encoded id
+    }
+  }
+
+  return { cleanSlug, pkgId, raw };
+}
+
+function getPackageIdFromPath(urlOrSlug) {
+  return parsePackageRouteParam(urlOrSlug).pkgId;
 }

@@ -1,6 +1,11 @@
 import React from 'react'
 import "./referal.css"
 import ReferalCalculator from '@/components/referal/ReferalCalculator'
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('referal');
+}
 function page() {
     return (
         <>

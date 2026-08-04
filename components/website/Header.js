@@ -1,15 +1,42 @@
 "use client"
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '@/services/reducers/userAuthSlice';
 
 function Header({ siteSettings }) {
   const pathname = usePathname();
   const route = useRouter();
+  const dispatch = useDispatch();
+  const { user, isLoggedIn } = useSelector((state) => state.userAuth || {});
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
-    setOpenMobileMenu(false)
-  }, [pathname])
+    setOpenMobileMenu(false);
+    setShowUserDropdown(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowUserDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setShowUserDropdown(false);
+    route.push('/login');
+  };
+
   return (
     <>
       <div id="magic-cursor">
@@ -44,13 +71,13 @@ function Header({ siteSettings }) {
               </div>
               <ul className="menu-list">
                 <li className={pathname == "/" ? "menu-item-has-children d-flex align-items-center active" : 'menu-item-has-children d-flex align-items-center'}>
-                  <i class="fa-regular fa-house"></i>
+                  <i className="fa-solid fa-house"></i>
                   <Link href="/" className="drop-down">
                     Home
                   </Link>
                 </li>
                 <li className={pathname.includes("/package") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
-                  <i class="fa-solid fa-suitcase-rolling"></i>
+                  <i className="fa-solid fa-suitcase-rolling"></i>
                   <Link href="/package" className="drop-down">
                     Package
                   </Link>
@@ -61,20 +88,8 @@ function Header({ siteSettings }) {
                     Corporate
                   </Link>
                 </li>
-                {/* <li className={pathname.includes("/hotel") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
-                  <i className="fa-solid fa-hotel"></i>
-                  <Link href="/hotel" className="drop-down">
-                    Hotel
-                  </Link>
-                </li>
-                <li className={pathname.includes("/cab") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
-                  <i className="fa-solid fa-taxi"></i>
-                  <Link href="/cab" className="drop-down">
-                    Cab
-                  </Link>
-                </li> */}
                 <li className={pathname.includes("/referal") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
-                  <i className="fa-regular fa-handshake"></i>
+                  <i className="fa-solid fa-handshake"></i>
                   <Link href="/referal" className="drop-down">
                     Referal
                   </Link>
@@ -99,16 +114,44 @@ function Header({ siteSettings }) {
                   <a href={`tel:${siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}`}>{siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}</a>
                 </div>
               </div>
-              <a className="primary-btn1 login-btn black-bg d-md-none d-flex">
-                <span>
-                  <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <path d="M7.50105 7.78913C9.64392 7.78913 11.3956 6.03744 11.3956 3.89456C11.3956 1.75169 9.64392 0 7.50105 0C5.35818 0 3.60652 1.75169 3.60652 3.89456C3.60652 6.03744 5.35821 7.78913 7.50105 7.78913ZM14.1847 10.9014C14.0827 10.6463 13.9467 10.4082 13.7936 10.1871C13.0113 9.0306 11.8038 8.2653 10.4433 8.07822C10.2732 8.06123 10.0861 8.09522 9.95007 8.19727C9.23578 8.72448 8.38546 8.99658 7.50108 8.99658C6.61671 8.99658 5.76638 8.72448 5.05209 8.19727C4.91603 8.09522 4.72895 8.04421 4.5589 8.07822C3.19835 8.2653 1.97387 9.0306 1.20857 10.1871C1.05551 10.4082 0.919443 10.6633 0.817424 10.9014C0.766415 11.0034 0.783407 11.1225 0.834416 11.2245C0.970484 11.4626 1.14054 11.7007 1.2936 11.9048C1.53168 12.2279 1.78679 12.517 2.07592 12.7891C2.31401 13.0272 2.58611 13.2483 2.85824 13.4694C4.20177 14.4728 5.81742 15 7.48409 15C9.15076 15 10.7664 14.4728 12.1099 13.4694C12.382 13.2653 12.6541 13.0272 12.8923 12.7891C13.1644 12.517 13.4365 12.2279 13.6746 11.9048C13.8446 11.6837 13.9977 11.4626 14.1338 11.2245C14.2188 11.1225 14.2358 11.0034 14.1847 10.9014Z"></path>
-                    </g>
-                  </svg>
-                  Login or Signup
-                </span>
-              </a>
+              {isLoggedIn ? (
+                <div className="px-3 py-2 my-2 bg-light rounded-3 border d-md-none">
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style={{ width: '32px', height: '32px', fontSize: '14px' }}>
+                      {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
+                    </div>
+                    <div>
+                      <h6 className="m-0 fw-bold">{user?.first_name} {user?.last_name}</h6>
+                      <span className="text-muted" style={{ fontSize: '11px' }}>{user?.email}</span>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-column gap-1">
+                    <Link href="/profile" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
+                      <i className="fa-regular fa-user text-primary" style={{ width: '16px' }}></i> Profile
+                    </Link>
+                    <Link href="/savedtour" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
+                      <i className="fa-regular fa-heart text-danger" style={{ width: '16px' }}></i> Saved Packages
+                    </Link>
+                    <Link href="/bookings" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
+                      <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: '16px' }}></i> Bookings
+                    </Link>
+                    <button onClick={() => { setOpenMobileMenu(false); handleLogout(); }} className="btn text-danger text-start p-0 py-1 px-2 d-flex align-items-center gap-2 fw-semibold">
+                      <i className="fa-solid fa-right-from-bracket" style={{ width: '16px' }}></i> Logout
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <a className="primary-btn1 login-btn black-bg d-md-none d-flex" onClick={() => route.push('/login')}>
+                  <span>
+                    <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path d="M7.50105 7.78913C9.64392 7.78913 11.3956 6.03744 11.3956 3.89456C11.3956 1.75169 9.64392 0 7.50105 0C5.35818 0 3.60652 1.75169 3.60652 3.89456C3.60652 6.03744 5.35821 7.78913 7.50105 7.78913ZM14.1847 10.9014C14.0827 10.6463 13.9467 10.4082 13.7936 10.1871C13.0113 9.0306 11.8038 8.2653 10.4433 8.07822C10.2732 8.06123 10.0861 8.09522 9.95007 8.19727C9.23578 8.72448 8.38546 8.99658 7.50108 8.99658C6.61671 8.99658 5.76638 8.72448 5.05209 8.19727C4.91603 8.09522 4.72895 8.04421 4.5589 8.07822C3.19835 8.2653 1.97387 9.0306 1.20857 10.1871C1.05551 10.4082 0.919443 10.6633 0.817424 10.9014C0.766415 11.0034 0.783407 11.1225 0.834416 11.2245C0.970484 11.4626 1.14054 11.7007 1.2936 11.9048C1.53168 12.2279 1.78679 12.517 2.07592 12.7891C2.31401 13.0272 2.58611 13.2483 2.85824 13.4694C4.20177 14.4728 5.81742 15 7.48409 15C9.15076 15 10.7664 14.4728 12.1099 13.4694C12.382 13.2653 12.6541 13.0272 12.8923 12.7891C13.1644 12.517 13.4365 12.2279 13.6746 11.9048C13.8446 11.6837 13.9977 11.4626 14.1338 11.2245C14.2188 11.1225 14.2358 11.0034 14.1847 10.9014Z"></path>
+                      </g>
+                    </svg>
+                    Login or Signup
+                  </span>
+                </a>
+              )}
             </div>
           </div>
           <div className="main-menu">
@@ -143,18 +186,6 @@ function Header({ siteSettings }) {
                   </span>
                 </Link>
               </li>
-              {/* <li className={pathname.includes("/hotel") ? "active" : ''}>
-                <Link href="/hotel" >
-                  <i className="fa-solid fa-hotel"></i>
-                  Hotel
-                </Link>
-              </li>
-              <li className={pathname.includes("/cab") ? "active" : ''}>
-                <Link href="/cab" >
-                  <i className="fa-solid fa-taxi"></i>
-                  Cab's
-                </Link>
-              </li> */}
               <li className={pathname.includes("/referal") ? "active" : ''}>
                 <Link href="/referal" >
                   <i className="fa-regular fa-handshake"></i>
@@ -168,17 +199,6 @@ function Header({ siteSettings }) {
                 </Link>
               </li>
             </ul>
-            <a className="primary-btn1 login-btn black-bg d-md-none d-flex">
-              <span>
-                <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                  <g>
-                    <path
-                      d="M7.50105 7.78913C9.64392 7.78913 11.3956 6.03744 11.3956 3.89456C11.3956 1.75169 9.64392 0 7.50105 0C5.35818 0 3.60652 1.75169 3.60652 3.89456C3.60652 6.03744 5.35821 7.78913 7.50105 7.78913ZM14.1847 10.9014C14.0827 10.6463 13.9467 10.4082 13.7936 10.1871C13.0113 9.0306 11.8038 8.2653 10.4433 8.07822C10.2732 8.06123 10.0861 8.09522 9.95007 8.19727C9.23578 8.72448 8.38546 8.99658 7.50108 8.99658C6.61671 8.99658 5.76638 8.72448 5.05209 8.19727C4.91603 8.09522 4.72895 8.04421 4.5589 8.07822C3.19835 8.2653 1.97387 9.0306 1.20857 10.1871C1.05551 10.4082 0.919443 10.6633 0.817424 10.9014C0.766415 11.0034 0.783407 11.1225 0.834416 11.2245C0.970484 11.4626 1.14054 11.7007 1.2936 11.9048C1.53168 12.2279 1.78679 12.517 2.07592 12.7891C2.31401 13.0272 2.58611 13.2483 2.85824 13.4694C4.20177 14.4728 5.81742 15 7.48409 15C9.15076 15 10.7664 14.4728 12.1099 13.4694C12.382 13.2653 12.6541 13.0272 12.8923 12.7891C13.1644 12.517 13.4365 12.2279 13.6746 11.9048C13.8446 11.6837 13.9977 11.4626 14.1338 11.2245C14.2188 11.1225 14.2358 11.0034 14.1847 10.9014Z" />
-                  </g>
-                </svg>
-                Login or Signup
-              </span>
-            </a>
           </div>
           <div className="nav-right d-flex flex-column gap-1 align-items-end">
             <div className='d-flex gap-3'>
@@ -228,40 +248,111 @@ function Header({ siteSettings }) {
                 </ul>
               </div>
             </div>
-            <a className="primary-btn1 login-btn black-bg ">
-              <span>
-                <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
-                  <g>
-                    <path
-                      d="M7.50105 7.78913C9.64392 7.78913 11.3956 6.03744 11.3956 3.89456C11.3956 1.75169 9.64392 0 7.50105 0C5.35818 0 3.60652 1.75169 3.60652 3.89456C3.60652 6.03744 5.35821 7.78913 7.50105 7.78913ZM14.1847 10.9014C14.0827 10.6463 13.9467 10.4082 13.7936 10.1871C13.0113 9.0306 11.8038 8.2653 10.4433 8.07822C10.2732 8.06123 10.0861 8.09522 9.95007 8.19727C9.23578 8.72448 8.38546 8.99658 7.50108 8.99658C6.61671 8.99658 5.76638 8.72448 5.05209 8.19727C4.91603 8.09522 4.72895 8.04421 4.5589 8.07822C3.19835 8.2653 1.97387 9.0306 1.20857 10.1871C1.05551 10.4082 0.919443 10.6633 0.817424 10.9014C0.766415 11.0034 0.783407 11.1225 0.834416 11.2245C0.970484 11.4626 1.14054 11.7007 1.2936 11.9048C1.53168 12.2279 1.78679 12.517 2.07592 12.7891C2.31401 13.0272 2.58611 13.2483 2.85824 13.4694C4.20177 14.4728 5.81742 15 7.48409 15C9.15076 15 10.7664 14.4728 12.1099 13.4694C12.382 13.2653 12.6541 13.0272 12.8923 12.7891C13.1644 12.517 13.4365 12.2279 13.6746 11.9048C13.8446 11.6837 13.9977 11.4626 14.1338 11.2245C14.2188 11.1225 14.2358 11.0034 14.1847 10.9014Z" />
-                  </g>
-                </svg>
-                Login or Signup
-              </span>
-            </a>
-            <div className="login-input-box">
-              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
-                <i className="fa-regular fa-user" style={{ fontSize: "25px" }}></i>
-                <div>
-                  <h6 className='m-0'>Customer Login</h6>
-                  <span style={{ fontSize: "14px" }}>Login and check bookings</span>
-                </div>
+            {isLoggedIn ? (
+              <div className="position-relative" ref={dropdownRef}>
+                <a
+                  className="primary-btn1 login-btn black-bg"
+                  onClick={() => setShowUserDropdown(!showUserDropdown)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span className="d-inline-flex align-items-center gap-1.5">
+                    <div
+                      className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle fw-bold"
+                      style={{ width: "22px", height: "22px", fontSize: "11px" }}
+                    >
+                      {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user" style={{ fontSize: "10px" }}></i>}
+                    </div>
+                    <span>{user?.first_name ? `Hi, ${user.first_name}` : "My Account"}</span>
+                    <i className={`fa-solid fa-chevron-down ms-1 ${showUserDropdown ? "rotate-180" : ""}`} style={{ fontSize: "10px", transition: "transform 0.2s" }}></i>
+                  </span>
+                </a>
+                {showUserDropdown && (
+                  <div
+                    className="dropdown-menu show shadow-lg border-0 rounded-4 p-2 position-absolute end-0 mt-2"
+                    style={{ width: "230px", zIndex: 1050, background: "#ffffff" }}
+                  >
+                    <div className="px-3 py-2 border-bottom mb-2 bg-light rounded-3">
+                      <p className="mb-0 fw-bold text-dark text-truncate" style={{ fontSize: "14px" }}>
+                        {user?.first_name} {user?.last_name}
+                      </p>
+                      <p className="mb-0 text-muted text-truncate" style={{ fontSize: "12px" }}>
+                        {user?.email || "Logged in"}
+                      </p>
+                    </div>
+                    <Link
+                      href="/profile"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <i className="fa-regular fa-user text-primary" style={{ width: "20px" }}></i>
+                      <span>Profile</span>
+                    </Link>
+                    <Link
+                      href="/savedtour"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <i className="fa-regular fa-heart text-danger" style={{ width: "20px" }}></i>
+                      <span>Saved Packages</span>
+                    </Link>
+                    <Link
+                      href="/bookings"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: "20px" }}></i>
+                      <span>Bookings</span>
+                    </Link>
+                    <div className="dropdown-divider my-2"></div>
+                    <button
+                      type="button"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-danger border-0 bg-transparent fw-semibold w-100"
+                      onClick={handleLogout}
+                    >
+                      <i className="fa-solid fa-right-from-bracket text-danger" style={{ width: "20px" }}></i>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                )}
               </div>
-              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
-                <i className="fa-solid fa-briefcase" style={{ fontSize: "25px" }}></i>
-                <div>
-                  <h6 className='m-0'>Corporate Login</h6>
-                  <span style={{ fontSize: "14px" }}>Login corporate account</span>
-                </div>
-              </div>
-              <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
-                <i className="fa-solid fa-user-shield" style={{ fontSize: "25px" }}></i>
-                <div>
-                  <h6 className='m-0'>Agent Login</h6>
-                  <span style={{ fontSize: "14px" }}>Login your agent account</span>
-                </div>
-              </div>
-            </div>
+            ) : (
+              <>
+                <a className="primary-btn1 login-btn black-bg ">
+                  <span>
+                    <svg width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path
+                          d="M7.50105 7.78913C9.64392 7.78913 11.3956 6.03744 11.3956 3.89456C11.3956 1.75169 9.64392 0 7.50105 0C5.35818 0 3.60652 1.75169 3.60652 3.89456C3.60652 6.03744 5.35821 7.78913 7.50105 7.78913ZM14.1847 10.9014C14.0827 10.6463 13.9467 10.4082 13.7936 10.1871C13.0113 9.0306 11.8038 8.2653 10.4433 8.07822C10.2732 8.06123 10.0861 8.09522 9.95007 8.19727C9.23578 8.72448 8.38546 8.99658 7.50108 8.99658C6.61671 8.99658 5.76638 8.72448 5.05209 8.19727C4.91603 8.09522 4.72895 8.04421 4.5589 8.07822C3.19835 8.2653 1.97387 9.0306 1.20857 10.1871C1.05551 10.4082 0.919443 10.6633 0.817424 10.9014C0.766415 11.0034 0.783407 11.1225 0.834416 11.2245C0.970484 11.4626 1.14054 11.7007 1.2936 11.9048C1.53168 12.2279 1.78679 12.517 2.07592 12.7891C2.31401 13.0272 2.58611 13.2483 2.85824 13.4694C4.20177 14.4728 5.81742 15 7.48409 15C9.15076 15 10.7664 14.4728 12.1099 13.4694C12.382 13.2653 12.6541 13.0272 12.8923 12.7891C13.1644 12.517 13.4365 12.2279 13.6746 11.9048C13.8446 11.6837 13.9977 11.4626 14.1338 11.2245C14.2188 11.1225 14.2358 11.0034 14.1847 10.9014Z" />
+                        </g>
+                      </svg>
+                      Login or Signup
+                    </span>
+                  </a>
+                  <div className="login-input-box">
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=1') }}>
+                      <i className="fa-regular fa-user" style={{ fontSize: "25px" }}></i>
+                      <div>
+                        <h6 className='m-0'>Customer Login</h6>
+                        <span style={{ fontSize: "14px" }}>Login and check bookings</span>
+                      </div>
+                    </div>
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=2') }}>
+                      <i className="fa-solid fa-briefcase" style={{ fontSize: "25px" }}></i>
+                      <div>
+                        <h6 className='m-0'>Corporate Login</h6>
+                        <span style={{ fontSize: "14px" }}>Login corporate account</span>
+                      </div>
+                    </div>
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=3') }}>
+                      <i className="fa-solid fa-user-shield" style={{ fontSize: "25px" }}></i>
+                      <div>
+                        <h6 className='m-0'>Agent Login</h6>
+                        <span style={{ fontSize: "14px" }}>Login your agent account</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             <div className="sidebar-button mobile-menu-btn" onClick={() => { setOpenMobileMenu(!openMobileMenu) }}>
               <svg width="20" height="18" viewBox="0 0 20 18" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -318,11 +409,11 @@ function Header({ siteSettings }) {
 
         {/* Profile / Login */}
         <Link
-          href="/login"
-          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/login") ? "active" : ""}`}
+          href={isLoggedIn ? "/profile" : "/login"}
+          className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/profile") || pathname.includes("/login") ? "active" : ""}`}
         >
           <i className="fa-regular fa-user mb-1 fs-5"></i>
-          <span className="nav-label">Profile</span>
+          <span className="nav-label">{isLoggedIn ? (user?.first_name || "Profile") : "Profile"}</span>
         </Link>
 
       </div>

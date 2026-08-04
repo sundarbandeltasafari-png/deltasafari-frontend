@@ -7,6 +7,11 @@ import { particularPageUrl } from '@/routes/serviceRoutes'
 import NotFound from '@/components/website/common/NotFound'
 import { getFaqPageUrl } from '@/routes/commonRoutes'
 import './page.css'
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('faq');
+}
 
 async function Page({ params }) {
   const { slug } = await params

@@ -1,3 +1,8 @@
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+}
+
 .fw-extrabold {
     font-weight: 800;
 }
@@ -82,4 +87,130 @@
 }
 .scroll-x-single-row::-webkit-scrollbar {
   display: none;
+}
+
+/* EaseMyTrip Style Package Card */
+.emt-card-horizontal {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.emt-card-horizontal:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+  border-color: #cbd5e1;
+}
+
+.emt-card-img-wrap {
+  position: relative;
+  min-height: 220px;
+  height: 100%;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.emt-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.emt-card-horizontal:hover .emt-card-img {
+  transform: scale(1.05);
+}
+
+.emt-badge-duration {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.emt-badge-type {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ef6614;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.emt-compare-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  user-select: none;
+}
+
+.emt-inc-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+}
+
+.emt-inc-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.emt-inc-item i {
+  font-size: 0.9rem;
+  color: #0066cc;
+}
+
+.emt-price-side {
+  background: #fafbfc;
+  padding: 20px;
+  border-left: 1px dashed #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: right;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .emt-price-side {
+    border-left: none;
+    border-top: 1px dashed #e2e8f0;
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+  }
 }

@@ -10,22 +10,22 @@ export default function CorporateHero({ onRequestCall }) {
   const bgSlides = [
     {
       id: 1,
-      image: "https://sundarbandeltasafari.com/assets/img/home9/destination-img1.jpg",
+      image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
       title: "Sundarban Mangrove Boat Offsite"
     },
     {
       id: 2,
-      image: "https://sundarbandeltasafari.com/assets/img/home9/destination-img7.jpg",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
       title: "Corporate Luxury Resort Stay"
     },
     {
       id: 3,
-      image: "https://sundarbandeltasafari.com/assets/img/home2/destination-img4.jpg",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
       title: "Beach & River Cruise Retreat"
     },
     {
       id: 4,
-      image: "https://sundarbandeltasafari.com/assets/img/home9/destination-img3.jpg",
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
       title: "Team Building & Gala Night"
     }
   ];
@@ -65,7 +65,7 @@ export default function CorporateHero({ onRequestCall }) {
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{
           zIndex: 1,
-          background: ' #00000061;',
+          background: '#00000061',
           backdropFilter: 'blur(2px)'
         }}
       ></div>
@@ -77,7 +77,7 @@ export default function CorporateHero({ onRequestCall }) {
           
           {/* LEFT CONTENT */}
           <div className="col-lg-6">
-            <span className="badge px-3 py-2 rounded-pill text-uppercase text-xs fw-bold mb-3" style={{ backgroundColor: '#00000061;' }}>
+            <span className="badge px-3 py-2 rounded-pill text-uppercase text-xs fw-bold mb-3" style={{ backgroundColor: '#00000061' }}>
               Corporate Tours & Team Offsites
             </span>
 
@@ -127,15 +127,15 @@ export default function CorporateHero({ onRequestCall }) {
             <div className="row gy-3 gx-2 align-items-center">
               <div className="col-6">
                 <div className="rounded-4 overflow-hidden mb-3 shadow-lg" style={{ height: '200px', border: '2px solid rgba(255,255,255,0.2)' }}>
-                  <img src="https://sundarbandeltasafari.com/assets/img/home9/destination-img1.jpg" alt="Corporate Trip 1" className="w-100 h-100 object-fit-cover" />
+                  <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=600&q=80" alt="Corporate Trip 1" className="w-100 h-100 object-fit-cover" />
                 </div>
                 <div className="rounded-4 overflow-hidden shadow-lg" style={{ height: '200px', border: '2px solid rgba(255,255,255,0.2)' }}>
-                  <img src="https://sundarbandeltasafari.com/assets/img/home9/destination-img7.jpg" alt="Corporate Trip 2" className="w-100 h-100 object-fit-cover" />
+                  <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="Corporate Trip 2" className="w-100 h-100 object-fit-cover" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="rounded-4 overflow-hidden shadow-lg" style={{ height: '410px', border: '2px solid rgba(255,255,255,0.2)' }}>
-                  <img src="https://sundarbandeltasafari.com/assets/img/home2/destination-img4.jpg" alt="Corporate Trip 3" className="w-100 h-100 object-fit-cover" />
+                  <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80" alt="Corporate Trip 3" className="w-100 h-100 object-fit-cover" />
                 </div>
               </div>
             </div>

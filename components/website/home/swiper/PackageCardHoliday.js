@@ -7,7 +7,7 @@ export default function PackageCardHoliday({ pkg }) {
     ? `${process.env.NEXT_PUBLIC_SERVER_URL}${pkg.path.replace(/\\/g, '/')}` 
     : `${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/images/noimage.jpg`;
 
-  const detailsUrl = "/package/"+pkg?.to_destination_slug+'/'+pkg?.slug+'-'+urlEncode(pkg?.id);
+  const detailsUrl = `/package/${pkg?.slug}`;
 
   return (
     <div className="home-scroll-card">

@@ -3,6 +3,11 @@ import "./contact.css"
 import axios from 'axios';
 import { contactDetailsURL } from '@/routes/homeRoutes';
 import ContactForm from '@/components/website/contact/ContactForm';
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('contact');
+}
 
 async function page() {
     let contacts = null;

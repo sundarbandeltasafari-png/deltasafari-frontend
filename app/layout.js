@@ -18,18 +18,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-let siteSettings = null;
-try {
-  const response = await axios.get(getSiteSettingsUrl);
-  if (response.data?.status) {
-    siteSettings = response.data?.siteSettings
+export const revalidate = 0;
+
+async function getSiteSettings() {
+  try {
+    const response = await axios.get(getSiteSettingsUrl);
+    if (response.data?.status) {
+      const resData = response.data?.siteSettings;
+      return Array.isArray(resData) ? resData[0] : resData;
+    }
+  } catch (error) {
+    console.error("Error fetching site settings:", error);
   }
-} catch (error) {
-  siteSettings = null
+  return null;
 }
 
 export async function generateMetadata() {
-  const data = siteSettings;
+  const data = await getSiteSettings();
   const siteUrl = data?.canonical_url || "https://sundarbandeltasafari.com";
 
   return {
@@ -65,7 +70,10 @@ export async function generateMetadata() {
   };
 }
 
+import ProviderStore from "@/services/ProviderStore";
+
 export default async function RootLayout({ children }) {
+  const siteSettings = await getSiteSettings();
   return (
     <html
       lang="en"
@@ -74,23 +82,24 @@ export default async function RootLayout({ children }) {
       <head>
         <link href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/bootstrap.min.css"} rel="stylesheet" />
         <link href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/bootstrap-icons.css"} rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
         <link rel="stylesheet" href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/style.css"} />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-          integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-          crossOrigin="anonymous" referrerPolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" />
         <link
           href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet"></link>
       </head>
       <body className="min-h-full flex flex-col">
-        <Header siteSettings={siteSettings} />
-        <ToastContainer />
-        {children}
-        <Footer siteSettings={siteSettings} />
-        <CustomPackageWidget />
+        <ProviderStore>
+          <Header siteSettings={siteSettings} />
+          <ToastContainer />
+          {children}
+          <Footer siteSettings={siteSettings} />
+          <CustomPackageWidget />
+        </ProviderStore>
       </body>
 
-      <Script src={process.env.NEXT_PUBLIC_PUBLIC_URL+ "assets/js/bootstrap.min.js"}></Script>
+      <Script src={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/js/bootstrap.min.js"}></Script>
     </html>
   );
 }

@@ -76,8 +76,7 @@ function Filter() {
             router.push(`/packages/destination-${item.slug}`);
         } else if (item.type === 'package') {
             const pkgSlug = item.slug || 'package';
-            const destSlug = item.to_destination_slug || 'destination';
-            router.push(`/package/${destSlug}/${pkgSlug}-${urlEncode(item.id)}`);
+            router.push(`/package/${pkgSlug}`);
         } else {
             router.push(`/packages/name-${encodeURIComponent(item.name || item.title || searchText)}`);
         }
@@ -159,9 +158,6 @@ function Filter() {
                                     {/* Grouped: Cities & Destinations */}
                                     {citiesAndDestinations.length > 0 && (
                                         <div className="mb-2">
-                                            <div className="px-3 py-1.5 text-uppercase fw-bold text-muted bg-light rounded" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
-                                                Cities & Destinations
-                                            </div>
                                             {citiesAndDestinations.map((item) => (
                                                 <div
                                                     key={`${item.type}-${item.id}`}
@@ -202,9 +198,6 @@ function Filter() {
                                     {/* Grouped: Packages */}
                                     {packagesList.length > 0 && (
                                         <div className="mb-2">
-                                            <div className="px-3 py-1.5 text-uppercase fw-bold text-muted bg-light rounded" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
-                                                Packages
-                                            </div>
                                             {packagesList.map((pkg) => (
                                                 <div
                                                     key={`pkg-${pkg.id}`}

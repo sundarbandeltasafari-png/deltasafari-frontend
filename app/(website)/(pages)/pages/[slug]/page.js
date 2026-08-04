@@ -6,6 +6,12 @@ import axios from 'axios'
 import { particularPageUrl } from '@/routes/serviceRoutes'
 import NotFound from '@/components/website/common/NotFound'
 import './pages.css'
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  return await fetchPageSeo(slug);
+}
 
 async function Page({ params }) {
   const { slug } = await params

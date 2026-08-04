@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import themeReducer from "./reducers/themeSlices";
 import adminAuthReducer from "./reducers/adminAuthSlices"
 import permisionReducer from "./reducers/permisionSlice"
+import userAuthReducer from "./reducers/userAuthSlice"
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { 
@@ -16,7 +17,8 @@ import {
 const rootReducer = combineReducers({
   theme: themeReducer,
   adminAuth: adminAuthReducer,
-  permision: permisionReducer
+  permision: permisionReducer,
+  userAuth: userAuthReducer
 })
 
 const persistConfig = {

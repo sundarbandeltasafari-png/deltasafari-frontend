@@ -24,7 +24,7 @@ function SwiperWrapperPackage({ data }) {
             observer={true}
             observeParents={true}
 
-            className="custom-package-swiper"
+            className="custom-package-swiper pb-5"
             slidesPerView={3}
             speed={1500}
             spaceBetween={24}

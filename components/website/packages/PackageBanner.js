@@ -29,7 +29,7 @@ function PackageBanner({ packageDetails }) {
                     >
                         {packageDetails.assets.map((asset, i) => (
                             <SwiperSlide key={i}>
-                                <img src={process.env.NEXT_PUBLIC_SERVER_URL + asset?.path} alt={`Slide ${i}`} style={{ width: '100%', height: '480px', objectFit: 'cover' }} />
+                                <img src={process.env.NEXT_PUBLIC_SERVER_URL + asset?.path} alt={`${packageDetails?.title || 'Sundarban Tour Package'} - Photo ${i + 1}`} style={{ width: '100%', height: '480px', objectFit: 'cover' }} />
                             </SwiperSlide>
                         ))}
                     </Swiper>
@@ -46,7 +46,7 @@ function PackageBanner({ packageDetails }) {
                     >
                         {packageDetails.assets.map((asset, i) => (
                             <SwiperSlide key={i} style={{ borderRadius: '8px', overflow: 'hidden', cursor: 'pointer' }}>
-                                <img src={process.env.NEXT_PUBLIC_SERVER_URL + asset?.path} alt={`Thumb ${i}`} style={{ width: '100%', height: '100px', objectFit: 'cover', border: '3px solid transparent' }} className="gofly-thumb-image" />
+                                <img src={process.env.NEXT_PUBLIC_SERVER_URL + asset?.path} alt={`${packageDetails?.title || 'Sundarban Tour Package'} - Thumbnail ${i + 1}`} style={{ width: '100%', height: '100px', objectFit: 'cover', border: '3px solid transparent' }} className="gofly-thumb-image" />
                             </SwiperSlide>
                         ))}
                     </Swiper>}
