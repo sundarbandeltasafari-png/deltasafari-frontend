@@ -22,6 +22,7 @@ async function page() {
         }
         console.log(response);
     } catch (error) {
+        console.log(error)
         contacts = null;
         offices = null;
         faqs = null;
