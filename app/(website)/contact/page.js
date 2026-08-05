@@ -20,16 +20,11 @@ async function page() {
             offices = response.data?.offices;
             faqs = response.data?.faqs;
         }
-        console.log(response);
     } catch (error) {
-        console.log(error)
         contacts = null;
         offices = null;
         faqs = null;
     }
-
-    console.log(offices)
-    console.log(contactDetailsURL)
 
     return (
         <>
