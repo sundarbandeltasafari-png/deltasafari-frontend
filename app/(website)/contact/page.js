@@ -28,6 +28,7 @@ async function page() {
     }
 
     console.log(offices)
+    console.log(contactDetailsURL)
 
     return (
         <>
