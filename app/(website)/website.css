@@ -1,16 +1,16 @@
  :root {
-     --primary: #ff6b35;
-     --primary-dark: #e5561f;
-     --primary-light: #fff3ee;
-     --secondary: #0d3b66;
-     --secondary-light: #e8f0fa;
-     --accent: #ffc107;
+     --primary: #2196f3;
+     --primary-dark: #0b4182;
+     --primary-light: #ebf5ff;
+     --secondary: #ef6614;
+     --secondary-light: #fff4ec;
+     --accent: #ffb400;
      --success: #198754;
-     --text-dark: #1a1a2e;
-     --text-muted: #6b7280;
-     --border: #e8ecf0;
+     --text-dark: #1c2b46;
+     --text-muted: #64748b;
+     --border: #e2e8f0;
      --white: #ffffff;
-     --bg-soft: #f8f9fc;
+     --bg-soft: #f4f6f8;
      --shadow-sm: 0 2px 12px rgba(0, 0, 0, .06);
      --shadow-md: 0 8px 32px rgba(0, 0, 0, .10);
      --shadow-lg: 0 20px 60px rgba(0, 0, 0, .12);
@@ -1170,4 +1170,9 @@
 
  .accordion-item {
      background: none !important;
+ }
+
+ /* Ensure cursor pointer on links & buttons */
+ a, button, [role="button"], input[type="submit"], input[type="button"], summary, .accordion-button, .destination-pill, .destination-card, .widget-list a, .widget-list li, .menu-list a, .footer-section a {
+     cursor: pointer !important;
  }

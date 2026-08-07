@@ -94,6 +94,12 @@ function Header({ siteSettings }) {
                     Referal
                   </Link>
                 </li>
+                <li className={pathname.includes("/about") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
+                  <i className="fa-solid fa-circle-info"></i>
+                  <Link href="/about" className="drop-down">
+                    About Us
+                  </Link>
+                </li>
                 <li className={pathname.includes("/contact") ? "menu-item-has-children  d-flex align-items-center position-inherit active" : 'menu-item-has-children  d-flex align-items-center position-inherit'}>
                   <i className="fa-solid fa-headset"></i>
                   <Link href="/contact" className="drop-down">

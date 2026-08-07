@@ -55,11 +55,13 @@ export default function SwiperBestPackages({ packagesList }) {
                         <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative">
                             {/* Media Banner */}
                             <div className="position-relative overflow-hidden" style={{ height: '170px' }}>
-                                <img 
-                                    src={imgUrl} 
-                                    alt={pkg.title || 'Travel Package'} 
-                                    className="w-100 h-100 object-fit-cover"
-                                />
+                                <Link href={detailsUrl} className="d-block w-100 h-100">
+                                    <img 
+                                        src={imgUrl} 
+                                        alt={pkg.title || 'Travel Package'} 
+                                        className="w-100 h-100 object-fit-cover"
+                                    />
+                                </Link>
 
                                 {/* Location Badge (Top Start) */}
                                 <span className="position-absolute top-0 start-0 m-2 bg-dark bg-opacity-75 text-white px-2 py-0.5 text-3xs rounded-3 d-flex align-items-center gap-1 shadow-xs fw-semibold" style={{ zIndex: 10 }}>
@@ -87,7 +89,9 @@ export default function SwiperBestPackages({ packagesList }) {
                             <div className="card-body p-3 d-flex flex-column justify-content-between">
                                 <div>
                                     <h3 className="h6 fw-bold mb-1 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35', fontFamily: "'Poppins', sans-serif" }}>
-                                        {pkg.title}
+                                        <Link href={detailsUrl} className="text-dark text-decoration-none hover-text-primary">
+                                            {pkg.title}
+                                        </Link>
                                     </h3>
 
                                     <div className="d-flex align-items-center justify-content-between text-3xs text-muted mb-2">

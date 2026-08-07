@@ -40,6 +40,7 @@ function Footer({ siteSettings }) {
                       <h5>Quick Links</h5>
                     </summary>
                     <ul className="widget-list">
+                      <li><Link href="/about">About Us</Link></li>
                       <li><Link href="/login">Login or Signup</Link></li>
                       <li><Link href="/corporate">Corporate Package</Link></li>
                       <li><Link href="/referal">Refer & Earn</Link></li>
@@ -59,6 +60,7 @@ function Footer({ siteSettings }) {
                       <h5>Information</h5>
                     </summary>
                     <ul className="widget-list">
+                      <li><Link href="/about">About Us</Link></li>
                       <li><Link href="/faq">FAQ's</Link></li>
                       <li><Link href="/pages/cancelation-policy">Cancellation Policy</Link></li>
                       <li><Link href="/pages/terms-condition">Terms & Condition</Link></li>

@@ -11,10 +11,11 @@ function PackageCard({ pkg }) {
         <div>
             <div className="package-card">
                 <div className="package-img-wrap">
-                    <Link href={destinationUrl} className="package-img">
+                    <Link href={destinationUrl} className="package-img d-block w-100 h-100">
                         <img
                             src={imageUrl}
                             alt={pkg?.name || 'Destination'}
+                            style={{ cursor: 'pointer', objectFit: 'cover' }}
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = `${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/images/noimage.jpg`;

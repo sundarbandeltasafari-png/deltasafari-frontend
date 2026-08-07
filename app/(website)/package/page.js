@@ -111,7 +111,7 @@ async function page() {
                                     <div key={pkg.id || index} className="col-12 col-md-6 col-lg-4 wow animate fadeInDown" data-wow-delay={`${((index % 3) + 1) * 200}ms`} data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms" }}>
                                         <div className="card h-100 border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all">
                                             {/* Media Banner */}
-                                            <div className="position-relative overflow-hidden" style={{ height: '200px' }}>
+                                            <Link href={detailsUrl} className="position-relative overflow-hidden" style={{ height: '200px' }}>
                                                 <img 
                                                     src={imgUrl} 
                                                     alt={pkg.title || 'Travel Package'} 
@@ -138,7 +138,7 @@ async function page() {
                                                         </span>
                                                     )}
                                                 </div>
-                                            </div>
+                                            </Link>
 
                                             {/* Body & Details */}
                                             <div className="card-body p-3.5 d-flex flex-column justify-content-between">

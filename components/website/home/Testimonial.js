@@ -2,65 +2,94 @@ import React from 'react'
 import SwiperWraperTesimonial from './swiper/SwiperWraperTesimonial'
 
 function Testimonial() {
+    const googleReviewLink = "https://www.google.com/search?sca_esv=daf998d8db52a0ce&rlz=1C1VDKB_enIN1113IN1113&sxsrf=APpeQntp-t_yMMgAImxLsS2tuHfHW1MNeg:1785735587595&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_-FV_l4Qf9ZlDtQv7uS0PbVZ5NTsRwV5rY_L9DBfXAG2MtfNLX3REBrkwGzb_rg9tZSQq3v8SBGRNGhLBeRyKMsFVqOf&q=Delta+Safari+Reviews&sa=X&ved=2ahUKEwiC4_G634OWAxUljeEIHd_dI_QQ0bkNegQINxAH&biw=1536&bih=730&dpr=1.25";
+
     const testimonialData = [
         {
-            "title": "Excellent Tourist Place!",
-            "description": "Our honeymoon package to the Maldives was beyond amazing! The travel agency took care of every detail.",
+            "id": 1,
+            "title": "Service Was Too Awesome",
+            "description": "Service was too awesome, everything part by part included which they were informed by whatsapp. Management was good.\nAlso nasir vaya behaviour was too good",
             "rating": 5,
+            "date": "15 Jan 2026",
+            "googleReviewUrl": googleReviewLink,
             "author": {
-                "name": "Robert Kcarery",
-                "role": "GoFly Traveler",
-                "image": "assets/img/home1/testimonial-author-img1.png"
+                "name": "Nil Sarkar",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/nil-sarkar.jpg"
             }
         },
         {
-            "title": "Average Experience",
-            "description": "The Thailand tour was flawless! Great hotels, smooth transfers — truly a stress-free and enjoyable experience.",
-            "rating": 4,
+            "id": 2,
+            "title": "Darun Experience!",
+            "description": "Darun experience khub bhalo bebohar khawa dawa ta to kono kotha hobe na sob kichu time to time sobai aste paren darun poriseba nice hotel everything is very nice and stop behaviour very nice people Thank Delta Tourism ❤️",
+            "rating": 5,
+            "date": "08 Feb 2026",
+            "googleReviewUrl": googleReviewLink,
             "author": {
-                "name": "James Bonde",
-                "role": "GoFly Traveler",
-                "image": "assets/img/home1/testimonial-author-img3.png"
+                "name": "Nitish Roy",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/nitish-roy.jpg"
             }
         },
         {
-            "title": "Great Experience!",
-            "description": "Thanks to their expert planning, our Dubai vacation was seamless. Every detail was handled with care.",
+            "id": 3,
+            "title": "Such A Great Hospitality",
+            "description": "Such a great hospitality, I will give no 1 rank in case of Sundarban travel packages....I will recommend everyone to make a such trip from delta safari",
             "rating": 5,
-            "ratingType": "trustpilot",
+            "date": "22 Mar 2026",
+            "googleReviewUrl": googleReviewLink,
             "author": {
-                "name": "Selina Henry",
-                "role": "GoFly Traveler",
-                "image": "assets/img/home1/testimonial-author-img2.png"
+                "name": "Indranil Halder",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/indranil-halder.jpg"
             }
         },
         {
-            "title": "Great Visitors Venue!",
-            "description": "We had an incredible Europe tour! The itinerary, bookings, and support were all professionally managed.",
+            "id": 4,
+            "title": "Very Good Service 10/10",
+            "description": "Very good service,,, well maintained.. very polite behaviour,, we enjoyed very much , and have lots of fun and listened so much cool and horrifying stories about sundarban and tiger attacks.. and food also so so good and comfortable.. 10/10",
             "rating": 5,
+            "date": "14 Apr 2026",
+            "googleReviewUrl": googleReviewLink,
             "author": {
-                "name": "Michael D Linda",
-                "role": "GoFly Traveler",
-                "image": "assets/img/home1/testimonial-author-img4.png"
+                "name": "Ayon Mondal",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/ayon-mondal.jpg"
             }
         },
         {
-            "title": "Fantastic Service!",
-            "description": "Our trip to Bali was unforgettable! Everything was perfectly organized by the agency from start to finish.",
+            "id": 5,
+            "title": "Hardworking & Reliable Service",
+            "description": "Before starting his own travel business, he worked as an employee at Sundarban Bubai Travels. When he left to start his own venture, I initially had some doubts about whether he would be able to organize tours professionally. However, after referring several guests to him, I received excellent feedback from all of them regarding his service, planning, and hospitality.\n\nDuring his time at our organization, he played a major role in organizing many successful trips. Based on my experience, he is hardworking, reliable, and capable of managing tours smoothly. I would confidently recommend his services to anyone looking for a well-organized and memorable travel experience.",
             "rating": 5,
-            "ratingType": "trustpilot",
+            "date": "05 May 2026",
+            "googleReviewUrl": googleReviewLink,
             "author": {
-                "name": "Amber Lashley",
-                "role": "GoFly Traveler",
-                "image": "assets/img/home1/testimonial-author-img5.png"
+                "name": "Buddhiswar Nayek",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/buddhiswar-nayek.jpg"
+            }
+        },
+        {
+            "id": 6,
+            "title": "Truly Memorable Trip!",
+            "description": "Our Sundarban trip with Delta Safari was truly memorable! The journey was comfortable, the resort was clean, and the food was super tasty — especially the fresh fish dishes. The boat safari was the highlight, and the team made sure we enjoyed every moment. Great hospitality and service! 👍",
+            "rating": 5,
+            "date": "18 Jun 2026",
+            "googleReviewUrl": googleReviewLink,
+            "author": {
+                "name": "Santanu Saha",
+                "role": "Google Reviewer",
+                "image": "assets/img/home1/santanu-saha.jpg"
             }
         }
     ]
+
     return (
         <>
             <div className="home2-testimonial-section">
                 <div className="container">
-                    <div className="row justify-content-start mb-50 wow animate fadeInDown" data-wow-delay="200ms"
+                    <div className="row justify-content-between align-items-center mb-50 wow animate fadeInDown" data-wow-delay="200ms"
                         data-wow-duration="1500ms">
                         <div className="col-xl-6 col-lg-8">
                             <div className="section-title text-start">
@@ -69,34 +98,31 @@ function Testimonial() {
                                     dreams!</p>
                             </div>
                         </div>
+                        <div className="col-xl-6 col-lg-4 d-flex justify-content-lg-end mt-3 mt-lg-0">
+                            <a 
+                                href={googleReviewLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill shadow-sm"
+                                style={{ 
+                                    textDecoration: 'none', 
+                                    fontWeight: '600', 
+                                    backgroundColor: '#ffffff', 
+                                    border: '1px solid #2196f3', 
+                                    color: '#2196f3',
+                                    transition: 'all 0.2s ease-in-out'
+                                }}
+                            >
+                                <img src="https://cdn.trustindex.io/assets/platform/Google/icon.svg" alt="Google" style={{ width: '20px', height: '20px' }} />
+                                <span>View Google Reviews</span>
+                            </a>
+                        </div>
                     </div>
                     <div className="row mb-40">
                         <div className="col-lg-12">
                             <SwiperWraperTesimonial data={testimonialData} />
                         </div>
                     </div>
-                    {/* <div className="review-and-slider-btn d-flex justify-content-center wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                        <div className="slider-btn-grp">
-                            <div className="slider-btn testimonial-slider-prev">
-                                <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                    <g>
-                                        <path
-                                            d="M11.002 13.0005C10.002 10.5005 5.00195 8.00049 2.00195 7.00049C5.00195 6.00049 9.50195 4.50049 11.002 1.00049"
-                                            strokeWidth="1.5" strokeLinecap="round" />
-                                    </g>
-                                </svg>
-                            </div>
-                            <div className="slider-btn testimonial-slider-next">
-                                <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-                                    <g>
-                                        <path
-                                            d="M2.99805 13.0005C3.99805 10.5005 8.99805 8.00049 11.998 7.00049C8.99805 6.00049 4.49805 4.50049 2.99805 1.00049"
-                                            strokeWidth="1.5" strokeLinecap="round" />
-                                    </g>
-                                </svg>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </>

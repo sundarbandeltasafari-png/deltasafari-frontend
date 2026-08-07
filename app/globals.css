@@ -699,3 +699,8 @@ body {
 .thin-loader-spinner {
   animation: spinAroundThin 0.85s linear infinite !important;
 }
+
+/* Ensure cursor pointer on all links, buttons, and interactive elements */
+a, button, [role="button"], input[type="submit"], input[type="button"], summary, .accordion-button, .destination-pill, .destination-card, .widget-list a, .widget-list li, .menu-list a, .footer-section a {
+  cursor: pointer !important;
+}

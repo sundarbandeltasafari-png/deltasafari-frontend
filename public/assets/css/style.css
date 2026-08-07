@@ -149,23 +149,23 @@ Version: 1.0
   --font-billy-ohio: "Billy Ohio", sans-serif;
   --white-color: #fff;
   --white-color-opc: 255, 255, 255;
-  --black-color: #FF5722;
-  --black-color-opc: 17, 15, 15;
-  --title-color: #110F0F;
-  --title-color-opc: 17, 15, 15;
+  --black-color: #ef6614;
+  --black-color-opc: 239, 102, 20;
+  --title-color: #1c2b46;
+  --title-color-opc: 28, 43, 70;
   --title-color2: #F6F3BC;
   --title-color2-opc: 246, 243, 188;
-  --text-color: #000;
+  --text-color: #2d3748;
   --white-text-color: #AAAAAA;
-  --primary-color1: #1781FE;
-  --primary-color1-opc: 23, 129, 254;
-  --primary-color2: #0EA9D0;
-  --primary-color2-opc: 14, 169, 208;
-  --primary-color3: #285340;
-  --primary-color3-opc: 40, 83, 64;
-  --primary-color4: #1B2072;
-  --primary-color4-opc: 27, 32, 114;
-  --borders-color: #E8E8E8;
+  --primary-color1: #2196f3;
+  --primary-color1-opc: 33, 150, 243;
+  --primary-color2: #ef6614;
+  --primary-color2-opc: 239, 102, 20;
+  --primary-color3: #0b4182;
+  --primary-color3-opc: 11, 65, 130;
+  --primary-color4: #0e59c7;
+  --primary-color4-opc: 14, 89, 199;
+  --borders-color: #E2E8F0;
 }
 
 /*================================================

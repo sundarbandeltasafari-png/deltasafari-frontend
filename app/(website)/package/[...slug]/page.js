@@ -377,60 +377,57 @@ export default function page() {
           <div className="emt-package-details-wrapper bg-light pb-5 pt-3" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
             <div className="container">
 
-              {/* EASEMYTRIP BREADCRUMB BAR */}
-              <nav aria-label="breadcrumb" className="mb-3">
-                <ol className="breadcrumb text-xs mb-0 bg-transparent p-0">
-                  <li className="breadcrumb-item"><a href="/" className="text-secondary text-decoration-none">Home</a></li>
-                  <li className="breadcrumb-item"><a href="/package" className="text-secondary text-decoration-none">Holidays</a></li>
-                  <li className="breadcrumb-item active fw-semibold text-dark text-truncate" style={{ maxWidth: '300px' }} aria-current="page">
-                    {packageDetails.title}
-                  </li>
-                </ol>
-              </nav>
-
-              {/* EASEMYTRIP TITLE & QUICK ACTIONS HEADER */}
-              <div className="card border-0 shadow-sm bg-white p-4 rounded-4 mb-4">
+              {/* TITLE & QUICK ACTIONS HEADER */}
+              <div className="card border-0 shadow-sm bg-white px-3.5 py-3 rounded-4 mb-3">
                 <div className="row align-items-center g-3">
-                  <div className="col-lg-8">
-                    <div className="d-flex flex-wrap align-items-center gap-2 mb-2">
-                      <span className="badge px-3 py-2 rounded-pill text-uppercase text-xs fw-bold" style={{ backgroundColor: '#ff5c41', color: '#fff' }}>
+                  <div className="col-lg-7">
+                    <div className="d-flex flex-wrap align-items-center gap-2 mb-1.5">
+                      <span className="badge px-2.5 py-1 rounded-pill text-uppercase text-2xs fw-bold" style={{ backgroundColor: '#ef6614', color: '#fff' }}>
                         {packageDetails.package_type_name || 'Group Special'}
                       </span>
-                      <span className="badge bg-light text-dark border px-3 py-2 rounded-pill text-xs fw-semibold">
+                      <span className="badge bg-light text-dark border px-2.5 py-1 rounded-pill text-2xs fw-semibold">
                         <i className="bi bi-clock text-danger me-1"></i>
                         {packageDetails.duration_nights || (packageDetails.duration_days - 1)} Nights / {packageDetails.duration_days} Days
                       </span>
-                      <span className="badge bg-warning bg-opacity-10 text-warning text-dark border border-warning border-opacity-25 px-3 py-2 rounded-pill text-xs fw-bold">
+                      <span className="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-25 px-2.5 py-1 rounded-pill text-2xs fw-bold">
                         <i className="bi bi-star-fill text-warning me-1"></i> 4.9 Superb (340+ reviews)
                       </span>
                     </div>
 
-                    <h1 className="h3 fw-extrabold text-dark mb-2" style={{ fontWeight: 800, color: '#0F172A', lineHeight: '1.25' }}>
+                    <h1 className="mb-0 text-dark" style={{ fontWeight: 600, fontSize: '24px', color: '#1c2b46', lineHeight: '1.3', fontFamily: "'Poppins', sans-serif" }}>
                       {packageDetails.title}
                     </h1>
-
-                    <div className="d-flex flex-wrap align-items-center gap-3 text-secondary text-xs">
-                      <div>
-                        <i className="bi bi-geo-alt-fill text-danger me-1"></i>
-                        <strong>Route:</strong> {packageDetails.from_destination_name || 'Kolkata'} ➔ {packageDetails.to_destination_name || 'Sundarban'} ➔ {packageDetails.from_destination_name || 'Kolkata'}
-                      </div>
-                      <div className="vr d-none d-md-block" style={{ height: '14px' }}></div>
-                      <div>
-                        <i className="bi bi-check-circle-fill text-success me-1"></i> Instant Booking Confirmation Available
-                      </div>
-                    </div>
                   </div>
 
-                  <div className="col-lg-4 text-lg-end d-flex flex-wrap align-items-center justify-content-lg-end gap-2">
-                    <button onClick={handleDownloadPdf} className="btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs hover-lift" style={{ color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' }}>
+                  <div className="col-lg-5 text-lg-end d-flex align-items-center justify-content-lg-end gap-2">
+                    <button 
+                      onClick={handleDownloadPdf} 
+                      className="btn btn-outline-warning rounded-pill text-xs fw-bold d-inline-flex align-items-center justify-content-center gap-1 shadow-2xs hover-lift" 
+                      style={{ 
+                        color: '#EF9720', 
+                        borderColor: '#EF9720', 
+                        backgroundColor: '#fffaf4',
+                        height: '36px',
+                        padding: '0 16px',
+                        fontSize: '12px'
+                      }}
+                    >
                       <i className="bi bi-file-earmark-pdf text-danger fs-6"></i> Download PDF
                     </button>
                     <ShareButton
                       title={packageDetails.title}
                       text={packageDetails.meta_description}
                       url={"/package/" + packageDetails?.slug}
-                      className="btn btn-outline-warning rounded-pill px-3 py-2 text-xs font-bold d-flex align-items-center gap-1 shadow-2xs hover-lift"
-                      style={{ color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' }}
+                      wrapperStyle={{ display: 'inline-flex', height: '36px' }}
+                      className="btn btn-outline-warning rounded-pill text-xs fw-bold d-inline-flex align-items-center justify-content-center gap-1 shadow-2xs hover-lift"
+                      style={{ 
+                        color: '#EF9720', 
+                        borderColor: '#EF9720', 
+                        backgroundColor: '#fffaf4',
+                        height: '36px',
+                        padding: '0 16px',
+                        fontSize: '12px'
+                      }}
                     />
                   </div>
                 </div>
@@ -701,14 +698,25 @@ export default function page() {
                       <div className="card-body p-4">
                         <div className="d-flex flex-column gap-3">
 
-                          {/* PACKAGE INCLUDES ICON MATRIX */}
+                          {/* PACKAGE INCLUDES ICON MATRIX & ROUTE DETAILS */}
                           <div>
                             <small className="text-2xs text-uppercase text-muted fw-bold d-block mb-2">Package Includes:</small>
-                            <div className="d-flex justify-content-between text-center text-muted border-top border-bottom py-2" style={{ fontSize: '11px' }}>
-                              <div><i className="bi bi-building d-block fs-5 text-secondary"></i>Hotel</div>
-                              <div><i className="bi bi-binoculars d-block fs-5 text-secondary"></i>Safari</div>
-                              <div><i className="bi bi-car-front d-block fs-5 text-secondary"></i>Transfer</div>
-                              <div><i className="bi bi-egg-fried d-block fs-5 text-secondary"></i>Meals</div>
+                            <div className="d-flex justify-content-between text-center text-muted border-top border-bottom py-2.5 mb-2.5" style={{ fontSize: '11px' }}>
+                              <div><i className="fa-solid fa-hotel fs-5 text-primary d-block mb-1"></i>Hotel</div>
+                              <div><i className="fa-solid fa-camera fs-5 text-primary d-block mb-1"></i>Sightseeing</div>
+                              <div><i className="fa-solid fa-bus fs-5 text-primary d-block mb-1"></i>Transfer</div>
+                              <div><i className="fa-solid fa-utensils fs-5 text-primary d-block mb-1"></i>Meals</div>
+                            </div>
+
+                            {/* ROUTE & INSTANT CONFIRMATION INFO */}
+                            <div className="bg-light p-2.5 rounded-3 border mb-1">
+                              <div className="text-2xs text-dark fw-semibold mb-1">
+                                <i className="bi bi-geo-alt-fill text-danger me-1"></i>
+                                <strong>Route:</strong> {packageDetails.from_destination_name || 'Kolkata'} ➔ {packageDetails.to_destination_name || 'Sundarban'} ➔ {packageDetails.from_destination_name || 'Kolkata'}
+                              </div>
+                              <div className="text-3xs text-success fw-bold">
+                                <i className="bi bi-check-circle-fill me-1"></i> Instant Booking Confirmation Available
+                              </div>
                             </div>
                           </div>
 

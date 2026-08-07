@@ -309,7 +309,7 @@ export default function TravelPackageListPage() {
     <>
       <HomeBanner />
       <Filter />
-      <div className="bg-light min-vh-100 py-4 font-sans text-dark position-relative">
+      <div className="bg-light min-vh-100 py-4 font-sans text-dark position-relative mt-4">
 
         {/* STICKY FLOATING COMPARE ACTION TRIGGER STRIP */}
         {compareIds.length > 0 && (
@@ -731,6 +731,97 @@ export default function TravelPackageListPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* HOW WE ARE DIFFERENT FROM OTHERS SECTION - BEFORE FAQ */}
+        <div className="mt-5 mb-5">
+          <div className="different-section-card p-4 p-md-5">
+            <div className="text-center max-w-2xl mx-auto mb-5">
+              <span className="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill fs-7 mb-2">
+                <i className="fa-solid fa-gem me-1.5 text-warning"></i> Delta Safari Advantage
+              </span>
+              <h2 className="display-6 fw-extrabold text-dark mb-3">
+                How We Are Different From Others
+              </h2>
+              <p className="text-secondary lead mx-auto" style={{ maxWidth: '780px' }}>
+                We don&apos;t just book trips—we create safe, eco-conscious, and authentic Sundarban experiences with registered forest naturalists and premium luxury boat comfort.
+              </p>
+            </div>
+
+            <div className="row gy-4 align-items-center mb-4">
+              <div className="col-lg-6">
+                <div className="different-banner-wrap">
+                  <img 
+                    src={`${process.env.NEXT_PUBLIC_PUBLIC_URL || ''}assets/img/innerpages/sundarban-different-banner.jpg`} 
+                    alt="Why Delta Safari is Different in Sundarban" 
+                    className="different-banner-img" 
+                  />
+                  <div className="different-banner-overlay">
+                    <span className="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2">
+                      <i className="fa-solid fa-shield-heart me-1"></i> Certified Eco-Safari
+                    </span>
+                    <h5 className="text-white fw-bold mb-1">Direct Operator Experience</h5>
+                    <p className="text-white-50 small mb-0">Solar-powered luxury vessels, expert naturalists, &amp; 100% transparent pricing.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <div className="row g-3">
+                  {[
+                    {
+                      icon: 'fa-solid fa-ship',
+                      title: 'Solar & Eco Luxury Vessels',
+                      desc: 'Equipped with solar energy, quiet twin engines, clean sound systems, and panoramic observation decks for maximum tiger sighting chances.'
+                    },
+                    {
+                      icon: 'fa-solid fa-user-shield',
+                      title: 'Certified Forest Naturalists',
+                      desc: 'Accompanied by Govt. Forest Department licensed naturalists who know tiger tracks, bird call signals, and hidden creeks intimately.'
+                    },
+                    {
+                      icon: 'fa-solid fa-utensils',
+                      title: 'Fresh Hot Local Cuisine',
+                      desc: 'Cooked fresh onboard by local chefs—featuring fresh fish, prawns, crab delicacies, vegetarian spreads, and purified drinking water.'
+                    },
+                    {
+                      icon: 'fa-solid fa-hand-holding-dollar',
+                      title: 'Zero Hidden Charges',
+                      desc: 'All forest entry permits, video camera fees, boat charges, meals, and GST are included upfront with absolute pricing transparency.'
+                    }
+                  ].map((feat, idx) => (
+                    <div className="col-sm-6" key={idx}>
+                      <div className="different-feature-card h-100">
+                        <div className="different-feature-icon">
+                          <i className={feat.icon}></i>
+                        </div>
+                        <h6 className="fw-bold text-dark mb-1">{feat.title}</h6>
+                        <p className="text-muted text-xs mb-0" style={{ lineHeight: '1.6' }}>{feat.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-4 text-center mt-4" style={{ background: 'linear-gradient(135deg, #ebf5ff 0%, #fff4ec 100%)', border: '1px solid #e2e8f0' }}>
+              <div className="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-start text-md-start">
+                <div className="d-flex align-items-center gap-3">
+                  <div className="icon-box-primary flex-shrink-0" style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#0066cc', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem' }}>
+                    <i className="fa-solid fa-headset"></i>
+                  </div>
+                  <div>
+                    <h6 className="fw-bold text-dark mb-1">Need help choosing your Sundarban package?</h6>
+                    <p className="small text-muted mb-0">Our expert travel team is ready 24/7 to customize your trip, group bookings, or resort choices.</p>
+                  </div>
+                </div>
+                <Link href="/contact" className="btn btn-primary px-4 py-2.5 rounded-pill fw-bold text-nowrap shadow-sm">
+                  <i className="fa-solid fa-phone me-1.5"></i> Talk to Expert
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
 

@@ -40,13 +40,13 @@ export default function ShareButton({ title, text, url, className, style, wrappe
   const defaultStyle = { color: '#EF9720', borderColor: '#EF9720', backgroundColor: '#fffaf4' };
 
   return (
-    <div style={{ position: 'relative', display: 'inline-block', marginLeft: '5px', ...wrapperStyle }}>
+    <div style={{ position: 'relative', display: 'inline-flex', ...wrapperStyle }}>
       <button
         onClick={handleShare}
         className={className !== undefined ? className : defaultClassName}
-        style={style !== undefined ? style : defaultStyle}
+        style={{ width: '100%', height: '100%', ...(style !== undefined ? style : defaultStyle) }}
       >
-        <i className="bi bi-share-fill"></i>
+        <i className="bi bi-share-fill me-1"></i>
         {copied ? 'Link Copied!' : 'Share'}
       </button>
 
