@@ -16,8 +16,8 @@ function TopDestination({ topDesination }) {
           >
             <div className="col-xl-6 col-lg-8">
               <div className="section-title text-start">
-                <h2>Top Destinations</h2>
-                <p className="m-0">Travel beyond boundaries with incredible savings</p>
+                <h2>Unbeatable Travel Deals</h2>
+                <p className="m-0">Save more and explore the world your way.</p>
               </div>
             </div>
           </div>

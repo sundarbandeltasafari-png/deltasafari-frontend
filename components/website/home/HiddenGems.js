@@ -65,8 +65,8 @@ function HiddenGems() {
             <div className="home9-destination-section mb-100">
                 <div className="container">
                     <div className="section-title text-start mb-40">
-                        <h2>Explore The Hidden Gems</h2>
-                        <p className="m-0">Tap into the untapped tourist spots for amazing vacations.</p>
+                        <h2>Discover Hidden Destinations</h2>
+                        <p className="m-0">Uncover less-crowded places for your next perfect holiday.</p>
                     </div>
                     <div className="destination-slider-wrapper">
                         <div className="row">

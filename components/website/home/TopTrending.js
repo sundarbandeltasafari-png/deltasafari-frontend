@@ -15,8 +15,8 @@ function TopTrending({ topTrending }) {
                         data-wow-duration="1500ms">
                         <div className="col-xl-6 col-lg-8">
                             <div className="section-title text-start">
-                                <h2>Top Trending Destinations</h2>
-                                <p className="m-0">Explore the hottest travel spots around the globe.</p>
+                                <h2>Most Picked Destinations</h2>
+                                <p className="m-0">Uncover the destinations every traveller is talking about.</p>
                             </div>
                         </div>
                     </div>

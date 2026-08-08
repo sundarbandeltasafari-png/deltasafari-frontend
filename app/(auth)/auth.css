@@ -10,7 +10,7 @@
   --text-2: #4b5563;
   --text-3: #9ca3af;
   --success: #16a34a;
-  --font-h: 'Noto Sans Devanagari', 'Mukta', sans-serif;
+  --font-h: 'Poppins', sans-serif;
 }
 
 *,
@@ -22,15 +22,21 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 body {
-  font-family: var(--font-h);
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
   background: var(--bg-page);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, input, button, select, textarea {
+  font-family: 'Poppins', sans-serif;
 }
 
 a {

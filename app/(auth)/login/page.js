@@ -43,6 +43,24 @@ function LoginContent() {
     if (typeParam && [1, 2, 3].includes(Number(typeParam))) {
       setUserType(Number(typeParam));
     }
+
+    // Check for referral code in URL query (?ref=DS12345 or ?referral_code=DS12345)
+    const refParam = searchParams.get('ref') || searchParams.get('referral_code');
+    if (refParam) {
+      const code = refParam.trim().toUpperCase();
+      try {
+        localStorage.setItem('pending_referral_code', code);
+      } catch (e) {}
+      setIsLoginMode(false); // Auto switch to Register mode when opening via referral link
+      setUserData((prev) => ({ ...prev, referral_code: code }));
+    } else {
+      try {
+        const savedRef = localStorage.getItem('pending_referral_code');
+        if (savedRef) {
+          setUserData((prev) => ({ ...prev, referral_code: savedRef }));
+        }
+      } catch (e) {}
+    }
   }, [searchParams, router, isLoggedIn]);
 
   const [userData, setUserData] = useState({
@@ -50,7 +68,8 @@ function LoginContent() {
     last_name: '',
     gender: '',
     email: '',
-    password: ''
+    password: '',
+    referral_code: ''
   });
   
   const [error, setError] = useState({

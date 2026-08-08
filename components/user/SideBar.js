@@ -60,21 +60,26 @@ function SideBar() {
                         <i className="fa-solid fa-sliders me-2"></i> Account Settings
                     </button>
 
-                    {userType === 1 && (
-                        <button className={`nav-link ${pathname === '/savedtour' ? 'active' : ''}`} onClick={() => { route.push('/savedtour') }} type="button">
-                            <i className="fa-regular fa-heart me-2"></i> Saved Tours
-                        </button>
-                    )}
+                    <button className={`nav-link ${pathname === '/savedtour' ? 'active' : ''}`} onClick={() => { route.push('/savedtour') }} type="button">
+                        <i className="fa-solid fa-heart me-2 text-danger"></i> Saved Packages
+                    </button>
 
                     <button className={`nav-link ${pathname === '/bookings' ? 'active' : ''}`} onClick={() => { route.push('/bookings') }} type="button">
                         <i className="fa-solid fa-suitcase me-2"></i> 
                         {userType === 2 ? 'Employee Bookings' : userType === 3 ? 'Client Bookings' : 'My Bookings'}
                     </button>
 
-                    <button className={`nav-link ${pathname === '/wallet' ? 'active' : ''}`} onClick={() => { route.push('/wallet') }} type="button">
-                        <i className="fa-solid fa-wallet me-2"></i> 
-                        {userType === 3 ? 'Commission Wallet' : 'Wallet Overview'}
+                    <button className={`nav-link ${pathname === '/customized-packages' ? 'active' : ''}`} onClick={() => { route.push('/customized-packages') }} type="button">
+                        <i className="fa-solid fa-wand-magic-sparkles me-2 text-warning"></i> Customized Packages
                     </button>
+
+                    {/* Wallet and Withdraw (Customer & Agent Only - Corporate has NO wallet) */}
+                    {(userType === 1 || userType === 3) && (
+                        <button className={`nav-link ${pathname === '/wallet' ? 'active' : ''}`} onClick={() => { route.push('/wallet') }} type="button">
+                            <i className="fa-solid fa-wallet me-2"></i> 
+                            {userType === 3 ? 'Commission Wallet' : 'Wallet Overview'}
+                        </button>
+                    )}
 
                     {(userType === 1 || userType === 3) && (
                         <button className={`nav-link ${pathname === '/withdraw' ? 'active' : ''}`} onClick={() => { route.push('/withdraw') }} type="button">
@@ -83,10 +88,10 @@ function SideBar() {
                         </button>
                     )}
 
-                    {(userType === 1 || userType === 3) && (
+                    {/* Customer-only Refer & Earn Program */}
+                    {userType === 1 && (
                         <button className={`nav-link ${pathname === '/myreferal' ? 'active' : ''}`} onClick={() => { route.push('/myreferal') }} type="button">
-                            <i className="fa-solid fa-gift me-2"></i> 
-                            {userType === 3 ? 'Agent Referral Tools' : 'Refer & Earn'}
+                            <i className="fa-solid fa-gift me-2"></i> Refer & Earn
                         </button>
                     )}
                 </div>

@@ -3,12 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import PackageBanner from '@/components/website/packages/PackageBanner';
 import { axiosNormalGet, axiosNormalPost } from '@/libs/axiosHelper';
 import { useParams, useRouter } from 'next/navigation';
-import { createBookingsUrl, getParticularPackageUrl } from '@/routes/serviceRoutes';
+import { createBookingsUrl, getParticularPackageUrl, toggleSavePackageUrl, checkIsPackageSavedUrl } from '@/routes/serviceRoutes';
 import LoadingComponent from '@/components/common/LoadingComponent';
 import { showMessage } from '@/libs/commonHelper';
 import Head from 'next/head';
 import { urlEncode } from '@/libs/urlHelper';
 import ShareButton from '@/components/common/ShareButton';
+import { useSelector } from 'react-redux';
+import AgentBookingModal from '@/components/website/package/AgentBookingModal';
 
 export default function page() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -20,6 +22,9 @@ export default function page() {
   const [loading, setLoading] = useState(true);
   const { slug } = params;
   const route = useRouter();
+  const { user } = useSelector((state) => state.userAuth || {});
+  const isAgent = Number(user?.user_type) === 3;
+  const [isAgentModalOpen, setIsAgentModalOpen] = useState(false);
 
   if (!slug && !(slug && slug.split("-").length > 1)) {
     route.back();
@@ -121,6 +126,60 @@ export default function page() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('book'); // 'book' or 'enquire'
+  const [isSaved, setIsSaved] = useState(false);
+  const [savingLoading, setSavingLoading] = useState(false);
+
+  // Check if current package is saved in wishlist
+  useEffect(() => {
+    if (packageDetails?.id) {
+      let uid = user?.id;
+      if (!uid && typeof window !== 'undefined') {
+        try {
+          const raw = localStorage.getItem('user') || localStorage.getItem('user_details') || localStorage.getItem('userAuth');
+          if (raw) uid = JSON.parse(raw)?.id;
+        } catch (e) {}
+      }
+      if (uid) {
+        axiosNormalPost(checkIsPackageSavedUrl, { user_id: uid, package_id: packageDetails.id })
+          .then((res) => {
+            if (res && res.status) setIsSaved(!!res.is_saved);
+          })
+          .catch(() => {});
+      }
+    }
+  }, [packageDetails, user]);
+
+  const handleToggleSave = async () => {
+    let uid = user?.id;
+    if (!uid && typeof window !== 'undefined') {
+      try {
+        const raw = localStorage.getItem('user') || localStorage.getItem('user_details') || localStorage.getItem('userAuth');
+        if (raw) uid = JSON.parse(raw)?.id;
+      } catch (e) {}
+    }
+
+    if (!uid) {
+      showMessage('Please sign in to save packages to your account wishlist & dashboard.', 'info');
+      route.push('/login');
+      return;
+    }
+
+    setSavingLoading(true);
+    try {
+      const res = await axiosNormalPost(toggleSavePackageUrl, {
+        user_id: uid,
+        package_id: packageDetails.id
+      });
+      if (res && res.status) {
+        setIsSaved(res.is_saved);
+        showMessage(res.msg || (res.is_saved ? 'Package saved to your wishlist!' : 'Package removed from saved list.'), res.is_saved ? 'success' : 'info');
+      }
+    } catch (err) {
+      showMessage('Could not update saved status. Please try again.', 'error');
+    } finally {
+      setSavingLoading(false);
+    }
+  };
 
   // Form Fields State
   const [formData, setFormData] = useState({
@@ -129,6 +188,28 @@ export default function page() {
     email: '',
     comment: ''
   });
+
+  // Auto-fill logged-in user details
+  useEffect(() => {
+    let u = user;
+    if (!u && typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("user") || localStorage.getItem("user_details") || localStorage.getItem("userAuth");
+        if (stored) u = JSON.parse(stored);
+      } catch (e) {}
+    }
+    if (u) {
+      const name = [u.first_name, u.last_name].filter(Boolean).join(" ").trim() || u.name || u.full_name || "";
+      const email = u.email || "";
+      const phone = u.phone || u.mobile || u.phone_number || "";
+      setFormData(prev => ({
+        ...prev,
+        name: prev.name || name,
+        email: prev.email || email,
+        phone: prev.phone || phone
+      }));
+    }
+  }, [user]);
 
   // Form Validation Errors State
   const [errors, setErrors] = useState({});
@@ -414,6 +495,25 @@ export default function page() {
                     >
                       <i className="bi bi-file-earmark-pdf text-danger fs-6"></i> Download PDF
                     </button>
+                    <button 
+                      onClick={handleToggleSave}
+                      disabled={savingLoading}
+                      className={`btn rounded-pill text-xs fw-bold d-inline-flex align-items-center justify-content-center gap-1.5 shadow-2xs hover-lift transition-all ${
+                        isSaved 
+                          ? 'btn-danger text-white border-danger' 
+                          : 'btn-outline-danger'
+                      }`}
+                      style={{ 
+                        height: '36px',
+                        padding: '0 16px',
+                        fontSize: '12px'
+                      }}
+                      title={isSaved ? "Saved in your Wishlist & Account Dashboard" : "Save Package to Wishlist"}
+                    >
+                      <i className={`fa-heart ${isSaved ? 'fa-solid text-white' : 'fa-regular text-danger'}`}></i>
+                      <span>{isSaved ? 'Saved' : 'Save Package'}</span>
+                    </button>
+
                     <ShareButton
                       title={packageDetails.title}
                       text={packageDetails.meta_description}
@@ -675,23 +775,52 @@ export default function page() {
                       <div
                         className="p-4 border-bottom text-white position-relative overflow-hidden"
                         style={{
-                          background: 'linear-gradient(135deg, #2e266d 0%, #17123d 100%)'
+                          background: isAgent 
+                            ? 'linear-gradient(135deg, #2e266d 0%, #17123d 100%)' 
+                            : 'linear-gradient(135deg, #2e266d 0%, #17123d 100%)'
                         }}
                       >
-                        <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Starting From</span>
-                        <div className="d-flex align-items-baseline gap-2">
-                          <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
-                            {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
-                          </h2>
-                          {packageDetails.base_price && (
-                            <del className="text-light opacity-50 text-sm fw-normal">
-                              {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.base_price).toLocaleString('en-IN')}
-                            </del>
-                          )}
-                        </div>
-                        <small className="text-light opacity-75 text-3xs d-block mt-1">
-                          Per Person on twin sharing basis (Taxes included)
-                        </small>
+                        {isAgent ? (
+                          <>
+                            <span className="badge bg-warning text-dark text-uppercase px-2.5 py-1 fw-bold rounded-pill mb-2" style={{ fontSize: '10px' }}>
+                              <i className="fa-solid fa-user-shield me-1"></i> Certified Agent B2B Rate
+                            </span>
+                            <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Agent Net Rate</span>
+                            <div className="d-flex align-items-baseline gap-2">
+                              <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
+                                ₹{Number(packageDetails.agent_actual_price || packageDetails.actual_price).toLocaleString('en-IN')}
+                              </h2>
+                              <del className="text-light opacity-50 text-sm fw-normal">
+                                ₹{Number(packageDetails.base_price || packageDetails.actual_price).toLocaleString('en-IN')}
+                              </del>
+                            </div>
+                            <div className="mt-2 p-2 rounded-3 bg-white bg-opacity-20 border border-white border-opacity-25 d-flex align-items-center justify-content-between">
+                              <span className="text-white text-2xs fw-bold">
+                                <i className="fa-solid fa-gift text-warning me-1"></i> Your Commission:
+                              </span>
+                              <span className="badge bg-warning text-dark fw-bold px-2 py-0.5" style={{ fontSize: '12px' }}>
+                                ₹{Math.max(0, (packageDetails.base_price || 0) - (packageDetails.agent_actual_price || packageDetails.actual_price || 0)).toLocaleString('en-IN')} / pax
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Starting From</span>
+                            <div className="d-flex align-items-baseline gap-2">
+                              <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
+                                {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
+                              </h2>
+                              {packageDetails.base_price && (
+                                <del className="text-light opacity-50 text-sm fw-normal">
+                                  {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.base_price).toLocaleString('en-IN')}
+                                </del>
+                              )}
+                            </div>
+                            <small className="text-light opacity-75 text-3xs d-block mt-1">
+                              Per Person on twin sharing basis (Taxes included)
+                            </small>
+                          </>
+                        )}
                       </div>
 
                       {/* BOOKING ACTION BLOCK */}
@@ -721,14 +850,26 @@ export default function page() {
                           </div>
 
                           {/* CTA BUTTONS */}
-                          <button
-                            type="button"
-                            onClick={() => { setModalType('book'); setIsModalOpen(true); }}
-                            className="btn btn-danger w-100 py-3 text-sm fw-bold rounded-3 shadow-sm hover-lift text-uppercase tracking-wider border-0"
-                            style={{ backgroundColor: '#ff5c41' }}
-                          >
-                            <i className="bi bi-lightning-charge-fill me-1"></i> Book Now
-                          </button>
+                          {isAgent ? (
+                            <button
+                              type="button"
+                              onClick={() => setIsAgentModalOpen(true)}
+                              className="btn btn-primary w-100 py-3 text-sm fw-bold rounded-3 shadow-sm hover-lift text-uppercase tracking-wider border-0 d-flex align-items-center justify-content-center gap-2"
+                              style={{ background: 'linear-gradient(135deg, #2e266d 0%, #1d184f 100%)' }}
+                            >
+                              <i className="fa-solid fa-user-plus"></i>
+                              <span>Book for Client (B2B Multi-Traveler)</span>
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => { setModalType('book'); setIsModalOpen(true); }}
+                              className="btn btn-danger w-100 py-3 text-sm fw-bold rounded-3 shadow-sm hover-lift text-uppercase tracking-wider border-0"
+                              style={{ backgroundColor: '#ff5c41' }}
+                            >
+                              <i className="bi bi-lightning-charge-fill me-1"></i> Book Now
+                            </button>
+                          )}
 
                           <button
                             type="button"
@@ -994,6 +1135,16 @@ export default function page() {
                 }
               }
             `}</style>
+
+            {/* Agent B2B Client Booking Modal */}
+            {isAgentModalOpen && packageDetails && (
+              <AgentBookingModal
+                pkg={packageDetails}
+                isOpen={isAgentModalOpen}
+                onClose={() => setIsAgentModalOpen(false)}
+                onSuccess={() => {}}
+              />
+            )}
 
           </div>
         </>

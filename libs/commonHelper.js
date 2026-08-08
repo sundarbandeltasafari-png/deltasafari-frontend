@@ -23,20 +23,39 @@ export const showMessage = (type, message) => {
         theme: "light",
         transition: Bounce,
     }
-    switch (type) {
-        case 'info':
-            return toast.info(message, toastOption);
-            break;
-        case 'success':
-            return toast.success(message, toastOption);
-            break;
-        case 'error':
-            return toast.error(message, toastOption);
-            break;
-        case 'warning':
-            return toast.warn(message, toastOption);
-            break;
-        default:
-            return toast.warn(message, toastOption);
+    if (message == 'error' || message == 'info' || message == 'warning' || message == 'success') {
+        switch (message) {
+            case 'info':
+                return toast.info(type, toastOption);
+                break;
+            case 'success':
+                return toast.success(type, toastOption);
+                break;
+            case 'error':
+                return toast.error(type, toastOption);
+                break;
+            case 'warning':
+                return toast.warn(type, toastOption);
+                break;
+            default:
+                return toast.warn(type, toastOption);
+        }
+    } else {
+        switch (type) {
+            case 'info':
+                return toast.info(message, toastOption);
+                break;
+            case 'success':
+                return toast.success(message, toastOption);
+                break;
+            case 'error':
+                return toast.error(message, toastOption);
+                break;
+            case 'warning':
+                return toast.warn(message, toastOption);
+                break;
+            default:
+                return toast.warn(message, toastOption);
+        }
     }
 }

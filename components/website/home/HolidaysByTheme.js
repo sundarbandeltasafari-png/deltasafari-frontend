@@ -25,8 +25,8 @@ function HolidaysByTheme() {
                         data-wow-duration="1500ms">
                         <div className="col-xl-6 col-lg-8">
                             <div className="section-title text-start">
-                                <h2>Explore Holidays By Theme</h2>
-                                <p className="m-0">Find your perfect getaway, tailored to your interests.</p>
+                                <h2>Holidays by Theme</h2>
+                                <p className="m-0">Pick the trip style that matches your travel mood.</p>
                             </div>
                         </div>
                     </div>

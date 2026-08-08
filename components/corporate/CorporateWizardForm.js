@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { axiosNormalPost } from "@/libs/axiosHelper";
-import { createCorporateLeadEnquiryUrl } from "@/routes/serviceRoutes";
+import { createCorporateLeadEnquiryUrl, getDestinationsUrl } from "@/routes/serviceRoutes";
 
 const STEP_META = [
   { key: "contact", label: "Contact & Info", hint: "Name, phone, email & city" },
@@ -85,7 +86,10 @@ const initialForm = {
   durationNights: 2,
 
   // Step 3: Travelers & Stay
-  adultsCount: 2,
+  totalEmployees: 10,
+  maleEmployees: 6,
+  femaleEmployees: 4,
+  adultsCount: 10,
   childrenCount: 0,
   infantsCount: 0,
   hotelCategory: HOTEL_CATEGORIES[1],
@@ -136,14 +140,68 @@ function Pill({ label, selected, onClick }) {
 }
 
 export default function CorporateWizardForm({ isModal = false, onClose = null, onSubmit = null }) {
+  const { user } = useSelector((state) => state.userAuth || {});
+
   const [step, setStep] = useState(0);
   const [form, setForm] = useState(initialForm);
+  const [destinationsList, setDestinationsList] = useState(DESTINATIONS);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [submittedJson, setSubmittedJson] = useState(null);
   const [copiedJson, setCopiedJson] = useState(false);
+
+  // Fetch backend destinations from 'zone' database table
+  useEffect(() => {
+    fetch(getDestinationsUrl)
+      .then((res) => res.json())
+      .then((resData) => {
+        if (resData?.status && Array.isArray(resData?.destinations) && resData.destinations.length > 0) {
+          const names = resData.destinations
+            .map((d) => d.name || d.zone_name)
+            .filter(Boolean);
+          if (names.length > 0) {
+            setDestinationsList(names);
+            setForm((f) => ({
+              ...f,
+              destination: f.destination || names[0]
+            }));
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching destination zones from backend:", err);
+      });
+  }, []);
+
+  // Auto-fill corporate / user account details if logged in
+  useEffect(() => {
+    let u = user;
+    if (!u && typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem("user") || localStorage.getItem("user_details") || localStorage.getItem("userAuth");
+        if (raw) u = JSON.parse(raw);
+      } catch (e) {}
+    }
+
+    if (u) {
+      const name = [u.first_name, u.last_name].filter(Boolean).join(" ").trim() || u.name || u.full_name || "";
+      const company = u.company_name || u.company || u.agency_name || name || "";
+      const email = u.email || "";
+      const phone = u.phone || u.mobile || u.phone_number || "";
+      const city = u.city || u.address || u.state || "Kolkata";
+
+      setForm((f) => ({
+        ...f,
+        fullName: f.fullName || name,
+        companyName: f.companyName || company,
+        email: f.email || email,
+        phone: f.phone || phone,
+        city: f.city || city
+      }));
+    }
+  }, [user]);
 
   const progress = useMemo(() => ((step + 1) / STEP_META.length) * 100, [step]);
 
@@ -154,6 +212,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
   const validateStep = () => {
     const e = {};
     if (step === 0) {
+      if (!form.companyName.trim()) e.companyName = "Company / Organization name is required";
       if (!form.fullName.trim()) e.fullName = "Full name is required";
       if (!form.phone.trim()) {
         e.phone = "Phone number is required";
@@ -185,18 +244,20 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
 
   // Build the clean JSON payload for backend API (createCorporateLeadEnquiry)
   const buildBackendPayload = () => {
+    const totalEmp = form.totalEmployees || form.adultsCount;
     return {
+      user_id: user?.id || null,
       company_name: form.companyName || "N/A",
       name: form.fullName,
       email: form.email,
       phone: form.phone,
       destination: form.destination,
-      group_size: `${totalTravelersCount} members`,
+      group_size: `${totalEmp} Employees (${form.maleEmployees} Male, ${form.femaleEmployees} Female)`,
       travel_date: form.departureDate,
       budget: form.budgetBand,
       message: form.specialNotes
-        ? `${form.specialNotes} (Duration: ${form.durationDays} Days, Stay: ${form.hotelCategory}, Transport: ${form.cabType})`
-        : `Interested in ${form.durationDays}-day ${form.tripType} package to ${form.destination}. Stay: ${form.hotelCategory}, Cab: ${form.cabType}.`
+        ? `${form.specialNotes} (Employees: ${totalEmp} [Male: ${form.maleEmployees}, Female: ${form.femaleEmployees}], Duration: ${form.durationDays} Days, Stay: ${form.hotelCategory}, Transport: ${form.cabType})`
+        : `Interested in ${form.durationDays}-day ${form.tripType} package to ${form.destination}. Total Employees: ${totalEmp} (Male: ${form.maleEmployees}, Female: ${form.femaleEmployees}). Stay: ${form.hotelCategory}, Cab: ${form.cabType}.`
     };
   };
 
@@ -242,7 +303,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
 
   if (submitted) {
     return (
-      <div id="enquiry-form" className="ds-wizard-shell position-relative bg-white rounded-4 shadow-lg overflow-hidden">
+      <div id="enquiry-form" className="ds-wizard-shell position-relative bg-white rounded-4 shadow-lg overflow-hidden border border-light-subtle">
         {onClose && (
           <button
             type="button"
@@ -252,31 +313,32 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
           />
         )}
         <div className="ds-wizard-main text-center py-5 px-4">
-          <div className="ds-success-badge mx-auto mb-3">
-            <i className="bi bi-check2 fs-1 text-success" />
+          
+          {/* Animated Success Badge */}
+          <div className="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle mb-3 p-3 position-relative" 
+               style={{ width: 80, height: 80, animation: 'pulse 2s infinite' }}>
+            <i className="fa-solid fa-circle-check display-4 text-success" />
           </div>
-          <h4 className="fw-bold mb-2">Quote Request Generated Successfully!</h4>
-          <p className="ds-lead mx-auto mb-4" style={{ maxWidth: 520, fontSize: '14px' }}>
-            Thank you <strong>{form.fullName}</strong>. Your custom inquiry for <strong>{form.destination}</strong> ({totalTravelersCount} Travelers, {form.durationDays} Days) has been formatted into a backend JSON payload.
+
+          <h3 className="fw-bold mb-2 text-dark">Corporate Quote Request Submitted!</h3>
+          <p className="ds-lead mx-auto mb-4 text-secondary" style={{ maxWidth: 540, fontSize: '15px' }}>
+            Thank you <strong>{form.fullName}</strong>{form.companyName ? ` (${form.companyName})` : ''}! Your corporate itinerary request for <strong>{form.destination}</strong> ({form.totalEmployees || form.adultsCount} Employees, {form.durationDays} Days) has been received.
           </p>
 
-          {/* DISPLAY BACKEND SUBMISSION JSON */}
-          <div className="text-start bg-dark text-warning p-3 rounded-3 mb-4 text-xs font-monospace overflow-auto" style={{ maxHeight: '220px', fontSize: '11px' }}>
-            <div className="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
-              <span className="text-light fw-bold">Backend Submission Payload (JSON):</span>
-              <button onClick={handleCopyJson} type="button" className="btn btn-sm btn-outline-warning text-2xs py-0.5 px-2">
-                <i className="bi bi-clipboard me-1"></i> {copiedJson ? 'Copied!' : 'Copy JSON'}
-              </button>
+          {/* Reassuring Notice Box */}
+          <div className="p-3 bg-light rounded-4 border border-info-subtle mb-4 mx-auto" style={{ maxWidth: 540 }}>
+            <div className="d-flex align-items-center justify-content-center gap-2 text-primary fw-bold mb-1">
+              <i className="fa-solid fa-headset fs-5"></i> Our Travel Team Will Connect With You Soon!
             </div>
-            <pre className="m-0 text-warning" style={{ whiteSpace: 'pre-wrap' }}>
-              {JSON.stringify(submittedJson, null, 2)}
-            </pre>
+            <p className="text-muted small mb-0">
+              Our corporate travel specialists are reviewing your team requirements and will reach out to you on <strong>{form.phone}</strong> or <strong>{form.email}</strong> shortly with a custom quote.
+            </p>
           </div>
 
           <div className="d-flex justify-content-center gap-2">
             <button
               type="button"
-              className="btn btn-ds-outline"
+              className="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold text-xs"
               onClick={() => {
                 setForm(initialForm);
                 setStep(0);
@@ -284,11 +346,11 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                 setSubmittedJson(null);
               }}
             >
-              Submit Another Inquiry
+              <i className="fa-solid fa-rotate-left me-1"></i> Submit Another Request
             </button>
             {onClose && (
-              <button type="button" className="btn btn-ds-primary" onClick={onClose}>
-                Done
+              <button type="button" className="btn btn-primary px-4 py-2 rounded-pill fw-semibold text-xs" style={{ backgroundColor: '#ff5c41', borderColor: '#ff5c41' }} onClick={onClose}>
+                Done <i className="fa-solid fa-check ms-1"></i>
               </button>
             )}
           </div>
@@ -355,7 +417,18 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
                   
                   <div className="col-md-6">
-                    <label className="ds-form-label">Full Name *</label>
+                    <label className="ds-form-label">Company / Organization Name *</label>
+                    <input
+                      className={`form-control ds-form-control ${errors.companyName ? "is-invalid" : ""}`}
+                      value={form.companyName}
+                      onChange={(e) => update("companyName", e.target.value)}
+                      placeholder="e.g. Delta Corp / Tech Solutions"
+                    />
+                    {errors.companyName && <div className="invalid-feedback text-2xs">{errors.companyName}</div>}
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="ds-form-label">Full Name / Contact Person *</label>
                     <input
                       className={`form-control ds-form-control ${errors.fullName ? "is-invalid" : ""}`}
                       value={form.fullName}
@@ -378,19 +451,19 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Email Address *</label>
+                    <label className="ds-form-label">Official Email Address *</label>
                     <input
                       type="email"
                       className={`form-control ds-form-control ${errors.email ? "is-invalid" : ""}`}
                       value={form.email}
                       onChange={(e) => update("email", e.target.value)}
-                      placeholder="name@example.com"
+                      placeholder="name@company.com"
                     />
                     {errors.email && <div className="invalid-feedback text-2xs">{errors.email}</div>}
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">City of Residence / Departure *</label>
+                    <label className="ds-form-label">City of Departure / Base *</label>
                     <input
                       className={`form-control ds-form-control ${errors.city ? "is-invalid" : ""}`}
                       value={form.city}
@@ -398,16 +471,6 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                       placeholder="e.g. Kolkata, Delhi, Mumbai"
                     />
                     {errors.city && <div className="invalid-feedback text-2xs">{errors.city}</div>}
-                  </div>
-
-                  <div className="col-md-6">
-                    <label className="ds-form-label">Company / Group Name (Optional)</label>
-                    <input
-                      className="form-control ds-form-control"
-                      value={form.companyName}
-                      onChange={(e) => update("companyName", e.target.value)}
-                      placeholder="e.g. Delta Tech / Family Group"
-                    />
                   </div>
 
                   <div className="col-md-6">
@@ -440,7 +503,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                       value={form.destination}
                       onChange={(e) => update("destination", e.target.value)}
                     >
-                      {DESTINATIONS.map((dest) => (
+                      {destinationsList.map((dest) => (
                         <option key={dest} value={dest}>{dest}</option>
                       ))}
                     </select>
@@ -505,42 +568,55 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
               {step === 2 && (
                 <div className="row g-3">
                   <div className="col-12">
-                    <h5 className="fw-bold text-dark mb-1">Travelers & Accommodation</h5>
-                    <p className="text-muted text-xs mb-2">Traveler age breakdown and hotel preferences matching TravelTriangle standard.</p>
+                    <h5 className="fw-bold text-dark mb-1">Company Employees & Accommodation</h5>
+                    <p className="text-muted text-xs mb-2">Specify employee group size and male/female gender counts for hotel room allocation.</p>
                   </div>
 
                   <div className="col-md-4">
                     <Counter
-                      label="Adults *"
-                      sublabel="12+ yrs"
-                      value={form.adultsCount}
+                      label="Total Employees *"
+                      sublabel="Total team"
+                      value={form.totalEmployees}
                       min={1}
-                      onChange={(v) => update("adultsCount", v)}
+                      onChange={(v) => {
+                        update("totalEmployees", v);
+                        update("adultsCount", v);
+                      }}
                     />
                   </div>
 
                   <div className="col-md-4">
                     <Counter
-                      label="Children"
-                      sublabel="2-11 yrs"
-                      value={form.childrenCount}
+                      label="Male Employees"
+                      sublabel="Male team"
+                      value={form.maleEmployees}
                       min={0}
-                      onChange={(v) => update("childrenCount", v)}
+                      onChange={(v) => {
+                        update("maleEmployees", v);
+                        const newTotal = v + form.femaleEmployees;
+                        update("totalEmployees", newTotal);
+                        update("adultsCount", newTotal);
+                      }}
                     />
                   </div>
 
                   <div className="col-md-4">
                     <Counter
-                      label="Infants"
-                      sublabel="0-2 yrs"
-                      value={form.infantsCount}
+                      label="Female Employees"
+                      sublabel="Female team"
+                      value={form.femaleEmployees}
                       min={0}
-                      onChange={(v) => update("infantsCount", v)}
+                      onChange={(v) => {
+                        update("femaleEmployees", v);
+                        const newTotal = form.maleEmployees + v;
+                        update("totalEmployees", newTotal);
+                        update("adultsCount", newTotal);
+                      }}
                     />
                   </div>
 
                   {errors.adultsCount && (
-                    <div className="col-12  text-2xs fw-bold">{errors.adultsCount}</div>
+                    <div className="col-12 text-danger text-2xs fw-bold">{errors.adultsCount}</div>
                   )}
 
                   <div className="col-md-6">
@@ -665,9 +741,9 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
 
                     <div className="col-md-6">
                       <div className="p-3 bg-light rounded-3 border">
-                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Travelers & Hotel Category</span>
+                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Company Team Breakdown</span>
                         <strong className="d-block text-dark text-xs">
-                          {totalTravelersCount} Total ({form.adultsCount} Adults, {form.childrenCount} Kids, {form.infantsCount} Infants)
+                          {form.totalEmployees} Total Employees ({form.maleEmployees} Male, {form.femaleEmployees} Female)
                         </strong>
                         <small className="text-secondary text-xs d-block">{form.hotelCategory} ({form.mealPlan})</small>
                       </div>

@@ -18,3 +18,9 @@ export const createHolidayEnquiryUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 
 // Contact Query
 export const createContactQueryUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/createContactQuery`
 export const contactQueryUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}contact-query`
+
+// Saved Packages / Wishlist
+export const toggleSavePackageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/toggleSavePackage`
+export const getSavedPackagesUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/getSavedPackages`
+export const checkIsPackageSavedUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/checkIsPackageSaved`
+

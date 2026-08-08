@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { ToastContainer } from "react-toastify";
@@ -8,14 +8,11 @@ import CustomPackageWidget from "@/components/website/CustomPackageWidget";
 import axios from "axios";
 import { getSiteSettingsUrl } from "@/routes/settingsRoute";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const revalidate = 0;
@@ -77,7 +74,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${poppins.variable} font-poppins h-full antialiased`}
     >
       <head>
         <link href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/bootstrap.min.css"} rel="stylesheet" />
@@ -86,10 +83,11 @@ export default async function RootLayout({ children }) {
         <link rel="stylesheet" href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/style.css"} />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet"></link>
+          href="https://fonts.googleapis.com/css2?family=Courgette&family=Dancing+Script:wght@400..700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className={`${poppins.className} font-poppins min-h-full flex flex-col`}>
         <ProviderStore>
           <Header siteSettings={siteSettings} />
           <ToastContainer />

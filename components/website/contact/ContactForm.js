@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { createContactQueryUrl, contactQueryUrl } from "@/routes/serviceRoutes";
@@ -24,11 +25,37 @@ const INITIAL_FORM = {
 };
 
 export default function ContactForm() {
+  const { user: reduxUser } = useSelector((state) => state.userAuth || {});
+
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [apiError, setApiError] = useState("");
+
+  // Auto-fill logged-in user details
+  useEffect(() => {
+    let u = reduxUser;
+    if (!u && typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("user") || localStorage.getItem("user_details") || localStorage.getItem("userAuth");
+        if (stored) u = JSON.parse(stored);
+      } catch (e) {}
+    }
+
+    if (u) {
+      const name = [u.first_name, u.last_name].filter(Boolean).join(" ").trim() || u.name || u.full_name || "";
+      const email = u.email || "";
+      const phone = u.phone || u.mobile || u.phone_number || "";
+
+      setFormData((prev) => ({
+        ...prev,
+        full_name: prev.full_name || name,
+        email: prev.email || email,
+        phone_number: prev.phone_number || phone
+      }));
+    }
+  }, [reduxUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

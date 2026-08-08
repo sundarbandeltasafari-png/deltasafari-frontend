@@ -1,271 +1,352 @@
-import React from 'react'
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { axiosPost } from '@/libs/axiosHelper';
+import { getReferralStatsURL } from '@/routes/authRoutes';
+import { showMessage } from '@/libs/commonHelper';
 
-function page() {
-  return (
-    <>
+export default function MyReferralPage() {
+  const authState = useSelector((state) => state?.userAuth);
+  const token = authState?.token || (typeof window !== 'undefined' ? localStorage.getItem('token') : null);
 
-      {/* <div className="page-header">
-        <div className="floating-plane"><i className="bi bi-airplane-fill"></i></div>
-        <div className="container">
-          <div className="header-badge"><i className="bi bi-gift-fill"></i> Exclusive Rewards Program</div>
-          <h1 className="mb-3">Refer Friends &amp; <span className="span-accent-color">Earn Rewards</span></h1>
-          <p className="mb-0">Share the joy of travel. Invite your friends to GoFly and earn ₹500 credits for every friend who completes a booking. No limits — earn as much as you want!</p>
-        </div>
-      </div>
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({
+    referralCode: '',
+    referralUrl: '',
+    walletBalance: 0,
+    stats: {
+      totalReferredCount: 0,
+      totalSuccessfulBookings: 0,
+      totalCommissionEarned: 0
+    },
+    referredUsers: [],
+    referralTransactions: []
+  });
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedUrl, setCopiedUrl] = useState(false);
 
-      <div className="container margin-top-offset">
-        <div className="row g-3">
-          <div className="col-6 col-md-3 fade-up">
-            <div className="stat-card">
-              <div className="icon-wrap bg-primary-light">
-                <i className="bi bi-people-fill"></i>
-              </div>
-              <div className="stat-value text-primary-color">24</div>
-              <div className="stat-label">Total Referrals</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>+3 this month</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d1">
-            <div className="stat-card">
-              <div className="icon-wrap bg-blue-light">
-                <i className="bi bi-bag-check-fill"></i>
-              </div>
-              <div className="stat-value text-blue-color">18</div>
-              <div className="stat-label">Successful Bookings</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>+2 this week</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d2">
-            <div className="stat-card">
-              <div className="icon-wrap bg-green-light">
-                <i className="bi bi-wallet2"></i>
-              </div>
-              <div className="stat-value text-green-color">₹9,000</div>
-              <div className="stat-label">Total Earned</div>
-              <div className="stat-change text-success"><i className="bi bi-arrow-up-short"></i>₹1,000 pending</div>
-            </div>
-          </div>
-          <div className="col-6 col-md-3 fade-up fade-up-d3">
-            <div className="stat-card">
-              <div className="icon-wrap bg-purple-light">
-                <i className="bi bi-star-fill"></i>
-              </div>
-              <div className="stat-value text-purple-color">Gold</div>
-              <div className="stat-label">Current Tier</div>
-              <div className="stat-change text-purple-color"><i className="bi bi-chevron-up"></i>6 more → Platinum</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  useEffect(() => {
+    fetchReferralData();
+  }, [token]);
 
-      <div className="container py-5">
-        <div className="row g-4">
+  const fetchReferralData = () => {
+    setLoading(true);
+    axiosPost(getReferralStatsURL, {}, token)
+      .then((res) => {
+        setLoading(false);
+        if (res?.status) {
+          setData({
+            referralCode: res.referralCode || '',
+            referralUrl: res.referralUrl || '',
+            walletBalance: res.walletBalance || 0,
+            stats: res.stats || { totalReferredCount: 0, totalSuccessfulBookings: 0, totalCommissionEarned: 0 },
+            referredUsers: res.referredUsers || [],
+            referralTransactions: res.referralTransactions || []
+          });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.error("Error fetching referral stats:", err);
+      });
+  };
 
-          <div className="col-lg-7">
+  const handleCopyCode = () => {
+    if (!data.referralCode) return;
+    navigator.clipboard.writeText(data.referralCode);
+    setCopiedCode(true);
+    showMessage('success', 'Referral Code copied to clipboard!');
+    setTimeout(() => setCopiedCode(false), 3000);
+  };
 
-            <div className="referral-hero-card mb-4">
-              <div className="row align-items-center hero-inner-z">
-                <div className="col-md-7 mb-3 mb-md-0">
-                  <p className="mb-1 fw-600 hero-p-sub">Your Personal Referral Code</p>
-                  <div className="code-display my-3">
-                    <span className="code-text" id="refCode">GOFLY-RAJ500</span>
-                    <button className="btn-copy" id="copyCodeBtn">
-                      <i className="bi bi-clipboard" id="copyIcon"></i>
-                      <span id="copyText">Copy</span>
-                    </button>
-                  </div>
-                  <p className="hero-p-info">
-                    <i className="bi bi-info-circle me-1"></i>
-                    Share this code with your friends to earn ₹500 per booking
-                  </p>
-                </div>
-                <div className="col-md-5 text-center">
-                  <div className="friend-reward-box">
-                    <div className="reward-label-sub">You Receive</div>
-                    <div className="reward-value-main">₹500</div>
-                    <div className="reward-p-text">per successful booking</div>
-                    <div className="reward-divider">Friend Gets</div>
-                    <div className="reward-value-sub">₹250</div>
-                    <div className="reward-p-text">off their first booking</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  const handleCopyUrl = () => {
+    if (!data.referralUrl) return;
+    navigator.clipboard.writeText(data.referralUrl);
+    setCopiedUrl(true);
+    showMessage('success', 'Referral Link copied to clipboard!');
+    setTimeout(() => setCopiedUrl(false), 3000);
+  };
 
-            <div className="card-section mb-4">
-              <h6 className="fw-700 mb-3" style={{fontSize: ".9rem", textTransform: "uppercase", letterSpacing: ".5px", color: "var(--text-muted)"}}>
-                <i className="bi bi-link-45deg text-primary me-1"></i> Share Your Referral Link
-              </h6>
-              <div className="input-group share-input-group mb-3">
-                <input type="text" className="form-control" id="referralLink" value="https://gofly.com/ref/GOFLY-RAJ500" readOnly />
-                <button className="btn btn-primary-custom" >
-                  <i className="bi bi-clipboard2-check"></i> Copy Link
-                </button>
-              </div>
-              <p className="text-muted mb-4" style={{fontSize: ".82rem"}}>
-                <i className="bi bi-shield-check text-success me-1"></i>
-                Your referral link is unique and tracks all sign-ups automatically.
-              </p>
+  const userType = Number(authState?.user?.user_type) || 1;
 
-              <p className="fw-700 mb-3" style={{fontSize: ".875rem"}}>Share via Social Media</p>
-              <div className="row g-2">
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn whatsapp"><i className="bi bi-whatsapp"></i> WhatsApp</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn facebook"><i className="bi bi-facebook"></i> Facebook</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn twitter"><i className="bi bi-twitter-x"></i> Twitter</a></div>
-                <div className="col-6 col-sm-3"><a href="#" className="share-btn email"><i className="bi bi-envelope-fill"></i> Email</a></div>
-              </div>
-            </div>
-
-            <div className="level-card mb-4">
-              <div className="row align-items-center">
-                <div className="col-md-8">
-                  <div className="d-flex align-items-center gap-3 mb-3">
-                    <div>
-                      <div className="level-badge mb-1"><i className="bi bi-trophy-fill me-1"></i> Gold Referrer</div>
-                      <h5 className="mb-0 text-white">6 more referrals to Platinum</h5>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-between mb-1" style={{fontSize: ".8rem", color:"rgba(255,255,255,.7)"}}>
-                    <span>18 / 24 referrals</span>
-                    <span>75%</span>
-                  </div>
-                  <div className="progress progress-custom">
-                    <div className="progress-bar" style={{width: "75%"}}></div>
-                  </div>
-                  <div className="row g-2 mt-3 text-white-color" style={{opacity: "0.7"}}>
-                    <div className="col-4 text-center">
-                      <div style={{fontSize: ".7rem", textTransform: "uppercase",letterSpacing: ".4px"}}>Silver</div>
-                      <div style={{fontSize: ".8rem", fontWeight: "700"}}>5+ refs</div>
-                    </div>
-                    <div className="col-4 text-center" style={{borderLeft: "1px solid rgba(255,255,255,.15)", borderRight: "1px solid rgba(255,255,255,.15)"}}>
-                      <div style={{fontSize: ".7rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: ".4px"}}>Gold ✓</div>
-                      <div style={{fontSize: ".8rem", fontWeight: 700 , color: "var(--accent)"}}>15+ refs</div>
-                    </div>
-                    <div className="col-4 text-center">
-                      <div style={{fontSize: ".7rem", textTransform: "uppercase",letterSpacing: ".4px"}}>Platinum</div>
-                      <div style={{fontSize: ".8rem", fontWeight: "700"}}>24+ refs</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 text-center mt-4 mt-md-0">
-                  <div style={{fontSize: "5rem", lineHeight: 1, filter: "dropShadow(0 4px 12px rgba(0,0,0,.3)"}}>🏆</div>
-                  <div style={{color: "var(--accent)", fontWeight: 700, fontSize: ".85rem", marginTop: "8px"}}>Platinum Bonus: ₹1000/ref</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <h5 className="mb-0 section-title-sm">Referral History</h5>
-                <a href="#" className="text-decoration-none text-primary-color" style={{fontSize: ".85rem", fontWeight: 600}}>View All <i className="bi bi-arrow-right"></i></a>
-              </div>
-              <div className="table-card">
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr><th>Friend</th><th>Joined</th><th>Status</th><th>Reward</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><div className="d-flex align-items-center gap-2"><div className="avatar-placeholder">PR</div><div><div className="fw-600" style={{fontSize: ".875rem"}}>Priya Raut</div><div style={{fontSize: ".75rem", color: "var(--text-muted)"}}>priya@email.com</div></div></div></td>
-                        <td><span style={{fontSize: ".82rem", color: "var(--text-muted)"}}>12 Apr 2025</span></td>
-                        <td><span className="badge-status badge-booked">Booked</span></td>
-                        <td><span className="fw-700 text-success-color">+₹500</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-5">
-
-            <div className="card-section mb-4">
-              <div className="section-tag">Simple Process</div>
-              <h5 className="section-title-md mb-1">How It Works</h5>
-              <p className="section-subtitle mb-4">Three easy steps to start earning travel credits</p>
-
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex gap-3 align-items-start p-3 bg-light-soft" style={{background: "var(--bg-soft)", borderRadius: "12px"}}>
-                  <div className="step-icon-fixed flex-shrink-0 bg-primary-light" style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                    <i className="bi bi-share-fill"></i>
-                  </div>
-                  <div>
-                    <div className="d-flex align-items-center gap-2 mb-1">
-                      <span className="step-num-circle" style={{background: "var(--primary)", color: "white"}}>1</span>
-                      <h6 className="mb-0 step-title-fixed">Share Your Code</h6>
-                    </div>
-                    <p className="mb-0 step-p-fixed">Copy your unique referral code or link and share it with friends via WhatsApp, email, or social media.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="card-section mb-4 wallet-banner">
-              <div className="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                  <div className="section-tag section-tag-success">Wallet Balance</div>
-                  <h5 className="mb-0 section-title-md">Available Credits</h5>
-                </div>
-                <div style={{fontSize: "2.5rem"}}>💰</div>
-              </div>
-              <div className="row g-3">
-                <div className="col-6"><div className="wallet-card-inner"><div className="wallet-amount-main">₹8,000</div><div className="wallet-p-small">Credited</div></div></div>
-                <div className="col-6"><div className="wallet-card-inner"><div className="wallet-amount-pending">₹1,000</div><div className="wallet-p-small">Pending</div></div></div>
-              </div>
-              <a href="#" className="btn-primary-custom mt-3 w-100 justify-content-center" style={{background: "var(--success)"}}>
-                <i className="bi bi-credit-card-2-front"></i> Redeem Now
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div className="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="copyToast" className="toast align-items-center text-white bg-success border-0" role="alert">
-          <div className="d-flex">
-            <div className="toast-body fw-600"><i className="bi bi-check-circle me-2"></i> Copied to clipboard!</div>
-            <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-          </div>
-        </div>
-      </div> */}
-
+  if (userType !== 1) {
+    return (
       <div className="col-lg-8 col-xl-9">
-        <div className="tab-content" id="v-pills-tabContent">
-          <div className="tab-pane fade show active" id="refer-panel" role="tabpanel">
-            <div className="gofly-card">
-              <h3 className="gofly-card-title">Invite Friends & Earn Rewards Together</h3>
+        <div className="bg-white p-5 rounded-4 shadow-sm border text-center my-4">
+          <i className="fa-solid fa-user-lock text-warning display-4 mb-3"></i>
+          <h4 className="fw-bold text-dark mb-2">Customer Exclusive Feature</h4>
+          <p className="text-secondary small mb-0">
+            The Refer & Earn rewards program is available exclusively for Customer User accounts.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-              <div className="row align-items-center mt-4 g-4">
-                <div className="col-md-7">
-                  <h5 className="fw-bold mb-2">Get $50 for every verified friend who signs up and books a trip package.</h5>
-                  <p className="text-muted small mb-4">There is no cap limit to your automated network cash bonus generation. Earn wallet balances seamlessly.</p>
+  return (
+    <div className="col-lg-8 col-xl-9">
+      <div className="tab-content" id="v-pills-tabContent">
+        <div className="tab-pane fade show active">
+          
+          {/* Header Card */}
+          <div className="gofly-card mb-4 border-0 shadow-sm rounded-4 overflow-hidden position-relative" 
+               style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', color: '#fff' }}>
+            <div className="row align-items-center p-4">
+              <div className="col-lg-12">
+                <span className="badge bg-warning text-dark mb-2 px-3 py-2 fw-bold text-uppercase rounded-pill" style={{ fontSize: '0.75rem' }}>
+                  <i className="fa-solid fa-gift me-1"></i> Refer & Earn Program
+                </span>
+                <h2 className="fw-bold mb-2 text-white" style={{ fontSize: '1.75rem' }}>
+                  Invite Friends & <span style={{ color: '#fb923c' }}>Earn Package Commissions</span>
+                </h2>
+                <p className="text-slate-300 small mb-4" style={{ opacity: 0.9 }}>
+                  Share your personal referral link or referral code. When a friend signs up using your link/code and books any tour package, you earn the user commission set for that package credited directly to your wallet balance!
+                </p>
 
-                  <label className="form-label d-block text-secondary">Your Personal Invite Link</label>
-                  <div className="referral-copy-field">
-                    <input type="text" className="form-control bg-transparent border-0 fw-bold text-primary py-1" value="https://gofly.com/invite/alex50m" readonly id="referralURL" />
-                    <button type="button" className="btn btn-dark btn-sm px-3 rounded-2 py-2" onclick="navigator.clipboard.writeText(document.getElementById('referralURL').value); alert('Link copied successfully!');">
-                      <i className="fa-regular fa-copy me-1"></i> Copy
-                    </button>
+                {/* Referral Link & Code Copy Boxes */}
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1 d-block">Your Referral Code</label>
+                    <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
+                      <span className="fw-bold text-warning text-truncate me-2 ms-1 fs-6">{data.referralCode || 'LOADING...'}</span>
+                      <button onClick={handleCopyCode} className="btn btn-sm btn-warning ms-auto rounded-2 px-3 fw-bold">
+                        {copiedCode ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-regular fa-copy me-1"></i> Copy Code</>}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1 d-block">Your Referral Link</label>
+                    <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
+                      <span className="text-truncate text-white-50 me-2 ms-1 small" style={{ maxWidth: '140px' }}>{data.referralUrl || 'Loading...'}</span>
+                      <button onClick={handleCopyUrl} className="btn btn-sm btn-light ms-auto rounded-2 px-3 fw-bold text-dark">
+                        {copiedUrl ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-solid fa-link me-1"></i> Copy Link</>}
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="col-md-5 text-center">
-                  <div className="p-4 bg-light border rounded-3">
-                    <i className="fa-solid fa-gift text-primary display-3 mb-2"></i>
-                    <div className="fw-bold text-dark fs-5">3 Friends Invited</div>
-                    <div className="text-muted small">Generated over <strong className="text-success">$150.00</strong> in credit points</div>
+
+              </div>
+
+              <div className="col-lg-12 pt-2 text-center mt-4 mt-lg-0">
+                <div className="p-4 bg-white bg-opacity-10 border border-white border-opacity-25 rounded-4 shadow-sm">
+                  <div className="display-4 text-warning mb-1"><i className="fa-solid fa-sack-dollar"></i></div>
+                  <div className="text-uppercase text-light opacity-75 text-xs fw-bold tracking-wider">Total Earned Rewards</div>
+                  <div className="display-6 fw-bold text-white my-1">₹{data.stats.totalCommissionEarned.toLocaleString('en-IN')}</div>
+                  <div className="text-success small fw-semibold mt-2">
+                    <i className="fa-solid fa-wallet me-1"></i> Wallet Balance: ₹{data.walletBalance.toLocaleString('en-IN')}
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Social Share Buttons */}
+          <div className="bg-white p-3 rounded-4 shadow-sm mb-4 border">
+            <label className="fw-bold text-dark small mb-2 d-block text-uppercase" style={{ letterSpacing: '0.5px' }}>
+              <i className="fa-solid fa-share-nodes text-primary me-1"></i> Share Instantly via Social Media:
+            </label>
+            <div className="row g-2">
+              <div className="col-6 col-sm-3">
+                <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Sign up on Delta Safari using my referral code ${data.referralCode} and explore amazing tour packages! ${data.referralUrl}`)}`}
+                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-success w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-brands fa-whatsapp me-1"></i> WhatsApp
+                </a>
+              </div>
+              <div className="col-6 col-sm-3">
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(data.referralUrl)}`}
+                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-brands fa-facebook me-1"></i> Facebook
+                </a>
+              </div>
+              <div className="col-6 col-sm-3">
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Sign up on Delta Safari using code ${data.referralCode} for exclusive travel packages! ${data.referralUrl}`)}`}
+                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-dark w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-brands fa-x-twitter me-1"></i> Twitter
+                </a>
+              </div>
+              <div className="col-6 col-sm-3">
+                <a href={`mailto:?subject=${encodeURIComponent('Join Delta Safari')}&body=${encodeURIComponent(`Sign up using my referral link ${data.referralUrl} or referral code ${data.referralCode}`)}`}
+                   className="btn btn-outline-danger w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-solid fa-envelope me-1"></i> Email
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Stats Overview */}
+          <div className="row g-3 mb-4">
+            <div className="col-md-4">
+              <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
+                <div className="rounded-3 p-3 bg-primary bg-opacity-10 text-primary me-3 fs-3">
+                  <i className="fa-solid fa-users"></i>
+                </div>
+                <div>
+                  <div className="text-muted small fw-bold text-uppercase">Friends Referred</div>
+                  <div className="fs-4 fw-bold text-dark">{data.stats.totalReferredCount}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
+                <div className="rounded-3 p-3 bg-success bg-opacity-10 text-success me-3 fs-3">
+                  <i className="fa-solid fa-plane-departure"></i>
+                </div>
+                <div>
+                  <div className="text-muted small fw-bold text-uppercase">Successful Bookings</div>
+                  <div className="fs-4 fw-bold text-dark">{data.stats.totalSuccessfulBookings}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
+                <div className="rounded-3 p-3 bg-warning bg-opacity-10 text-warning me-3 fs-3">
+                  <i className="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                  <div className="text-muted small fw-bold text-uppercase">Total Earned</div>
+                  <div className="fs-4 fw-bold text-dark">₹{data.stats.totalCommissionEarned.toLocaleString('en-IN')}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Referred Friends Table */}
+          <div className="bg-white p-4 rounded-4 shadow-sm border mb-4">
+            <h5 className="fw-bold text-dark mb-3">
+              <i className="fa-solid fa-user-plus text-primary me-2"></i> Referred Friends ({data.referredUsers.length})
+            </h5>
+            
+            {loading ? (
+              <div className="text-center py-4 text-muted">
+                <div className="spinner-border spinner-border-sm me-2 text-primary" role="status"></div>
+                Loading referral data...
+              </div>
+            ) : data.referredUsers.length === 0 ? (
+              <div className="text-center py-4 bg-light rounded-3">
+                <i className="fa-solid fa-user-group text-muted fs-2 mb-2"></i>
+                <p className="text-secondary small mb-0">No friends have registered using your referral code yet.</p>
+                <p className="text-muted text-xs">Share your code or link above to start earning rewards!</p>
+              </div>
+            ) : (
+              <div className="table-responsive">
+                <table className="table table-hover align-middle mb-0">
+                  <thead className="table-light text-uppercase small text-muted">
+                    <tr>
+                      <th>Friend Name</th>
+                      <th>Email / Contact</th>
+                      <th>Joined Date</th>
+                      <th>Bookings Made</th>
+                      <th>Commission Earned</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.referredUsers.map((friend) => (
+                      <tr key={friend.id}>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <div className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold me-2"
+                                 style={{ width: '36px', height: '36px', fontSize: '0.85rem' }}>
+                              {(friend.first_name?.[0] || 'U').toUpperCase()}
+                            </div>
+                            <div>
+                              <div className="fw-bold text-dark small">{friend.first_name} {friend.last_name}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="small text-secondary">{friend.email || friend.phone || 'N/A'}</td>
+                        <td className="small text-muted">{new Date(friend.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        <td>
+                          <span className="badge bg-info text-dark px-2.5 py-1.5 rounded-pill fw-bold">
+                            {friend.total_bookings} Bookings
+                          </span>
+                        </td>
+                        <td className="fw-bold text-success">
+                          +₹{Number(friend.commission_earned).toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Referral Reward Transactions History */}
+          <div className="bg-white p-4 rounded-4 shadow-sm border mb-4">
+            <h5 className="fw-bold text-dark mb-3">
+              <i className="fa-solid fa-receipt text-success me-2"></i> Referral Commission Transactions
+            </h5>
+
+            {data.referralTransactions.length === 0 ? (
+              <div className="text-center py-4 bg-light rounded-3">
+                <i className="fa-solid fa-wallet text-muted fs-2 mb-2"></i>
+                <p className="text-secondary small mb-0">No referral commission payouts logged yet.</p>
+                <p className="text-muted text-xs">When your referred friends book a tour package, your cash rewards will appear here instantly!</p>
+              </div>
+            ) : (
+              <div className="table-responsive">
+                <table className="table table-hover align-middle mb-0">
+                  <thead className="table-light text-uppercase small text-muted">
+                    <tr>
+                      <th>Booking ID</th>
+                      <th>Package Booked</th>
+                      <th>Friend Name</th>
+                      <th>Date</th>
+                      <th>Commission</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.referralTransactions.map((tx) => (
+                      <tr key={tx.id}>
+                        <td className="fw-bold text-primary small">#{tx.booking_id}</td>
+                        <td className="fw-bold text-dark small">{tx.package_title || 'Tour Package'}</td>
+                        <td className="small text-secondary">{tx.friend_first_name} {tx.friend_last_name}</td>
+                        <td className="small text-muted">{new Date(tx.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        <td className="fw-bold text-success">+₹{Number(tx.commission_amount).toLocaleString('en-IN')}</td>
+                        <td>
+                          <span className="badge bg-success text-white px-2 py-1 rounded-pill">
+                            <i className="fa-solid fa-circle-check me-1"></i> {tx.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* How It Works Guide */}
+          <div className="bg-light p-4 rounded-4 border">
+            <h6 className="fw-bold text-uppercase text-secondary small mb-3">How The Referral Program Works</h6>
+            <div className="row g-3">
+              <div className="col-md-4">
+                <div className="p-3 bg-white rounded-3 border h-100">
+                  <div className="fw-bold text-primary mb-1">1. Share Code or Link</div>
+                  <p className="text-muted small mb-0">Copy your unique referral code or link and send it to your friends or family.</p>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="p-3 bg-white rounded-3 border h-100">
+                  <div className="fw-bold text-primary mb-1">2. Friend Registers</div>
+                  <p className="text-muted small mb-0">Your friend signs up on Delta Safari using your link or code during registration.</p>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="p-3 bg-white rounded-3 border h-100">
+                  <div className="fw-bold text-primary mb-1">3. Earn Cash Reward</div>
+                  <p className="text-muted small mb-0">When your friend books any tour package, the referral commission is credited to your wallet!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-    </>
-  )
+    </div>
+  );
 }
-
-export default page

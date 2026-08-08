@@ -23,8 +23,8 @@ async function HolidayPackages() {
                     <div className="row justify-content-start mb-3 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div className="col-lg-10">
                             <div className="section-title text-start">
-                                <h2>Handpicked Holiday Packages</h2>
-                                <p className="m-0">Indulge in unforgettable adventure with special tour plans.</p>
+                                <h2>Best Holiday Packagess</h2>
+                                <p className="m-0">Choose from top domestic and international tours made for you.</p>
                             </div>
                             <ul className="nav mt-2 nav-pills justify-content-start" id="pills-tab" role="tablist">
                                 {domestic && domestic.length > 0 && <li className="nav-item" role="presentation">

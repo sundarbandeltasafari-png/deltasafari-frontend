@@ -37,6 +37,10 @@ function Header({ siteSettings }) {
     route.push('/login');
   };
 
+  const userPic = user?.profile_pic 
+    ? (user.profile_pic.startsWith('http') ? user.profile_pic : process.env.NEXT_PUBLIC_SERVER_URL + user.profile_pic)
+    : null;
+
   return (
     <>
       <div id="magic-cursor">
@@ -123,9 +127,18 @@ function Header({ siteSettings }) {
               {isLoggedIn ? (
                 <div className="px-3 py-2 my-2 bg-light rounded-3 border d-md-none">
                   <div className="d-flex align-items-center gap-2 mb-2">
-                    <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style={{ width: '32px', height: '32px', fontSize: '14px' }}>
-                      {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
-                    </div>
+                    {userPic ? (
+                      <img 
+                        src={userPic} 
+                        alt="Profile" 
+                        className="rounded-circle" 
+                        style={{ width: '32px', height: '32px', objectFit: 'cover' }} 
+                      />
+                    ) : (
+                      <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style={{ width: '32px', height: '32px', fontSize: '14px' }}>
+                        {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
+                      </div>
+                    )}
                     <div>
                       <h6 className="m-0 fw-bold">{user?.first_name} {user?.last_name}</h6>
                       <span className="text-muted" style={{ fontSize: '11px' }}>{user?.email}</span>
@@ -135,9 +148,11 @@ function Header({ siteSettings }) {
                     <Link href="/profile" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
                       <i className="fa-regular fa-user text-primary" style={{ width: '16px' }}></i> Profile
                     </Link>
-                    <Link href="/savedtour" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
-                      <i className="fa-regular fa-heart text-danger" style={{ width: '16px' }}></i> Saved Packages
-                    </Link>
+                    {Number(user?.user_type) !== 2 && (
+                      <Link href="/savedtour" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
+                        <i className="fa-regular fa-heart text-danger" style={{ width: '16px' }}></i> Saved Packages
+                      </Link>
+                    )}
                     <Link href="/bookings" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
                       <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: '16px' }}></i> Bookings
                     </Link>
@@ -262,12 +277,21 @@ function Header({ siteSettings }) {
                   style={{ cursor: "pointer" }}
                 >
                   <span className="d-inline-flex align-items-center gap-1.5">
-                    <div
-                      className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle fw-bold"
-                      style={{ width: "22px", height: "22px", fontSize: "11px" }}
-                    >
-                      {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user" style={{ fontSize: "10px" }}></i>}
-                    </div>
+                    {userPic ? (
+                      <img 
+                        src={userPic} 
+                        alt="Profile" 
+                        className="rounded-circle border border-white me-1" 
+                        style={{ width: "24px", height: "24px", objectFit: "cover" }} 
+                      />
+                    ) : (
+                      <div
+                        className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle fw-bold"
+                        style={{ width: "22px", height: "22px", fontSize: "11px" }}
+                      >
+                        {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user" style={{ fontSize: "10px" }}></i>}
+                      </div>
+                    )}
                     <span>{user?.first_name ? `Hi, ${user.first_name}` : "My Account"}</span>
                     <i className={`fa-solid fa-chevron-down ms-1 ${showUserDropdown ? "rotate-180" : ""}`} style={{ fontSize: "10px", transition: "transform 0.2s" }}></i>
                   </span>
@@ -277,13 +301,27 @@ function Header({ siteSettings }) {
                     className="dropdown-menu show shadow-lg border-0 rounded-4 p-2 position-absolute end-0 mt-2"
                     style={{ width: "230px", zIndex: 1050, background: "#ffffff" }}
                   >
-                    <div className="px-3 py-2 border-bottom mb-2 bg-light rounded-3">
-                      <p className="mb-0 fw-bold text-dark text-truncate" style={{ fontSize: "14px" }}>
-                        {user?.first_name} {user?.last_name}
-                      </p>
-                      <p className="mb-0 text-muted text-truncate" style={{ fontSize: "12px" }}>
-                        {user?.email || "Logged in"}
-                      </p>
+                    <div className="px-3 py-2 border-bottom mb-2 bg-light rounded-3 d-flex align-items-center gap-2">
+                      {userPic ? (
+                        <img 
+                          src={userPic} 
+                          alt="Profile" 
+                          className="rounded-circle border" 
+                          style={{ width: "32px", height: "32px", objectFit: "cover" }} 
+                        />
+                      ) : (
+                        <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0" style={{ width: "32px", height: "32px", fontSize: "14px" }}>
+                          {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
+                        </div>
+                      )}
+                      <div className="overflow-hidden">
+                        <p className="mb-0 fw-bold text-dark text-truncate" style={{ fontSize: "14px" }}>
+                          {user?.first_name} {user?.last_name}
+                        </p>
+                        <p className="mb-0 text-muted text-truncate" style={{ fontSize: "12px" }}>
+                          {user?.email || "Logged in"}
+                        </p>
+                      </div>
                     </div>
                     <Link
                       href="/profile"
@@ -293,14 +331,16 @@ function Header({ siteSettings }) {
                       <i className="fa-regular fa-user text-primary" style={{ width: "20px" }}></i>
                       <span>Profile</span>
                     </Link>
-                    <Link
-                      href="/savedtour"
-                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
-                      onClick={() => setShowUserDropdown(false)}
-                    >
-                      <i className="fa-regular fa-heart text-danger" style={{ width: "20px" }}></i>
-                      <span>Saved Packages</span>
-                    </Link>
+                    {Number(user?.user_type) !== 2 && (
+                      <Link
+                        href="/savedtour"
+                        className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                        onClick={() => setShowUserDropdown(false)}
+                      >
+                        <i className="fa-regular fa-heart text-danger" style={{ width: "20px" }}></i>
+                        <span>Saved Packages</span>
+                      </Link>
+                    )}
                     <Link
                       href="/bookings"
                       className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
@@ -308,6 +348,14 @@ function Header({ siteSettings }) {
                     >
                       <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: "20px" }}></i>
                       <span>Bookings</span>
+                    </Link>
+                    <Link
+                      href="/customized-packages"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      <i className="fa-solid fa-wand-magic-sparkles text-warning" style={{ width: "20px" }}></i>
+                      <span>Customized Packages</span>
                     </Link>
                     <div className="dropdown-divider my-2"></div>
                     <button
@@ -335,21 +383,21 @@ function Header({ siteSettings }) {
                     </span>
                   </a>
                   <div className="login-input-box">
-                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=1') }}>
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
                       <i className="fa-regular fa-user" style={{ fontSize: "25px" }}></i>
                       <div>
                         <h6 className='m-0'>Customer Login</h6>
                         <span style={{ fontSize: "14px" }}>Login and check bookings</span>
                       </div>
                     </div>
-                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=2') }}>
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
                       <i className="fa-solid fa-briefcase" style={{ fontSize: "25px" }}></i>
                       <div>
                         <h6 className='m-0'>Corporate Login</h6>
                         <span style={{ fontSize: "14px" }}>Login corporate account</span>
                       </div>
                     </div>
-                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login?type=3') }}>
+                    <div className='d-flex gap-2 align-items-center p-2 cursor-pointer' onClick={() => { route.push('/login') }}>
                       <i className="fa-solid fa-user-shield" style={{ fontSize: "25px" }}></i>
                       <div>
                         <h6 className='m-0'>Agent Login</h6>
@@ -418,7 +466,16 @@ function Header({ siteSettings }) {
           href={isLoggedIn ? "/profile" : "/login"}
           className={`nav-item d-flex flex-column align-items-center text-decoration-none ${pathname.includes("/profile") || pathname.includes("/login") ? "active" : ""}`}
         >
-          <i className="fa-regular fa-user mb-1 fs-5"></i>
+          {isLoggedIn && userPic ? (
+            <img 
+              src={userPic} 
+              alt="Profile" 
+              className="rounded-circle mb-1 object-fit-cover border" 
+              style={{ width: "22px", height: "22px" }} 
+            />
+          ) : (
+            <i className="fa-regular fa-user mb-1 fs-5"></i>
+          )}
           <span className="nav-label">{isLoggedIn ? (user?.first_name || "Profile") : "Profile"}</span>
         </Link>
 

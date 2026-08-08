@@ -14,7 +14,7 @@ function HomeBanner() {
         {
             id: 1,
             image: "/assets/images/homebanner/banner1.png",
-            title: "All-in-one Travel Booking.",
+            title: "Plan your perfect vacation!",
             isMainHeading: true, // Uses h1 for SEO on the first slide
             description: "Highlights convenience and simplicity, Best for agencies with online & mobile-friendly services.",
             className: "banner-video-area"
