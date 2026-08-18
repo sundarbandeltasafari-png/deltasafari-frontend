@@ -35,16 +35,16 @@ function page() {
                 </div>
                 <div class="col-lg-6 d-md-block d-none">
                     <div class="error-img-wrap">
-                        <div class="error-img">
-                            <img src="assets/img/innerpages/error-page-img.png" alt=""/>
+                        <div className="error-img">
+                            <img src="assets/img/innerpages/error-page-img.png" alt="Delta Safari Error - Page Not Found" />
                         </div>
-                        <img src="assets/img/innerpages/error-page-img-vector.png" alt="" class="vector"/>
+                        <img src="assets/img/innerpages/error-page-img-vector.png" alt="Error Illustration Vector" className="vector" />
                     </div>
                 </div>
             </div>
         </div>
-        <img src="assets/img/innerpages/vector/error-page-vector1.svg" alt="" class="vector1"/>
-        <img src="assets/img/innerpages/vector/error-page-vector2.svg" alt="" class="vector2"/>
+        <img src="assets/img/innerpages/vector/error-page-vector1.svg" alt="Error Page Graphic Element" className="vector1" />
+        <img src="assets/img/innerpages/vector/error-page-vector2.svg" alt="Error Page Background Element" className="vector2" />
     </div>
     </>
   )

@@ -49,7 +49,7 @@ function page() {
                 <div className="otp-card">
 
                     <div className="otp-card-stripe">
-                        <img src="/assets/img/logo_DS.png" style={{width: "100%"}} />
+                        <img src="/assets/img/logo_DS.png" alt="Delta Safari Official Logo" style={{width: "100%"}} />
                     </div>
 
                     <div className="otp-card-body d-flex flex-column" id="cardBody">

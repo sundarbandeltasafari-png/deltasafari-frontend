@@ -19,7 +19,7 @@ function SwiperWrapperTopTrending({ data }) {
             key={pathname}
 
             // Modules must be defined here
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay]}
 
             // Settings from your JS snippet
             slidesPerView={5}
@@ -33,14 +33,7 @@ function SwiperWrapperTopTrending({ data }) {
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true, // Matches your JS setting
             }}
-
-            // Pagination Configuration
-            pagination={{
-                clickable: true,
-                // If you have a specific class for the dots:
-                // el: '.swiper-pagination2', 
-            }}
-
+            
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{
                 280: { slidesPerView: 1.1 },

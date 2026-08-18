@@ -357,75 +357,75 @@ function page() {
           </div>
           <div class="row gy-lg-5 gy-4">
             <div class="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
-              <div class="package-card2">
-                <div class="package-img-wrap">
-                  <a href="travel-package-details.html" class="package-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV8w40s0Yjw4SZwwaeCR_aMklIgmRFfxt3hw&s" alt="" />
+              <div className="package-card2">
+                <div className="package-img-wrap">
+                  <a href="/cab" className="package-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV8w40s0Yjw4SZwwaeCR_aMklIgmRFfxt3hw&s" alt="Delta Safari Private AC Cab Tour" />
                   </a>
-                  <div class="batch">
-                    <span class="yellow-bg">Private Tour</span>
+                  <div className="batch">
+                    <span className="yellow-bg">Private Tour</span>
                   </div>
                 </div>
-                <div class="package-content">
+                <div className="package-content">
                   <p>Get flat 10% OFF* on ride with outstation one way or round trip cab bookings</p>
                   <div className='d-flex justify-content-between'>
                     <div>
-                      <i class="fa-regular fa-calendar"></i>
+                      <i className="fa-regular fa-calendar"></i>
                       <span>Valid till : 30th Jun 2026</span>
                     </div>
                     <div className='d-flex gap-2 align-items-center copy-div'>
                       <span>DTSCAB10</span>
-                      <i class="fa-regular fa-copy"></i>
+                      <i className="fa-regular fa-copy"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
-              <div class="package-card2">
-                <div class="package-img-wrap">
-                  <a href="travel-package-details.html" class="package-img">
-                    <img src="https://www.jaipurcitycab.in/images/car2.png" alt="" />
+            <div className="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
+              <div className="package-card2">
+                <div className="package-img-wrap">
+                  <a href="/cab" className="package-img">
+                    <img src="https://www.jaipurcitycab.in/images/car2.png" alt="Delta Safari Outstation Sedan Cab Rental" />
                   </a>
-                  <div class="batch">
-                    <span class="yellow-bg">Group Tour</span>
+                  <div className="batch">
+                    <span className="yellow-bg">Group Tour</span>
                   </div>
                 </div>
-                <div class="package-content">
+                <div className="package-content">
                   <p>Get flat 10% OFF* on ride with outstation one way or round trip cab bookings</p>
                   <div className='d-flex justify-content-between'>
                     <div>
-                      <i class="fa-regular fa-calendar"></i>
+                      <i className="fa-regular fa-calendar"></i>
                       <span>Valid till : 30th Jun 2026</span>
                     </div>
                     <div className='d-flex gap-2 align-items-center copy-div'>
                       <span>DTSCAB10</span>
-                      <i class="fa-regular fa-copy"></i>
+                      <i className="fa-regular fa-copy"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
-              <div class="package-card2">
-                <div class="package-img-wrap">
-                  <a href="travel-package-details.html" class="package-img">
-                    <img src="https://rajputanacabs.b-cdn.net/wp-content/uploads/2021/01/Maruti-Dzire-Car-view.jpg" alt="" />
+            <div className="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}>
+              <div className="package-card2">
+                <div className="package-img-wrap">
+                  <a href="/cab" className="package-img">
+                    <img src="https://rajputanacabs.b-cdn.net/wp-content/uploads/2021/01/Maruti-Dzire-Car-view.jpg" alt="Delta Safari Luxury SUV Cab Booking" />
                   </a>
-                  <div class="batch">
+                  <div className="batch">
                     <span>Sale on!</span>
                   </div>
                 </div>
-                <div class="package-content">
+                <div className="package-content">
                   <p>Get flat 10% OFF* on ride with outstation one way or round trip cab bookings</p>
                   <div className='d-flex justify-content-between'>
                     <div>
-                      <i class="fa-regular fa-calendar"></i>
+                      <i className="fa-regular fa-calendar"></i>
                       <span>Valid till : 30th Jun 2026</span>
                     </div>
                     <div className='d-flex gap-2 align-items-center copy-div'>
                       <span>DTSCAB10</span>
-                      <i class="fa-regular fa-copy"></i>
+                      <i className="fa-regular fa-copy"></i>
                     </div>
                   </div>
                 </div>
@@ -447,7 +447,7 @@ function page() {
                 <div className="hotel-card row m-2">
                   <div className="hotel-img-wrap p-0 col-md-5">
                     <a href="/" className="hotel-img">
-                      <img src={city.image} alt={city.name} style={{ height: "90px", width: "100%" }} />
+                      <img src={city.image} alt={city.name ? `${city.name} Outstation Cab Service - Delta Safari` : "Cab Destination City"} style={{ height: "90px", width: "100%" }} />
                     </a>
                   </div>
                   <div className="hotel-content col-md-7 pb-0 pt-2">

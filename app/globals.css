@@ -641,7 +641,7 @@ button, input, select, textarea, optgroup {
   position: fixed !important;
   bottom: 28px !important;
   right: 28px !important;
-  z-index: 999999 !important;
+  z-index: 99 !important;
   display: inline-flex;
   align-items: center;
   gap: 8px;

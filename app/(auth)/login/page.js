@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
+import Link from "next/link";
 import { emailValidation, passwordValidation, showMessage } from "../../../libs/commonHelper";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,6 +81,8 @@ function LoginContent() {
     password: ''
   });
   
+  const [serverError, setServerError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [viewPass, setViewPass] = useState(false);
 
   // Initialize Google Identity Services SDK
@@ -138,11 +141,14 @@ function LoginContent() {
       });
       return;
     }
-    showMessage('error', 'Google OAuth failed to retrieve account credentials.');
+    const errMsg = 'Google OAuth failed to retrieve account credentials.';
+    setServerError(errMsg);
+    showMessage('error', errMsg);
   };
 
   const sendGoogleAuthToBackend = (authData) => {
     setLoadingGoogle(true);
+    setServerError('');
     const googlePayload = {
       ...authData,
       type: userType // 1 = Customer, 2 = Corporate, 3 = Agent
@@ -151,7 +157,7 @@ function LoginContent() {
     axiosNormalPost(googleLoginURL, googlePayload)
       .then((res) => {
         setLoadingGoogle(false);
-        if (res.status) {
+        if (res?.status) {
           if (res.token) {
             dispatch(setUser({ user: res.userDetails, token: res.token }));
           }
@@ -159,12 +165,15 @@ function LoginContent() {
           showMessage('success', `Signed in successfully via Google OAuth as ${roleLabel}!`);
           router.push('/');
         } else {
-          showMessage('error', res.msg || 'Google OAuth Login failed.');
+          const errMsg = res?.msg || res?.message || 'Google OAuth Login failed. Please try again.';
+          setServerError(errMsg);
+          showMessage('error', errMsg);
         }
       })
       .catch((err) => {
         setLoadingGoogle(false);
-        const errMsg = err?.response?.data?.msg || 'Google OAuth server connection error.';
+        const errMsg = err?.response?.data?.msg || err?.message || 'Google OAuth server connection error.';
+        setServerError(errMsg);
         showMessage('error', errMsg);
       });
   };
@@ -184,62 +193,72 @@ function LoginContent() {
 
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
+    setServerError('');
     setError({ first_name: '', last_name: '', gender: '', email: '', password: '' });
   };
 
   function submitForm() {
     let currentErrors = { first_name: '', last_name: '', gender: '', email: '', password: '' };
     let hasError = false;
+    setServerError('');
 
     if (!isLoginMode) {
-      if (!userData.first_name) {
-        showMessage("error", "Please enter a valid first name!");
-        currentErrors.first_name = "Please enter a valid first name!";
+      if (!userData.first_name?.trim()) {
+        currentErrors.first_name = "Please enter your first name";
         hasError = true;
       }
-      else if (!userData.last_name) {
-        showMessage("error", "Please enter a valid last name!");
-        currentErrors.last_name = "Please enter a valid last name!";
+      else if (!userData.last_name?.trim()) {
+        currentErrors.last_name = "Please enter your last name";
         hasError = true;
       }
       else if (!userData.gender) {
-        showMessage("error", "Please enter a valid gender!");
-        currentErrors.gender = "Please choose a valid gender!";
+        currentErrors.gender = "Please choose a gender";
         hasError = true;
       }
     }
     
     if (!hasError && !emailValidation(userData.email)) {
-      showMessage("error", "Please enter a valid email!");
-      currentErrors.email = "Please enter a valid email!";
+      currentErrors.email = "Please enter a valid email address";
       hasError = true;
     }
     else if (!hasError && !passwordValidation(userData.password)) {
-      showMessage("error", "Please enter a valid password!");
       currentErrors.password = "At least 8 characters, 1 uppercase, 1 lowercase, 1 number";
       hasError = true;
     }
 
     if (hasError) {
       setError(currentErrors);
+      const firstErrMsg = Object.values(currentErrors).find(msg => msg !== '');
+      if (firstErrMsg) {
+        setServerError(firstErrMsg);
+        showMessage("error", firstErrMsg);
+      }
       return;
     }
 
+    setLoading(true);
     const payload = isLoginMode 
-      ? { email: userData.email, password: userData.password, user_type: userType }
-      : { ...userData, user_type: userType };
+      ? { email: userData.email.trim(), password: userData.password, user_type: userType }
+      : { ...userData, email: userData.email.trim(), user_type: userType };
 
     axiosNormalPost(isLoginMode ? loginURL : registerURL, payload).then((res) => {
-      if (res.status) {
+      setLoading(false);
+      if (res?.status) {
         if (res.token) {
           dispatch(setUser({ user: res.userDetails, token: res.token }));
         }
+        showMessage('success', isLoginMode ? 'Signed in successfully!' : (res.msg || 'OTP sent successfully!'));
         router.push(isLoginMode ? '/' : `/otpvalidation?token=${res.token}`);
       } else {
-        showMessage('error', res.msg);
+        const errorMsg = res?.msg || res?.message || (isLoginMode ? 'Invalid email or password. Please check your credentials.' : 'Registration failed.');
+        setServerError(errorMsg);
+        showMessage('error', errorMsg);
       }
-    }).catch(() => {
-      showMessage('error', 'Something went wrong, please try again later.');
+    }).catch((err) => {
+      setLoading(false);
+      const errorMsg = err?.response?.data?.msg || err?.message || 'Something went wrong, please try again later.';
+      setServerError(errorMsg);
+      showMessage('error', errorMsg);
     });
   }
 
@@ -289,6 +308,14 @@ function LoginContent() {
             <div className="step-label text-center mb-3">
               <span>{userType}</span> {isLoginMode ? `${roleLabels[userType]} Login` : `Register New ${roleLabels[userType]} Account`}
             </div>
+
+            {/* Server Error Alert Banner */}
+            {serverError && (
+              <div className="alert alert-danger d-flex align-items-center gap-2 p-2.5 rounded-3 mb-3 text-xs border border-danger-subtle shadow-xs">
+                <i className="bi bi-exclamation-triangle-fill text-danger fs-6 flex-shrink-0"></i>
+                <div className="fw-semibold text-danger-emphasis">{serverError}</div>
+              </div>
+            )}
             
             <div className="row">
               {!isLoginMode && (
@@ -298,7 +325,10 @@ function LoginContent() {
                       <input 
                         type="text" 
                         value={userData.first_name}
-                        onChange={(e) => { setUserData({ ...userData, first_name: e.target.value }) }} 
+                        onChange={(e) => { 
+                          setUserData({ ...userData, first_name: e.target.value });
+                          if (serverError) setServerError('');
+                        }} 
                         className="form-control" 
                         placeholder="First Name" 
                       />
@@ -311,7 +341,10 @@ function LoginContent() {
                       <input 
                         type="text" 
                         value={userData.last_name}
-                        onChange={(e) => { setUserData({ ...userData, last_name: e.target.value }) }} 
+                        onChange={(e) => { 
+                          setUserData({ ...userData, last_name: e.target.value });
+                          if (serverError) setServerError('');
+                        }} 
                         className="form-control" 
                         placeholder="Last Name" 
                       />
@@ -323,7 +356,10 @@ function LoginContent() {
                     <select 
                       className="form-select" 
                       value={userData.gender}
-                      onChange={(e) => { setUserData({ ...userData, gender: e.target.value }) }}
+                      onChange={(e) => { 
+                        setUserData({ ...userData, gender: e.target.value });
+                        if (serverError) setServerError('');
+                      }}
                     >
                       <option value="">Gender</option>
                       <option value="1">Male</option>
@@ -339,18 +375,24 @@ function LoginContent() {
                 <input 
                   type="email" 
                   value={userData.email}
-                  onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }} 
+                  onChange={(e) => { 
+                    setUserData({ ...userData, email: e.target.value });
+                    if (serverError) setServerError('');
+                  }} 
                   className="form-control" 
                   placeholder="Email Address" 
                 />
                 {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
               </div>
 
-              <div className="col-md-12 mb-4 position-relative">
+              <div className="col-md-12 mb-3 position-relative">
                 <input 
                   type={viewPass ? "text" : "password"} 
                   value={userData.password}
-                  onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }}
+                  onChange={(e) => { 
+                    setUserData({ ...userData, password: e.target.value });
+                    if (serverError) setServerError('');
+                  }} 
                   className="form-control" 
                   placeholder="Password" 
                 />
@@ -359,10 +401,36 @@ function LoginContent() {
                 </div>
                 {error.password && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.password}</div>}
               </div>
+
+              {isLoginMode && (
+                <div className="col-12 text-end mb-3">
+                  <Link 
+                    href="/forget-password" 
+                    style={{ color: "#ef6614", fontSize: "13px", fontWeight: "600", textDecoration: "none" }}
+                  >
+                    Forgot Password?
+                  </Link>
+                </div>
+              )}
             </div>
 
-            <button onClick={submitForm} className="db-btn-primary mb-2" id="sendOtpBtn">
-              <i className="bi bi-send-fill me-1"></i> {isLoginMode ? `Login as ${roleLabels[userType]}` : "Send OTP"}
+            <button 
+              onClick={submitForm} 
+              disabled={loading}
+              className="db-btn-primary mb-2 d-flex align-items-center justify-content-center gap-2" 
+              id="sendOtpBtn"
+            >
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm" role="status"></span>
+                  <span>Authenticating...</span>
+                </>
+              ) : (
+                <>
+                  <i className="bi bi-send-fill me-1"></i>
+                  <span>{isLoginMode ? `Login as ${roleLabels[userType]}` : "Send OTP"}</span>
+                </>
+              )}
             </button>
 
             <div className="text-center mt-2 mb-3">

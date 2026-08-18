@@ -21,18 +21,18 @@ function LastMinutesDeal() {
                                     <div className="swiper package-card-img-slider">
                                         <div className="swiper-wrapper">
                                             <div className="swiper-slide">
-                                                <a href="travel-package-details.html" className="package-img">
-                                                    <img src="assets/img/home1/tour-package-img7.jpg" alt="" />
+                                                <a href="/package" className="package-img">
+                                                    <img src="assets/img/home1/tour-package-img7.jpg" alt="Sundarban 3D/2N Royal Bengal Safari Deal" />
                                                 </a>
                                             </div>
                                             <div className="swiper-slide">
-                                                <a href="travel-package-details.html" className="package-img">
-                                                    <img src="assets/img/home1/tour-package-img17.jpg" alt="" />
+                                                <a href="/package" className="package-img">
+                                                    <img src="assets/img/home1/tour-package-img17.jpg" alt="Sundarban Luxury Houseboat Cruise Deal" />
                                                 </a>
                                             </div>
                                             <div className="swiper-slide">
-                                                <a href="travel-package-details.html" className="package-img">
-                                                    <img src="assets/img/home1/tour-package-img18.jpg" alt="" />
+                                                <a href="/package" className="package-img">
+                                                    <img src="assets/img/home1/tour-package-img18.jpg" alt="Sundarban Eco Wildlife Holiday Resort Deal" />
                                                 </a>
                                             </div>
                                         </div>
@@ -151,8 +151,8 @@ function LastMinutesDeal() {
                         <div className="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms">
                             <div className="package-card">
                                 <div className="package-img-wrap">
-                                    <a href="travel-package-details.html" className="package-img">
-                                        <img src="assets/img/home1/tour-package-img8.jpg" alt="" />
+                                    <a href="/package" className="package-img">
+                                        <img src="assets/img/home1/tour-package-img8.jpg" alt="Sundarban Mangrove Creek Boat Safari Deal" />
                                     </a>
                                     <div className="batch">
                                         <span className="discount">20% off</span>
@@ -266,8 +266,8 @@ function LastMinutesDeal() {
                         <div className="col-lg-4 col-md-6 wow animate fadeInDown" data-wow-delay="600ms" data-wow-duration="1500ms">
                             <div className="package-card">
                                 <div className="package-img-wrap">
-                                    <a href="travel-package-details.html" className="package-img">
-                                        <img src="assets/img/home1/tour-package-img9.jpg" alt="" />
+                                    <a href="/package" className="package-img">
+                                        <img src="assets/img/home1/tour-package-img9.jpg" alt="Sundarban Wildlife & Bird Photography Tour Deal" />
                                     </a>
                                     <div className="batch">
                                         <span className="discount">15% off</span>

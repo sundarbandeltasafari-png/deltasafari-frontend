@@ -6,8 +6,10 @@ export const getParticularPackageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}ser
 // destinations
 export const getDestinationsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getDestinations`
 
-// Bookings
+// Bookings & Razorpay Payments
 export const createBookingsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/createBookings`
+export const createRazorpayOrderUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/create-razorpay-order`
+export const verifyRazorpayPaymentUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/verify-razorpay-payment`
 
 // Corporate Lead Enquiry
 export const createCorporateLeadEnquiryUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/createCorporateLeadEnquiry`

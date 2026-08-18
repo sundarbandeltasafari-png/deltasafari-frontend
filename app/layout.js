@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script";
 import { ToastContainer } from "react-toastify";
 import Header from "@/components/website/Header";

@@ -16,7 +16,7 @@ function Footer({ siteSettings }) {
                   <Link href="/" className="footer-logo">
                     <img
                       src={siteSettings?.site_dark_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_dark_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"}
-                      alt=""
+                      alt={siteSettings?.site_title ? `${siteSettings.site_title} - Sundarban Tours & Wildlife Safaris` : "Delta Safari - Tour Packages & Sundarban Safari"}
                     />
                   </Link>
                   <div className="address-area">

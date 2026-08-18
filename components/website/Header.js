@@ -62,12 +62,12 @@ function Header({ siteSettings }) {
         <div className="container-fluid d-flex flex-nowrap align-items-center justify-content-between">
           <div className="logo-and-menu-area">
             <Link href="/" className="header-logo">
-              <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
+              <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt={siteSettings?.site_title ? `${siteSettings.site_title} Logo` : "Delta Safari - Sundarban Wildlife Tours & Holiday Packages"} />
             </Link>
             <div className={`main-menu ${openMobileMenu && 'show-menu'}`}>
               <div className="mobile-logo-area d-md-none d-flex align-items-center justify-content-between">
-                <a href="index.html" className="mobile-logo-wrap">
-                  <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
+                <a href="/" className="mobile-logo-wrap">
+                  <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt={siteSettings?.site_title ? `${siteSettings.site_title} Logo` : "Delta Safari Official Logo"} />
                 </a>
                 <div className="menu-close-btn" onClick={() => { setOpenMobileMenu(!openMobileMenu) }}>
                   <i className="bi bi-x"></i>
@@ -130,7 +130,7 @@ function Header({ siteSettings }) {
                     {userPic ? (
                       <img 
                         src={userPic} 
-                        alt="Profile" 
+                        alt={user?.first_name ? `${user.first_name} ${user.last_name || ''} Profile Photo` : "User Profile Avatar"} 
                         className="rounded-circle" 
                         style={{ width: '32px', height: '32px', objectFit: 'cover' }} 
                       />
@@ -178,7 +178,7 @@ function Header({ siteSettings }) {
           <div className="main-menu">
             <div className="mobile-logo-area d-md-none d-flex align-items-center justify-content-between">
               <Link href="/" className="mobile-logo-wrap">
-                <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt="Logo" />
+                <img src={siteSettings?.site_logo ? process.env.NEXT_PUBLIC_SERVER_URL + siteSettings?.site_logo : process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/img/logo_DS.png"} alt={siteSettings?.site_title ? `${siteSettings.site_title} Logo` : "Delta Safari Logo"} />
               </Link>
               <div className="menu-close-btn">
                 <i className="bi bi-x"></i>
@@ -280,7 +280,7 @@ function Header({ siteSettings }) {
                     {userPic ? (
                       <img 
                         src={userPic} 
-                        alt="Profile" 
+                        alt={user?.first_name ? `${user.first_name} Profile Photo` : "User Account Avatar"} 
                         className="rounded-circle border border-white me-1" 
                         style={{ width: "24px", height: "24px", objectFit: "cover" }} 
                       />
@@ -305,7 +305,7 @@ function Header({ siteSettings }) {
                       {userPic ? (
                         <img 
                           src={userPic} 
-                          alt="Profile" 
+                          alt={user?.first_name ? `${user.first_name} ${user.last_name || ''} Avatar` : "User Profile"} 
                           className="rounded-circle border" 
                           style={{ width: "32px", height: "32px", objectFit: "cover" }} 
                         />
@@ -469,7 +469,7 @@ function Header({ siteSettings }) {
           {isLoggedIn && userPic ? (
             <img 
               src={userPic} 
-              alt="Profile" 
+              alt={user?.first_name ? `${user.first_name} Profile Photo` : "User Avatar"} 
               className="rounded-circle mb-1 object-fit-cover border" 
               style={{ width: "22px", height: "22px" }} 
             />

@@ -52,7 +52,7 @@ export default async function page() {
   return (
     <div className="bg-light py-5 pt-0">
       <div className='page-header-div'>
-        <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/pagebg.jpg'} />
+        <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/pagebg.jpg'} alt="Delta Safari Travel Blogs & Inspiration Header Banner" />
         <h1 className='mb-5'>Travel Inspiration</h1>
       </div>
       <div className="container">

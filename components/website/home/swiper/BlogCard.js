@@ -9,7 +9,7 @@ function BlogCard({ post }) {
             <div className="blog-card2">
                 <div className="blog-img-wrap">
                     <Link href={"/blogs/" + post?.slug + "-" + urlEncode(post?.id)} className="blog-img">
-                        <img src={process.env.NEXT_PUBLIC_SERVER_URL + post?.featured_image} alt="" />
+                        <img src={process.env.NEXT_PUBLIC_SERVER_URL + post?.featured_image} alt={post?.title ? `${post.title} - Delta Safari Travel Blog` : "Delta Safari Travel Article"} />
                     </Link>
                     <div className="blog-date">
                         {formatDate(post?.created_at)?.split(',')[0]?.split(" ")[1]}<span>{formatDate(post?.created_at)?.split(',')[0]?.split(" ")[0]}.</span>

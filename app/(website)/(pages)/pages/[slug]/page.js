@@ -35,7 +35,7 @@ async function Page({ params }) {
     <>
       <section className="mt-0 mb-5">
         <div className='page-header-div'>
-          <img src={process.env.NEXT_PUBLIC_PUBLIC_URL+'assets/images/pagebg.jpg'} />
+          <img src={process.env.NEXT_PUBLIC_PUBLIC_URL+'assets/images/pagebg.jpg'} alt={`${pageContent?.title || 'Policy & Guidelines'} - Delta Safari`} />
         <h1 className='mb-5'>{pageContent?.title}</h1>
         </div>
         <div className='container'>

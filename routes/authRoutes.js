@@ -8,6 +8,12 @@ export const getUserDetailsURL = `${SERVER_URL}user/getUserDetails`;
 export const editProfileURL = `${SERVER_URL}user/editProfile`;
 export const changePasswordURL = `${SERVER_URL}user/changePassword`;
 
+// Forgot & Reset Password Endpoints
+export const forgotPasswordReqURL = `${SERVER_URL}auth/resetpasswordreq`;
+export const verifyResetOtpURL = `${SERVER_URL}auth/verify-reset-otp`;
+export const resetPasswordURL = `${SERVER_URL}auth/resetPassword`;
+export const resendResetOtpURL = `${SERVER_URL}auth/resend-reset-otp`;
+
 // Referral & Custom Package Endpoints
 export const getReferralStatsURL = `${SERVER_URL}user/getReferralStats`;
 export const getCustomPackageEnquiriesURL = `${SERVER_URL}user/getCustomPackageEnquiries`;

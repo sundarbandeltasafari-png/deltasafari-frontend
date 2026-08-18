@@ -85,7 +85,7 @@ function FilterBottomCard() {
                                     return <SwiperSlide key={index} className='bottom-card-swiper' style={{ height: 'stretch', width: 'max-content' }}>
                                         <Link href={'packages/category-' + cat?.slug} className="d-flex justify-content-between">
                                             <div className="d-flex justify-content-between gap-2 align-items-center">
-                                                <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + `assets/images/package/${cat?.name && cat?.name?.split(' ')[0].toLowerCase()}.png`} alt="" />
+                                                <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + `assets/images/package/${cat?.name && cat?.name?.split(' ')[0].toLowerCase()}.png`} alt={cat?.name ? `${cat.name} Package Category - Delta Safari` : "Package Category Icon"} />
                                                 <p className="m-0">{cat?.name}</p>
                                             </div>
                                         </Link>

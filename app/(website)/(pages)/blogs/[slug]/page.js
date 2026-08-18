@@ -97,7 +97,7 @@ export default async function page({ params }) {
     return (
         <div className="bg-light py-5 pt-0">
             <div className='page-header-div'>
-                <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/pagebg.jpg'} />
+                <img src={process.env.NEXT_PUBLIC_PUBLIC_URL + 'assets/images/pagebg.jpg'} alt="Delta Safari Travel Blogs & Guides Header" />
                 <h1 className='mb-5'>Travel Inspiration</h1>
             </div>
             <div className="container">
@@ -107,14 +107,14 @@ export default async function page({ params }) {
                     <div className="col-lg-8">
                         {particularBlog ?
                             <div className="d-flex flex-column gap-5">
-                                <div class="inspiration-details">
+                                <div className="inspiration-details">
                                     <h1>{particularBlog?.title}</h1>
-                                    <span class="line-break"></span>
+                                    <span className="line-break"></span>
                                     <p>{particularBlog?.summary}</p>
-                                    <span class="line-break"></span>
-                                    <span class="line-break"></span>
-                                    <div class="inspiration-image mb-50">
-                                        <img src={process.env.NEXT_PUBLIC_SERVER_URL + particularBlog?.featured_image} alt="" />
+                                    <span className="line-break"></span>
+                                    <span className="line-break"></span>
+                                    <div className="inspiration-image mb-50">
+                                        <img src={process.env.NEXT_PUBLIC_SERVER_URL + particularBlog?.featured_image} alt={particularBlog?.title ? `${particularBlog.title} - Delta Safari Travel Blog` : "Delta Safari Featured Article"} />
                                     </div>
                                     {particularBlog?.content && <div className='content' style={{ marginBottom: '45px' }} dangerouslySetInnerHTML={{ __html: particularBlog?.content }} />}
                                     <div class="tag-and-social-area">

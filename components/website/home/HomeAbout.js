@@ -10,18 +10,14 @@ function HomeAbout() {
                 <div className="col-xl-6 col-lg-6 wow animate fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms" style={{visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms'}}>
                     <div className="about-content">
                         <div className="section-title mb-45">
-                            <h2>Book Your Holiday With DeltaSafari.</h2>
-                            <p className='mt-3'>We are a passionate city tour and travel experience provider dedicated to helping
-                                travelers discover the heart of every destination. With a team of certified local guides
-                                and travel experts, we design engaging, safe, and immersive city tours for individuals,
-                                families, and groups.</p>
-                            <p>Our mission is simple: to deliver authentic, well-organized, and unforgettable journeys
-                                while ensuring comfort, safety, and exceptional service every step of the way. Trusted
-                                by thousands of travelers worldwide, we continue to set the standard for quality in city
-                                exploration.</p>
+                            <h2>About Delta Safari – Your Trusted Travel Partner for Unforgettable Holidays</h2>
+                            <h4 className="mt-3">Welcome to Delta Safari</h4>
+                            <p className='mt-3'>At Delta Safari, we believe that every journey should be memorable, affordable, and stress-free. As one of India&apos;s trusted travel companies, we specialize in creating customized holiday packages, budget-friendly tours, luxury vacations, group tours, family holidays, honeymoon packages, adventure trips, wildlife tours, and weekend getaways across India and selected international destinations.</p>
+                            <p className='mt-3'>Our experienced travel experts carefully design every itinerary to match your budget, travel preferences, and holiday expectations. Whether you&apos;re looking for a peaceful nature retreat, an exciting adventure, a romantic honeymoon, or a fun-filled family vacation, Delta Safari ensures a seamless travel experience from booking to your safe return.</p>
+                            <p className='mt-3'>With years of experience in the tourism industry, our mission is simple—to provide exceptional travel experiences, outstanding customer service, transparent pricing, and unforgettable memories for every traveller.</p>
                         </div>
                         <div className="btn-and-review">
-                            <Link className="primary-btn1" href="/">
+                            <Link className="primary-btn1" href="/about">
                                 <span>
                                     Explore Deltasafari
                                 </span>
@@ -34,14 +30,14 @@ function HomeAbout() {
                         <div className="about-img-grp">
                             <div className="single-grp">
                                 <div className="single-img">
-                                    <img src="assets/img/home9/about-img1.jpg" alt=""/>
+                                    <img src="assets/img/home9/about-img1.jpg" alt="Delta Safari Sundarban Boat Cruise & Mangrove Exploration"/>
                                 </div>
                                 <div className="single-img two">
-                                    <img src="assets/img/home9/about-img2.jpg" alt=""/>
+                                    <img src="assets/img/home9/about-img2.jpg" alt="Royal Bengal Tiger Safari & Wildlife Watching - Delta Safari"/>
                                 </div>
                             </div>
                             <div className="last-img">
-                                <img src="assets/img/home9/about-img3.jpg" alt=""/>
+                                <img src="assets/img/home9/about-img3.jpg" alt="Sundarban Watchtower & Scenic Delta Viewpoint - Delta Safari"/>
                             </div>
                         </div>
                         <div className="icon">

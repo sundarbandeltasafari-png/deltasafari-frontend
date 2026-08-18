@@ -114,7 +114,7 @@ async function page() {
                                             <Link href={detailsUrl} className="position-relative overflow-hidden" style={{ height: '200px' }}>
                                                 <img 
                                                     src={imgUrl} 
-                                                    alt={pkg.title || 'Travel Package'} 
+                                                    alt={pkg.title ? `${pkg.title} - Delta Safari Tour Package` : 'Sundarban Tour Package'} 
                                                     className="w-100 h-100 object-fit-cover"
                                                 />
 

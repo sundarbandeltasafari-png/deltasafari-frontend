@@ -61,7 +61,7 @@ function SwipperWrapperExplore({ packageType }) {
                 return <SwiperSlide key={index} style={{ height: 'stretch' }}>
                     <Link href={'packages/category-' + pkgType?.slug} className="single-counter">
                         <div className="content">
-                            <img src={process.env.NEXT_PUBLIC_SERVER_URL+pkgType?.image} style={{ height: "50px", filter: "grayscale(100%)" }} />
+                            <img src={process.env.NEXT_PUBLIC_SERVER_URL+pkgType?.image} alt={pkgType?.name ? `${pkgType.name} Tour Category - Delta Safari` : "Tour Category Icon"} style={{ height: "50px", filter: "grayscale(100%)" }} />
                             <h5>{pkgType?.name}</h5>
                             <p style={{fontSize: '12px', lineHeight: '5px'}}>Explore Now</p>
                         </div>

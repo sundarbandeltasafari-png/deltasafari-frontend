@@ -9,7 +9,10 @@ export async function axiosNormalGet(url) {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error fetching data' };
     }
 }
 
@@ -22,7 +25,10 @@ export async function axiosNormalPost(url, data, type = 'application/json') {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error submitting data' };
     }
 }
 
@@ -36,7 +42,10 @@ export async function axiosGet(url, token) {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error fetching authenticated data' };
     }
 }
 
@@ -50,7 +59,10 @@ export async function axiosPost(url, data, token, type = 'application/json') {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error posting authenticated data' };
     }
 }
 
@@ -64,7 +76,10 @@ export async function axiosPut(url, data, token, type = 'application/json') {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error updating data' };
     }
 }
 
@@ -78,6 +93,9 @@ export async function axiosDelete(url, token, type = 'application/json') {
         });
         return response.data;
     } catch (error) {
-        return new Error('Error fetching data:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            return error.response.data;
+        }
+        return { status: false, msg: error.message || 'Error deleting data' };
     }
 }

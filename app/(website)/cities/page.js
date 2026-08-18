@@ -52,7 +52,7 @@ async function CitiesPage() {
                                             <Link href={cityLink} className="hotel-img d-block h-100 overflow-hidden rounded-2">
                                                 <img 
                                                     src={imgUrl} 
-                                                    alt={city.name} 
+                                                    alt={city.name ? `${city.name} Tour Destination - Delta Safari` : "Tour Destination City"} 
                                                     style={{ height: "95px", width: "100%", objectFit: "cover" }} 
                                                 />
                                             </Link>
