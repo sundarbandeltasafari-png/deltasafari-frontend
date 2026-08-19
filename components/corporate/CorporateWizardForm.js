@@ -6,11 +6,11 @@ import { axiosNormalPost } from "@/libs/axiosHelper";
 import { createCorporateLeadEnquiryUrl, getDestinationsUrl } from "@/routes/serviceRoutes";
 
 const STEP_META = [
-  { key: "contact", label: "Contact & Info", hint: "Name, phone, email & city" },
-  { key: "destination", label: "Destination & Dates", hint: "Where & when you plan to travel" },
-  { key: "travelers", label: "Travelers & Stay", hint: "Adults, kids & hotel preferences" },
-  { key: "transport", label: "Cab & Budget", hint: "Transport, flights & budget band" },
-  { key: "review", label: "Review & Submit", hint: "Confirm & get custom quote" },
+  { key: "contact", label: "Contact & Info", hint: "Name, phone, email & city", icon: "fa-solid fa-address-card" },
+  { key: "destination", label: "Destination & Dates", hint: "Where & when you plan to travel", icon: "fa-solid fa-location-dot" },
+  { key: "travelers", label: "Travelers & Stay", hint: "Adults, team & hotel preferences", icon: "fa-solid fa-user-group" },
+  { key: "transport", label: "Cab & Budget", hint: "Transport, flights & budget band", icon: "fa-solid fa-car" },
+  { key: "review", label: "Review & Submit", hint: "Confirm & get custom quote", icon: "fa-solid fa-clipboard-check" },
 ];
 
 const DESTINATIONS = [
@@ -113,7 +113,7 @@ function Counter({ label, sublabel, value, onChange, min = 0, max = 5000 }) {
       </label>
       <div className="ds-counter">
         <button type="button" onClick={() => step(-1)} aria-label={`Decrease ${label}`}>
-          −
+          <i className="fa-solid fa-minus" />
         </button>
         <input
           type="number"
@@ -122,24 +122,24 @@ function Counter({ label, sublabel, value, onChange, min = 0, max = 5000 }) {
           inputMode="numeric"
         />
         <button type="button" onClick={() => step(1)} aria-label={`Increase ${label}`}>
-          +
+          <i className="fa-solid fa-plus" />
         </button>
       </div>
     </div>
   );
 }
 
-function Pill({ label, selected, onClick }) {
+function Pill({ label, selected, onClick, icon = null }) {
   return (
     <label className={`ds-choice-pill ${selected ? "is-selected" : ""}`}>
       <input type="checkbox" checked={selected} onChange={onClick} />
-      {selected && <i className="bi bi-check2 me-1" />}
+      {selected ? <i className="fa-solid fa-check me-1.5 text-success" /> : icon ? <i className={`${icon} me-1.5 opacity-75`} /> : null}
       {label}
     </label>
   );
 }
 
-export default function CorporateWizardForm({ isModal = false, onClose = null, onSubmit = null }) {
+export default function CorporateWizardForm({ isModal = false, initialDestination = '', onClose = null, onSubmit = null }) {
   const { user } = useSelector((state) => state.userAuth || {});
 
   const [step, setStep] = useState(0);
@@ -152,6 +152,19 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
   const [submittedJson, setSubmittedJson] = useState(null);
   const [copiedJson, setCopiedJson] = useState(false);
 
+  // Sync initialDestination if provided (e.g. clicked from CorporateDestinations)
+  useEffect(() => {
+    if (initialDestination) {
+      setForm((f) => ({ ...f, destination: initialDestination }));
+      setDestinationsList((prev) => {
+        if (!prev.includes(initialDestination)) {
+          return [initialDestination, ...prev];
+        }
+        return prev;
+      });
+    }
+  }, [initialDestination]);
+
   // Fetch backend destinations from 'zone' database table
   useEffect(() => {
     fetch(getDestinationsUrl)
@@ -162,10 +175,10 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
             .map((d) => d.name || d.zone_name)
             .filter(Boolean);
           if (names.length > 0) {
-            setDestinationsList(names);
+            setDestinationsList((prev) => Array.from(new Set([...(initialDestination ? [initialDestination] : []), ...names, ...DESTINATIONS])));
             setForm((f) => ({
               ...f,
-              destination: f.destination || names[0]
+              destination: initialDestination || f.destination || names[0]
             }));
           }
         }
@@ -173,7 +186,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
       .catch((err) => {
         console.error("Error fetching destination zones from backend:", err);
       });
-  }, []);
+  }, [initialDestination]);
 
   // Auto-fill corporate / user account details if logged in
   useEffect(() => {
@@ -308,9 +321,12 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
           <button
             type="button"
             onClick={onClose}
-            className="btn-close position-absolute top-0 end-0 m-3 z-3 bg-white p-2 rounded-circle shadow-sm"
+            className="btn btn-sm btn-light position-absolute top-0 end-0 m-3 z-3 rounded-circle shadow-sm border d-flex align-items-center justify-content-center"
+            style={{ width: "36px", height: "36px", cursor: "pointer", background: "#ffffff", color: "#0f172a" }}
             aria-label="Close"
-          />
+          >
+            <i className="fa-solid fa-xmark fs-5"></i>
+          </button>
         )}
         <div className="ds-wizard-main text-center py-5 px-4">
           
@@ -360,17 +376,53 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
   }
 
   return (
-    <div id="enquiry-form" className="ds-wizard-shell position-relative bg-white rounded-4 shadow-lg overflow-hidden">
+    <div id="enquiry-form" className="ds-wizard-shell position-relative bg-white rounded-4 shadow-lg overflow-hidden border border-light-subtle">
       {onClose && (
         <button
           type="button"
           onClick={onClose}
-          className="btn-close position-absolute top-0 end-0 m-3 z-3 bg-white p-2 rounded-circle shadow-sm"
+          className="btn btn-sm btn-light position-absolute top-0 end-0 m-3 z-3 rounded-circle shadow-sm border d-flex align-items-center justify-content-center"
+          style={{ width: "36px", height: "36px", cursor: "pointer", background: "#ffffff", color: "#0f172a" }}
           aria-label="Close"
-        />
+        >
+          <i className="fa-solid fa-xmark fs-5"></i>
+        </button>
       )}
+
+      {/* MOBILE / TABLET COMPACT TOP HEADER & PROCESS ROADMAP */}
+      <div className="d-lg-none px-3 py-2.5 text-white d-flex align-items-center justify-content-between border-bottom" style={{ background: 'linear-gradient(135deg, #0b1d3a 0%, #174385 100%)' }}>
+        <div className="d-flex align-items-center gap-2">
+          <span className="badge text-uppercase text-2xs fw-bold" style={{ backgroundColor: 'rgba(255,92,65,0.25)', color: '#ff5c41' }}>Customize & Quote</span>
+          <span className="text-white text-xs fw-bold">{STEP_META[step].label}</span>
+        </div>
+        
+        <div className="d-flex align-items-center gap-1.5">
+          {STEP_META.map((s, i) => {
+            const isActive = i === step;
+            const isDone = i < step;
+            return (
+              <div
+                key={s.key}
+                onClick={() => { if (isDone) setStep(i); }}
+                className={`rounded-circle d-flex align-items-center justify-content-center transition-all ${
+                  isActive
+                    ? "bg-warning text-dark fw-bold shadow-sm scale-110"
+                    : isDone
+                    ? "bg-success text-white opacity-90"
+                    : "bg-white bg-opacity-20 text-white opacity-50"
+                }`}
+                style={{ width: 26, height: 26, fontSize: '11px', cursor: isDone ? 'pointer' : 'default' }}
+                title={s.label}
+              >
+                {isDone ? "✓" : i + 1}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="row g-0">
-        <div className="col-lg-4">
+        <div className="col-lg-4 d-none d-lg-block">
           <div className="ds-wizard-side p-4 h-100 text-white" style={{ background: 'linear-gradient(165deg, #0b1d3a, #174385)' }}>
 
             <span className="badge px-3 py-1 rounded-pill text-uppercase text-2xs fw-bold mb-2" style={{ backgroundColor: 'rgba(255,92,65,0.2)', color: '#ff5c41' }}>
@@ -385,8 +437,15 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                 <li
                   key={s.key}
                   className={i === step ? "is-active" : i < step ? "is-done" : ""}
+                  style={{ cursor: i < step ? "pointer" : "default" }}
+                  onClick={() => {
+                    if (i < step) setStep(i);
+                  }}
                 >
-                  {s.label}
+                  <div className="d-flex align-items-center gap-2">
+                    {s.icon && <i className={`${s.icon} text-xs opacity-75`} />}
+                    <span>{s.label}</span>
+                  </div>
                   <small>{s.hint}</small>
                 </li>
               ))}
@@ -417,7 +476,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
                   
                   <div className="col-md-6">
-                    <label className="ds-form-label">Company / Organization Name *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-building me-1 text-primary"></i> Company / Organization Name *</label>
                     <input
                       className={`form-control ds-form-control ${errors.companyName ? "is-invalid" : ""}`}
                       value={form.companyName}
@@ -428,7 +487,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Full Name / Contact Person *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-user me-1 text-primary"></i> Full Name / Contact Person *</label>
                     <input
                       className={`form-control ds-form-control ${errors.fullName ? "is-invalid" : ""}`}
                       value={form.fullName}
@@ -439,7 +498,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Phone / WhatsApp Number *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-phone me-1 text-primary"></i> Phone / WhatsApp Number *</label>
                     <input
                       type="tel"
                       className={`form-control ds-form-control ${errors.phone ? "is-invalid" : ""}`}
@@ -451,7 +510,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Official Email Address *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-envelope me-1 text-primary"></i> Official Email Address *</label>
                     <input
                       type="email"
                       className={`form-control ds-form-control ${errors.email ? "is-invalid" : ""}`}
@@ -463,7 +522,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">City of Departure / Base *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-location-dot me-1 text-primary"></i> City of Departure / Base *</label>
                     <input
                       className={`form-control ds-form-control ${errors.city ? "is-invalid" : ""}`}
                       value={form.city}
@@ -474,7 +533,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Trip Category</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-briefcase me-1 text-primary"></i> Trip Category</label>
                     <select
                       className="form-select ds-form-control text-xs"
                       value={form.tripType}
@@ -497,7 +556,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Select Destination *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-map-location-dot me-1 text-primary"></i> Select Destination *</label>
                     <select
                       className={`form-select ds-form-control text-xs ${errors.destination ? "is-invalid" : ""}`}
                       value={form.destination}
@@ -511,7 +570,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label">Departure Date *</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-calendar-days me-1 text-primary"></i> Departure Date *</label>
                     <input
                       type="date"
                       className={`form-control ds-form-control text-xs ${errors.departureDate ? "is-invalid" : ""}`}
@@ -543,7 +602,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-4">
-                    <label className="ds-form-label">Departure City</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-plane-departure me-1 text-primary"></i> Departure City</label>
                     <input
                       className="form-control ds-form-control text-xs"
                       value={form.departureCity}
@@ -553,7 +612,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-12">
-                    <label className="ds-form-label">Travel Window / Flexible Month (Optional)</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-calendar-week me-1 text-primary"></i> Travel Window / Flexible Month (Optional)</label>
                     <input
                       className="form-control ds-form-control text-xs"
                       value={form.travelWindow}
@@ -620,7 +679,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   )}
 
                   <div className="col-md-6">
-                    <label className="ds-form-label d-block">Hotel Category Preference</label>
+                    <label className="ds-form-label d-block"><i className="fa-solid fa-hotel me-1 text-primary"></i> Hotel Category Preference</label>
                     <div className="d-flex flex-wrap gap-2">
                       {HOTEL_CATEGORIES.map((category) => (
                         <Pill
@@ -634,7 +693,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label d-block">Meal Plan Preference</label>
+                    <label className="ds-form-label d-block"><i className="fa-solid fa-utensils me-1 text-primary"></i> Meal Plan Preference</label>
                     <div className="d-flex flex-wrap gap-2">
                       {MEAL_PLANS.map((meal) => (
                         <Pill
@@ -658,7 +717,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-12">
-                    <label className="ds-form-label d-block">Cab / Vehicle Type Required</label>
+                    <label className="ds-form-label d-block"><i className="fa-solid fa-van-shuttle me-1 text-primary"></i> Cab / Vehicle Type Required</label>
                     <div className="d-flex flex-wrap gap-2">
                       {CAB_TYPES.map((cab) => (
                         <Pill
@@ -672,7 +731,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label d-block">Need Flights Included?</label>
+                    <label className="ds-form-label d-block"><i className="fa-solid fa-plane me-1 text-primary"></i> Need Flights Included?</label>
                     <div className="d-flex gap-2">
                       <Pill
                         label="Yes, Include Flights"
@@ -688,7 +747,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-md-6">
-                    <label className="ds-form-label d-block">Expected Budget Band (per person)</label>
+                    <label className="ds-form-label d-block"><i className="fa-solid fa-wallet me-1 text-primary"></i> Expected Budget Band (per person)</label>
                     <select
                       className="form-select ds-form-control text-xs"
                       value={form.budgetBand}
@@ -701,7 +760,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   </div>
 
                   <div className="col-12">
-                    <label className="ds-form-label">Special Requests / Customized Preferences</label>
+                    <label className="ds-form-label"><i className="fa-solid fa-comment-dots me-1 text-primary"></i> Special Requests / Customized Preferences</label>
                     <textarea
                       className="form-control ds-form-control text-xs"
                       rows={2}
@@ -722,8 +781,8 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   <div className="row g-3">
                     <div className="col-md-6">
                       <div className="p-3 bg-light rounded-3 border">
-                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Traveler Information</span>
-                        <strong className="d-block text-dark text-xs">{form.fullName} ({form.city})</strong>
+                        <span className="text-2xs text-uppercase fw-bold text-muted d-block"><i className="fa-solid fa-address-card me-1 text-primary"></i> Traveler Information</span>
+                        <strong className="d-block text-dark text-xs mt-1">{form.fullName} ({form.city})</strong>
                         <small className="text-muted text-xs d-block">{form.phone} | {form.email}</small>
                         {form.companyName && <small className="text-secondary text-2xs d-block">Org: {form.companyName}</small>}
                       </div>
@@ -731,18 +790,18 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
 
                     <div className="col-md-6">
                       <div className="p-3 bg-light rounded-3 border">
-                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Trip & Destination</span>
-                        <strong className="d-block  text-xs">{form.destination}</strong>
+                        <span className="text-2xs text-uppercase fw-bold text-muted d-block"><i className="fa-solid fa-map-location-dot me-1 text-primary"></i> Trip & Destination</span>
+                        <strong className="d-block text-xs mt-1">{form.destination}</strong>
                         <small className="text-dark text-xs d-block">
-                          Date: {form.departureDate} ({form.durationDays} Days / {form.durationNights} Nights)
+                          Date: {form.departureDate || 'Flexible'} ({form.durationDays} Days / {form.durationNights} Nights)
                         </small>
                       </div>
                     </div>
 
                     <div className="col-md-6">
                       <div className="p-3 bg-light rounded-3 border">
-                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Company Team Breakdown</span>
-                        <strong className="d-block text-dark text-xs">
+                        <span className="text-2xs text-uppercase fw-bold text-muted d-block"><i className="fa-solid fa-users-gear me-1 text-primary"></i> Company Team Breakdown</span>
+                        <strong className="d-block text-dark text-xs mt-1">
                           {form.totalEmployees} Total Employees ({form.maleEmployees} Male, {form.femaleEmployees} Female)
                         </strong>
                         <small className="text-secondary text-xs d-block">{form.hotelCategory} ({form.mealPlan})</small>
@@ -751,22 +810,22 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
 
                     <div className="col-md-6">
                       <div className="p-3 bg-light rounded-3 border">
-                        <span className="text-2xs text-uppercase fw-bold text-muted d-block">Vehicle & Budget</span>
-                        <strong className="d-block text-dark text-xs">{form.cabType}</strong>
+                        <span className="text-2xs text-uppercase fw-bold text-muted d-block"><i className="fa-solid fa-van-shuttle me-1 text-primary"></i> Vehicle & Budget</span>
+                        <strong className="d-block text-dark text-xs mt-1">{form.cabType}</strong>
                         <small className="text-secondary text-xs d-block">Budget: {form.budgetBand} | Flights: {form.includeFlights ? 'Yes' : 'No'}</small>
                       </div>
                     </div>
                   </div>
 
                   <p className="text-muted text-2xs mt-3 mb-0">
-                    <i className="bi bi-shield-check me-1 text-success"></i> Submitting sends this inquiry payload directly to our desk for a personalized quote.
+                    <i className="fa-solid fa-shield-halved me-1 text-success"></i> Submitting sends this inquiry payload directly to our corporate desk for a personalized quote.
                   </p>
                 </div>
               )}
 
               {submitError && (
                 <div className="alert alert-danger text-xs mt-3 mb-0 py-2 px-3 rounded-3" role="alert">
-                  <i className="bi bi-exclamation-triangle-fill me-2" />
+                  <i className="fa-solid fa-triangle-exclamation me-2" />
                   {submitError}
                 </div>
               )}
@@ -780,12 +839,12 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                   disabled={step === 0 || loading}
                   style={{ visibility: step === 0 ? "hidden" : "visible" }}
                 >
-                  <i className="bi bi-arrow-left me-1" /> Back
+                  <i className="fa-solid fa-arrow-left me-1" /> Back
                 </button>
 
                 {step < STEP_META.length - 1 ? (
                   <button type="button" className="btn btn-ds-primary" onClick={goNext}>
-                    Next Step <i className="bi bi-arrow-right ms-1" />
+                    Next Step <i className="fa-solid fa-arrow-right ms-1" />
                   </button>
                 ) : (
                   <button type="submit" disabled={loading} className="btn btn-ds-primary" style={{ backgroundColor: '#ff5c41', borderColor: '#ff5c41' }}>
@@ -796,7 +855,7 @@ export default function CorporateWizardForm({ isModal = false, onClose = null, o
                       </>
                     ) : (
                       <>
-                        Submit &amp; Get Quote <i className="bi bi-send ms-2" />
+                        Submit &amp; Get Quote <i className="fa-solid fa-paper-plane ms-2" />
                       </>
                     )}
                   </button>

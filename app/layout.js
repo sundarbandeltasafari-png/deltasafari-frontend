@@ -82,7 +82,7 @@ export default async function RootLayout({ children }) {
         <link href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/bootstrap-icons.css"} rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
         <link rel="stylesheet" href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/style.css"} />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
         <link
           href="https://fonts.googleapis.com/css2?family=Courgette&family=Dancing+Script:wght@400..700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
           rel="stylesheet"

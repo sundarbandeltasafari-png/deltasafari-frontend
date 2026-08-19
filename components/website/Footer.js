@@ -1,8 +1,23 @@
+'use client';
 import axios from 'axios';
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React, { useState } from 'react';
+import CorporateWizardForm from '@/components/corporate/CorporateWizardForm';
 
 function Footer({ siteSettings }) {
+  const [isCorporateModalOpen, setIsCorporateModalOpen] = useState(false);
+
+  React.useEffect(() => {
+    if (isCorporateModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isCorporateModalOpen]);
+
   return (
     <>
       <footer className="footer-section">
@@ -44,7 +59,16 @@ function Footer({ siteSettings }) {
                       <li><Link href="/login">Login or Signup</Link></li>
                       <li><Link href="/corporate">Corporate Package</Link></li>
                       <li><Link href="/referal">Refer & Earn</Link></li>
-                      <li><a>B2B Enquiries</a></li>
+                      <li>
+                        <a 
+                          role="button" 
+                          onClick={() => setIsCorporateModalOpen(true)} 
+                          style={{ cursor: 'pointer' }}
+                          className="d-inline-flex align-items-center gap-1"
+                        >
+                          B2B Enquiries
+                        </a>
+                      </li>
                       <li><Link href="/activities">Activities</Link></li>
                       <li><Link href="/hotel">Hotels</Link></li>
                     </ul>
@@ -103,6 +127,34 @@ function Footer({ siteSettings }) {
           </div>
         </div>
       </footer>
+
+      {/* CORPORATE TRAVELTRIANGLE CUSTOMIZE & QUOTE MODAL */}
+      {isCorporateModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000005,
+            padding: '16px'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsCorporateModalOpen(false);
+          }}
+        >
+          <div className="position-relative w-100" style={{ maxWidth: '980px', maxHeight: '92vh', overflowY: 'auto' }}>
+            <CorporateWizardForm isModal={true} onClose={() => setIsCorporateModalOpen(false)} />
+          </div>
+        </div>
+      )}
     </>
   )
 }

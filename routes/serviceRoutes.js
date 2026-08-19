@@ -5,6 +5,7 @@ export const getParticularPackageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}ser
 
 // destinations
 export const getDestinationsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getDestinations`
+export const getCorporateDestinationsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getCorporateDestinations`
 
 // Bookings & Razorpay Payments
 export const createBookingsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/createBookings`
@@ -25,4 +26,8 @@ export const contactQueryUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://
 export const toggleSavePackageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/toggleSavePackage`
 export const getSavedPackagesUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/getSavedPackages`
 export const checkIsPackageSavedUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3002/'}service/checkIsPackageSaved`
+
+// Public Hotels & Stays
+export const getHotelsUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getHotels`
+export const getParticularHotelUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}service/getParticularHotel`
 

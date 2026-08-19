@@ -18,6 +18,7 @@ import { urlEncode } from '@/libs/urlHelper';
 import ShareButton from '@/components/common/ShareButton';
 import { useSelector } from 'react-redux';
 import AgentBookingModal from '@/components/website/package/AgentBookingModal';
+import ReferenceHotelsSection from '@/components/website/package/ReferenceHotelsSection';
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
@@ -760,6 +761,7 @@ export default function page() {
                         { id: 'overview', label: 'Overview', icon: 'bi-info-circle' },
                         { id: 'itinerary', label: 'Day wise Itinerary', icon: 'bi-calendar3' },
                         { id: 'inclusions', label: 'Inclusions & Exclusions', icon: 'bi-check2-circle' },
+                        { id: 'hotels', label: 'Hotels & Stay', icon: 'bi-house-door' },
                         { id: 'policies', label: 'Policies & FAQs', icon: 'bi-file-text' },
                       ].map((tab) => (
                         <button
@@ -808,90 +810,116 @@ export default function page() {
                   {/* SECTION 2: DAY WISE ITINERARY */}
                   <div id="itinerary" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
                     <div className="d-flex align-items-center justify-content-between mb-4">
-                      <h3 className="h5 fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-                        <i className="bi bi-map-fill text-danger"></i> Detailed Day-Wise Itinerary
-                      </h3>
-                      <span className="badge bg-danger bg-opacity-10 text-danger px-3 py-1 rounded-pill text-xs fw-bold">
-                        {packageDetails.duration_days} Days Covered
+                      <div>
+                        <h3 className="h5 fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                          <i className="bi bi-calendar-range-fill text-danger"></i> Day Wise Itinerary
+                        </h3>
+                        <p className="text-secondary text-xs mb-0">Carefully curated schedule to maximize your wildlife sightings & comfort</p>
+                      </div>
+                      <span className="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill text-xs fw-bold">
+                        {packageDetails.duration_days} Days / {packageDetails.duration_nights || (packageDetails.duration_days - 1)} Nights
                       </span>
                     </div>
 
-                    <div className="timeline-container position-relative ps-4 ms-2 border-start border-2 border-danger border-opacity-25">
-                      {itineraryDays.map((day, index) => (
-                        <div key={index} className="timeline-item mb-4 position-relative">
-                          {/* TIMELINE NUMBER BADGE CIRCLE */}
-                          <div
-                            className="position-absolute rounded-circle bg-danger text-white fw-bold d-flex align-items-center justify-content-center text-xs shadow-sm"
-                            style={{ width: '36px', height: '36px', left: '-42px', top: '0px' }}
-                          >
-                            D{day.dayNumber || (index + 1)}
-                          </div>
+                    <div className="package-itinerary-timeline">
+                      {packageDetails.itineraries && packageDetails.itineraries.length > 0 ? (
+                        packageDetails.itineraries.map((itinerary, index) => {
+                          const detailsHtml = itinerary?.details
+                            ? Buffer.from(itinerary.details).toString('utf8')
+                            : (itinerary?.description || '');
+                          const roadmap = Array.isArray(itinerary?.roadmap)
+                            ? itinerary.roadmap
+                            : (itinerary?.roadmap ? JSON.parse(itinerary.roadmap) : []);
 
-                          <div className="card border rounded-3 p-3 bg-light hover-shadow transition-all">
-                            <h4 className="h6 fw-bold text-dark mb-2 d-flex align-items-center justify-content-between">
-                              <span>{day.title || `Day ${day.dayNumber || (index + 1)}: Exploration & Sightseeing`}</span>
-                              <span className="badge bg-white text-secondary border text-xs fw-medium">
-                                Day {day.dayNumber || (index + 1)}
-                              </span>
-                            </h4>
-                            <p className="text-secondary text-xs leading-relaxed mb-0" style={{ lineHeight: '1.75' }}>
-                              {day.description || day.itinararyDescription || 'Detailed day plan including boat cruise, sightseeing, watchtower visit and traditional meals.'}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                          return (
+                            <div key={index} className="timeline-item mb-4 pb-2 border-bottom position-relative">
+                              <div className="d-flex align-items-center gap-2 mb-2">
+                                <span className="badge bg-primary text-white rounded-pill px-3 py-1 text-xs fw-bold">
+                                  Day {itinerary.dayNumber || index + 1}
+                                </span>
+                                <h4 className="h6 fw-bold text-dark mb-0">{itinerary.title}</h4>
+                              </div>
+
+                              {roadmap && roadmap.length > 0 && (
+                                <div className="d-flex flex-wrap gap-2 my-2 py-1">
+                                  {roadmap.map((point, rIdx) => (
+                                    <span key={rIdx} className="badge bg-light text-secondary border px-2 py-1 text-2xs rounded-pill">
+                                      <i className="bi bi-geo-alt me-1 text-primary"></i>{point}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div
+                                className="text-secondary text-xs mt-2 leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: detailsHtml }}
+                              />
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <p className="text-secondary text-xs">Standard daily wildlife safari schedule with boat cruise, jungle watchtowers and village cultural tours.</p>
+                      )}
                     </div>
                   </div>
 
                   {/* SECTION 3: INCLUSIONS & EXCLUSIONS */}
                   <div id="inclusions" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
                     <h3 className="h5 fw-bold text-dark mb-4 d-flex align-items-center gap-2">
-                      <i className="bi bi-list-check text-danger"></i> Inclusions & Exclusions
+                      <i className="bi bi-card-checklist text-danger"></i> Inclusions & Exclusions
                     </h3>
 
-                    <div className="row g-3">
-                      {/* INCLUSIONS COLUMN */}
+                    <div className="row g-4">
+                      {/* Inclusions Column */}
                       <div className="col-md-6">
-                        <div className="p-3 rounded-3 bg-success bg-opacity-10 border border-success border-opacity-25 h-100">
+                        <div className="p-3 bg-success bg-opacity-10 rounded-3 border border-success border-opacity-25 h-100">
                           <h4 className="h6 fw-bold text-success mb-3 d-flex align-items-center gap-2">
-                            <i className="bi bi-check-circle-fill text-success fs-5"></i> What's Included
+                            <i className="bi bi-check-circle-fill"></i> What is Included
                           </h4>
-                          <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-xs text-dark">
-                            {inclusions.length > 0 ? (
-                              inclusions.map((item, i) => (
+                          <ul className="list-unstyled d-flex flex-column gap-2 mb-0 text-xs text-dark">
+                            {packageDetails.inclusions && packageDetails.inclusions.length > 0 ? (
+                              (Array.isArray(packageDetails.inclusions)
+                                ? packageDetails.inclusions
+                                : JSON.parse(packageDetails.inclusions || '[]')
+                              ).map((inc, i) => (
                                 <li key={i} className="d-flex align-items-start gap-2">
-                                  <i className="bi bi-check2 text-success fw-bold fs-6 mt-n1"></i>
-                                  <span>{item}</span>
+                                  <i className="bi bi-check-lg text-success fw-bold fs-6"></i>
+                                  <span>{inc}</span>
                                 </li>
                               ))
                             ) : (
                               <>
-                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> All meals (Breakfast, Lunch, Evening Snacks & Dinner)</li>
-                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> AC Room Hotel/Resort Stay</li>
-                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> Exclusive Boat Cruise & Jungle Permit</li>
-                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check2 text-success fw-bold fs-6"></i> Tour Manager & Experienced Local Guide</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check-lg text-success fw-bold fs-6"></i> AC accommodation in Eco Resort / Cottage</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check-lg text-success fw-bold fs-6"></i> All meals (Breakfast, Lunch, Dinner, Evening Snacks)</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check-lg text-success fw-bold fs-6"></i> Guided Jungle Boat Safari with Govt. Forest Guide</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check-lg text-success fw-bold fs-6"></i> Watchtower entries and Forest Department entry permits</li>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-check-lg text-success fw-bold fs-6"></i> Evening Baul folk dance and cultural show</li>
                               </>
                             )}
                           </ul>
                         </div>
                       </div>
 
-                      {/* EXCLUSIONS COLUMN */}
+                      {/* Exclusions Column */}
                       <div className="col-md-6">
-                        <div className="p-3 rounded-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 h-100">
+                        <div className="p-3 bg-danger bg-opacity-10 rounded-3 border border-danger border-opacity-25 h-100">
                           <h4 className="h6 fw-bold text-danger mb-3 d-flex align-items-center gap-2">
-                            <i className="bi bi-x-circle-fill text-danger fs-5"></i> What's Excluded
+                            <i className="bi bi-x-circle-fill"></i> What is Not Included
                           </h4>
-                          <ul className="list-unstyled mb-0 d-flex flex-column gap-2 text-xs text-dark">
-                            {exclusions.length > 0 ? (
-                              exclusions.map((item, i) => (
+                          <ul className="list-unstyled d-flex flex-column gap-2 mb-0 text-xs text-dark">
+                            {packageDetails.exclusions && packageDetails.exclusions.length > 0 ? (
+                              (Array.isArray(packageDetails.exclusions)
+                                ? packageDetails.exclusions
+                                : JSON.parse(packageDetails.exclusions || '[]')
+                              ).map((exc, i) => (
                                 <li key={i} className="d-flex align-items-start gap-2">
-                                  <i className="bi bi-x text-danger fw-bold fs-6 mt-n1"></i>
-                                  <span>{item}</span>
+                                  <i className="bi bi-x text-danger fw-bold fs-6"></i>
+                                  <span>{exc}</span>
                                 </li>
                               ))
                             ) : (
                               <>
+                                <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Any transport not mentioned in itinerary</li>
                                 <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Personal expenses (Laundry, Camera Fees)</li>
                                 <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Any optional activity or video camera charges</li>
                                 <li className="d-flex align-items-start gap-2"><i className="bi bi-x text-danger fw-bold fs-6"></i> Anything not mentioned in inclusions</li>
@@ -903,31 +931,12 @@ export default function page() {
                     </div>
                   </div>
 
-                  {/* SECTION 4: HOTELS & ACCOMMODATION */}
-                  {/* <div id="hotels" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">
-                    <h3 className="h5 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                      <i className="bi bi-house-door-fill text-danger"></i> Hotel & Stay Details
-                    </h3>
-
-                    <div className="border rounded-3 p-3 bg-light">
-                      <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-                        <div className="d-flex align-items-center gap-2">
-                          <h4 className="h6 fw-bold text-dark mb-0">Sundarban Eco Resort / Luxury Boat Cruise</h4>
-                          <span className="badge bg-warning text-dark text-2xs">★ 4 Star Rated</span>
-                        </div>
-                        <span className="badge bg-success text-white text-xs">Verified Partner Stay</span>
-                      </div>
-                      <p className="text-secondary text-xs mb-3">
-                        Experience serene nature staying in deluxe air-conditioned eco-friendly rooms or river boat cabins with attached modern washrooms, 24/7 power backup, and fresh gourmet dining.
-                      </p>
-                      <div className="d-flex flex-wrap gap-2 text-2xs text-secondary">
-                        <span className="badge bg-white text-dark border"><i className="bi bi-wind me-1 text-primary"></i> Air Conditioned</span>
-                        <span className="badge bg-white text-dark border"><i className="bi bi-wifi me-1 text-primary"></i> WiFi in Lounge</span>
-                        <span className="badge bg-white text-dark border"><i className="bi bi-cup-hot me-1 text-primary"></i> Dining Hall</span>
-                        <span className="badge bg-white text-dark border"><i className="bi bi-lightning-charge me-1 text-primary"></i> 24/7 Power Backup</span>
-                      </div>
-                    </div>
-                  </div> */}
+                  {/* SECTION 4: REFERENCE HOTELS & STAYS */}
+                  <ReferenceHotelsSection
+                    referenceHotels={packageDetails.reference_hotels}
+                    destinationName={packageDetails.to_destination_name || packageDetails.from_destination_name || 'Sundarban'}
+                    onEnquire={() => scrollToSection('booking-form-card')}
+                  />
 
                   {/* SECTION 5: POLICIES & ACCORDION FAQS */}
                   <div id="policies" className="card border-0 shadow-sm bg-white rounded-4 p-4 mb-4 scroll-margin-top">

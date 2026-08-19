@@ -14,9 +14,20 @@ import './page.css';
 
 export default function CorporatePackagePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialDestination, setInitialDestination] = useState("");
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = (destName) => {
+    if (typeof destName === "string" && destName.trim()) {
+      setInitialDestination(destName.trim());
+    } else {
+      setInitialDestination("");
+    }
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setInitialDestination("");
+  };
 
   return (
     <>
@@ -77,7 +88,7 @@ export default function CorporatePackagePage() {
           }}
         >
           <div className="position-relative w-100" style={{ maxWidth: '980px', maxHeight: '92vh', overflowY: 'auto' }}>
-            <CorporateWizardForm isModal={true} onClose={closeModal} />
+            <CorporateWizardForm isModal={true} initialDestination={initialDestination} onClose={closeModal} />
           </div>
         </div>
       )}

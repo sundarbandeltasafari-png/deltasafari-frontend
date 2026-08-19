@@ -22,7 +22,7 @@
 }
 
 html {
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 15px;
   -webkit-text-size-adjust: 100%;
 }
@@ -30,7 +30,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-poppins);
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-size: 15px;
   line-height: 1.6;
   font-weight: 400;
@@ -38,9 +38,83 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Consistent Standardized Typography Scale */
+/* Global Typography Scale with Poppins */
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+p, span:not([class*="fa-"]):not([class*="bi-"]):not([class*="ri-"]),
+a, label,
+button, input, select, textarea, optgroup,
+table, th, td, blockquote, small, b, strong,
+.card, .card-title, .card-text, .badge, .btn,
+.nav-link, .dropdown-item, .modal, .modal-title, .modal-body,
+.form-control, .form-select, .form-label, .breadcrumb, .breadcrumb-item {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+/* ==========================================================
+   RESTORE & PROTECT ALL ICON FONTS (Font Awesome, Bootstrap, Remix)
+   ========================================================== */
+.fa,
+.fas,
+.far,
+.fal,
+.fat,
+.fad,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-light,
+.fa-thin,
+.fa-duotone,
+.fa-brands,
+[class^="fa-"],
+[class*=" fa-"],
+[class^="fa-"]::before,
+[class*=" fa-"]::before,
+[class^="fa-"]::after,
+[class*=" fa-"]::after {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif !important;
+}
+
+.fab,
+.fa-brands,
+[class^="fa-brands"],
+[class*=" fa-brands"],
+[class^="fa-brands"]::before,
+[class*=" fa-brands"]::before {
+  font-family: "Font Awesome 6 Brands", "Font Awesome 5 Brands", sans-serif !important;
+}
+
+.bi,
+[class^="bi-"],
+[class*=" bi-"],
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  font-family: "bootstrap-icons" !important;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+
+.ri,
+[class^="ri-"],
+[class*=" ri-"],
+[class^="ri-"]::before,
+[class*=" ri-"]::before {
+  font-family: "remixicon" !important;
+  font-style: normal;
+  line-height: 1;
+}
+
 h1, .h1 {
-  font-family: var(--font-poppins);
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.3;
@@ -48,7 +122,6 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-family: var(--font-poppins);
   font-size: 1.65rem;
   font-weight: 700;
   line-height: 1.35;
@@ -56,42 +129,36 @@ h2, .h2 {
 }
 
 h3, .h3 {
-  font-family: var(--font-poppins);
   font-size: 1.3rem;
   font-weight: 600;
   line-height: 1.4;
 }
 
 h4, .h4 {
-  font-family: var(--font-poppins);
   font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.4;
 }
 
 h5, .h5 {
-  font-family: var(--font-poppins);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.45;
 }
 
 h6, .h6 {
-  font-family: var(--font-poppins);
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.5;
 }
 
 p {
-  font-family: var(--font-poppins);
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 0.75rem;
 }
 
 button, input, select, textarea, optgroup {
-  font-family: var(--font-poppins) !important;
   font-size: 14px;
 }
 
@@ -782,4 +849,318 @@ button, input, select, textarea, optgroup {
 /* Ensure cursor pointer on all links, buttons, and interactive elements */
 a, button, [role="button"], input[type="submit"], input[type="button"], summary, .accordion-button, .destination-pill, .destination-card, .widget-list a, .widget-list li, .menu-list a, .footer-section a {
   cursor: pointer !important;
+}
+
+/* =========================================================
+   GLOBAL CORPORATE & CUSTOM PACKAGE WIZARD STYLES
+   ========================================================= */
+.ds-wizard-shell {
+  background: #ffffff !important;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.35);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.ds-wizard-side {
+  background: linear-gradient(165deg, #0b1d3a 0%, #174385 100%) !important;
+  color: #ffffff !important;
+  padding: 36px 28px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-wizard-side::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: rgba(255, 92, 65, 0.14);
+  right: -80px;
+  bottom: -80px;
+  pointer-events: none;
+}
+
+.ds-wizard-side h4 {
+  color: #ffffff !important;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.ds-wizard-side p {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* Stepper Channel */
+.ds-channel {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  position: relative;
+}
+
+.ds-channel::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.ds-channel li {
+  position: relative;
+  padding: 0 0 26px 46px;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.90rem;
+  color: rgba(255, 255, 255, 0.60);
+  transition: all 0.2s ease;
+}
+
+.ds-channel li:last-child {
+  padding-bottom: 0;
+}
+
+.ds-channel li::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0b1d3a;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  transition: all 0.2s ease;
+}
+
+.ds-channel li small {
+  display: block;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.60);
+  font-size: 0.76rem;
+  margin-top: 2px;
+}
+
+.ds-channel li.is-active {
+  color: #ffffff !important;
+}
+
+.ds-channel li.is-active::before {
+  background: #ff5c41 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(255, 92, 65, 0.35);
+}
+
+.ds-channel li.is-done {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.ds-channel li.is-done::before {
+  content: "✓";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+}
+
+.ds-wizard-main {
+  padding: 36px 36px 28px;
+  background: #ffffff;
+}
+
+@media (max-width: 767.98px) {
+  .ds-wizard-main {
+    padding: 24px 18px 20px;
+  }
+  .ds-wizard-side {
+    padding: 24px 20px;
+  }
+}
+
+.ds-step-tag {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff5c41;
+}
+
+.ds-progress-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ds-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff5c41, #f2941e);
+  transition: width 0.3s ease;
+}
+
+.ds-form-label {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.84rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.ds-form-control,
+.form-control.ds-form-control,
+.form-select.ds-form-control {
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  font-size: 0.90rem !important;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  transition: all 0.2s ease;
+}
+
+.ds-form-control:focus,
+.form-control.ds-form-control:focus,
+.form-select.ds-form-control:focus {
+  border-color: #174385 !important;
+  box-shadow: 0 0 0 3px rgba(23, 67, 133, 0.12) !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+}
+
+.ds-counter {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f8fafc;
+  height: 44px;
+}
+
+.ds-counter button {
+  width: 42px;
+  height: 100%;
+  border: none;
+  background: #e8f1fd;
+  color: #174385;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ds-counter button:hover {
+  background: #174385;
+  color: #ffffff;
+}
+
+.ds-counter input {
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  color: #0f172a;
+  width: 100%;
+  padding: 0 4px;
+  font-size: 0.92rem;
+}
+
+.ds-counter input:focus {
+  outline: none;
+}
+
+.ds-choice-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #475569;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.ds-choice-pill input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ds-choice-pill:hover {
+  border-color: #174385;
+  color: #174385;
+  background: #f8fafc;
+}
+
+.ds-choice-pill.is-selected {
+  border-color: #174385 !important;
+  background: #e8f1fd !important;
+  color: #174385 !important;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(23, 67, 133, 0.15);
+}
+
+.btn-ds-primary {
+  background-color: #ff5c41 !important;
+  border: 1px solid #ff5c41 !important;
+  color: #ffffff !important;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-ds-primary:hover {
+  background-color: #e0452b !important;
+  border-color: #e0452b !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 92, 65, 0.35);
+}
+
+.btn-ds-outline {
+  background-color: transparent !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: #475569 !important;
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-ds-outline:hover {
+  border-color: #174385 !important;
+  color: #174385 !important;
+  background: #f8fafc !important;
 }
