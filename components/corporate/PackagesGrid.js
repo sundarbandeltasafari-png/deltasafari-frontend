@@ -106,13 +106,13 @@ export default function PackagesGrid({ onRequestCall }) {
                   <img src={pkg.image} alt={pkg.title} className="w-100 h-100 object-fit-cover package-img" />
 
                   {/* Location Badge */}
-                  <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs fw-semibold" style={{ zIndex: 10 }}>
+                  <span className="position-absolute  m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs fw-semibold" style={{ zIndex: 10, top: '0px', left: '0px', padding: '5px' }}>
                     <i className="fa-solid fa-location-dot text-danger me-0.5"></i>
                     {pkg.location}
                   </span>
 
                   {/* Corporate Badge */}
-                  <span className="position-absolute top-0 end-0 m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs fw-bold" style={{ backgroundColor: '#ef6614', zIndex: 10 }}>
+                  <span className="position-absolute  m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs fw-bold" style={{ backgroundColor: '#ef6614', zIndex: 10, top: '0px', right: '0px', }}>
                     Corporate
                   </span>
 

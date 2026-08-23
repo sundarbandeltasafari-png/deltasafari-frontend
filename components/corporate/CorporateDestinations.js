@@ -64,10 +64,10 @@ export default function CorporateDestinations({ onRequestCall }) {
 
         <div className="d-flex flex-wrap align-items-end justify-content-between mb-4">
           <div>
-            <span className="badge bg-danger bg-opacity-10 text-danger px-3 py-1.5 rounded-pill text-xs fw-bold text-uppercase">
+            <span className="badge px-3 py-1.5 rounded-pill text-xs text-uppercase" style={{ backgroundColor: '#eff6ff', color: '#0066cc', fontWeight: 500 }}>
               Popular Offsites
             </span>
-            <h2 className="fw-extrabold text-dark mt-2 mb-1" style={{ fontSize: '28px', fontFamily: "'Poppins', sans-serif" }}>
+            <h2 className="fw-bold text-dark mt-2 mb-1" style={{ fontSize: '28px', fontFamily: "'Poppins', sans-serif" }}>
               Popular Corporate Destinations
             </h2>
             <p className="text-muted text-xs mb-0 d-none d-md-block" style={{ lineHeight: '1.6' }}>
@@ -87,14 +87,14 @@ export default function CorporateDestinations({ onRequestCall }) {
             768: { slidesPerView: 3 },
             1024: { slidesPerView: 4 },
           }}
-          className="pb-2"
+          className="py-2 px-1 pb-3"
         >
           {destinations.map((item, index) => (
             <SwiperSlide key={item.id || index}>
               <div
                 onClick={() => onRequestCall?.(item.title)}
                 className="card border-0 shadow-sm rounded-4 overflow-hidden position-relative hover-lift transition-all"
-                style={{ height: '260px', cursor: 'pointer' }}
+                style={{ height: '280px', cursor: 'pointer', borderRadius: '16px' }}
               >
                 <img 
                   src={item.image} 
@@ -105,16 +105,27 @@ export default function CorporateDestinations({ onRequestCall }) {
                   }}
                 />
                 <div
-                  className="position-absolute top-0 start-0 w-100 h-100 p-3.5 d-flex flex-column justify-content-between text-white"
-                  style={{ background: 'linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, transparent 60%)' }}
+                  className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-between text-white"
+                  style={{ 
+                    padding: '20px', 
+                    background: 'linear-gradient(to top, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.35) 45%, transparent 75%)' 
+                  }}
                 >
-                  <span className="badge bg-white text-dark text-2xs rounded-pill align-self-start shadow-sm fw-semibold">
+                  <span 
+                    className="badge bg-white text-dark rounded-pill align-self-start shadow-sm"
+                    style={{ fontSize: '11px', padding: '6px 12px', fontWeight: 500 }}
+                  >
                     {item.tag}
                   </span>
-                  <div>
-                    <h4 className="fw-bold h5 mb-1 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>{item.title}</h4>
-                    <span className="text-warning text-xs font-bold d-inline-flex align-items-center gap-1">
-                      Request Call <i className="fa-solid fa-chevron-right text-3xs"></i>
+                  <div className="pt-2">
+                    <h4 className="fw-bold h5 mb-1.5 text-white" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '18px' }}>
+                      {item.title}
+                    </h4>
+                    <span 
+                      className="d-inline-flex align-items-center gap-1.5"
+                      style={{ fontSize: '12px', fontWeight: 500, color: '#93c5fd' }}
+                    >
+                      Request Call <i className="fa-solid fa-chevron-right" style={{ fontSize: '10px' }}></i>
                     </span>
                   </div>
                 </div>

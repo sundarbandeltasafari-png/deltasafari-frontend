@@ -58,15 +58,33 @@ function SwipperWrapperExplore({ packageType }) {
         >
 
             {packageType.map((pkgType, index) => {
-                return <SwiperSlide key={index} style={{ height: 'stretch' }}>
-                    <Link href={'packages/category-' + pkgType?.slug} className="single-counter">
-                        <div className="content">
-                            <img src={process.env.NEXT_PUBLIC_SERVER_URL+pkgType?.image} alt={pkgType?.name ? `${pkgType.name} Tour Category - Delta Safari` : "Tour Category Icon"} style={{ height: "50px", filter: "grayscale(100%)" }} />
-                            <h5>{pkgType?.name}</h5>
-                            <p style={{fontSize: '12px', lineHeight: '5px'}}>Explore Now</p>
-                        </div>
-                    </Link>
-                </SwiperSlide>
+                return (
+                    <SwiperSlide key={index} style={{ height: 'stretch' }}>
+                        <Link 
+                            href={'/packages/category-' + pkgType?.slug} 
+                            className="d-flex flex-column align-items-center justify-content-center p-3 rounded-4 bg-white border text-decoration-none shadow-xs hover-lift h-100 text-center"
+                            style={{ borderColor: '#eef2f6', transition: 'all 0.2s ease', minHeight: '140px' }}
+                        >
+                            <div 
+                                className="d-flex align-items-center justify-content-center rounded-circle mb-2"
+                                style={{ width: '60px', height: '60px', backgroundColor: '#f0f7ff' }}
+                            >
+                                <img 
+                                    src={process.env.NEXT_PUBLIC_SERVER_URL + pkgType?.image} 
+                                    alt={pkgType?.name ? `${pkgType.name} Tour Category - Delta Safari` : "Tour Category Icon"} 
+                                    style={{ width: '36px', height: '36px', objectFit: 'contain' }} 
+                                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                />
+                            </div>
+                            <h5 className="text-dark mb-1 mt-1 text-truncate w-100" style={{ fontSize: '14px', lineHeight: '1.3' }}>
+                                {pkgType?.name}
+                            </h5>
+                            <span className="text-primary d-inline-flex align-items-center gap-1" style={{ fontSize: '11px', color: '#0066cc' }}>
+                                Explore ➔
+                            </span>
+                        </Link>
+                    </SwiperSlide>
+                );
             })}
         </Swiper>
     )

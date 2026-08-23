@@ -74,9 +74,9 @@ function HomeBanner() {
                                     <div className="container">
                                         <div className="banner-content">
                                             {slide.isMainHeading ? (
-                                                <h1>{slide.title}</h1>
+                                                <h1 className="home-banner-title" style={{ fontFamily: "var(--font-courgette), 'Courgette', cursive" }}>{slide.title}</h1>
                                             ) : (
-                                                <h2>{slide.title}</h2>
+                                                <h2 className="home-banner-title" style={{ fontFamily: "var(--font-courgette), 'Courgette', cursive" }}>{slide.title}</h2>
                                             )}
                                             <p>{slide.description}</p>
                                         </div>

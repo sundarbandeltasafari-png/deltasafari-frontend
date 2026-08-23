@@ -38,24 +38,94 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Typography Scale with Poppins */
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
+/* ==========================================================
+   STRICT TYPOGRAPHY RULES: ONLY Headings and Subheadings can be Bold
+   Inspired by EaseMyTrip Holidays typography & clean layout scale
+   ========================================================== */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.heading, .subheading,
+.section-title h1, .section-title h2, .section-title h3, .section-title h4, .section-title h5, .section-title h6,
+.card-title, .modal-title,
+.widget-title h5, .widget-title h4, .widget-title h6,
+.accordion-header button,
+.title, .sub-title, .main-title,
+.ds-heading, .ds-subheading {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #111827;
 }
 
-p, span:not([class*="fa-"]):not([class*="bi-"]):not([class*="ri-"]),
+h1, .h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+h2, .h2 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+h3, .h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+h4, .h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h5, .h5 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+h6, .h6 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* All other text elements MUST NOT BE BOLD (regular/normal font weight 400, or medium 500) */
+body, p, span:not([class*="fa-"]):not([class*="bi-"]):not([class*="ri-"]),
 a, label,
 button, input, select, textarea, optgroup,
 table, th, td, blockquote, small, b, strong,
-.card, .card-title, .card-text, .badge, .btn,
-.nav-link, .dropdown-item, .modal, .modal-title, .modal-body,
-.form-control, .form-select, .form-label, .breadcrumb, .breadcrumb-item {
+.card, .card-text, .badge, .btn,
+.nav-link, .dropdown-item, .modal-body,
+.form-control, .form-select, .form-label, .breadcrumb, .breadcrumb-item,
+.price, .price-actual, .price-strike, .card-price, .nav-label,
+.fw-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
+.fw-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
+.fw-extrabold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
+.font-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
+.font-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *) {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
+  font-weight: 400 !important;
+}
+
+/* Medium weight for interactive buttons, nav links, form labels for crisp legibility */
+.nav-link, .menu-list a, .btn, .primary-btn1, .dropdown-item, .ds-form-label, .filter-chip, .login-btn, .nav-item span {
+  font-weight: 500 !important;
+}
+
+p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+button, input, select, textarea, optgroup {
+  font-size: 14px;
 }
 
 /* ==========================================================
@@ -81,6 +151,14 @@ table, th, td, blockquote, small, b, strong,
 [class^="fa-"]::after,
 [class*=" fa-"]::after {
   font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif !important;
+  font-weight: 900 !important;
+}
+
+.fa-regular,
+.far,
+[class^="fa-regular"],
+[class*=" fa-regular"] {
+  font-weight: 400 !important;
 }
 
 .fab,
@@ -90,6 +168,7 @@ table, th, td, blockquote, small, b, strong,
 [class^="fa-brands"]::before,
 [class*=" fa-brands"]::before {
   font-family: "Font Awesome 6 Brands", "Font Awesome 5 Brands", sans-serif !important;
+  font-weight: 400 !important;
 }
 
 .bi,
@@ -114,64 +193,17 @@ table, th, td, blockquote, small, b, strong,
   line-height: 1;
 }
 
-h1, .h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-
-h2, .h2 {
-  font-size: 1.65rem;
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-}
-
-h3, .h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-h4, .h4 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-h5, .h5 {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-h6, .h6 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-p {
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 0.75rem;
-}
-
-button, input, select, textarea, optgroup {
-  font-size: 14px;
-}
-
-/* Preserved Banner Font Family */
+/* Banner Title font - Courgette */
 .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h1,
 .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content h2,
 .home2-banner-section .banner-content h1,
 .home2-banner-section .banner-content h2,
 .banner-wrapper .banner-content h1,
-.banner-wrapper .banner-content h2 {
-  font-family: 'Courgette', cursive !important;
+.banner-wrapper .banner-content h2,
+.home-banner-title {
+  font-family: var(--font-courgette), 'Courgette', cursive !important;
+  letter-spacing: 0.01em;
 }
-
 
 .customer-service-header>.dropdown-toggle:hover~.dropdown-menu {
   display: block;
@@ -244,22 +276,21 @@ button, input, select, textarea, optgroup {
 
 /* Scrollbar Handle (The Moving Strip) */
 ::-webkit-scrollbar-thumb {
-  background: #ff5c41;
-  /* Matches the secondary coral theme brand color */
+  background: #0066cc;
+  /* Delta Safari brand blue */
   border-radius: 10px;
   transition: background 0.3s ease;
 }
 
 /* Scrollbar Handle Hover State */
 ::-webkit-scrollbar-thumb:hover {
-  background: #e04b32;
-  /* Slightly darker variant for active state tracking feedback */
+  background: #0055b3;
 }
 
 /* Firefox Specific Support Fallback Properties */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #ff5c41 #f1f3f7;
+  scrollbar-color: #0066cc #f1f3f7;
 }
 
 .swiper {
@@ -572,19 +603,19 @@ button, input, select, textarea, optgroup {
   z-index: 1;
 }
 
-/* Duration badge matches image_ad362b.jpg */
+/* Duration badge - clean EaseMyTrip style */
 .duration-tag {
   position: absolute;
   top: 12px;
   right: 12px;
-  background-color: #0d6efd;
+  background-color: #0066cc;
   color: #ffffff;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500 !important;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 20px;
   z-index: 2;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 /* Overlay content container alignment */
@@ -596,11 +627,11 @@ button, input, select, textarea, optgroup {
   padding: 16px;
   z-index: 2;
   display: flex;
-  flex-column: min-content;
+  flex-direction: column;
   gap: 4px;
 }
 
-/* Two-line title clamping configuration */
+/* Two-line title clamping configuration (heading) */
 .card-title-text {
   color: #ffffff;
   font-size: 14px;
@@ -625,16 +656,88 @@ button, input, select, textarea, optgroup {
 
 .price-actual {
   color: #ffffff;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .price-strike {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 13px;
   text-decoration: line-through;
-  font-weight: 400;
+  font-weight: 400 !important;
+}
+
+/* EaseMyTrip Inspired Clean Card & Layout Utilities */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+}
+
+.clean-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+.clean-card:hover {
+  border-color: #d8e2ed;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.clean-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500 !important;
+}
+
+.clean-pill-tab {
+  border-radius: 50px !important;
+  padding: 8px 20px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #4b5563 !important;
+}
+
+.clean-pill-tab.active,
+.clean-pill-tab:hover {
+  background: #0066cc !important;
+  border-color: #0066cc !important;
+  color: #ffffff !important;
+}
+
+/* EaseMyTrip Holiday Search Box Styles */
+.filter-wrapper {
+  margin-top: -65px !important;
+  position: relative;
+  z-index: 90;
+}
+
+@media (max-width: 991px) {
+  .filter-wrapper {
+    margin-top: 20px !important;
+  }
+}
+
+.emt-holiday-search-box {
+  transition: all 0.25s ease;
+}
+
+.emt-holiday-search-box:hover {
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.12) !important;
 }
 
 
@@ -954,9 +1057,9 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
 }
 
 .ds-channel li.is-active::before {
-  background: #ff5c41 !important;
+  background: #0066cc !important;
   border-color: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(255, 92, 65, 0.35);
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.35);
 }
 
 .ds-channel li.is-done {
@@ -971,8 +1074,8 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
   font-size: 11px;
   font-weight: 700;
   color: #ffffff;
-  background: #10b981 !important;
-  border-color: #10b981 !important;
+  background: #0284c7 !important;
+  border-color: #0284c7 !important;
 }
 
 .ds-wizard-main {
@@ -995,7 +1098,7 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #ff5c41;
+  color: #0066cc;
 }
 
 .ds-progress-track {
@@ -1007,7 +1110,7 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
 
 .ds-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff5c41, #f2941e);
+  background: linear-gradient(90deg, #0066cc, #38bdf8);
   transition: width 0.3s ease;
 }
 
@@ -1124,8 +1227,8 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
 }
 
 .btn-ds-primary {
-  background-color: #ff5c41 !important;
-  border: 1px solid #ff5c41 !important;
+  background-color: #0066cc !important;
+  border: 1px solid #0066cc !important;
   color: #ffffff !important;
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-weight: 600;
@@ -1138,11 +1241,11 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
 }
 
 .btn-ds-primary:hover {
-  background-color: #e0452b !important;
-  border-color: #e0452b !important;
+  background-color: #0055b3 !important;
+  border-color: #0055b3 !important;
   color: #ffffff !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 92, 65, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.35);
 }
 
 .btn-ds-outline {
@@ -1163,4 +1266,8 @@ a, button, [role="button"], input[type="submit"], input[type="button"], summary,
   border-color: #174385 !important;
   color: #174385 !important;
   background: #f8fafc !important;
+}
+
+.home1-trip-slider{
+  padding: 10px;
 }

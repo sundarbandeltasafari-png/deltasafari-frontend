@@ -124,21 +124,21 @@ export default function PackageCard({ pkg, onSaveChange, initialSaved = false })
                     </button>
 
                     {/* Location Badge (Top Start) */}
-                    <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs fw-semibold" style={{ zIndex: 10 }}>
+                    <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs" style={{ zIndex: 10, fontWeight: 500 }}>
                         <i className="fa-solid fa-location-dot text-danger me-0.5"></i>
                         {destinationName}
                     </span>
 
                     {/* Category Badge (Top End) */}
-                    <span className="position-absolute top-0 end-0 m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs fw-bold" style={{ backgroundColor: '#ef6614', zIndex: 10 }}>
+                    <span className="position-absolute top-0 end-0 m-2.5 badge text-white text-uppercase text-3xs px-2.5 py-1 rounded-2 shadow-xs" style={{ backgroundColor: '#0066cc', zIndex: 10, fontWeight: 500 }}>
                         {categoryName}
                     </span>
 
                     {/* Duration & Discount Overlay Banner */}
-                    <div className="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white px-3 py-1.5 text-xs fw-semibold d-flex align-items-center justify-content-between" style={{ zIndex: 10 }}>
+                    <div className="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white px-3 py-1.5 text-xs d-flex align-items-center justify-content-between" style={{ zIndex: 10, fontWeight: 500 }}>
                         <span><i className="fa-solid fa-clock text-warning me-1"></i>{durationText}</span>
                         {discountPercent > 0 && (
-                            <span className="badge bg-danger text-white text-3xs px-2 py-0.5 rounded-pill fw-bold">
+                            <span className="badge bg-danger text-white text-3xs px-2 py-0.5 rounded-pill" style={{ fontWeight: 500 }}>
                                 {discountPercent}% OFF
                             </span>
                         )}
@@ -148,7 +148,7 @@ export default function PackageCard({ pkg, onSaveChange, initialSaved = false })
                 {/* Body & Details */}
                 <div className="card-body p-3.5 d-flex flex-column justify-content-between">
                     <div>
-                        <h3 className="h6 fw-bold mb-1.5 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35', fontFamily: "'Poppins', sans-serif" }}>
+                        <h3 className="h6 mb-1.5 text-dark text-truncate-2" style={{ minHeight: '38px', lineHeight: '1.35', fontFamily: "'Poppins', sans-serif", fontSize: '15px' }}>
                             <Link href={detailsUrl} className="text-dark text-decoration-none hover-text-primary">
                                 {pkg.title}
                             </Link>
@@ -163,10 +163,10 @@ export default function PackageCard({ pkg, onSaveChange, initialSaved = false })
                         {isAgent && (
                             <div className="p-2 rounded-3 bg-primary-subtle border border-primary-subtle mb-2 text-start">
                                 <div className="d-flex align-items-center justify-content-between">
-                                    <span className="text-2xs fw-bold text-primary text-uppercase">
+                                    <span className="text-2xs text-primary text-uppercase" style={{ fontWeight: 500 }}>
                                         <i className="fa-solid fa-hand-holding-dollar me-1"></i> Agent Commission
                                     </span>
-                                    <span className="badge bg-primary fw-bold text-white px-2 py-0.5" style={{ fontSize: '11px', backgroundColor: '#2e266d' }}>
+                                    <span className="badge bg-primary text-white px-2 py-0.5" style={{ fontSize: '11px', backgroundColor: '#0066cc', fontWeight: 500 }}>
                                         ₹{commissionPerPax.toLocaleString('en-IN')} / pax
                                     </span>
                                 </div>
@@ -190,23 +190,23 @@ export default function PackageCard({ pkg, onSaveChange, initialSaved = false })
                                         {mrpText}
                                     </span>
                                 )}
-                                <strong className="fw-extrabold mb-0 text-nowrap" style={{ fontSize: '20px', fontWeight: 800, color: isAgent ? '#2e266d' : '#ef6614' }}>
+                                <span className="mb-0 text-nowrap" style={{ fontSize: '18px', fontWeight: 500, color: isAgent ? '#0066cc' : '#0066cc' }}>
                                     {isAgent ? `₹${agentNetPrice.toLocaleString('en-IN')}` : (priceText || 'Contact Us')}
-                                </strong>
+                                </span>
                             </div>
                         </div>
 
                         {isAgent ? (
                             <button 
                                 type="button" 
-                                className="btn btn-primary fw-bold py-1.5 px-3 text-xs rounded-pill shadow-xs d-flex align-items-center gap-1"
-                                style={{ backgroundColor: '#2e266d', borderColor: '#2e266d' }}
+                                className="btn btn-primary py-1.5 px-3 text-xs rounded-pill shadow-xs d-flex align-items-center gap-1"
+                                style={{ backgroundColor: '#0066cc', borderColor: '#0066cc', fontWeight: 500 }}
                                 onClick={() => setAgentModalOpen(true)}
                             >
                                 <i className="fa-solid fa-user-plus me-1"></i> Book for Client
                             </button>
                         ) : (
-                            <Link href={detailsUrl} className="primary-btn1 py-1.5 px-3 text-xs">
+                            <Link href={detailsUrl} className="primary-btn1 py-1.5 px-3 text-xs" style={{ fontWeight: 500 }}>
                                 <span>Book Now</span>
                                 <span>Book Now</span>
                             </Link>

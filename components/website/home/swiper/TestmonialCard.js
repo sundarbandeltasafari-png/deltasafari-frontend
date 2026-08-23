@@ -51,10 +51,10 @@ function TestmonialCard({ pkg }) {
                     }
                 </ul>
                 <div style={{ flex: 1 }}>
-                    <p style={{ margin: 0, lineHeight: '1.45', fontSize: '14px' }}>
+                    <p style={{ margin: 0, lineHeight: '1.5', fontSize: '14px', color: '#4b5563' }}>
                         {displayText}{' '}
-                        <span style={{ color: '#ef6614', fontWeight: '600', fontSize: '13px', display: 'inline' }}>
-                            show more
+                        <span style={{ color: '#0066cc', fontSize: '13px', display: 'inline', fontWeight: 500 }}>
+                            read more ➔
                         </span>
                     </p>
                 </div>

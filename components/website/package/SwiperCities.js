@@ -40,14 +40,16 @@ export default function SwiperCities({ cities }) {
                         <div className="hotel-content col-7 pb-0 pt-2">
                             <div className="location-area flex-column mb-0 gap-1">
                                 <div className="location w-100 mb-2 d-flex align-items-center gap-1.5">
-                                    <i className="fa-solid fa-location-dot text-danger fs-5 me-0.5"></i>
-                                    <Link 
-                                        href={"/packages/" + 'city-' + city.slug} 
-                                        style={{ fontSize: "20px", fontFamily: "'Poppins', sans-serif", fontWeight: 700, lineHeight: "1.25" }} 
-                                        className="fw-bold text-dark text-decoration-none text-truncate"
-                                    >
-                                        {city.name}
-                                    </Link>
+                                    <i className="fa-solid fa-location-dot text-danger me-1"></i>
+                                    <h5 className="m-0 text-truncate">
+                                        <Link 
+                                            href={"/packages/" + 'city-' + city.slug} 
+                                            style={{ fontSize: "16px", fontFamily: "'Poppins', sans-serif" }} 
+                                            className="text-dark text-decoration-none"
+                                        >
+                                            {city.name}
+                                        </Link>
+                                    </h5>
                                 </div>
                                 <ul className="hotel-feature-list mb-0">
                                     <li><span>Best Packages</span></li>

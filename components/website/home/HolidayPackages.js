@@ -23,17 +23,16 @@ async function HolidayPackages() {
                     <div className="row justify-content-start mb-3 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms">
                         <div className="col-lg-10">
                             <div className="section-title text-start">
-                                <h2>Best Holiday Packagess</h2>
+                                <h2>Best Holiday Packages</h2>
                                 <p className="m-0">Choose from top domestic and international tours made for you.</p>
                             </div>
-                            <ul className="nav mt-2 nav-pills justify-content-start" id="pills-tab" role="tablist">
+                            <ul className="nav mt-3 nav-pills justify-content-start gap-2" id="pills-tab" role="tablist">
                                 {domestic && domestic.length > 0 && <li className="nav-item" role="presentation">
-                                    <button className="nav-link active" id="pills-europe-tab" data-bs-toggle="pill" data-bs-target="#pills-europe" type="button" role="tab" aria-controls="pills-europe" aria-selected="true">Domestic</button>
+                                    <button className="nav-link clean-pill-tab active" id="pills-europe-tab" data-bs-toggle="pill" data-bs-target="#pills-europe" type="button" role="tab" aria-controls="pills-europe" aria-selected="true">Domestic Holidays</button>
                                 </li>}
                                 {international && international.length > 0 && <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="pills-asia-tab" data-bs-toggle="pill" data-bs-target="#pills-asia" type="button" role="tab" aria-controls="pills-asia" aria-selected="false">International</button>
+                                    <button className="nav-link clean-pill-tab" id="pills-asia-tab" data-bs-toggle="pill" data-bs-target="#pills-asia" type="button" role="tab" aria-controls="pills-asia" aria-selected="false">International Holidays</button>
                                 </li>}
-
                             </ul>
                         </div>
                     </div>

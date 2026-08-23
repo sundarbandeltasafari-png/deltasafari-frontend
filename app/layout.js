@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Courgette } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script";
@@ -13,6 +13,13 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const courgette = Courgette({
+  variable: "--font-courgette",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -75,7 +82,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${poppins.variable} font-poppins h-full antialiased`}
+      className={`${poppins.variable} ${courgette.variable} font-poppins h-full antialiased`}
     >
       <head>
         <link href={process.env.NEXT_PUBLIC_PUBLIC_URL + "assets/css/bootstrap.min.css"} rel="stylesheet" />
@@ -88,7 +95,7 @@ export default async function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={`${poppins.className} font-poppins min-h-full flex flex-col`}>
+      <body className={`${poppins.className} ${courgette.variable} font-poppins min-h-full flex flex-col`}>
         <ProviderStore>
           <Header siteSettings={siteSettings} />
           <ToastContainer />

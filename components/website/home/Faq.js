@@ -34,7 +34,7 @@ function Faq({ faqs, faqText = "Find quick answers to common questions about our
                 <div className="row justify-content-start mb-4 wow animate fadeInDown" data-wow-delay="200ms" data-wow-duration="1500ms" style={{ visibility: 'visible', animationDuration: '1500ms', animationDelay: '200ms' }}>
                     <div className="col-xl-6 col-lg-8">
                         <div className="section-title text-start">
-                            <h2 className="fw-extrabold text-dark h3" style={{ fontFamily: "'Poppins', sans-serif" }}>Frequently Asked Questions</h2>
+                            <h2 className="text-dark h3" style={{ fontFamily: "'Poppins', sans-serif" }}>Frequently Asked Questions</h2>
                             <p className='m-0 text-muted text-xs'>{faqText}</p>
                         </div>
                     </div>
@@ -46,16 +46,16 @@ function Faq({ faqs, faqText = "Find quick answers to common questions about our
                                 {list.map((faq, index) => {
                                     const itemId = faq.id || index;
                                     return (
-                                        <div key={itemId} className="accordion-item border rounded-3 mb-2 overflow-hidden shadow-2xs">
+                                        <div key={itemId} className="accordion-item border rounded-3 mb-2 overflow-hidden shadow-2xs" style={{ borderColor: '#eef2f6' }}>
                                             <h5 className="accordion-header" id={"flush-heading_" + itemId}>
                                                 <button 
-                                                    className="accordion-button collapsed fw-bold text-dark text-sm py-3 px-4" 
+                                                    className="accordion-button collapsed text-dark text-sm py-3 px-4" 
                                                     type="button" 
                                                     data-bs-toggle="collapse" 
                                                     data-bs-target={"#flush-collapse_" + itemId} 
                                                     aria-expanded="false" 
                                                     aria-controls={"flush-collapse_" + itemId}
-                                                    style={{ fontFamily: "'Poppins', sans-serif" }}
+                                                    style={{ fontFamily: "'Poppins', sans-serif", fontSize: '15px' }}
                                                 >
                                                     {faq.question}
                                                 </button>
@@ -66,7 +66,7 @@ function Faq({ faqs, faqText = "Find quick answers to common questions about our
                                                 aria-labelledby={"flush-heading_" + itemId} 
                                                 data-bs-parent="#packageFaqAccordion"
                                             >
-                                                <div className="accordion-body text-secondary text-xs px-4 py-3" style={{ lineHeight: '1.6' }}>
+                                                <div className="accordion-body text-secondary text-xs px-4 py-3" style={{ lineHeight: '1.6', fontSize: '14px', color: '#4b5563' }}>
                                                     {faq.answer}
                                                 </div>
                                             </div>

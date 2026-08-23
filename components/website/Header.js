@@ -135,12 +135,12 @@ function Header({ siteSettings }) {
                         style={{ width: '32px', height: '32px', objectFit: 'cover' }} 
                       />
                     ) : (
-                      <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style={{ width: '32px', height: '32px', fontSize: '14px' }}>
+                      <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '32px', height: '32px', fontSize: '13px', fontWeight: 500 }}>
                         {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
                       </div>
                     )}
                     <div>
-                      <h6 className="m-0 fw-bold">{user?.first_name} {user?.last_name}</h6>
+                      <h6 className="m-0">{user?.first_name} {user?.last_name}</h6>
                       <span className="text-muted" style={{ fontSize: '11px' }}>{user?.email}</span>
                     </div>
                   </div>
@@ -156,7 +156,7 @@ function Header({ siteSettings }) {
                     <Link href="/bookings" className="text-decoration-none text-dark py-1 px-2 rounded d-flex align-items-center gap-2" onClick={() => setOpenMobileMenu(false)}>
                       <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: '16px' }}></i> Bookings
                     </Link>
-                    <button onClick={() => { setOpenMobileMenu(false); handleLogout(); }} className="btn text-danger text-start p-0 py-1 px-2 d-flex align-items-center gap-2 fw-semibold">
+                    <button onClick={() => { setOpenMobileMenu(false); handleLogout(); }} className="btn text-danger text-start p-0 py-1 px-2 d-flex align-items-center gap-2">
                       <i className="fa-solid fa-right-from-bracket" style={{ width: '16px' }}></i> Logout
                     </button>
                   </div>
@@ -230,17 +230,17 @@ function Header({ siteSettings }) {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" style={{ width: "max-content" }}>
                   <div className='d-flex gap-2 align-items-center p-2 cursor-pointer'>
-                    <i className="fa-solid fa-phone-volume" style={{ fontSize: "25px" }}></i>
+                    <i className="fa-solid fa-phone-volume" style={{ fontSize: "22px", color: '#0066cc' }}></i>
                     <div>
                       <h6 className='m-0'>Call Support</h6>
-                      <a style={{ fontSize: "14px" }} href={`tel:${siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}`}>{siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}</a>
+                      <a style={{ fontSize: "13px", color: '#4b5563' }} href={`tel:${siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}`}>{siteSettings?.contacts?.phone_1 ? siteSettings?.contacts?.phone_1?.replaceAll(" ", "") : siteSettings?.contacts?.phone_2?.replaceAll(" ", "")}</a>
                     </div>
                   </div>
                   <div className='d-flex gap-2 align-items-center p-2 cursor-pointer'>
-                    <i className="fa-solid fa-envelope" style={{ fontSize: "25px" }}></i>
+                    <i className="fa-solid fa-envelope" style={{ fontSize: "22px", color: '#0066cc' }}></i>
                     <div>
                       <h6 className='m-0'>Mail Support</h6>
-                      <span style={{ fontSize: "14px" }} href={`mailto:${siteSettings?.contacts?.email}`}>{siteSettings?.contacts?.email}</span>
+                      <span style={{ fontSize: "13px", color: '#4b5563' }} href={`mailto:${siteSettings?.contacts?.email}`}>{siteSettings?.contacts?.email}</span>
                     </div>
                   </div>
                 </ul>
@@ -286,8 +286,8 @@ function Header({ siteSettings }) {
                       />
                     ) : (
                       <div
-                        className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle fw-bold"
-                        style={{ width: "22px", height: "22px", fontSize: "11px" }}
+                        className="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle"
+                        style={{ width: "22px", height: "22px", fontSize: "11px", fontWeight: 500 }}
                       >
                         {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user" style={{ fontSize: "10px" }}></i>}
                       </div>
@@ -310,14 +310,14 @@ function Header({ siteSettings }) {
                           style={{ width: "32px", height: "32px", objectFit: "cover" }} 
                         />
                       ) : (
-                        <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0" style={{ width: "32px", height: "32px", fontSize: "14px" }}>
+                        <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: "32px", height: "32px", fontSize: "13px", fontWeight: 500 }}>
                           {user?.first_name ? user.first_name.charAt(0).toUpperCase() : <i className="fa-solid fa-user"></i>}
                         </div>
                       )}
                       <div className="overflow-hidden">
-                        <p className="mb-0 fw-bold text-dark text-truncate" style={{ fontSize: "14px" }}>
+                        <h6 className="mb-0 text-dark text-truncate" style={{ fontSize: "14px" }}>
                           {user?.first_name} {user?.last_name}
-                        </p>
+                        </h6>
                         <p className="mb-0 text-muted text-truncate" style={{ fontSize: "12px" }}>
                           {user?.email || "Logged in"}
                         </p>
@@ -325,7 +325,7 @@ function Header({ siteSettings }) {
                     </div>
                     <Link
                       href="/profile"
-                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none"
                       onClick={() => setShowUserDropdown(false)}
                     >
                       <i className="fa-regular fa-user text-primary" style={{ width: "20px" }}></i>
@@ -334,7 +334,7 @@ function Header({ siteSettings }) {
                     {Number(user?.user_type) !== 2 && (
                       <Link
                         href="/savedtour"
-                        className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                        className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none"
                         onClick={() => setShowUserDropdown(false)}
                       >
                         <i className="fa-regular fa-heart text-danger" style={{ width: "20px" }}></i>
@@ -343,7 +343,7 @@ function Header({ siteSettings }) {
                     )}
                     <Link
                       href="/bookings"
-                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none"
                       onClick={() => setShowUserDropdown(false)}
                     >
                       <i className="fa-solid fa-suitcase-rolling text-success" style={{ width: "20px" }}></i>
@@ -351,7 +351,7 @@ function Header({ siteSettings }) {
                     </Link>
                     <Link
                       href="/customized-packages"
-                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none fw-medium"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none"
                       onClick={() => setShowUserDropdown(false)}
                     >
                       <i className="fa-solid fa-wand-magic-sparkles text-warning" style={{ width: "20px" }}></i>
@@ -360,7 +360,7 @@ function Header({ siteSettings }) {
                     <div className="dropdown-divider my-2"></div>
                     <button
                       type="button"
-                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-danger border-0 bg-transparent fw-semibold w-100"
+                      className="dropdown-item d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-danger border-0 bg-transparent w-100"
                       onClick={handleLogout}
                     >
                       <i className="fa-solid fa-right-from-bracket text-danger" style={{ width: "20px" }}></i>

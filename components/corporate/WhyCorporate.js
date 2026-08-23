@@ -57,7 +57,7 @@ export default function WhyCorporate({ onRequestCall }) {
                 className="w-100 h-100 object-fit-cover position-absolute top-0 start-0"
               />
               <div className="position-absolute bottom-0 start-0 w-100 p-4 text-white" style={{ background: 'linear-gradient(to top, rgba(11, 29, 58, 0.92) 0%, transparent 100%)', zIndex: 2 }}>
-                <span className="badge text-white text-2xs mb-2 fw-bold px-3 py-1.5 rounded-pill shadow-xs d-inline-flex align-items-center gap-1" style={{ backgroundColor: '#ef6614' }}>
+                <span className="badge text-white text-2xs mb-2 px-3 py-1.5 rounded-pill shadow-xs d-inline-flex align-items-center gap-1" style={{ backgroundColor: '#0066cc', fontWeight: 500 }}>
                   <i className="fa-solid fa-trophy"></i> 100+ Corporate Trips Hosted
                 </span>
                 <h4 className="fw-bold h5 mb-1 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>Unforgettable Team Experiences</h4>
@@ -73,8 +73,8 @@ export default function WhyCorporate({ onRequestCall }) {
                 <div key={i} className='col-md-6 mb-1 p-1'>
                   <div className="corpo-y-card p-3 mb-2 h-100 rounded-3 border bg-light shadow-2xs d-flex align-items-start gap-3 hover-lift transition-all">
                     <div
-                      className="p-2.5 rounded-circle text-white flex-shrink-0 d-flex align-items-center justify-content-center shadow-xs"
-                      style={{ width: '44px', height: '44px', backgroundColor: i % 2 === 0 ? '#ef6614' : '#174385' }}
+                      className="rounded-circle flex-shrink-0 d-flex align-items-center justify-content-center"
+                      style={{ width: '44px', height: '44px', backgroundColor: '#eff6ff', color: '#0066cc' }}
                     >
                       <i className={`${point.icon} fs-6`}></i>
                     </div>
@@ -91,8 +91,8 @@ export default function WhyCorporate({ onRequestCall }) {
               <button
                 type="button"
                 onClick={onRequestCall}
-                className="btn btn-orange text-white px-4 py-2.5 text-xs fw-bold rounded-pill border-0 shadow-sm d-inline-flex align-items-center gap-1.5"
-                style={{ backgroundColor: '#ef6614', fontFamily: "'Poppins', sans-serif" }}
+                className="btn text-white px-4 py-2.5 text-xs rounded-pill border-0 shadow-sm d-inline-flex align-items-center gap-1.5"
+                style={{ backgroundColor: '#0066cc', fontFamily: "'Poppins', sans-serif", fontWeight: 500 }}
               >
                 <i className="fa-solid fa-phone me-1"></i> Request Callback Now
               </button>
