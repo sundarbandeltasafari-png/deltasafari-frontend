@@ -1,0 +1,657 @@
+[
+  {
+    "group": "Core / Marketing",
+    "route": "/",
+    "file": "app/(website)/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Core / Marketing",
+    "route": "/about",
+    "file": "app/(website)/about/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "About Delta Safari – Your Trusted Travel Partner for Unforgettable Holidays"
+    ],
+    "h2s": [
+      "Your Journey to Unforgettable Destinations Starts Here",
+      "Book Your Holiday Packages with Confidence",
+      "Easy Online Booking at Budget-Friendly Prices",
+      "Why Choose Delta Safari?",
+      "Explore Incredible Destinations with Delta Safari",
+      "Our Unwavering Promise To You",
+      "Ready to Plan Your Next Unforgettable Vacation?"
+    ],
+    "imgTotal": 7,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Core / Marketing",
+    "route": "/about-us",
+    "file": "app/(website)/about-us/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Core / Marketing",
+    "route": "/contact",
+    "file": "app/(website)/contact/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "Contact Delta Safari – We're Here to Help You Plan Your Perfect Journey"
+    ],
+    "h2s": [
+      "Our Offices",
+      "Frequently Asked Questions"
+    ],
+    "imgTotal": 2,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Core / Marketing",
+    "route": "/referal",
+    "file": "app/(website)/referal/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "Invite Friends & Earn Commission on Every Holiday Tour"
+    ],
+    "h2s": [
+      "How Does The Referral Program Work?",
+      "Highlights Of Our Referral Program",
+      "Frequently Asked Questions",
+      "Ready to Turn Travel Sharing into Real Earnings?"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Core / Marketing",
+    "route": "/corporate",
+    "file": "app/(website)/corporate/page.js",
+    "layout": "app/(website)/corporate/layout.js",
+    "isClient": true,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Layout generateMetadata",
+    "h1s": [],
+    "h2s": [
+      "Get a custom corporate quote in 5 steps"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Content / CMS",
+    "route": "/blogs",
+    "file": "app/(website)/(pages)/blogs/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "Travel Inspiration"
+    ],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Content / CMS",
+    "route": "/blogs/[slug]",
+    "file": "app/(website)/(pages)/blogs/[slug]/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "Travel Inspiration",
+      "{particularBlog?.title}"
+    ],
+    "h2s": [],
+    "imgTotal": 2,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Content / CMS",
+    "route": "/faq",
+    "file": "app/(website)/(pages)/faq/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "Frequently Asked Questions"
+    ],
+    "h2s": [
+      "Everything You Need to Know About Delta Safari"
+    ],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Content / CMS",
+    "route": "/pages/[slug]",
+    "file": "app/(website)/(pages)/pages/[slug]/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [
+      "{pageContent?.title}"
+    ],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/package",
+    "file": "app/(website)/package/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Page generateMetadata",
+    "h1s": [],
+    "h2s": [
+      "Get Your Discounted Package",
+      "Popular Holiday Destinations"
+    ],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/package/cities",
+    "file": "app/(website)/package/cities/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/packages/[...slug]",
+    "file": "app/(website)/packages/[...slug]/page.js",
+    "layout": "app/(website)/packages/[...slug]/layout.js",
+    "isClient": true,
+    "hasGenerateMetadata": true,
+    "hasStaticMetadata": false,
+    "metadataSource": "Layout generateMetadata",
+    "h1s": [],
+    "h2s": [
+      "How We Are Different From Others"
+    ],
+    "imgTotal": 3,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": true
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/package/[...slug]",
+    "file": "app/(website)/package/[...slug]/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "{packageDetails.title}"
+    ],
+    "h2s": [
+      "setOpenFaq(openFaq === index ? -1 : index)} > {policy.title}",
+      "₹{Number(packageDetails.agent_actual_price || packageDetails.actual_price).toLocaleString('en-IN')}",
+      "{packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": true,
+    "hasCanonical": true
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/cities",
+    "file": "app/(website)/cities/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "Explore All Cities & Destinations"
+    ],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/hotel",
+    "file": "app/(website)/hotel/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "Get Your Dream Hotel"
+    ],
+    "h2s": [
+      "Book Hotels At Popular Destinations",
+      "Why We’re Best Agency",
+      "Benefits of Booking With Us"
+    ],
+    "imgTotal": 3,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/hotel/[...slug]",
+    "file": "app/(website)/hotel/[...slug]/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "{hotel.name}"
+    ],
+    "h2s": [],
+    "imgTotal": 3,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/cab",
+    "file": "app/(website)/cab/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "Cabs"
+    ],
+    "h2s": [
+      "Exclusive Cab Offers",
+      "City To City-Outstation Cabs"
+    ],
+    "imgTotal": 4,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Travel / Listings",
+    "route": "/customized-package",
+    "file": "app/(website)/customized-package/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Auth (User Access)",
+    "route": "/login",
+    "file": "app/(auth)/login/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Auth (User Access)",
+    "route": "/forget-password",
+    "file": "app/(auth)/forget-password/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Auth (User Access)",
+    "route": "/forgot-password",
+    "file": "app/(auth)/forgot-password/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Auth (User Access)",
+    "route": "/otpvalidation",
+    "file": "app/(auth)/otpvalidation/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/profile",
+    "file": "app/(website)/(users)/profile/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "₹{stats.walletBalance.toLocaleString('en-IN')}"
+    ],
+    "imgTotal": 4,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/editprofile",
+    "file": "app/(website)/(users)/editprofile/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 1,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/bookings",
+    "file": "app/(website)/(users)/bookings/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/savedtour",
+    "file": "app/(website)/(users)/savedtour/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/wallet",
+    "file": "app/(website)/(users)/wallet/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [
+      "₹{walletBalance.toLocaleString('en-IN')}"
+    ],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/withdraw",
+    "file": "app/(website)/(users)/withdraw/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/myreferal",
+    "file": "app/(website)/(users)/myreferal/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "Invite Friends & Earn Package Commissions"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/customized-packages",
+    "file": "app/(website)/(users)/customized-packages/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "User Portal (Private)",
+    "route": "/settings",
+    "file": "app/(website)/(users)/settings/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Utility / Internal",
+    "route": "/error",
+    "file": "app/(website)/error/page.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "Oops! Something went wrong, Try again later."
+    ],
+    "imgTotal": 4,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Utility / Internal",
+    "route": "/email-templates-preview",
+    "file": "app/(website)/email-templates-preview/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "Verify Your Registration",
+      "Reset Your Password",
+      "Secure Login Code",
+      "Booking Request Received!",
+      "Custom Package Enquiry Received"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Utility / Internal",
+    "route": "/loader-test",
+    "file": "app/loader-test/page.js",
+    "layout": null,
+    "isClient": true,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "Loader Component Preview"
+    ],
+    "imgTotal": 0,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  },
+  {
+    "group": "Utility / Internal",
+    "route": "/404",
+    "file": "app/not-found.js",
+    "layout": null,
+    "isClient": false,
+    "hasGenerateMetadata": false,
+    "hasStaticMetadata": false,
+    "metadataSource": "Root layout fallback (/websitesettings)",
+    "h1s": [],
+    "h2s": [
+      "Oops! Looks like you’ve taken a wrong turn."
+    ],
+    "imgTotal": 4,
+    "imgMissingAlt": 0,
+    "hasJsonLd": false,
+    "hasCanonical": false
+  }
+]

@@ -1,0 +1,1523 @@
+[
+  {
+    "file": "app/(website)/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(homeDestinationURL)"
+    ],
+    "codeLength": 2099,
+    "codeExcerpt": "import HomeBanner from '@/components/website/home/HomeBanner'\r\nimport TopDestination from '@/components/website/home/TopDestination'\r\nimport TopTrending from '@/components/website/home/TopTrending'\r\nimport HolidayPackages from '@/components/website/home/HolidayPackages'\r\nimport React from 'react'\r\nimport HiddenGems from '@/components/website/home/HiddenGems'\r\nimport LimiterOffer from '@/components/website/home/LimiterOffer'\r\nimport AllTourActivity from '@/components/website/home/AllTourActivity'"
+  },
+  {
+    "file": "app/(website)/about/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "About Delta Safari – Your Trusted Travel Partner for Unforgettable Holidays"
+      },
+      {
+        "tag": "h4",
+        "text": "Explore With Confidence"
+      },
+      {
+        "tag": "h3",
+        "text": "10+"
+      },
+      {
+        "tag": "h2",
+        "text": "Your Journey to Unforgettable Destinations Starts Here"
+      },
+      {
+        "tag": "h2",
+        "text": "Book Your Holiday Packages with Confidence"
+      },
+      {
+        "tag": "h5",
+        "text": "Every itinerary is carefully planned to provide:"
+      },
+      {
+        "tag": "h6",
+        "text": "Our Core Goal"
+      },
+      {
+        "tag": "h2",
+        "text": "Easy Online Booking at Budget-Friendly Prices"
+      },
+      {
+        "tag": "h5",
+        "text": "{cat.title}"
+      },
+      {
+        "tag": "h3",
+        "text": "Best Travel Deals & Exclusive Holiday Offers"
+      },
+      {
+        "tag": "h6",
+        "text": "Popular Deal Categories:"
+      },
+      {
+        "tag": "h6",
+        "text": "Tailored For Everyone"
+      },
+      {
+        "tag": "h3",
+        "text": "Customized Tours Designed Just for You"
+      },
+      {
+        "tag": "h6",
+        "text": "Tailored Experience Types:"
+      },
+      {
+        "tag": "h2",
+        "text": "Why Choose Delta Safari?"
+      },
+      {
+        "tag": "h5",
+        "text": "{reason.title}"
+      },
+      {
+        "tag": "h2",
+        "text": "Explore Incredible Destinations with Delta Safari"
+      },
+      {
+        "tag": "h4",
+        "text": "Popular Domestic Destinations"
+      },
+      {
+        "tag": "h5",
+        "text": "{dest.name}"
+      },
+      {
+        "tag": "h4",
+        "text": "International Getaways"
+      },
+      {
+        "tag": "h2",
+        "text": "Our Unwavering Promise To You"
+      },
+      {
+        "tag": "h3",
+        "text": "100%"
+      },
+      {
+        "tag": "h3",
+        "text": "24/7"
+      },
+      {
+        "tag": "h4",
+        "text": "Transparent"
+      },
+      {
+        "tag": "h2",
+        "text": "Ready to Plan Your Next Unforgettable Vacation?"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 34532,
+    "codeExcerpt": "import React from 'react';\nimport Link from 'next/link';\nimport './about.css';\n\nexport async function generateMetadata() {\n  return {\n    title: 'About Delta Safari – Your Trusted Travel Partner for Unforgettable Holidays',\n    description: 'Learn about Delta Safari, one of India\\'s trusted travel companies specializing in customized holiday packages, budget tours, luxury vacations, wildlife safaris, and international trips.',\n    keywords: 'Delta Safari, About Delta Safari, travel agency India,"
+  },
+  {
+    "file": "app/(website)/about-us/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 117,
+    "codeExcerpt": "import AboutPage, { generateMetadata } from '../about/page';\n\nexport { generateMetadata };\nexport default AboutPage;\n"
+  },
+  {
+    "file": "app/(website)/contact/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Contact Delta Safari – We're Here to Help You Plan Your Perfect Journey"
+      },
+      {
+        "tag": "h4",
+        "text": "24/7 Support"
+      },
+      {
+        "tag": "h3",
+        "text": "24/7"
+      },
+      {
+        "tag": "h3",
+        "text": "General & Travel Support"
+      },
+      {
+        "tag": "h3",
+        "text": "Call Us Directly"
+      },
+      {
+        "tag": "h3",
+        "text": "Email Support"
+      },
+      {
+        "tag": "h3",
+        "text": "Chat Live"
+      },
+      {
+        "tag": "h3",
+        "text": "For Business Purpose"
+      },
+      {
+        "tag": "h3",
+        "text": "Business Calls"
+      },
+      {
+        "tag": "h3",
+        "text": "Business Email"
+      },
+      {
+        "tag": "h3",
+        "text": "Business WhatsApp"
+      },
+      {
+        "tag": "h2",
+        "text": "Our Offices"
+      },
+      {
+        "tag": "h3",
+        "text": "{office?.office_type}"
+      },
+      {
+        "tag": "h2",
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "tag": "h5",
+        "text": "{faq?.question}"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(contactDetailsURL)"
+    ],
+    "codeLength": 15459,
+    "codeExcerpt": "import React from 'react';\nimport Link from 'next/link';\nimport axios from 'axios';\nimport { contactDetailsURL } from '@/routes/homeRoutes';\nimport ContactForm from '@/components/website/contact/ContactForm';\nimport { fetchPageSeo } from '@/libs/seoHelper';\nimport '../about/about.css';\nimport './contact.css';\n\nexport async function generateMetadata() {\n  return await fetchPageSeo('contact');\n}\n\nasync function page() {\n  const publicUrl = process.env.NEXT_PUBLIC_PUBLIC_URL || '';\n  let contacts ="
+  },
+  {
+    "file": "app/(website)/referal/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Invite Friends & Earn Commission on Every Holiday Tour"
+      },
+      {
+        "tag": "h3",
+        "text": "₹500+ Commission"
+      },
+      {
+        "tag": "h2",
+        "text": "How Does The Referral Program Work?"
+      },
+      {
+        "tag": "h3",
+        "text": "{step.title}"
+      },
+      {
+        "tag": "h2",
+        "text": "Highlights Of Our Referral Program"
+      },
+      {
+        "tag": "h4",
+        "text": "{item.title}"
+      },
+      {
+        "tag": "h2",
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "tag": "h3",
+        "text": "{faq.question}"
+      },
+      {
+        "tag": "h2",
+        "text": "Ready to Turn Travel Sharing into Real Earnings?"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 18652,
+    "codeExcerpt": "import React from 'react';\nimport Link from 'next/link';\nimport '../about/about.css';\nimport './referal.css';\nimport { fetchPageSeo } from '@/libs/seoHelper';\n\nexport async function generateMetadata() {\n  return await fetchPageSeo('referal');\n}\n\nexport default function ReferralPage() {\n  const publicUrl = process.env.NEXT_PUBLIC_PUBLIC_URL || '';\n\n  const steps = [\n    {\n      num: 1,\n      icon: 'fa-solid fa-user-plus',\n      title: 'Create Account',\n      desc: 'Sign up on Delta Safari. Your u"
+  },
+  {
+    "file": "app/(website)/corporate/layout.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 206,
+    "codeExcerpt": "import { fetchPageSeo } from '@/libs/seoHelper';\n\nexport async function generateMetadata() {\n  return await fetchPageSeo('corporate');\n}\n\nexport default function Layout({ children }) {\n  return children;\n}\n"
+  },
+  {
+    "file": "app/(website)/corporate/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Get a custom corporate quote in 5 steps"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 3574,
+    "codeExcerpt": "\"use client\";\r\n\r\nimport React, { useState } from \"react\";\r\nimport CorporateHero from \"@/components/corporate/CorporateHero\";\r\nimport CorporateServices from \"@/components/corporate/CorporateServices\";\r\nimport CorporateDestinations from \"@/components/corporate/CorporateDestinations\";\r\nimport WhyCorporate from \"@/components/corporate/WhyCorporate\";\r\nimport PackagesGrid from \"@/components/corporate/PackagesGrid\";\r\nimport ProcessRoute from \"@/components/corporate/ProcessRoute\";\r\nimport CorporateWizar"
+  },
+  {
+    "file": "app/(website)/(pages)/blogs/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Travel Inspiration"
+      },
+      {
+        "tag": "h4",
+        "text": "Categories"
+      },
+      {
+        "tag": "h4",
+        "text": "Trending Insights"
+      },
+      {
+        "tag": "h4",
+        "text": "Popular Tags"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(getAllBlogsUrl)",
+      "axios.get(getTotalCategoryBlogsUrl)",
+      "axios.get(getTrendingBlogsUrl)"
+    ],
+    "codeLength": 4750,
+    "codeExcerpt": "import React from 'react';\r\nimport \"./page.css\"\r\nimport BlogCard from '@/components/blog/BlogCard';\r\nimport { getAllBlogsUrl, getTotalCategoryBlogsUrl, getTrendingBlogsUrl } from '@/routes/commonRoutes';\r\nimport { notFound, redirect } from 'next/navigation';\r\nimport axios from 'axios';\r\nimport InfiniteScrollBlogComponent from '@/components/blog/InfiniteScrollBlogComponent';\r\nimport Link from 'next/link';\r\nimport BlogSearch from '@/components/blog/BlogSearch';\r\nimport BlogSearchResults from '@/co"
+  },
+  {
+    "file": "app/(website)/(pages)/blogs/[slug]/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Travel Inspiration"
+      },
+      {
+        "tag": "h1",
+        "text": "{particularBlog?.title}"
+      },
+      {
+        "tag": "h6",
+        "text": "Tag:"
+      },
+      {
+        "tag": "h6",
+        "text": "Share:"
+      },
+      {
+        "tag": "h4",
+        "text": "Categories"
+      },
+      {
+        "tag": "h4",
+        "text": "Trending Insights"
+      },
+      {
+        "tag": "h4",
+        "text": "Popular Tags"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(`${getAllBlogsUrl}?cat=${slug}`)",
+      "axios.get(`${getParticularBlogUrl}?id=${postId}`)",
+      "axios.get(getTotalCategoryBlogsUrl)",
+      "axios.get(getTrendingBlogsUrl)"
+    ],
+    "codeLength": 10168,
+    "codeExcerpt": "import React, { cache } from 'react';\r\nimport \"../page.css\"\r\nimport BlogCard from '@/components/blog/BlogCard';\r\nimport { getAllBlogsUrl, getParticularBlogUrl, getTotalCategoryBlogsUrl, getTrendingBlogsUrl } from '@/routes/commonRoutes';\r\nimport { notFound, redirect } from 'next/navigation';\r\nimport axios from 'axios';\r\nimport InfiniteScrollBlogComponent from '@/components/blog/InfiniteScrollBlogComponent';\r\nimport Link from 'next/link';\r\nimport { urlEncode } from '@/libs/urlHelper';\r\nimport Blo"
+  },
+  {
+    "file": "app/(website)/(pages)/faq/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Frequently Asked Questions"
+      },
+      {
+        "tag": "h2",
+        "text": "Everything You Need to Know About Delta Safari"
+      },
+      {
+        "tag": "h5",
+        "text": "{faq?.question}"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(`${getFaqPageUrl}?page=faq`)"
+    ],
+    "codeLength": 7418,
+    "codeExcerpt": "import React from 'react';\nimport Link from 'next/link';\nimport axios from 'axios';\nimport { getFaqPageUrl } from '@/routes/commonRoutes';\nimport './page.css';\nimport { fetchPageSeo } from '@/libs/seoHelper';\n\nexport async function generateMetadata() {\n  const seoData = await fetchPageSeo('faq');\n  if (seoData && seoData.title && seoData.title !== 'Delta Safari') {\n    return seoData;\n  }\n  return {\n    title: 'Frequently Asked Questions (FAQ) – Delta Safari',\n    description: 'Find answers to c"
+  },
+  {
+    "file": "app/(website)/(pages)/pages/[slug]/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "{pageContent?.title}"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.get(`${particularPageUrl}?page=${slug}`)"
+    ],
+    "codeLength": 1756,
+    "codeExcerpt": "import React from 'react'\r\nimport pagesData from '@/libs/pagesData.json'\r\nimport { notFound, redirect } from 'next/navigation'\r\nimport Link from 'next/link'\r\nimport axios from 'axios'\r\nimport { particularPageUrl } from '@/routes/serviceRoutes'\r\nimport NotFound from '@/components/website/common/NotFound'\r\nimport './pages.css'\r\nimport { fetchPageSeo } from '@/libs/seoHelper';\r\n\r\nexport async function generateMetadata({ params }) {\r\n  const { slug } = await params;\r\n  return await fetchPageSeo(slug"
+  },
+  {
+    "file": "app/(website)/package/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Get Your Discounted Package"
+      },
+      {
+        "tag": "h3",
+        "text": "{pkg.title}"
+      },
+      {
+        "tag": "h2",
+        "text": "Popular Holiday Destinations"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.post(getAllCitiesUrl, {})",
+      "axios.post(getCitiesUrl, { condition: { status: 1 } })",
+      "axios.post(getCitiesUrl, { condition: { status: 1 } })",
+      "axios.get(getDiscountedPackagesUrl)",
+      "axios.post(getFilterPackages, {})",
+      "axios.post(getFilterPackages, {})"
+    ],
+    "codeLength": 14466,
+    "codeExcerpt": "import SwiperSlideWrapper from '@/components/website/common/SwiperSlideWrapper'\r\nimport SwiperWrapper from '@/components/website/common/SwiperWrapper'\r\nimport Faq from '@/components/website/home/Faq';\r\nimport HomeBanner from '@/components/website/home/HomeBanner';\r\nimport SwiperWrapperPackage from '@/components/website/package/SwiperWrapperPackage';\r\nimport SwiperCities from '@/components/website/package/SwiperCities';\r\nimport SwiperBestPackages from '@/components/website/package/SwiperBestPacka"
+  },
+  {
+    "file": "app/(website)/package/cities/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 72,
+    "codeExcerpt": "import CitiesPage from '../../cities/page';\n\nexport default CitiesPage;\n"
+  },
+  {
+    "file": "app/(website)/package/[...slug]/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "{packageDetails.title}"
+      },
+      {
+        "tag": "h3",
+        "text": "Package Overview"
+      },
+      {
+        "tag": "h4",
+        "text": "Package Highlights & Themes:"
+      },
+      {
+        "tag": "h3",
+        "text": "Day Wise Itinerary"
+      },
+      {
+        "tag": "h4",
+        "text": "{itinerary.title}"
+      },
+      {
+        "tag": "h3",
+        "text": "Inclusions & Exclusions"
+      },
+      {
+        "tag": "h4",
+        "text": "What is Included"
+      },
+      {
+        "tag": "h4",
+        "text": "What is Not Included"
+      },
+      {
+        "tag": "h3",
+        "text": "Terms, Cancellation & Policies"
+      },
+      {
+        "tag": "h2",
+        "text": "setOpenFaq(openFaq === index ? -1 : index)} > {policy.title}"
+      },
+      {
+        "tag": "h5",
+        "text": "Cancellation & Refund Policy"
+      },
+      {
+        "tag": "h5",
+        "text": "Important Travel Guidelines"
+      },
+      {
+        "tag": "h2",
+        "text": "₹{Number(packageDetails.agent_actual_price || packageDetails.actual_price).toLocaleString('en-IN')}"
+      },
+      {
+        "tag": "h2",
+        "text": "{packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}"
+      },
+      {
+        "tag": "h5",
+        "text": "Need Expert Assistance?"
+      },
+      {
+        "tag": "h4",
+        "text": "{packageDetails.title}"
+      },
+      {
+        "tag": "h6",
+        "text": "Travelers Details ({guestsCount} Guest{guestsCount > 1 ? 's' : ''})"
+      },
+      {
+        "tag": "h4",
+        "text": "Your Safari is Booked!"
+      }
+    ],
+    "hasSchema": true,
+    "apiCalls": [],
+    "codeLength": 88214,
+    "codeExcerpt": "\"use client\"\r\nimport React, { useEffect, useRef, useState } from 'react';\r\nimport PackageBanner from '@/components/website/packages/PackageBanner';\r\nimport { axiosNormalGet, axiosNormalPost } from '@/libs/axiosHelper';\r\nimport { useParams, useRouter } from 'next/navigation';\r\nimport { \r\n  createBookingsUrl, \r\n  createRazorpayOrderUrl, \r\n  verifyRazorpayPaymentUrl, \r\n  getParticularPackageUrl, \r\n  toggleSavePackageUrl, \r\n  checkIsPackageSavedUrl \r\n} from '@/routes/serviceRoutes';\r\nimport LoadingC"
+  },
+  {
+    "file": "app/(website)/packages/[...slug]/layout.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "generateMetadata (async)",
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.post(getDestinationsUrl, {\n        condition: isNaN(destinationSlugOrId)",
+      "axios.post(getAllCitiesUrl, {\n        condition: isNaN(citySlugOrId)"
+    ],
+    "codeLength": 6382,
+    "codeExcerpt": "import axios from 'axios';\nimport { getDestinationsUrl } from '@/routes/serviceRoutes';\nimport { getAllCitiesUrl } from '@/routes/packageRoutes';\n\nfunction parseSlugFilters(slugs) {\n  const filters = {};\n  if (!slugs) return filters;\n  const slugArray = Array.isArray(slugs) ? slugs : [slugs];\n  slugArray.forEach((slug) => {\n    const hyphenIndex = slug.indexOf('-');\n    if (hyphenIndex === -1) {\n      filters['name'] = decodeURI(slug);\n      return;\n    }\n    const key = slug.substring(0, hyphen"
+  },
+  {
+    "file": "app/(website)/packages/[...slug]/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h5",
+        "text": "No Packages Selected"
+      },
+      {
+        "tag": "h6",
+        "text": "Filter By Price Range"
+      },
+      {
+        "tag": "h5",
+        "text": "No Matching Packages"
+      },
+      {
+        "tag": "h3",
+        "text": "{pkg.title}"
+      },
+      {
+        "tag": "h4",
+        "text": "Traveler&apos;s Guide &amp; Destination Insights"
+      },
+      {
+        "tag": "h6",
+        "text": "Best Time to Visit &amp; Weather"
+      },
+      {
+        "tag": "h6",
+        "text": "100% Safety &amp; Certified Guides"
+      },
+      {
+        "tag": "h6",
+        "text": "Customizable Itineraries"
+      },
+      {
+        "tag": "h6",
+        "text": "Best Price &amp; Flexible Booking"
+      },
+      {
+        "tag": "h2",
+        "text": "How We Are Different From Others"
+      },
+      {
+        "tag": "h5",
+        "text": "Own Solar &amp; Luxury Safari Vessels"
+      },
+      {
+        "tag": "h5",
+        "text": "Govt. Certified Forest Naturalists"
+      },
+      {
+        "tag": "h5",
+        "text": "Freshly Cooked Regional Meals"
+      },
+      {
+        "tag": "h5",
+        "text": "100% Verified Resorts &amp; Safety"
+      },
+      {
+        "tag": "h4",
+        "text": "Zero Middlemen. Best Rates."
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 50833,
+    "codeExcerpt": "'use client';\n\nimport React, { useState, useEffect, useMemo, useRef } from 'react';\nimport { useInView } from 'react-intersection-observer';\nimport { axiosNormalPost } from '@/libs/axiosHelper';\nimport { getFilterPackages, getAllCitiesUrl } from '@/routes/packageRoutes';\nimport { getDestinationsUrl } from '@/routes/serviceRoutes';\nimport './page.css';\nimport { useParams } from 'next/navigation';\nimport HomeBanner from '@/components/website/home/HomeBanner';\nimport Filter from '@/components/websi"
+  },
+  {
+    "file": "app/(website)/cities/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Explore All Cities & Destinations"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.post(getAllCitiesUrl, { condition: { is_active: 1 } })"
+    ],
+    "codeLength": 6382,
+    "codeExcerpt": "import React from 'react';\nimport { getAllCitiesUrl } from '@/routes/packageRoutes';\nimport axios from 'axios';\nimport Link from 'next/link';\n\nasync function CitiesPage() {\n    let cities = [];\n    try {\n        const response = await axios.post(getAllCitiesUrl, { condition: { is_active: 1 } });\n        if (response.data?.status && Array.isArray(response.data?.cities)) {\n            cities = response.data.cities;\n        }\n        console.log(response);\n        \n    } catch (error) {\n        cit"
+  },
+  {
+    "file": "app/(website)/hotel/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Get Your Dream Hotel"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Bali Paradaise"
+      },
+      {
+        "tag": "h6",
+        "text": "POKHARA"
+      },
+      {
+        "tag": "h6",
+        "text": "Himachal"
+      },
+      {
+        "tag": "h6",
+        "text": "Sao Paulo"
+      },
+      {
+        "tag": "h6",
+        "text": "Bangkok"
+      },
+      {
+        "tag": "h6",
+        "text": "Barcelona"
+      },
+      {
+        "tag": "h6",
+        "text": "Burj Khalifa"
+      },
+      {
+        "tag": "h6",
+        "text": "New York"
+      },
+      {
+        "tag": "h6",
+        "text": "9 May"
+      },
+      {
+        "tag": "h6",
+        "text": "16 June"
+      },
+      {
+        "tag": "h6",
+        "text": "1 Adults, 0 Child"
+      },
+      {
+        "tag": "h6",
+        "text": "Guest & Room"
+      },
+      {
+        "tag": "h6",
+        "text": "Room-1"
+      },
+      {
+        "tag": "h6",
+        "text": "Adult"
+      },
+      {
+        "tag": "h6",
+        "text": "Children"
+      },
+      {
+        "tag": "h2",
+        "text": "Book Hotels At Popular Destinations"
+      },
+      {
+        "tag": "h3",
+        "text": "Our Top Hotel Chains"
+      },
+      {
+        "tag": "h2",
+        "text": "Why We’re Best Agency"
+      },
+      {
+        "tag": "h4",
+        "text": "Welcome to Delta Safari – Your Gateway to Unforgettable Journeys!"
+      },
+      {
+        "tag": "h2",
+        "text": "Benefits of Booking With Us"
+      },
+      {
+        "tag": "h5",
+        "text": "Customised Itineraries"
+      },
+      {
+        "tag": "h5",
+        "text": "Premium Comfort"
+      },
+      {
+        "tag": "h5",
+        "text": "Wallet-Friendly Prices"
+      },
+      {
+        "tag": "h5",
+        "text": "Wallet-Friendly Prices"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 66903,
+    "codeExcerpt": "import Faq from '@/components/website/home/Faq'\r\nimport React from 'react'\r\n\r\nfunction page() {\r\n    const hotelChain = [\r\n        {\r\n            \"name\": \"Amritara\",\r\n            \"url\": \"https://images.emtcontent.com/hotel-img/amritara-hotel-hp.png\"\r\n        },\r\n        {\r\n            \"name\": \"Byke\",\r\n            \"url\": \"https://images.emtcontent.com/hotel-img/the-byke-hotels-hp-logo.webp\"\r\n        },\r\n        {\r\n            \"name\": \"RedHouse\",\r\n            \"url\": \"https://images.emtcontent.com/"
+  },
+  {
+    "file": "app/(website)/hotel/[...slug]/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Hotel Not Found"
+      },
+      {
+        "tag": "h1",
+        "text": "{hotel.name}"
+      },
+      {
+        "tag": "h3",
+        "text": "About The Property"
+      },
+      {
+        "tag": "h3",
+        "text": "Amenities & Highlights"
+      },
+      {
+        "tag": "h3",
+        "text": "Available Room Categories"
+      },
+      {
+        "tag": "h4",
+        "text": "{room.name}"
+      },
+      {
+        "tag": "h3",
+        "text": "Tour Packages Featuring This Stay"
+      },
+      {
+        "tag": "h5",
+        "text": "{pkg.title}"
+      },
+      {
+        "tag": "h4",
+        "text": "Direct Stay Enquiry"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 39307,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport { useParams, useRouter } from 'next/navigation';\nimport Link from 'next/link';\nimport { axiosNormalGet, axiosNormalPost } from '@/libs/axiosHelper';\nimport { getParticularHotelUrl, createContactQueryUrl } from '@/routes/serviceRoutes';\nimport LoadingComponent from '@/components/common/LoadingComponent';\nimport NotFound from '@/components/website/common/NotFound';\nimport ShareButton from '@/components/common/ShareButton';\ni"
+  },
+  {
+    "file": "app/(website)/cab/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Cabs"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Bali Paradaise"
+      },
+      {
+        "tag": "h6",
+        "text": "POKHARA"
+      },
+      {
+        "tag": "h6",
+        "text": "Himachal"
+      },
+      {
+        "tag": "h6",
+        "text": "Sao Paulo"
+      },
+      {
+        "tag": "h6",
+        "text": "Bangkok"
+      },
+      {
+        "tag": "h6",
+        "text": "Barcelona"
+      },
+      {
+        "tag": "h6",
+        "text": "Burj Khalifa"
+      },
+      {
+        "tag": "h6",
+        "text": "New York"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Kolkata"
+      },
+      {
+        "tag": "h6",
+        "text": "Bali Paradaise"
+      },
+      {
+        "tag": "h6",
+        "text": "POKHARA"
+      },
+      {
+        "tag": "h6",
+        "text": "Himachal"
+      },
+      {
+        "tag": "h6",
+        "text": "Sao Paulo"
+      },
+      {
+        "tag": "h6",
+        "text": "Bangkok"
+      },
+      {
+        "tag": "h6",
+        "text": "Barcelona"
+      },
+      {
+        "tag": "h6",
+        "text": "Burj Khalifa"
+      },
+      {
+        "tag": "h6",
+        "text": "New York"
+      },
+      {
+        "tag": "h6",
+        "text": "7 May"
+      },
+      {
+        "tag": "h2",
+        "text": "Exclusive Cab Offers"
+      },
+      {
+        "tag": "h2",
+        "text": "City To City-Outstation Cabs"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 31040,
+    "codeExcerpt": "import Faq from '@/components/website/home/Faq'\r\nimport React from 'react'\r\n\r\nfunction page() {\r\n  const hotelCities = [\r\n    {\r\n      \"name\": \"Chennai\",\r\n      \"image\": \"https://images.emtcontent.com/hotel-img/chennai-sm.webp\",\r\n      \"categories\": [\r\n        \"Hotels\",\r\n        \"Budget Hotels\",\r\n        \"3 Star Hotels\",\r\n        \"4 Star Hotels\",\r\n        \"5 Star Hotels\"\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Kolkata\",\r\n      \"image\": \"https://images.emtcontent.com/hotel-img/kolkata-sm.webp\",\r\n"
+  },
+  {
+    "file": "app/(website)/customized-package/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 110,
+    "codeExcerpt": "import React from 'react'\r\n\r\nfunction page() {\r\n  return (\r\n    <div>page</div>\r\n  )\r\n}\r\n\r\nexport default page"
+  },
+  {
+    "file": "app/(auth)/layout.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 218,
+    "codeExcerpt": "import ProviderStore from \"@/services/ProviderStore\";\n\nexport default function AuthLayout({ children }) {\n  return <>\n    <ProviderStore>\n      <section>\n        {children}\n      </section>\n    </ProviderStore>\n  </>\n}"
+  },
+  {
+    "file": "app/(auth)/login/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 17852,
+    "codeExcerpt": "\"use client\";\nimport React, { useState, useEffect, Suspense } from \"react\";\nimport Link from \"next/link\";\nimport { emailValidation, passwordValidation, showMessage } from \"../../../libs/commonHelper\";\nimport { useRouter, useSearchParams } from \"next/navigation\";\nimport { useDispatch, useSelector } from \"react-redux\";\nimport { setUser } from \"@/services/reducers/userAuthSlice\";\nimport \"../auth.css\";\nimport { axiosNormalPost } from \"@/libs/axiosHelper\";\nimport { loginURL, registerURL, googleLoginU"
+  },
+  {
+    "file": "app/(auth)/forgot-password/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 51,
+    "codeExcerpt": "export { default } from '../forget-password/page';\n"
+  },
+  {
+    "file": "app/(auth)/forget-password/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h5",
+        "text": "{step === 1 && \"Forgot Password\"} {step === 2 && \"Enter OTP & Reset Password\"} {step === 3 && \"Password Reset Complete\"}"
+      },
+      {
+        "tag": "h5",
+        "text": "Password Reset Successful!"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 16618,
+    "codeExcerpt": "\"use client\";\nimport React, { useState, useEffect, Suspense } from \"react\";\nimport Link from \"next/link\";\nimport { useRouter } from \"next/navigation\";\nimport { emailValidation, passwordValidation, showMessage } from \"../../../libs/commonHelper\";\nimport { axiosNormalPost } from \"@/libs/axiosHelper\";\nimport { \n  forgotPasswordReqURL, \n  verifyResetOtpURL, \n  resetPasswordURL, \n  resendResetOtpURL \n} from \"@/routes/authRoutes\";\nimport \"../auth.css\";\n\nfunction ForgetPasswordContent() {\n  const route"
+  },
+  {
+    "file": "app/(auth)/otpvalidation/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 4727,
+    "codeExcerpt": "\"use client\"\nimport { useRouter, useParams  } from \"next/navigation\"\nimport { useEffect, useState } from \"react\";\nimport \"../auth.css\";\nimport OTPInput from \"react-otp-input\";\nfunction page() {\n    const [loading, setLoaging] = useState(true);\n    const [error, setError] = useState(null);\n    const [otp, setOtp] = useState('');\n    const [resend, setResend] = useState(true);\n    const searchParams = useParams();\n    console.log(searchParams)\n    const phone = '7845129636';\n    const route = useR"
+  },
+  {
+    "file": "app/(website)/(users)/layout.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h5",
+        "text": "Authenticating session..."
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 2232,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from \"react\";\nimport \"./users.css\";\nimport SideBar from \"@/components/user/SideBar\";\nimport { useSelector } from \"react-redux\";\nimport { useRouter } from \"next/navigation\";\n\nexport default function UserLayout({ children }) {\n  const router = useRouter();\n  const { isLoggedIn, token } = useSelector((state) => state.userAuth || {});\n  const [isChecking, setIsChecking] = useState(true);\n  const [isAuthenticated, setIsAuthenticated] = useState(fal"
+  },
+  {
+    "file": "app/(website)/(users)/profile/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "{user?.first_name ? `${user.first_name} ${user?.last_name || ''}` : 'Certified Travel Agent'}"
+      },
+      {
+        "tag": "h5",
+        "text": "6-Month Agent Commission & Revenue Trajectory"
+      },
+      {
+        "tag": "h5",
+        "text": "Recent Client Bookings & Commission Ledger"
+      },
+      {
+        "tag": "h5",
+        "text": "All Client Bookings & Travelers Ledger"
+      },
+      {
+        "tag": "h5",
+        "text": "Indian Bank Account & UPI Management"
+      },
+      {
+        "tag": "h2",
+        "text": "₹{stats.walletBalance.toLocaleString('en-IN')}"
+      },
+      {
+        "tag": "h5",
+        "text": "Withdraw Commission to Bank"
+      },
+      {
+        "tag": "h5",
+        "text": "Wallet Transactions & Commission History"
+      },
+      {
+        "tag": "h5",
+        "text": "Booking #{viewBookingModal.bookings_id || viewBookingModal.id} Details"
+      },
+      {
+        "tag": "h6",
+        "text": "Registered Travelers ({safeParseTravelers(viewBookingModal.travelers).length || viewBookingModal.total_travelers || 1})"
+      },
+      {
+        "tag": "h3",
+        "text": "{user?.first_name ? `${user.first_name} ${user?.last_name || ''}` : 'Corporate Enterprise'}"
+      },
+      {
+        "tag": "h5",
+        "text": "Company Team Bookings & Itineraries"
+      },
+      {
+        "tag": "h5",
+        "text": "Company Information & Registered Profile"
+      },
+      {
+        "tag": "h5",
+        "text": "Enterprise Safari Benefits & Privileges"
+      },
+      {
+        "tag": "h6",
+        "text": "Private Luxury Boat Charters"
+      },
+      {
+        "tag": "h6",
+        "text": "Corporate GST Invoicing"
+      },
+      {
+        "tag": "h6",
+        "text": "24/7 Dedicated Tour Manager"
+      },
+      {
+        "tag": "h5",
+        "text": "Corporate Booking #{viewBookingModal.bookings_id || viewBookingModal.id}"
+      },
+      {
+        "tag": "h6",
+        "text": "Registered Team Travelers ({safeParseTravelers(viewBookingModal.travelers).length || viewBookingModal.total_travelers || 1})"
+      },
+      {
+        "tag": "h3",
+        "text": "{user?.first_name ? `${user.first_name} ${user?.last_name || ''}` : 'Safari Explorer'}"
+      },
+      {
+        "tag": "h5",
+        "text": "My Safari Bookings & Itineraries"
+      },
+      {
+        "tag": "h6",
+        "text": "No Safari Bookings Yet"
+      },
+      {
+        "tag": "h5",
+        "text": "Saved Packages &amp; Wishlist ({savedPackages.length})"
+      },
+      {
+        "tag": "h6",
+        "text": "{pkg.title}"
+      },
+      {
+        "tag": "h5",
+        "text": "Personal Details & Account Preferences"
+      },
+      {
+        "tag": "h5",
+        "text": "Delta Safari Member Privileges"
+      },
+      {
+        "tag": "h6",
+        "text": "Guaranteed AC Houseboats"
+      },
+      {
+        "tag": "h6",
+        "text": "Fresh Bengali Gastronomy"
+      },
+      {
+        "tag": "h6",
+        "text": "100% Forest Safety & Permits"
+      },
+      {
+        "tag": "h5",
+        "text": "Booking #{viewBookingModal.bookings_id || viewBookingModal.id} Details"
+      },
+      {
+        "tag": "h6",
+        "text": "Registered Travelers ({safeParseTravelers(viewBookingModal.travelers).length || viewBookingModal.total_travelers || 1})"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 121019,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport \"../users.css\";\nimport { useSelector, useDispatch } from 'react-redux';\nimport { useRouter } from 'next/navigation';\nimport { axiosGet, axiosPost, axiosNormalPost } from '@/libs/axiosHelper';\nimport { getUserDetailsURL, getAgentDashboardStatsURL, updateAgentBankDetailsURL, requestAgentWithdrawalURL } from '@/routes/authRoutes';\nimport { setUser } from '@/services/reducers/userAuthSlice';\nimport { showMessage } from '@/libs"
+  },
+  {
+    "file": "app/(website)/(users)/bookings/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "{isAgent ? 'Client Bookings & Commission Ledger' : 'My Tour Reservations'}"
+      },
+      {
+        "tag": "h5",
+        "text": "Booking #{selectedBooking.bookings_id || selectedBooking.id} Dossier"
+      },
+      {
+        "tag": "h6",
+        "text": "Registered Travelers ({safeParseTravelers(selectedBooking.travelers).length || selectedBooking.total_travelers || 1})"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 14039,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport { useSelector } from 'react-redux';\nimport { useRouter } from 'next/navigation';\nimport { axiosGet } from '@/libs/axiosHelper';\nimport { getAgentBookingsURL, getAgentDashboardStatsURL } from '@/routes/authRoutes';\n\nexport default function BookingsPage() {\n    const router = useRouter();\n    const token = useSelector((state) => state.userAuth?.token);\n    const { user } = useSelector((state) => state.userAuth || {});\n    co"
+  },
+  {
+    "file": "app/(website)/(users)/customized-packages/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "My Custom Package Enquiries"
+      },
+      {
+        "tag": "h5",
+        "text": "Saved Custom Requests ({enquiries.length})"
+      },
+      {
+        "tag": "h5",
+        "text": "No Custom Packages Found"
+      },
+      {
+        "tag": "h5",
+        "text": "{selectedEnquiry.destination}"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 18497,
+    "codeExcerpt": "'use client';\n\nimport React, { useState, useEffect } from 'react';\nimport { useSelector } from 'react-redux';\nimport { axiosGet } from '@/libs/axiosHelper';\nimport { getCustomPackageEnquiriesURL } from '@/routes/authRoutes';\nimport CustomPackageWizardForm from '@/components/website/CustomPackageWizardForm';\n\nexport default function UserCustomizedPackagesPage() {\n  const { token, user } = useSelector((state) => state.userAuth || {});\n  const activeToken = token || (typeof window !== 'undefined' ?"
+  },
+  {
+    "file": "app/(website)/(users)/editprofile/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Edit Profile Information"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [
+      "axios.post(editProfileURL, data, {\n                headers: {\n                  "
+    ],
+    "codeLength": 13503,
+    "codeExcerpt": "\"use client\";\nimport React, { useState, useEffect } from 'react';\nimport { useSelector, useDispatch } from 'react-redux';\nimport { useRouter } from 'next/navigation';\nimport axios from 'axios';\nimport { showMessage } from '@/libs/commonHelper';\nimport { editProfileURL } from '@/routes/authRoutes';\nimport { setUser } from '@/services/reducers/userAuthSlice';\n\nexport default function EditProfilePage() {\n    const router = useRouter();\n    const dispatch = useDispatch();\n    const { user, token } ="
+  },
+  {
+    "file": "app/(website)/(users)/myreferal/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Customer Exclusive Feature"
+      },
+      {
+        "tag": "h2",
+        "text": "Invite Friends & Earn Package Commissions"
+      },
+      {
+        "tag": "h5",
+        "text": "Referred Friends ({data.referredUsers.length})"
+      },
+      {
+        "tag": "h5",
+        "text": "Referral Commission Transactions"
+      },
+      {
+        "tag": "h6",
+        "text": "How The Referral Program Works"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 18239,
+    "codeExcerpt": "'use client';\nimport React, { useState, useEffect } from 'react';\nimport { useSelector } from 'react-redux';\nimport { axiosPost } from '@/libs/axiosHelper';\nimport { getReferralStatsURL } from '@/routes/authRoutes';\nimport { showMessage } from '@/libs/commonHelper';\n\nexport default function MyReferralPage() {\n  const authState = useSelector((state) => state?.userAuth);\n  const token = authState?.token || (typeof window !== 'undefined' ? localStorage.getItem('token') : null);\n\n  const [loading, s"
+  },
+  {
+    "file": "app/(website)/(users)/savedtour/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Saved Travel Packages"
+      },
+      {
+        "tag": "h5",
+        "text": "No Saved Packages Found"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 11490,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport Link from 'next/link';\nimport { useSelector } from 'react-redux';\nimport { useRouter } from 'next/navigation';\nimport { axiosNormalPost } from '@/libs/axiosHelper';\nimport { getSavedPackagesUrl, toggleSavePackageUrl } from '@/routes/serviceRoutes';\nimport { showMessage } from '@/libs/commonHelper';\nimport PackageCard from '@/components/website/package/PackageCard';\n\nexport default function SavedTourPage() {\n    const route"
+  },
+  {
+    "file": "app/(website)/(users)/settings/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h3",
+        "text": "Account Security & Change Password"
+      },
+      {
+        "tag": "h3",
+        "text": "Account Preferences"
+      },
+      {
+        "tag": "h6",
+        "text": "Email Travel Alerts"
+      },
+      {
+        "tag": "h6",
+        "text": "Deactivate Account"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 11205,
+    "codeExcerpt": "\"use client\";\nimport React, { useState } from 'react';\nimport { useSelector } from 'react-redux';\nimport { showMessage, passwordValidation } from '@/libs/commonHelper';\nimport { axiosPost } from '@/libs/axiosHelper';\nimport { changePasswordURL } from '@/routes/authRoutes';\n\nexport default function SettingsPage() {\n    const { token } = useSelector((state) => state.userAuth || {});\n\n    const [passwords, setPasswords] = useState({\n        currentPassword: '',\n        newPassword: '',\n        conf"
+  },
+  {
+    "file": "app/(website)/(users)/wallet/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "₹{walletBalance.toLocaleString('en-IN')}"
+      },
+      {
+        "tag": "h3",
+        "text": "₹{totalEarned.toLocaleString('en-IN')}"
+      },
+      {
+        "tag": "h5",
+        "text": "Commission & Payout Transaction Ledger"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 7463,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport { useSelector } from 'react-redux';\nimport { useRouter } from 'next/navigation';\nimport { axiosGet } from '@/libs/axiosHelper';\n\nexport default function WalletPage() {\n    const router = useRouter();\n    const token = useSelector((state) => state.userAuth?.token);\n    const { user } = useSelector((state) => state.userAuth || {});\n\n    const [stats, setStats] = useState(null);\n    const [loading, setLoading] = useState(true"
+  },
+  {
+    "file": "app/(website)/(users)/withdraw/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h4",
+        "text": "Withdraw Commission to Indian Bank Account"
+      },
+      {
+        "tag": "h6",
+        "text": "1. Enter Payout Amount (₹)"
+      },
+      {
+        "tag": "h6",
+        "text": "2. Manage Indian Bank & UPI Details"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 12931,
+    "codeExcerpt": "\"use client\";\n\nimport React, { useState, useEffect } from 'react';\nimport { useSelector } from 'react-redux';\nimport { axiosGet, axiosNormalPost } from '@/libs/axiosHelper';\nimport { showMessage } from '@/libs/commonHelper';\n\nexport default function WithdrawPage() {\n    const token = useSelector((state) => state.userAuth?.token);\n    const { user } = useSelector((state) => state.userAuth || {});\n\n    const [stats, setStats] = useState(null);\n    const [amount, setAmount] = useState('');\n    cons"
+  },
+  {
+    "file": "app/not-found.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Oops! Looks like you’ve taken a wrong turn."
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 5672,
+    "codeExcerpt": "import Footer from '@/components/website/Footer'\r\nimport Header from '@/components/website/Header'\r\nimport React from 'react'\r\n\r\nfunction notFound() {\r\n    return (\r\n        <>\r\n            <div class=\"error-page\">\r\n                <div class=\"container\">\r\n                    <div class=\"row gy-5 align-items-center justify-content-between\">\r\n                        <div class=\"col-xl-4 col-lg-5\">\r\n                            <div class=\"error-content\">\r\n                                <svg width"
+  },
+  {
+    "file": "app/loader-test/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Loader Component Preview"
+      },
+      {
+        "tag": "h6",
+        "text": "Loading.js"
+      },
+      {
+        "tag": "h6",
+        "text": "LoadingComponent.js"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 2355,
+    "codeExcerpt": "\"use client\"\nimport React, { useState } from 'react';\nimport Loading from '@/components/common/Loading';\nimport LoadingComponent from '@/components/common/LoadingComponent';\n\nexport default function LoaderTestPage() {\n  const [size, setSize] = useState(140);\n\n  return (\n    <div className=\"container py-5 text-center\" style={{ minHeight: '100vh', fontFamily: 'sans-serif' }}>\n      <div className=\"card shadow-sm border-0 rounded-4 p-5 bg-white max-w-3xl mx-auto\">\n        <h2 className=\"fw-bold mb-"
+  },
+  {
+    "file": "app/(website)/email-templates-preview/page.js",
+    "exists": true,
+    "isClient": true,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Verify Your Registration"
+      },
+      {
+        "tag": "h2",
+        "text": "Reset Your Password"
+      },
+      {
+        "tag": "h2",
+        "text": "Secure Login Code"
+      },
+      {
+        "tag": "h2",
+        "text": "Booking Request Received!"
+      },
+      {
+        "tag": "h2",
+        "text": "Custom Package Enquiry Received"
+      },
+      {
+        "tag": "h3",
+        "text": "Delta Safari Mailjet HTML Email Templates"
+      },
+      {
+        "tag": "h6",
+        "text": "Select Email Template"
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 19779,
+    "codeExcerpt": "'use client';\n\nimport React, { useState } from 'react';\n\nconst BRAND_COLOR = \"#2196f3\";\nconst BRAND_LIGHT_BG = \"#e3f2fd\";\nconst BRAND_BORDER = \"#90caf9\";\n\nconst wrapInBaseTemplate = (title, preheader, bodyContent) => {\n  return `<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>${title}</title>\n    <style>\n        body {\n            margin: 0;\n            padding: 0;\n            background-colo"
+  },
+  {
+    "file": "app/(website)/error/page.js",
+    "exists": true,
+    "isClient": false,
+    "exports": [
+      "default export"
+    ],
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "Oops! Something went wrong, Try again later."
+      }
+    ],
+    "hasSchema": false,
+    "apiCalls": [],
+    "codeLength": 5331,
+    "codeExcerpt": "import Footer from '@/components/website/Footer'\r\nimport Header from '@/components/website/Header'\r\nimport React from 'react'\r\n\r\nfunction page() {\r\n  return (\r\n    <>\r\n    <div class=\"error-page\">\r\n        <div class=\"container\">\r\n            <div class=\"row gy-5 align-items-center justify-content-between\">\r\n                <div class=\"col-xl-4 col-lg-5\">\r\n                    <div class=\"error-content\">\r\n                        <svg width=\"216\" height=\"130\" viewBox=\"0 0 216 130\" xmlns=\"http://ww"
+  }
+]

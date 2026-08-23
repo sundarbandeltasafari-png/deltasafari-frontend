@@ -721,7 +721,7 @@ button, input, select, textarea, optgroup {
 
 /* EaseMyTrip Holiday Search Box Styles */
 .filter-wrapper {
-  margin-top: -65px !important;
+  margin-top: -135px !important;
   position: relative;
   z-index: 90;
 }
