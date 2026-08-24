@@ -1005,7 +1005,7 @@ export default function page() {
 
                 {/* RIGHT COLUMN (STICKY EASEMYTRIP PRICING SIDEBAR) */}
                 <div className="col-lg-4">
-                  <div ref={sidebarRef} className="position-sticky" style={{ top: '80px' }}>
+                  <div ref={sidebarRef} className="position-sticky sticky-top-sidebar" style={{ top: '80px', zIndex: 10 }}>
 
                     {/* PRICING CARD */}
                     <div className="card border-0 shadow-sm bg-white rounded-4 overflow-hidden mb-4">
