@@ -59,7 +59,7 @@ export default function BookYourDestinations({ cities }) {
                         <Link 
                           href={`/packages/city-${city.slug}`} 
                           className="fw-bold text-dark text-decoration-none text-truncate hover-text-primary"
-                          style={{ fontSize: '20px', lineHeight: '1.25', fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
+                          style={{ fontSize: '22px', lineHeight: '1.25', fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
                         >
                           {city.name}
                         </Link>

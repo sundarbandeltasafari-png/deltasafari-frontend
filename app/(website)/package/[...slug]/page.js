@@ -64,6 +64,15 @@ export default function page() {
   const siteUrl = process.env.NEXT_PUBLIC_PUBLIC_URL;
   const sidebarRef = useRef();
 
+  // Scroll to top immediately when redirecting to package details page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [slug]);
+
   useEffect(() => {
     const { cleanSlug, pkgId } = parsePackageRouteParam(slug);
     let queryStr = "";
@@ -105,6 +114,15 @@ export default function page() {
       setLoading(false);
     }
   }, [slug]);
+
+  // Ensure scroll is at the top once loading finishes
+  useEffect(() => {
+    if (!loading && typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [loading]);
 
   // Comprehensive SEO & Meta Tags Handler
   useEffect(() => {
@@ -1008,7 +1026,7 @@ export default function page() {
                             </span>
                             <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Agent Net Rate</span>
                             <div className="d-flex align-items-baseline gap-2">
-                              <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
+                              <h2 className="h2 fw-extrabold text-warning mb-0 package-price" style={{ fontWeight: 800 }}>
                                 ₹{Number(packageDetails.agent_actual_price || packageDetails.actual_price).toLocaleString('en-IN')}
                               </h2>
                               <del className="text-light opacity-50 text-sm fw-normal">
@@ -1028,7 +1046,7 @@ export default function page() {
                           <>
                             <span className="text-uppercase text-xs text-light opacity-75 fw-bold d-block mb-1">Starting From</span>
                             <div className="d-flex align-items-baseline gap-2">
-                              <h2 className="h2 fw-extrabold text-warning mb-0" style={{ fontWeight: 800 }}>
+                              <h2 className="h2 fw-extrabold text-warning mb-0 package-price" style={{ fontWeight: 800 }}>
                                 {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
                               </h2>
                               {packageDetails.base_price && (
@@ -1132,7 +1150,7 @@ export default function page() {
               <div className="d-flex align-items-center justify-content-between">
                 <div>
                   <span className="text-3xs text-muted d-block">Starting from</span>
-                  <strong className="h5 fw-bold text-danger mb-0">
+                  <strong className="h5 fw-bold text-danger mb-0 package-price" style={{ fontWeight: 700 }}>
                     {packageDetails.currency === 'INR' ? '₹' : '$'}{Number(packageDetails.actual_price).toLocaleString('en-IN')}
                   </strong>
                   <span className="text-3xs text-muted d-block">/ person</span>
@@ -1449,7 +1467,7 @@ export default function page() {
                       <div className="p-3 rounded-3 border" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)' }}>
                         <div className="d-flex justify-content-between align-items-center text-xs mb-1.5">
                           <span className="text-secondary">Package Rate:</span>
-                          <strong className="text-dark">₹{Number(packageDetails.actual_price).toLocaleString('en-IN')} / person</strong>
+                          <strong className="text-dark fw-bold package-price" style={{ fontWeight: 700 }}>₹{Number(packageDetails.actual_price).toLocaleString('en-IN')} / person</strong>
                         </div>
                         <div className="d-flex justify-content-between align-items-center text-xs mb-1.5">
                           <span className="text-secondary">Travelers:</span>
@@ -1457,7 +1475,7 @@ export default function page() {
                         </div>
                         <div className="d-flex justify-content-between align-items-center text-xs pt-2 border-top">
                           <span className="fw-extrabold text-dark">{bookingIntent === 'pay' ? 'Total Payable Now:' : 'Estimated Package Total:'}</span>
-                          <strong className="text-danger fs-5 fw-extrabold">
+                          <strong className="text-danger fs-5 fw-extrabold package-price" style={{ fontWeight: 800 }}>
                             ₹{(packageDetails.actual_price * guestsCount).toLocaleString('en-IN')}
                           </strong>
                         </div>

@@ -44,7 +44,7 @@ export default function PackageCardHoliday({ pkg }) {
                 ₹{pkg?.base_price}
               </span>
             )}
-            <span className="price-actual">
+            <span className="price-actual fw-bold package-price" style={{ fontWeight: 700 }}>
               ₹{pkg?.actual_price}
             </span>
           </div>

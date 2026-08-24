@@ -26,11 +26,11 @@ function HiddenGemsCard({ pkg }) {
                         height: '65%' 
                     }}
                 >
-                    <h5 className="text-white m-0 text-truncate" style={{ fontSize: '16px' }}>
+                    <h5 className="text-white m-0 text-truncate fw-bold" style={{ fontSize: '18px', fontWeight: 700 }}>
                         {pkg?.title}
                     </h5>
                     <span className="text-white-50 mt-0.5" style={{ fontSize: '12px' }}>
-                        Starting From {pkg?.currency || '₹'}{pkg?.price?.toLocaleString('en-IN')}
+                        Starting From <strong className="text-white fw-bold package-price" style={{ fontWeight: 700, fontSize: 'inherit' }}>{pkg?.currency || '₹'}{pkg?.price?.toLocaleString('en-IN')}</strong>
                     </span>
                 </div>
             </Link>

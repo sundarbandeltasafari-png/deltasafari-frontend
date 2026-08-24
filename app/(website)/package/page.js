@@ -119,7 +119,7 @@ async function page() {
                                                 />
 
                                                 {/* Location Badge (Top Start) */}
-                                                <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 text-2xs rounded-3 d-flex align-items-center gap-1 shadow-xs" style={{ zIndex: 10, fontWeight: 500 }}>
+                                                <span className="position-absolute top-0 start-0 m-2.5 bg-dark bg-opacity-75 text-white px-2.5 py-1 rounded-3 d-flex align-items-center gap-1 shadow-xs fw-bold" style={{ zIndex: 10, fontWeight: 700, fontSize: '13px' }}>
                                                     <i className="fa-solid fa-location-dot text-danger me-0.5"></i>
                                                     {destinationName}
                                                 </span>
@@ -134,7 +134,7 @@ async function page() {
                                                     <span><i className="fa-solid fa-clock text-warning me-1"></i>{durationText}</span>
                                                     {discountPercent > 0 && (
                                                         <span className="badge bg-danger text-white text-3xs px-2 py-0.5 rounded-pill" style={{ fontWeight: 500 }}>
-                                                            {discountPercent}% OFF
+                                                             {discountPercent}% OFF
                                                         </span>
                                                     )}
                                                 </div>
@@ -147,8 +147,8 @@ async function page() {
                                                         {pkg.title}
                                                     </h3>
 
-                                                    <div className="d-flex align-items-center justify-content-between text-2xs text-muted mb-2">
-                                                        <span><i className="fa-solid fa-map-pin text-primary me-1"></i>{destinationName}</span>
+                                                    <div className="d-flex align-items-center justify-content-between mb-2" style={{ fontSize: '13px' }}>
+                                                        <span className="fw-bold text-dark"><i className="fa-solid fa-map-pin text-primary me-1"></i>{destinationName}</span>
                                                         <span className="badge bg-light text-secondary border text-2xs">{categoryName}</span>
                                                     </div>
                                                 </div>
@@ -163,7 +163,7 @@ async function page() {
                                                                     {mrpText}
                                                                 </span>
                                                             )}
-                                                            <span className="mb-0 text-nowrap" style={{ fontSize: '18px', fontWeight: 500, color: '#0066cc' }}>
+                                                            <span className="mb-0 text-nowrap package-price" style={{ fontSize: '18px', fontWeight: 700, color: '#0066cc' }}>
                                                                 {priceText || 'Contact Us'}
                                                             </span>
                                                         </div>

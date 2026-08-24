@@ -152,11 +152,13 @@ function Filter() {
                         <button 
                             onClick={handleSearch} 
                             type="submit" 
-                            className="btn text-white rounded-pill px-4 py-2 d-flex align-items-center gap-2 flex-shrink-0"
-                            style={{ backgroundColor: '#0066cc', border: 'none', height: '48px', fontSize: '15px', fontWeight: 500 }}
+                            className="btn text-white rounded-pill px-3 px-md-4 py-2 d-flex align-items-center justify-content-center gap-2 flex-shrink-0 search-submit-btn"
+                            style={{ backgroundColor: '#0066cc', border: 'none', height: '46px', minWidth: '46px', fontSize: '15px', fontWeight: 500 }}
+                            aria-label="Search Holidays"
+                            title="Search Holidays"
                         >
                             <i className="fa-solid fa-magnifying-glass"></i>
-                            <span>Search Holidays</span>
+                            <span className="d-none d-md-inline">Search Holidays</span>
                         </button>
                     </form>
 
@@ -197,7 +199,7 @@ function Filter() {
                                                             onError={(e) => { e.target.src = '/assets/images/noimage.jpg'; }}
                                                         />
                                                         <div className="text-truncate">
-                                                            <h6 className="mb-0 text-dark text-truncate" style={{ fontSize: '14px', lineHeight: '1.3' }}>
+                                                            <h6 className="mb-0 text-dark text-truncate fw-bold" style={{ fontSize: '15px', fontWeight: 700, lineHeight: '1.3' }}>
                                                                 {item.name || item.title}
                                                             </h6>
                                                             <span className="text-muted text-capitalize" style={{ fontSize: '11px' }}>

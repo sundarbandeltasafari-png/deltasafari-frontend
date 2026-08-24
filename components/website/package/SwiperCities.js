@@ -44,8 +44,8 @@ export default function SwiperCities({ cities }) {
                                     <h5 className="m-0 text-truncate">
                                         <Link 
                                             href={"/packages/" + 'city-' + city.slug} 
-                                            style={{ fontSize: "16px", fontFamily: "'Poppins', sans-serif" }} 
-                                            className="text-dark text-decoration-none"
+                                            style={{ fontSize: "18px", fontFamily: "'Poppins', sans-serif", fontWeight: 700 }} 
+                                            className="text-dark text-decoration-none fw-bold"
                                         >
                                             {city.name}
                                         </Link>

@@ -56,7 +56,7 @@ function TopDestination({ topDesination }) {
                     </div>
                     <div className="destination-content-wrap">
                       <div className="destination-content">
-                        <h5 style={{color: '#fff'}}>
+                        <h5 className="fw-bold" style={{ color: '#fff', fontSize: '22px', fontWeight: 700 }}>
                           {elem?.name}
                         </h5>
                         <span>{elem?.showing_text || elem?.show_text}</span>

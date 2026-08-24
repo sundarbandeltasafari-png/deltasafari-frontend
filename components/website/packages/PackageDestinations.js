@@ -51,7 +51,7 @@ export default function PackageDestinations() {
                     />
                   </div>
                   <div className="destination-content position-absolute bottom-0">
-                    <h5 className="text-left text-white">{dest?.name}</h5>
+                    <h5 className="text-left text-white fw-bold" style={{ fontSize: '20px', fontWeight: 700 }}>{dest?.name}</h5>
                     <p className="text-start" style={{ fontSize: '14px' }}>{dest?.showing_text}</p>
                   </div>
                 </Link>

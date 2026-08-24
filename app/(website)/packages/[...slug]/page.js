@@ -91,6 +91,11 @@ export default function TravelPackageListPage() {
 
   // --- FETCH DATA & DESTINATION / CITY SEO ---
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
     setLoading(true);
     const filter = params.slug && parseSlugFilters(params.slug);
     axiosNormalPost(getFilterPackages, filter)
@@ -393,7 +398,7 @@ export default function TravelPackageListPage() {
                   <tr>
                     <td className="fw-bold text-secondary small">Route & Cities</td>
                     {comparedPackages.map(pkg => (
-                      <td key={pkg.id} className="text-center text-xs fw-medium text-primary">
+                      <td key={pkg.id} className="text-center fw-bold text-primary" style={{ fontSize: '13px', fontWeight: 700 }}>
                         {pkg.from_destination_name ? `${pkg.from_destination_name} ➔ ` : ''}
                         {pkg.to_destination_name || 'Destination'}
                       </td>
@@ -432,7 +437,7 @@ export default function TravelPackageListPage() {
                       const mrpText = pkg.mrp_price ? `₹${Number(pkg.mrp_price).toLocaleString('en-IN')}` : null;
                       return (
                         <td key={pkg.id} className="text-center py-3">
-                          <div className="h5 fw-bold text-primary mb-0">{priceText}</div>
+                          <div className="h5 fw-bold text-primary mb-0 package-price" style={{ fontWeight: 700 }}>{priceText}</div>
                           {mrpText && <small className="text-muted text-decoration-line-through me-2 text-2xs">{mrpText}</small>}
                           <span className="text-2xs text-muted d-block mt-0.5">Per Person</span>
                         </td>
@@ -703,7 +708,7 @@ export default function TravelPackageListPage() {
                           </h3>
                         </Link>
 
-                        <div className="text-xs text-primary fw-semibold mb-2">
+                        <div className="text-primary fw-bold mb-2" style={{ fontSize: '14px', fontWeight: 700 }}>
                           <i className="fa-solid fa-location-dot text-danger me-1"></i>
                           {pkg.from_destination_name ? `${pkg.from_destination_name} ` : ''}
                           {pkg.to_destination_name && `➔ ${pkg.to_destination_name}`}
@@ -755,7 +760,7 @@ export default function TravelPackageListPage() {
                               ₹{Number(pkg.base_price).toLocaleString('en-IN')}
                             </span>
                           )}
-                          <span className="h4 fw-extrabold mb-0" style={{ fontWeight: 800, color: '#ef6614' }}>
+                          <span className="h4 fw-extrabold mb-0 package-price" style={{ fontWeight: 800, color: '#ef6614' }}>
                             ₹{Number(pkg.actual_price || 0).toLocaleString('en-IN')}
                           </span>
                           <span className="text-3xs text-muted d-block text-nowrap" style={{ lineHeight: '14px' }}>Per Person</span>

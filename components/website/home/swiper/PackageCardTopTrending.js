@@ -31,7 +31,7 @@ function PackageCard({ pkg }) {
                         height: '65%' 
                     }}
                 >
-                    <h5 className="text-white m-0 text-truncate" style={{ fontSize: '16px' }}>
+                    <h5 className="text-white m-0 text-truncate fw-bold" style={{ fontSize: '18px', fontWeight: 700 }}>
                         {pkg?.name}
                     </h5>
                     <span className="text-white-50" style={{ fontSize: '12px' }}>

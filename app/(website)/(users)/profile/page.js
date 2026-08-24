@@ -1699,7 +1699,7 @@ export default function ProfilePage() {
                                                 {pkg.title}
                                             </h6>
                                             <div className="d-flex align-items-center justify-content-between pt-2 border-top mt-2">
-                                                <span className="fw-extrabold text-danger" style={{ fontSize: '14px' }}>
+                                                <span className="fw-extrabold text-danger package-price" style={{ fontSize: '14px', fontWeight: 800 }}>
                                                     ₹{price.toLocaleString('en-IN')}
                                                 </span>
                                                 <button 

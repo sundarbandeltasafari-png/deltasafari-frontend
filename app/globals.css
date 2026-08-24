@@ -95,21 +95,31 @@ h6, .h6 {
 }
 
 /* All other text elements MUST NOT BE BOLD (regular/normal font weight 400, or medium 500) */
-body, p, span:not([class*="fa-"]):not([class*="bi-"]):not([class*="ri-"]),
-a, label,
-button, input, select, textarea, optgroup,
-table, th, td, blockquote, small, b, strong,
+body, p, span:not([class*="fa-"]):not([class*="bi-"]):not([class*="ri-"]):not(.package-price):not(.price-actual):not(.price):not(.card-price),
+a:not(.package-price), label,
+button:not(.package-price), input, select, textarea, optgroup,
+table, th, td, blockquote, small, b:not(.package-price), strong:not(.package-price),
 .card, .card-text, .badge, .btn,
 .nav-link, .dropdown-item, .modal-body,
 .form-control, .form-select, .form-label, .breadcrumb, .breadcrumb-item,
-.price, .price-actual, .price-strike, .card-price, .nav-label,
-.fw-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
-.fw-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
-.fw-extrabold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
-.font-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *),
-.font-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *) {
+.price-strike, .nav-label,
+.fw-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *):not(.package-price):not(.price-actual):not(.price):not(.card-price),
+.fw-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *):not(.package-price):not(.price-actual):not(.price):not(.card-price),
+.fw-extrabold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *):not(.package-price):not(.price-actual):not(.price):not(.card-price),
+.font-bold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *):not(.package-price):not(.price-actual):not(.price):not(.card-price),
+.font-semibold:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.heading):not(.subheading):not(.section-title *):not(.card-title):not(.modal-title):not(.accordion-header button):not(.widget-title *):not(.package-price):not(.price-actual):not(.price):not(.card-price) {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
   font-weight: 400 !important;
+}
+
+/* Package Price Typography - Always bold without altering size or color */
+.package-price,
+.price-actual,
+.package-card-price,
+.card-price-row .price-actual,
+.price-area strong,
+.package-card .btn-and-price-area .price-area span {
+  font-weight: 700 !important;
 }
 
 /* Medium weight for interactive buttons, nav links, form labels for crisp legibility */
@@ -657,7 +667,7 @@ button, input, select, textarea, optgroup {
 .price-actual {
   color: #ffffff;
   font-size: 18px;
-  font-weight: 500 !important;
+  font-weight: 700 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 

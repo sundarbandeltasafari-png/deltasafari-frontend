@@ -4,16 +4,117 @@ html, body {
     max-width: 100vw !important;
 }
 
+/* Responsive Banner & Inside-Banner Search Filter Placement */
+/* Responsive Banner & Inside-Banner Search Filter Placement */
 .home2-banner-section {
-    height: 315px !important;
+    position: relative !important;
+    height: 275px !important;
+    overflow: hidden !important;
+}
+
+.home2-banner-section .banner-wrapper {
+    position: relative !important;
+    height: 100% !important;
+}
+
+.home2-banner-section .banner-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.home2-banner-section .banner-content {
+    padding-top: 15px !important;
+    padding-bottom: 70px !important;
+}
+
+.home2-banner-section .home-banner-title {
+    font-size: 34px !important;
+    color: #ffffff !important;
+    margin-bottom: 6px !important;
+    font-family: var(--font-courgette), 'Courgette', cursive !important;
 }
 
 .filter-wrapper {
-    margin-top: -145px !important;
+    position: relative !important;
+    margin-top: -100px !important;
+    z-index: 20 !important;
 }
 
 .filter-wrapper.bottom-card {
     margin-top: 55px !important;
+}
+
+@media (max-width: 991px) {
+    .home2-banner-section {
+        height: 250px !important;
+    }
+
+    .home2-banner-section .home-banner-title {
+        font-size: 28px !important;
+    }
+
+    .home2-banner-section .banner-content {
+        padding-top: 10px !important;
+        padding-bottom: 65px !important;
+    }
+
+    .filter-wrapper {
+        margin-top: -90px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .home2-banner-section {
+        height: 225px !important;
+    }
+
+    .home2-banner-section .home-banner-title {
+        font-size: 23px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .home2-banner-section .banner-content {
+        padding-top: 10px !important;
+        padding-bottom: 55px !important;
+    }
+
+    .filter-wrapper {
+        margin-top: -78px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .filter-input-wrap.home {
+        padding: 5px 8px !important;
+        border-radius: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .home2-banner-section {
+        height: 220px !important;
+    }
+
+    .home2-banner-section .home-banner-title {
+        font-size: 20px !important;
+    }
+
+    .home2-banner-section .banner-content {
+        padding-top: 8px !important;
+        padding-bottom: 50px !important;
+    }
+
+    .filter-wrapper {
+        margin-top: -75px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .filter-input-wrap.home {
+        padding: 4px 6px !important;
+    }
 }
 
 /* Swiper Pagination Placement & Overlap Prevention */
@@ -134,5 +235,54 @@ html, body {
     }
     .package-thumb-gallery-img {
         height: 65px !important;
+    }
+}
+
+/* Destination Name Typography Enhancements */
+.destination-content h5,
+.destination-card2 .destination-content h5,
+.package-dest .destination-content h5 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.destination-mosaic-grid .destination-content h5 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Banner Sub-Tagline Single-Line Responsive Styling */
+.banner-sub-tagline {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    font-size: 18px !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1.4 !important;
+}
+
+@media (max-width: 991px) {
+    .banner-sub-tagline {
+        font-size: 15px !important;
+        max-width: 700px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .banner-sub-tagline {
+        font-size: 13px !important;
+        max-width: 95% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-sub-tagline {
+        font-size: 11.5px !important;
     }
 }

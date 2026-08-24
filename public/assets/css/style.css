@@ -14779,7 +14779,7 @@ header.style-3.three .nav-right .primary-btn1 {
 }
 
 .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content {
-  max-width: 590px;
+  /* max-width: 590px; */
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -45999,7 +45999,7 @@ p {
   }
 
   .home2-banner-section .banner-wrapper .banner-content-wrap .banner-content p {
-    font-size: 14px !important;
+    font-size: 18px !important;
   }
 
   .section-title h2 {
