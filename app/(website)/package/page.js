@@ -22,7 +22,11 @@ import './package.css'
 import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata() {
-  return await fetchPageSeo('package');
+  return await fetchPageSeo('package', '/package', {
+    title: 'Explore All Tour Packages & Holiday Trips | Delta Safari',
+    description: 'Find and book the best holiday tour packages, Sundarban wildlife safaris, domestic vacations, and customized tours with Delta Safari.',
+    keywords: 'tour packages, holiday packages, travel bookings, delta safari packages'
+  });
 }
 
 async function page() {

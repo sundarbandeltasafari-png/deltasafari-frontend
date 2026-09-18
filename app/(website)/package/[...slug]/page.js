@@ -90,16 +90,30 @@ export default function page() {
         .then((res) => {
           if (res?.status) {
             setPackageDetails(res?.package);
-            if (res?.package?.assets?.length > 0) {
-              let ogImage = null;
-              res?.package.assets.forEach((element) => {
-                if (element.type == 1 && !ogImage) {
-                  ogImage = `${process.env.NEXT_PUBLIC_SERVER_URL}${element.path.replace(/\\/g, '/')}`;
-                  setOgImageUrl(ogImage);
-                }
-              });
+            const pkg = res?.package;
+            let pkgImg = null;
+            if (pkg?.og_image) {
+              pkgImg = pkg.og_image;
+            } else if (Array.isArray(pkg?.assets) && pkg.assets.length > 0) {
+              const primary = pkg.assets.find((a) => (a.type == 1 || a.type === null || a.type === undefined) && a.path) || pkg.assets.find((a) => a.type != 2 && a.path) || pkg.assets[0];
+              if (primary && primary.path) pkgImg = primary.path;
+            }
+            if (!pkgImg && pkg?.path) {
+              pkgImg = pkg.path;
+            }
+            if (!pkgImg && (pkg?.banner_path || pkg?.image || pkg?.featured_image)) {
+              pkgImg = pkg.banner_path || pkg.image || pkg.featured_image;
+            }
+
+            if (pkgImg) {
+              const sUrl = (process.env.NEXT_PUBLIC_SERVER_URL || 'https://serverds.sundarbandeltasafari.com')
+                .replace(/https?:\/\/serverds\.deltasafari\.in/gi, 'https://serverds.sundarbandeltasafari.com')
+                .replace(/\/+$/, '');
+              const cleanImg = pkgImg.replace(/\\/g, '/');
+              const finalImg = cleanImg.startsWith('http') ? cleanImg : `${sUrl}/${cleanImg.replace(/^\/+/, '')}`;
+              setOgImageUrl(finalImg);
             } else {
-              setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/img/logo_DS.png`);
+              setOgImageUrl(`${process.env.NEXT_PUBLIC_PUBLIC_URL || 'https://deltasafari.in/'}assets/img/logo_DS.png`);
             }
             setLoading(false);
           } else {

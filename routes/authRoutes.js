@@ -3,10 +3,13 @@ const SERVER_URL = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
 
 export const loginURL = `${SERVER_URL}auth/login`;
 export const registerURL = `${SERVER_URL}auth/register`;
+export const registerOtpValidateURL = `${SERVER_URL}auth/registerOtpValidate`;
+export const resendOtpURL = `${SERVER_URL}auth/resendOtp`;
 export const googleLoginURL = `${SERVER_URL}auth/googleLogin`;
 export const getUserDetailsURL = `${SERVER_URL}user/getUserDetails`;
 export const editProfileURL = `${SERVER_URL}user/editProfile`;
 export const changePasswordURL = `${SERVER_URL}user/changePassword`;
+
 
 // Forgot & Reset Password Endpoints
 export const forgotPasswordReqURL = `${SERVER_URL}auth/resetpasswordreq`;

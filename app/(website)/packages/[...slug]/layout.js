@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 
   const destinationSlugOrId = filter?.destination || filter?.zone;
   const citySlugOrId = filter?.city;
-  const siteUrl = process.env.NEXT_PUBLIC_PUBLIC_URL || 'https://sundarbandeltasafari.com';
+  const siteUrl = (process.env.NEXT_PUBLIC_PUBLIC_URL || 'https://deltasafari.in').replace(/https?:\/\/(www\.)?sundarbandeltasafari\.com/gi, 'https://deltasafari.in').replace(/\/+$/, '') || 'https://deltasafari.in';
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || '';
 
   // 1. Destination SEO Metadata

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { emailValidation, passwordValidation, showMessage } from "../../../libs/commonHelper";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,52 +32,30 @@ function LoginContent() {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.userAuth || {});
 
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [userType, setUserType] = useState(1); // 1 = Customer, 2 = Corporate, 3 = Agent
+  const typeParam = searchParams.get('type');
+  const refParam = searchParams.get('ref') || searchParams.get('referral_code');
+  const initialType = (typeParam && [1, 2, 3].includes(Number(typeParam))) ? Number(typeParam) : 1;
+
+  const [isLoginMode, setIsLoginMode] = useState(!refParam);
+  const [userType, setUserType] = useState(initialType); // 1 = Customer, 2 = Corporate, 3 = Agent
   const [loadingGoogle, setLoadingGoogle] = useState(false);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push('/');
-    }
-    const typeParam = searchParams.get('type');
-    if (typeParam && [1, 2, 3].includes(Number(typeParam))) {
-      setUserType(Number(typeParam));
-    }
-
-    // Check for referral code in URL query (?ref=DS12345 or ?referral_code=DS12345)
-    const refParam = searchParams.get('ref') || searchParams.get('referral_code');
-    if (refParam) {
-      const code = refParam.trim().toUpperCase();
-      try {
-        localStorage.setItem('pending_referral_code', code);
-      } catch (e) {}
-      setIsLoginMode(false); // Auto switch to Register mode when opening via referral link
-      setUserData((prev) => ({ ...prev, referral_code: code }));
-    } else {
-      try {
-        const savedRef = localStorage.getItem('pending_referral_code');
-        if (savedRef) {
-          setUserData((prev) => ({ ...prev, referral_code: savedRef }));
-        }
-      } catch (e) {}
-    }
-  }, [searchParams, router, isLoggedIn]);
-
-  const [userData, setUserData] = useState({
+  const [regMethod, setRegMethod] = useState('whatsapp'); // 'whatsapp' | 'email'
+  const [userData, setUserData] = useState(() => ({
     first_name: '',
     last_name: '',
     gender: '',
     email: '',
+    phone: '',
     password: '',
-    referral_code: ''
-  });
+    referral_code: refParam ? refParam.trim().toUpperCase() : (typeof window !== 'undefined' ? (localStorage.getItem('pending_referral_code') || '') : '')
+  }));
   
   const [error, setError] = useState({
     first_name: '',
     last_name: '',
     gender: '',
     email: '',
+    phone: '',
     password: ''
   });
   
@@ -85,68 +63,7 @@ function LoginContent() {
   const [loading, setLoading] = useState(false);
   const [viewPass, setViewPass] = useState(false);
 
-  // Initialize Google Identity Services SDK
-  useEffect(() => {
-    const scriptId = 'google-gsi-script';
-    let script = document.getElementById(scriptId);
-
-    if (!script) {
-      script = document.createElement('script');
-      script.id = scriptId;
-      script.src = 'https://accounts.google.com/gsi/client';
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        initGoogleOAuth();
-      };
-      document.body.appendChild(script);
-    } else {
-      initGoogleOAuth();
-    }
-  }, [userType]);
-
-  const initGoogleOAuth = () => {
-    if (window.google?.accounts?.id) {
-      const clientId = (process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '1060481688994-l2hqidq1gdnm0b571jmffbsk611jgco1.apps.googleusercontent.com').trim();
-      window.google.accounts.id.initialize({
-        client_id: clientId,
-        callback: handleGoogleOAuthResponse,
-        auto_select: false
-      });
-
-      const googleBtnDiv = document.getElementById('googleOAuthBtnContainer');
-      if (googleBtnDiv) {
-        googleBtnDiv.innerHTML = '';
-        window.google.accounts.id.renderButton(googleBtnDiv, {
-          theme: 'outline',
-          size: 'large',
-          width: 360,
-          text: 'continue_with',
-          logo_alignment: 'center'
-        });
-      }
-    }
-  };
-
-  const handleGoogleOAuthResponse = (response) => {
-    if (response && response.credential) {
-      const payload = parseJwt(response.credential);
-      sendGoogleAuthToBackend({
-        token: response.credential,
-        email: payload?.email || '',
-        first_name: payload?.given_name || payload?.name?.split(' ')[0] || '',
-        last_name: payload?.family_name || payload?.name?.split(' ').slice(1).join(' ') || '',
-        google_id: payload?.sub || '',
-        picture: payload?.picture || ''
-      });
-      return;
-    }
-    const errMsg = 'Google OAuth failed to retrieve account credentials.';
-    setServerError(errMsg);
-    showMessage('error', errMsg);
-  };
-
-  const sendGoogleAuthToBackend = (authData) => {
+  const sendGoogleAuthToBackend = useCallback((authData) => {
     setLoadingGoogle(true);
     setServerError('');
     const googlePayload = {
@@ -176,7 +93,80 @@ function LoginContent() {
         setServerError(errMsg);
         showMessage('error', errMsg);
       });
-  };
+  }, [userType, dispatch, router]);
+
+  const handleGoogleOAuthResponse = useCallback((response) => {
+    if (response && response.credential) {
+      const payload = parseJwt(response.credential);
+      sendGoogleAuthToBackend({
+        token: response.credential,
+        email: payload?.email || '',
+        first_name: payload?.given_name || payload?.name?.split(' ')[0] || '',
+        last_name: payload?.family_name || payload?.name?.split(' ').slice(1).join(' ') || '',
+        google_id: payload?.sub || '',
+        picture: payload?.picture || ''
+      });
+      return;
+    }
+    const errMsg = 'Google OAuth failed to retrieve account credentials.';
+    setServerError(errMsg);
+    showMessage('error', errMsg);
+  }, [sendGoogleAuthToBackend]);
+
+  const initGoogleOAuth = useCallback(() => {
+    if (window.google?.accounts?.id) {
+      const clientId = (process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '1060481688994-l2hqidq1gdnm0b571jmffbsk611jgco1.apps.googleusercontent.com').trim();
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: handleGoogleOAuthResponse,
+        auto_select: false
+      });
+
+      const googleBtnDiv = document.getElementById('googleOAuthBtnContainer');
+      if (googleBtnDiv) {
+        googleBtnDiv.innerHTML = '';
+        window.google.accounts.id.renderButton(googleBtnDiv, {
+          theme: 'outline',
+          size: 'large',
+          width: 360,
+          text: 'continue_with',
+          logo_alignment: 'center'
+        });
+      }
+    }
+  }, [handleGoogleOAuthResponse]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/');
+    }
+    const ref = searchParams.get('ref') || searchParams.get('referral_code');
+    if (ref) {
+      try {
+        localStorage.setItem('pending_referral_code', ref.trim().toUpperCase());
+      } catch (e) {}
+    }
+  }, [searchParams, router, isLoggedIn]);
+
+  // Initialize Google Identity Services SDK
+  useEffect(() => {
+    const scriptId = 'google-gsi-script';
+    let script = document.getElementById(scriptId);
+
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        initGoogleOAuth();
+      };
+      document.body.appendChild(script);
+    } else {
+      initGoogleOAuth();
+    }
+  }, [initGoogleOAuth]);
 
   // Trigger Google OAuth One-Tap Prompt
   const handleGoogleAuthClick = () => {
@@ -194,11 +184,11 @@ function LoginContent() {
   const toggleMode = () => {
     setIsLoginMode(!isLoginMode);
     setServerError('');
-    setError({ first_name: '', last_name: '', gender: '', email: '', password: '' });
+    setError({ first_name: '', last_name: '', gender: '', email: '', phone: '', password: '' });
   };
 
   function submitForm() {
-    let currentErrors = { first_name: '', last_name: '', gender: '', email: '', password: '' };
+    let currentErrors = { first_name: '', last_name: '', gender: '', email: '', phone: '', password: '' };
     let hasError = false;
     setServerError('');
 
@@ -206,22 +196,49 @@ function LoginContent() {
       if (!userData.first_name?.trim()) {
         currentErrors.first_name = "Please enter your first name";
         hasError = true;
-      }
-      else if (!userData.last_name?.trim()) {
+      } else if (!userData.last_name?.trim()) {
         currentErrors.last_name = "Please enter your last name";
         hasError = true;
-      }
-      else if (!userData.gender) {
+      } else if (!userData.gender) {
         currentErrors.gender = "Please choose a gender";
         hasError = true;
       }
+
+      if (regMethod === 'whatsapp') {
+        const cleanPhone = userData.phone?.replace(/\D/g, '');
+        if (!cleanPhone || cleanPhone.length !== 10) {
+          currentErrors.phone = "Please enter a valid 10-digit WhatsApp number";
+          hasError = true;
+        }
+        if (userData.email?.trim() && !emailValidation(userData.email.trim())) {
+          currentErrors.email = "Please enter a valid email address";
+          hasError = true;
+        }
+      } else {
+        if (!userData.email?.trim() || !emailValidation(userData.email.trim())) {
+          currentErrors.email = "Please enter a valid email address";
+          hasError = true;
+        }
+        if (userData.phone?.trim()) {
+          const cleanPhone = userData.phone.replace(/\D/g, '');
+          if (cleanPhone.length !== 10) {
+            currentErrors.phone = "Please enter a valid 10-digit phone number";
+            hasError = true;
+          }
+        }
+      }
+    } else {
+      // Login mode: allow either email or 10-digit phone in credential input
+      const cred = userData.email?.trim();
+      const isEmail = emailValidation(cred);
+      const isPhone = /^\d{10}$/.test(cred?.replace(/\D/g, ''));
+      if (!cred || (!isEmail && !isPhone)) {
+        currentErrors.email = "Please enter your registered email address or 10-digit WhatsApp number";
+        hasError = true;
+      }
     }
-    
-    if (!hasError && !emailValidation(userData.email)) {
-      currentErrors.email = "Please enter a valid email address";
-      hasError = true;
-    }
-    else if (!hasError && !passwordValidation(userData.password)) {
+
+    if (!hasError && !passwordValidation(userData.password)) {
       currentErrors.password = "At least 8 characters, 1 uppercase, 1 lowercase, 1 number";
       hasError = true;
     }
@@ -237,9 +254,16 @@ function LoginContent() {
     }
 
     setLoading(true);
+    const targetIdentifier = regMethod === 'whatsapp' ? userData.phone.replace(/\D/g, '') : userData.email.trim();
     const payload = isLoginMode 
       ? { email: userData.email.trim(), password: userData.password, user_type: userType }
-      : { ...userData, email: userData.email.trim(), user_type: userType };
+      : { 
+          ...userData, 
+          email: userData.email.trim(), 
+          phone: userData.phone.replace(/\D/g, ''),
+          reg_channel: regMethod,
+          user_type: userType 
+        };
 
     axiosNormalPost(isLoginMode ? loginURL : registerURL, payload).then((res) => {
       setLoading(false);
@@ -248,9 +272,15 @@ function LoginContent() {
           dispatch(setUser({ user: res.userDetails, token: res.token }));
         }
         showMessage('success', isLoginMode ? 'Signed in successfully!' : (res.msg || 'OTP sent successfully!'));
-        router.push(isLoginMode ? '/' : `/otpvalidation?token=${res.token}`);
+        if (isLoginMode && !res.otpVerify) {
+          router.push('/');
+        } else {
+          const channel = res.channel || (isLoginMode ? 'email' : regMethod);
+          const identifier = res.identifier || (isLoginMode ? userData.email.trim() : targetIdentifier);
+          router.push(`/otpvalidation?channel=${channel}&identifier=${encodeURIComponent(identifier)}&name=${encodeURIComponent(userData.first_name || '')}`);
+        }
       } else {
-        const errorMsg = res?.msg || res?.message || (isLoginMode ? 'Invalid email or password. Please check your credentials.' : 'Registration failed.');
+        const errorMsg = res?.msg || res?.message || (isLoginMode ? 'Invalid credentials. Please check and try again.' : 'Registration failed.');
         setServerError(errorMsg);
         showMessage('error', errorMsg);
       }
@@ -304,9 +334,40 @@ function LoginContent() {
             </div>
           </div>
 
+          {/* Registration Channel Toggle (WhatsApp vs Email) */}
+          {!isLoginMode && (
+            <div className="mb-3">
+              <label className="text-2xs text-muted fw-bold mb-1.5 d-block text-center text-uppercase">
+                Register Via
+              </label>
+              <div className="d-flex p-1 bg-light rounded-3 border" role="group">
+                <button
+                  type="button"
+                  className={`btn text-xs fw-bold rounded-2 py-2 flex-fill transition-all ${regMethod === 'whatsapp' ? 'bg-success text-white shadow-xs' : 'text-secondary border-0'}`}
+                  onClick={() => {
+                    setRegMethod('whatsapp');
+                    setServerError('');
+                  }}
+                >
+                  <i className="bi bi-whatsapp me-1.5"></i> WhatsApp
+                </button>
+                <button
+                  type="button"
+                  className={`btn text-xs fw-bold rounded-2 py-2 flex-fill transition-all ${regMethod === 'email' ? 'bg-primary text-white shadow-xs' : 'text-secondary border-0'}`}
+                  onClick={() => {
+                    setRegMethod('email');
+                    setServerError('');
+                  }}
+                >
+                  <i className="bi bi-envelope-fill me-1.5"></i> Email
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="step active" id="step1">
             <div className="step-label text-center mb-3">
-              <span>{userType}</span> {isLoginMode ? `${roleLabels[userType]} Login` : `Register New ${roleLabels[userType]} Account`}
+              <span>{userType}</span> {isLoginMode ? `${roleLabels[userType]} Login` : `Register New ${roleLabels[userType]} (${regMethod === 'whatsapp' ? 'WhatsApp' : 'Email'})`}
             </div>
 
             {/* Server Error Alert Banner */}
@@ -371,19 +432,107 @@ function LoginContent() {
                 </>
               )}
 
-              <div className="input-group mb-3 col-12">
-                <input 
-                  type="email" 
-                  value={userData.email}
-                  onChange={(e) => { 
-                    setUserData({ ...userData, email: e.target.value });
-                    if (serverError) setServerError('');
-                  }} 
-                  className="form-control" 
-                  placeholder="Email Address" 
-                />
-                {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
-              </div>
+              {/* In Register mode with WhatsApp: Phone first (Required), Email second (Optional) */}
+              {!isLoginMode && regMethod === 'whatsapp' && (
+                <>
+                  <div className="input-group mb-3 col-12">
+                    <span className="input-group-text bg-white text-muted fw-bold text-xs border-end-0">
+                      <i className="bi bi-whatsapp text-success me-1"></i> +91
+                    </span>
+                    <input 
+                      type="tel" 
+                      maxLength={10}
+                      value={userData.phone}
+                      onChange={(e) => { 
+                        const val = e.target.value.replace(/\D/g, '');
+                        setUserData({ ...userData, phone: val });
+                        if (serverError) setServerError('');
+                      }} 
+                      className="form-control border-start-0 ps-1" 
+                      placeholder="10-digit WhatsApp Number *" 
+                    />
+                    {error.phone && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.phone}</div>}
+                  </div>
+
+                  <div className="input-group mb-3 col-12">
+                    <span className="input-group-text bg-white text-muted border-end-0">
+                      <i className="bi bi-envelope text-muted"></i>
+                    </span>
+                    <input 
+                      type="email" 
+                      value={userData.email}
+                      onChange={(e) => { 
+                        setUserData({ ...userData, email: e.target.value });
+                        if (serverError) setServerError('');
+                      }} 
+                      className="form-control border-start-0 ps-1" 
+                      placeholder="Email Address (Optional)" 
+                    />
+                    {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
+                  </div>
+                </>
+              )}
+
+              {/* In Register mode with Email: Email first (Required), Phone second (Optional) */}
+              {!isLoginMode && regMethod === 'email' && (
+                <>
+                  <div className="input-group mb-3 col-12">
+                    <span className="input-group-text bg-white text-muted border-end-0">
+                      <i className="bi bi-envelope text-primary"></i>
+                    </span>
+                    <input 
+                      type="email" 
+                      value={userData.email}
+                      onChange={(e) => { 
+                        setUserData({ ...userData, email: e.target.value });
+                        if (serverError) setServerError('');
+                      }} 
+                      className="form-control border-start-0 ps-1" 
+                      placeholder="Email Address *" 
+                    />
+                    {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
+                  </div>
+
+                  <div className="input-group mb-3 col-12">
+                    <span className="input-group-text bg-white text-muted fw-bold text-xs border-end-0">
+                      <i className="bi bi-telephone text-muted me-1"></i> +91
+                    </span>
+                    <input 
+                      type="tel" 
+                      maxLength={10}
+                      value={userData.phone}
+                      onChange={(e) => { 
+                        const val = e.target.value.replace(/\D/g, '');
+                        setUserData({ ...userData, phone: val });
+                        if (serverError) setServerError('');
+                      }} 
+                      className="form-control border-start-0 ps-1" 
+                      placeholder="Phone / WhatsApp (Optional)" 
+                    />
+                    {error.phone && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.phone}</div>}
+                  </div>
+                </>
+              )}
+
+              {/* In Login Mode: Accepts Email or WhatsApp phone */}
+              {isLoginMode && (
+                <div className="input-group mb-3 col-12">
+                  <span className="input-group-text bg-white text-muted border-end-0">
+                    <i className="bi bi-person-badge"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    value={userData.email}
+                    onChange={(e) => { 
+                      setUserData({ ...userData, email: e.target.value });
+                      if (serverError) setServerError('');
+                    }} 
+                    className="form-control border-start-0 ps-1" 
+                    placeholder="Email or 10-digit WhatsApp Number" 
+                  />
+                  {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
+                </div>
+              )}
 
               <div className="col-md-12 mb-3 position-relative">
                 <input 
@@ -423,12 +572,12 @@ function LoginContent() {
               {loading ? (
                 <>
                   <span className="spinner-border spinner-border-sm" role="status"></span>
-                  <span>Authenticating...</span>
+                  <span>Processing...</span>
                 </>
               ) : (
                 <>
-                  <i className="bi bi-send-fill me-1"></i>
-                  <span>{isLoginMode ? `Login as ${roleLabels[userType]}` : "Send OTP"}</span>
+                  <i className={isLoginMode ? "bi bi-box-arrow-in-right me-1" : (regMethod === 'whatsapp' ? "bi bi-whatsapp me-1" : "bi bi-send-fill me-1")}></i>
+                  <span>{isLoginMode ? `Login as ${roleLabels[userType]}` : `Verify with ${regMethod === 'whatsapp' ? 'WhatsApp OTP' : 'Email OTP'}`}</span>
                 </>
               )}
             </button>
@@ -438,6 +587,7 @@ function LoginContent() {
                 {isLoginMode ? "Don't have an account? Register here" : "Already have an account? Login here"}
               </span>
             </div>
+
 
             <div className="db-divider">or continue with</div>
 

@@ -11,7 +11,11 @@ import BlogSearchResults from '@/components/blog/BlogSearchResults';
 import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata() {
-  return await fetchPageSeo('blogs');
+  return await fetchPageSeo('blogs', '/blogs', {
+    title: 'Travel Inspiration & Guides | Delta Safari Blog',
+    description: 'Explore expert travel advice, destination guides, wildlife safari tips, and holiday ideas on the Delta Safari blog.',
+    keywords: 'travel blog, sundarban travel guide, safari tips, holiday ideas, delta safari'
+  });
 }
 
 

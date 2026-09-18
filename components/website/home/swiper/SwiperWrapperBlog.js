@@ -29,11 +29,7 @@ function SwiperWrapperBlog({ data }) {
             loop={data.lngth > 5} // Usually recommended for autoplay sliders
 
             // Autoplay Configuration
-            autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true, // Matches your JS setting
-            }}
+            autoplay={false}
 
             // Responsive Breakpoints (Updated to match your JS counts)
             breakpoints={{

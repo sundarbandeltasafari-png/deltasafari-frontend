@@ -38,20 +38,25 @@ const getPostData = cache(async (slug) => {
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const { particularBlog, allCatBlogs } = await getPostData(slug);
+    const siteUrl = "https://deltasafari.in";
 
     if (particularBlog) {
-        const cleanImagePath = particularBlog.featured_image.replace(/\\/g, '/');
-        const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${cleanImagePath}`;
-        const cleanSummary = particularBlog.summary.replace(/\r\n/g, ' ');
+        const cleanImagePath = particularBlog.featured_image ? particularBlog.featured_image.replace(/\\/g, '/') : '';
+        const imageUrl = cleanImagePath ? `${process.env.NEXT_PUBLIC_SERVER_URL}${cleanImagePath}` : `${siteUrl}/assets/images/fav-icon.png`;
+        const cleanSummary = particularBlog.summary ? particularBlog.summary.replace(/\r\n/g, ' ') : '';
+        const blogCanonical = `${siteUrl}/blogs/${encodeURI(particularBlog?.slug + "-" + urlEncode(particularBlog?.id))}`;
 
         return {
-            title: particularBlog.title,
+            title: `${particularBlog.title} | Delta Safari`,
             description: cleanSummary,
             keywords: particularBlog.post_tags,
+            alternates: {
+                canonical: blogCanonical,
+            },
             openGraph: {
                 title: particularBlog.title,
                 description: cleanSummary,
-                url: `${process.env.NEXT_PUBLIC_PUBLIC_URL}blogs/${encodeURI(particularBlog?.slug + "-" + urlEncode(particularBlog?.id))}`,
+                url: blogCanonical,
                 images: [{ url: imageUrl, width: 1200, height: 630 }],
                 type: 'article',
             },
@@ -64,6 +69,19 @@ export async function generateMetadata({ params }) {
         };
     }
 
+    const catTitle = `${decodeURIComponent(slug)} Blogs & Articles | Delta Safari`;
+    const catCanonical = `${siteUrl}/blogs/${slug}`;
+    return {
+        title: catTitle,
+        description: `Read travel articles, guides and stories about ${decodeURIComponent(slug)} on Delta Safari.`,
+        alternates: {
+            canonical: catCanonical,
+        },
+        openGraph: {
+            title: catTitle,
+            url: catCanonical,
+        }
+    };
 }
 
 

@@ -7,7 +7,14 @@ export async function getSiteSettings() {
     const response = await axios.get(getSiteSettingsUrl);
     if (response.data?.status) {
       const resData = response.data?.siteSettings;
-      return Array.isArray(resData) ? resData[0] : resData;
+      const s = Array.isArray(resData) ? resData[0] : resData;
+      if (s) {
+        delete s.google_client_secret;
+        delete s.google_auth_token;
+        delete s.whatsapp_access_token;
+        delete s.whatsapp_verify_token;
+      }
+      return s;
     }
   } catch (error) {
     console.error("Error fetching site settings:", error);
@@ -15,12 +22,60 @@ export async function getSiteSettings() {
   return null;
 }
 
-export async function fetchPageSeo(slug) {
+export function getSiteBaseUrl(siteSettings) {
+  let url = siteSettings?.canonical_url || process.env.NEXT_PUBLIC_PUBLIC_URL || "https://deltasafari.in";
+  // Replace legacy domain if present
+  url = url.replace(/https?:\/\/(www\.)?sundarbandeltasafari\.com/gi, "https://deltasafari.in");
+  // Normalize by stripping trailing slashes
+  url = url.trim().replace(/\/+$/, "");
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://deltasafari.in";
+  }
+  return url;
+}
+
+export function buildPageCanonicalUrl(siteUrl, pagePath, customCanonical) {
+  if (customCanonical && typeof customCanonical === "string" && customCanonical.trim() !== "") {
+    let trimmed = customCanonical.trim();
+    trimmed = trimmed.replace(/https?:\/\/(www\.)?sundarbandeltasafari\.com/gi, "https://deltasafari.in");
+    if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+      return trimmed;
+    }
+    const cleanPath = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+    return `${siteUrl}${cleanPath}`;
+  }
+
+  if (!pagePath || pagePath === "/" || pagePath === "home") {
+    return `${siteUrl}/`;
+  }
+
+  const cleanPath = pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
+  return `${siteUrl}${cleanPath}`;
+}
+
+export async function fetchPageSeo(slug, defaultPath = null, fallbackMeta = null) {
   const siteSettings = await getSiteSettings();
+  const siteUrl = getSiteBaseUrl(siteSettings);
+
+  // If path is not provided, deduce sensible default path from slug
+  let path = defaultPath;
+  if (!path) {
+    if (!slug || slug === "home" || slug === "/") {
+      path = "/";
+    } else if (slug === "about" || slug === "about-us") {
+      path = "/about";
+    } else if (slug === "contact" || slug === "contacts") {
+      path = "/contact";
+    } else if (slug === "cab" || slug === "cabs") {
+      path = "/cab";
+    } else {
+      path = `/${slug.replace(/^\/+/, "")}`;
+    }
+  }
 
   // Home page explicitly uses /websitesettings SEO
-  if (!slug || slug === 'home' || slug === '/') {
-    return buildMetadata(siteSettings, null);
+  if (!slug || slug === "home" || slug === "/") {
+    return buildMetadata(siteSettings, null, path, fallbackMeta);
   }
 
   // Other pages try /seopages first via /service/getPageSeo
@@ -29,25 +84,28 @@ export async function fetchPageSeo(slug) {
     if (response.data?.status && response.data?.seo) {
       const seo = response.data.seo;
       // If valid SEO details exist for this page
-      if (seo.meta_title || seo.meta_description || seo.og_title) {
-        return buildMetadata(siteSettings, seo);
+      if (seo.meta_title || seo.meta_description || seo.og_title || seo.canonical_url) {
+        return buildMetadata(siteSettings, seo, path, fallbackMeta);
       }
     }
   } catch (error) {
     console.error(`Error fetching page SEO for ${slug}:`, error);
   }
 
-  // Fallback to /websitesettings if no page SEO found
-  return buildMetadata(siteSettings, null);
+  // Fallback to fallbackMeta / websitesettings if no page SEO found
+  return buildMetadata(siteSettings, null, path, fallbackMeta);
 }
 
-function buildMetadata(siteSettings, pageSeo) {
-  const title = pageSeo?.meta_title || siteSettings?.site_title || "Delta Safari";
-  const description = pageSeo?.meta_description || siteSettings?.meta_description || "Delta Safari";
-  const keywords = pageSeo?.meta_keywords || siteSettings?.meta_keywords || "Delta Safari";
-  const og_title = pageSeo?.og_title || siteSettings?.og_title || title;
-  const og_description = pageSeo?.meta_description || siteSettings?.og_description || description;
-  const siteUrl = siteSettings?.canonical_url || "https://sundarbandeltasafari.com";
+export function buildMetadata(siteSettings, pageSeo, pagePath = "/", fallbackMeta = null) {
+  const siteUrl = getSiteBaseUrl(siteSettings);
+
+  const title = pageSeo?.meta_title || fallbackMeta?.title || siteSettings?.site_title || "Delta Safari";
+  const description = pageSeo?.meta_description || fallbackMeta?.description || siteSettings?.meta_description || "Delta Safari";
+  const keywords = pageSeo?.meta_keywords || fallbackMeta?.keywords || siteSettings?.meta_keywords || "Delta Safari";
+  const og_title = pageSeo?.og_title || fallbackMeta?.og_title || siteSettings?.og_title || title;
+  const og_description = pageSeo?.og_description || pageSeo?.meta_description || fallbackMeta?.og_description || fallbackMeta?.description || siteSettings?.og_description || description;
+
+  const canonicalUrl = buildPageCanonicalUrl(siteUrl, pagePath, pageSeo?.canonical_url || fallbackMeta?.canonical_url);
 
   return {
     title,
@@ -55,7 +113,7 @@ function buildMetadata(siteSettings, pageSeo) {
     keywords,
     metadataBase: new URL(siteUrl),
     alternates: {
-      canonical: "/",
+      canonical: canonicalUrl,
     },
     robots: siteSettings?.robots_meta || "index, follow",
     icons: {
@@ -66,7 +124,7 @@ function buildMetadata(siteSettings, pageSeo) {
     openGraph: {
       title: og_title,
       description: og_description,
-      url: siteSettings?.og_url || "/",
+      url: canonicalUrl,
       siteName: siteSettings?.og_site_name || "Delta Safari",
       type: siteSettings?.og_type || "website",
       images: siteSettings?.og_image

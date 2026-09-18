@@ -6,15 +6,11 @@ import './page.css';
 import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata() {
-  const seoData = await fetchPageSeo('faq');
-  if (seoData && seoData.title && seoData.title !== 'Delta Safari') {
-    return seoData;
-  }
-  return {
+  return await fetchPageSeo('faq', '/faq', {
     title: 'Frequently Asked Questions (FAQ) – Delta Safari',
     description: 'Find answers to common questions about Delta Safari holiday packages, customized travel planning, online booking, transparent pricing, top destinations, and customer support.',
     keywords: 'Delta Safari FAQ, travel questions, booking tour packages, customized holiday FAQ, Sundarban safari FAQ, budget tour packages India',
-  };
+  });
 }
 
 const defaultFaqs = [

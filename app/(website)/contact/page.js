@@ -8,7 +8,11 @@ import '../about/about.css';
 import './contact.css';
 
 export async function generateMetadata() {
-  return await fetchPageSeo('contact');
+  return await fetchPageSeo('contact', '/contact', {
+    title: "Contact Delta Safari – We're Here to Help You Plan Your Perfect Journey",
+    description: "Get in touch with Delta Safari for tour package bookings, customized itineraries, hotel inquiries, and 24/7 customer support.",
+    keywords: "Contact Delta Safari, customer support, travel booking inquiries, Sundarban safari contact"
+  });
 }
 
 async function page() {

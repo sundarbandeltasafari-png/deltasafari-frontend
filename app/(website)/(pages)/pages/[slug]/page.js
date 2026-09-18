@@ -10,7 +10,7 @@ import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  return await fetchPageSeo(slug);
+  return await fetchPageSeo(slug, `/pages/${slug}`);
 }
 
 async function Page({ params }) {

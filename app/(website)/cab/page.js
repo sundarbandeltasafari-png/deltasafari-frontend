@@ -1,5 +1,14 @@
 import Faq from '@/components/website/home/Faq'
 import React from 'react'
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('cab', '/cab', {
+    title: 'Cab & Car Rental Services | Delta Safari',
+    description: 'Book safe, verified cabs and car rentals for city tours, airport transfers, and outstation trips with Delta Safari.',
+    keywords: 'cab booking, taxi service, car rental, outstation cab, delta safari cab'
+  });
+}
 
 function page() {
   const hotelCities = [

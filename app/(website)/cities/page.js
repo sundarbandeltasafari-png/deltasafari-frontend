@@ -2,6 +2,15 @@ import React from 'react';
 import { getAllCitiesUrl } from '@/routes/packageRoutes';
 import axios from 'axios';
 import Link from 'next/link';
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('cities', '/cities', {
+    title: 'Explore All Cities & Destinations | Delta Safari',
+    description: 'Browse through our complete collection of travel destinations to find your perfect getaway with Delta Safari.',
+    keywords: 'cities, travel destinations, holiday destinations, delta safari cities'
+  });
+}
 
 async function CitiesPage() {
     let cities = [];

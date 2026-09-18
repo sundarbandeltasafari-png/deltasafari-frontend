@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import './about.css';
+import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata() {
-  return {
+  return await fetchPageSeo('about', '/about', {
     title: 'About Delta Safari – Your Trusted Travel Partner for Unforgettable Holidays',
     description: 'Learn about Delta Safari, one of India\'s trusted travel companies specializing in customized holiday packages, budget tours, luxury vacations, wildlife safaris, and international trips.',
     keywords: 'Delta Safari, About Delta Safari, travel agency India, holiday packages, customized tours, budget travel, wildlife safari, domestic tours, international holidays',
-  };
+  });
 }
 
 export default function AboutPage() {

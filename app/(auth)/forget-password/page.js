@@ -15,9 +15,10 @@ import "../auth.css";
 function ForgetPasswordContent() {
   const router = useRouter();
 
-  // Steps: 1 = Enter Email, 2 = Verify OTP & Set New Password, 3 = Success
+  // Steps: 1 = Enter Email/WhatsApp, 2 = Verify OTP & Set New Password, 3 = Success
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
+  const [channel, setChannel] = useState("email");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -48,15 +49,20 @@ function ForgetPasswordContent() {
   const handleRequestOtp = (e) => {
     if (e) e.preventDefault();
 
-    if (!email.trim()) {
-      const msg = "Please enter your registered email address.";
+    const trimmed = email.trim();
+    if (!trimmed) {
+      const msg = "Please enter your registered email address or 10-digit WhatsApp number.";
       setServerError(msg);
       showMessage("error", msg);
       return;
     }
 
-    if (!emailValidation(email.trim())) {
-      const msg = "Please enter a valid email address.";
+    const isEmail = emailValidation(trimmed);
+    const cleanDigits = trimmed.replace(/\D/g, '');
+    const isPhone = cleanDigits.length === 10;
+
+    if (!isEmail && !isPhone) {
+      const msg = "Please enter a valid email address or 10-digit WhatsApp number.";
       setServerError(msg);
       showMessage("error", msg);
       return;
@@ -66,16 +72,22 @@ function ForgetPasswordContent() {
     setServerError("");
     setSuccessMsg("");
 
-    axiosNormalPost(forgotPasswordReqURL, { email: email.trim() })
+    axiosNormalPost(forgotPasswordReqURL, { 
+      identifier: trimmed, 
+      email: trimmed,
+      channel: isPhone ? 'whatsapp' : 'email'
+    })
       .then((res) => {
         setLoading(false);
         if (res?.status) {
-          setSuccessMsg(res.msg || "Password reset OTP has been sent to your email.");
-          showMessage("success", "OTP sent to your email!");
+          const respChannel = res.channel || (isPhone ? 'whatsapp' : 'email');
+          setChannel(respChannel);
+          setSuccessMsg(res.msg || `Password reset OTP has been sent to your ${respChannel === 'whatsapp' ? 'WhatsApp number' : 'email'}.`);
+          showMessage("success", `OTP sent to your ${respChannel === 'whatsapp' ? 'WhatsApp' : 'email'}!`);
           setStep(2);
           setTimer(60); // 60 seconds countdown
         } else {
-          const msg = res?.msg || "Failed to send reset OTP. Please check your email.";
+          const msg = res?.msg || "Failed to send reset OTP. Please check your details.";
           setServerError(msg);
           showMessage("error", msg);
         }
@@ -95,12 +107,19 @@ function ForgetPasswordContent() {
     setResending(true);
     setServerError("");
 
-    axiosNormalPost(resendResetOtpURL, { email: email.trim() })
+    const trimmed = email.trim();
+    axiosNormalPost(resendResetOtpURL, { 
+      identifier: trimmed, 
+      email: trimmed,
+      channel: channel 
+    })
       .then((res) => {
         setResending(false);
         if (res?.status) {
-          setSuccessMsg("A fresh OTP code has been dispatched to your email.");
-          showMessage("success", "New OTP code sent to your inbox!");
+          const respChannel = res.channel || channel;
+          setChannel(respChannel);
+          setSuccessMsg(`A fresh OTP code has been dispatched to your ${respChannel === 'whatsapp' ? 'WhatsApp number' : 'email'}.`);
+          showMessage("success", `New OTP code sent to your ${respChannel === 'whatsapp' ? 'WhatsApp' : 'email'}!`);
           setTimer(60);
         } else {
           const msg = res?.msg || "Failed to resend OTP.";
@@ -116,12 +135,13 @@ function ForgetPasswordContent() {
       });
   };
 
+
   // Step 2: Validate OTP and Set New Password
   const handleResetPassword = (e) => {
     if (e) e.preventDefault();
 
     if (!otp.trim()) {
-      const msg = "Please enter the 6-digit OTP code sent to your email.";
+      const msg = `Please enter the 6-digit OTP code sent to your ${channel === 'whatsapp' ? 'WhatsApp number' : 'email'}.`;
       setServerError(msg);
       showMessage("error", msg);
       return;
@@ -160,6 +180,7 @@ function ForgetPasswordContent() {
 
     axiosNormalPost(resetPasswordURL, {
       email: email.trim(),
+      identifier: email.trim(),
       otp: otp.trim(),
       password: password,
       confirmPassword: confirmPassword
@@ -204,8 +225,8 @@ function ForgetPasswordContent() {
               {step === 3 && "Password Reset Complete"}
             </h5>
             <small className="text-muted" style={{ fontSize: "13px" }}>
-              {step === 1 && "Enter your email to receive a password reset OTP"}
-              {step === 2 && `OTP verification code sent to ${email}`}
+              {step === 1 && "Enter your email or 10-digit WhatsApp number to receive a reset OTP"}
+              {step === 2 && `OTP verification code sent to your ${channel === 'whatsapp' ? 'WhatsApp number' : 'email'} (${email})`}
               {step === 3 && "You can now log in with your new password"}
             </small>
           </div>
@@ -221,24 +242,27 @@ function ForgetPasswordContent() {
           {/* Success Banner on Step 2 */}
           {successMsg && step === 2 && (
             <div className="alert alert-success d-flex align-items-center gap-2 p-2.5 rounded-3 mb-3 text-xs border border-success-subtle shadow-xs">
-              <i className="bi bi-check-circle-fill text-success fs-6 flex-shrink-0"></i>
+              <i className={channel === 'whatsapp' ? "bi bi-whatsapp text-success fs-6 flex-shrink-0" : "bi bi-check-circle-fill text-success fs-6 flex-shrink-0"}></i>
               <div className="fw-semibold text-success-emphasis" style={{ fontSize: "12.5px" }}>{successMsg}</div>
             </div>
           )}
 
-          {/* STEP 1: Enter Registered Email */}
+          {/* STEP 1: Enter Registered Email or WhatsApp */}
           {step === 1 && (
             <div>
               <div className="input-group mb-3 col-12">
+                <span className="input-group-text bg-white text-muted border-end-0">
+                  <i className="bi bi-person-badge"></i>
+                </span>
                 <input
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     if (serverError) setServerError("");
                   }}
-                  className="form-control"
-                  placeholder="Registered Email Address"
+                  className="form-control border-start-0 ps-1"
+                  placeholder="Email or 10-digit WhatsApp Number"
                   autoFocus
                 />
               </div>
@@ -252,15 +276,16 @@ function ForgetPasswordContent() {
                 {loading ? (
                   <>
                     <span className="spinner-border spinner-border-sm" role="status"></span>
-                    <span>Sending OTP to Email...</span>
+                    <span>Sending Reset OTP...</span>
                   </>
                 ) : (
                   <>
-                    <i className="bi bi-envelope-fill me-1"></i>
+                    <i className="bi bi-send-fill me-1"></i>
                     <span>Send Password Reset OTP</span>
                   </>
                 )}
               </button>
+
 
               <div className="text-center mt-3 mb-2">
                 <Link
@@ -289,7 +314,7 @@ function ForgetPasswordContent() {
                     onClick={() => setStep(1)}
                     style={{ color: "#ef6614", fontSize: "12px", fontWeight: "600" }}
                   >
-                    Change Email
+                    Change Email / WhatsApp
                   </button>
                 </div>
                 <input
@@ -308,7 +333,7 @@ function ForgetPasswordContent() {
                 
                 <div className="d-flex justify-content-between align-items-center mt-2">
                   <span className="text-muted" style={{ fontSize: "12px" }}>
-                    Didn't receive the email OTP?
+                    Didn&apos;t receive the {channel === "whatsapp" ? "WhatsApp" : "email"} OTP?
                   </span>
                   {timer > 0 ? (
                     <span className="badge bg-light text-muted border py-1 px-2" style={{ fontSize: "11px" }}>

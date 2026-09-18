@@ -14,8 +14,11 @@ import HomeAbout from '@/components/website/home/HomeAbout'
 import axios from 'axios'
 import { homeDestinationURL } from '@/routes/homeRoutes'
 import Filter from '@/components/website/home/Filter'
+import { fetchPageSeo } from '@/libs/seoHelper';
 
-
+export async function generateMetadata() {
+  return await fetchPageSeo('home', '/');
+}
 
 async function page() {
     let topDesination = null;

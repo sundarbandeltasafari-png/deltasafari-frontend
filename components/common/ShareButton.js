@@ -6,10 +6,20 @@ export default function ShareButton({ title, text, url, className, style, wrappe
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    // Fallback to current window location if no explicit URL is passed
-    const shareUrl = url || window.location.href; 
+    // Always resolve to a fully-qualified absolute URL
+    let shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+    if (url && typeof url === 'string') {
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        shareUrl = url;
+      } else if (typeof window !== 'undefined') {
+        const cleanPath = url.startsWith('/') ? url : `/${url}`;
+        shareUrl = `${window.location.origin}${cleanPath}`;
+      } else {
+        shareUrl = url;
+      }
+    }
     const shareData = {
-      title: title || document.title,
+      title: title || (typeof document !== 'undefined' ? document.title : 'Delta Safari'),
       text: text || 'Check this out!',
       url: shareUrl,
     };

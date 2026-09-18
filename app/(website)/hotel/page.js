@@ -1,5 +1,14 @@
 import Faq from '@/components/website/home/Faq'
 import React from 'react'
+import { fetchPageSeo } from '@/libs/seoHelper';
+
+export async function generateMetadata() {
+  return await fetchPageSeo('hotel', '/hotel', {
+    title: 'Book Hotels & Luxury Stays | Delta Safari',
+    description: 'Find and book top hotels, luxury jungle resorts, and comfortable guest stays at the best rates with Delta Safari.',
+    keywords: 'hotel booking, sundarban hotels, resorts, luxury stays, delta safari'
+  });
+}
 
 function page() {
     const hotelChain = [

@@ -8,6 +8,7 @@ import Footer from "@/components/website/Footer";
 import CustomPackageWidget from "@/components/website/CustomPackageWidget";
 import axios from "axios";
 import { getSiteSettingsUrl } from "@/routes/settingsRoute";
+import { getSiteBaseUrl } from "@/libs/seoHelper";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,7 +31,14 @@ async function getSiteSettings() {
     const response = await axios.get(getSiteSettingsUrl);
     if (response.data?.status) {
       const resData = response.data?.siteSettings;
-      return Array.isArray(resData) ? resData[0] : resData;
+      const s = Array.isArray(resData) ? resData[0] : resData;
+      if (s) {
+        delete s.google_client_secret;
+        delete s.google_auth_token;
+        delete s.whatsapp_access_token;
+        delete s.whatsapp_verify_token;
+      }
+      return s;
     }
   } catch (error) {
     console.error("Error fetching site settings:", error);
@@ -40,16 +48,13 @@ async function getSiteSettings() {
 
 export async function generateMetadata() {
   const data = await getSiteSettings();
-  const siteUrl = data?.canonical_url || "https://sundarbandeltasafari.com";
+  const siteUrl = getSiteBaseUrl(data);
 
   return {
     title: data?.site_title || "Delta Safari",
     description: data?.meta_description || "Delta Safari",
     keywords: data?.meta_keywords || "Delta Safari",
     metadataBase: new URL(siteUrl),
-    alternates: {
-      canonical: "/",
-    },
     robots: data?.robots_meta || "index, follow",
     icons: {
       icon: data?.site_favicon ? process.env.NEXT_PUBLIC_SERVER_URL + `${data.site_favicon.replace(/\\/g, "/")}` : process.env.NEXT_PUBLIC_PUBLIC_URL + "/assets/images/fav-icon.png",
@@ -57,7 +62,7 @@ export async function generateMetadata() {
     openGraph: {
       title: data?.og_title || data?.site_title,
       description: data?.og_description || data?.meta_description,
-      url: data?.og_url || "/",
+      url: siteUrl,
       siteName: data?.og_site_name || "Delta Safari",
       type: data?.og_type || "website",
       images: data?.og_image

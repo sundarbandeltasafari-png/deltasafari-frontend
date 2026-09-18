@@ -5,7 +5,11 @@ import './referal.css';
 import { fetchPageSeo } from '@/libs/seoHelper';
 
 export async function generateMetadata() {
-  return await fetchPageSeo('referal');
+  return await fetchPageSeo('referal', '/referal', {
+    title: 'Refer & Earn Commission on Holiday Tours | Delta Safari',
+    description: 'Invite friends and earn commission on every holiday tour and safari booking through the Delta Safari referral program.',
+    keywords: 'refer and earn, travel affiliate, Delta Safari referral, earn travel commission'
+  });
 }
 
 export default function ReferralPage() {
