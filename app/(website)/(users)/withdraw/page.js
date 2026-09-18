@@ -110,13 +110,13 @@ export default function WithdrawPage() {
                 <div className="d-flex justify-content-between align-items-center pb-3 border-bottom mb-4">
                     <div>
                         <h4 className="fw-bold text-dark mb-1">
-                            <i className="fa-solid fa-money-bill-transfer text-success me-2"></i> Withdraw Commission to Indian Bank Account
+                            <i className="fa-solid fa-money-bill-transfer text-primary me-2"></i> Withdraw Commission to Indian Bank Account
                         </h4>
                         <p className="text-muted small mb-0">Direct IMPS / NEFT / UPI settlement in INR (₹) to your registered bank account</p>
                     </div>
-                    <div className="p-2.5 bg-success-subtle border border-success-subtle rounded-3 text-end">
+                    <div className="p-2.5 bg-primary-subtle border border-primary-subtle rounded-3 text-end">
                         <small className="text-muted d-block" style={{ fontSize: '11px' }}>Available Balance</small>
-                        <strong className="text-success fs-5">₹{walletBalance.toLocaleString('en-IN')}</strong>
+                        <strong className="text-primary fs-5">₹{walletBalance.toLocaleString('en-IN')}</strong>
                     </div>
                 </div>
 
@@ -150,13 +150,13 @@ export default function WithdrawPage() {
                                 <div className="small text-dark">
                                     <strong>{bankDetails.bank_name || 'Bank Name Pending'}</strong> - A/C: {bankDetails.account_number || 'Pending'}
                                     {bankDetails.ifsc_code && <span className="d-block text-muted">IFSC: {bankDetails.ifsc_code}</span>}
-                                    {bankDetails.upi_id && <span className="d-block text-success fw-semibold">UPI: {bankDetails.upi_id}</span>}
+                                    {bankDetails.upi_id && <span className="d-block text-primary fw-semibold">UPI: {bankDetails.upi_id}</span>}
                                 </div>
                             </div>
 
                             <button 
                                 type="submit" 
-                                className="btn btn-success w-100 py-2.5 rounded-pill fw-bold shadow d-flex align-items-center justify-content-center gap-2"
+                                className="btn btn-primary w-100 py-2.5 rounded-pill fw-bold shadow d-flex align-items-center justify-content-center gap-2"
                                 disabled={submitting || walletBalance < 500}
                             >
                                 {submitting ? (
@@ -176,7 +176,7 @@ export default function WithdrawPage() {
 
                     {/* Bank Details Management */}
                     <div className="col-md-6">
-                        <h6 className="fw-bold text-success text-uppercase mb-3" style={{ fontSize: '12px' }}>
+                        <h6 className="fw-bold text-primary text-uppercase mb-3" style={{ fontSize: '12px' }}>
                             2. Manage Indian Bank & UPI Details
                         </h6>
                         <form onSubmit={handleSaveBank}>
@@ -237,7 +237,7 @@ export default function WithdrawPage() {
 
                             <button 
                                 type="submit" 
-                                className="btn btn-outline-success btn-sm w-100 rounded-pill fw-bold"
+                                className="btn btn-outline-primary btn-sm w-100 rounded-pill fw-bold"
                                 disabled={savingBank}
                             >
                                 {savingBank ? 'Saving...' : 'Update Bank & UPI Details'}

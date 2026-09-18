@@ -45,7 +45,7 @@ function TopDestination({ topDesination }) {
                   data-wow-duration="1500ms"
                   style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}
                 >
-                  <Link href={"/packages/destination-" + elem?.slug} className="destination-card2 four h-100 d-flex flex-column position-relative overflow-hidden rounded-4">
+                  <Link href={`/packages/${elem?.slug}-tours-packages`} className="destination-card2 four h-100 d-flex flex-column position-relative overflow-hidden rounded-4">
                     <div className="destination-img w-100 h-100">
                       <img
                         src={process.env.NEXT_PUBLIC_SERVER_URL + elem?.image}

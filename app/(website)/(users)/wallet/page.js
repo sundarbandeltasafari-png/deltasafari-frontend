@@ -40,19 +40,19 @@ export default function WalletPage() {
                 <div className="col-md-6">
                     <div 
                         className="card border-0 shadow-sm rounded-4 p-4 text-white h-100 position-relative overflow-hidden"
-                        style={{ background: "linear-gradient(135deg, #064e3b 0%, #047857 100%)" }}
+                        style={{ background: "linear-gradient(135deg, #174385 0%, #1781FE 100%)" }}
                     >
                         <div className="d-flex align-items-center justify-content-between mb-2">
-                            <span className="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold text-uppercase" style={{ fontSize: '11px' }}>
+                            <span className="badge px-3 py-1 rounded-pill fw-bold text-uppercase" style={{ fontSize: '11px', backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                                 Available Payout Balance
                             </span>
-                            <i className="fa-solid fa-wallet fs-3 text-warning"></i>
+                            <i className="fa-solid fa-wallet fs-3" style={{ color: '#b8d7ff' }}></i>
                         </div>
-                        <h1 className="display-6 fw-extrabold text-warning mb-2">
+                        <h1 className="display-6 fw-extrabold text-white mb-2">
                             ₹{walletBalance.toLocaleString('en-IN')}
                         </h1>
                         <p className="m-0 text-light text-opacity-75 small">
-                            <i className="fa-solid fa-shield-halved me-1 text-warning"></i> Indian Bank & UPI Payout Gateway
+                            <i className="fa-solid fa-shield-halved me-1" style={{ color: '#b8d7ff' }}></i> Indian Bank & UPI Payout Gateway
                         </p>
                     </div>
                 </div>
@@ -62,13 +62,13 @@ export default function WalletPage() {
                         <div>
                             <span className="text-muted small text-uppercase fw-bold d-block mb-1">Total Commission Earned</span>
                             <h3 className="fw-bold text-primary mb-1">₹{totalEarned.toLocaleString('en-IN')}</h3>
-                            <span className="badge bg-warning-subtle text-warning border border-warning-subtle px-2.5 py-1 rounded-pill">
+                            <span className="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 rounded-pill">
                                 ⏳ Pending Clearance: ₹{pendingComm.toLocaleString('en-IN')}
                             </span>
                         </div>
                         <div className="mt-3 pt-3 border-top d-flex gap-2">
                             <button 
-                                className="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm flex-grow-1"
+                                className="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm flex-grow-1"
                                 onClick={() => router.push('/withdraw')}
                             >
                                 <i className="fa-solid fa-arrow-up-from-bracket me-2"></i> Withdraw to Bank (₹)
@@ -114,11 +114,11 @@ export default function WalletPage() {
                                         <td>{tx.description || tx.source}</td>
                                         <td>{new Date(tx.created_at).toLocaleDateString('en-IN')}</td>
                                         <td>
-                                            <span className={`badge ${tx.type === 'CREDIT' ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-danger-subtle text-danger border border-danger-subtle'} rounded-pill px-2.5 py-1 fw-bold`}>
+                                            <span className={`badge ${tx.type === 'CREDIT' ? 'bg-primary-subtle text-primary border border-primary-subtle' : 'bg-danger-subtle text-danger border border-danger-subtle'} rounded-pill px-2.5 py-1 fw-bold`}>
                                                 {tx.type === 'CREDIT' ? 'Credit (+)' : 'Debit (-)'}
                                             </span>
                                         </td>
-                                        <td className={`fw-bold ${tx.type === 'CREDIT' ? 'text-success' : 'text-danger'}`}>
+                                        <td className={`fw-bold ${tx.type === 'CREDIT' ? 'text-primary' : 'text-danger'}`}>
                                             {tx.type === 'CREDIT' ? '+' : '-'}₹{Number(tx.amount).toLocaleString('en-IN')}
                                         </td>
                                         <td>

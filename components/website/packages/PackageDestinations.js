@@ -39,7 +39,7 @@ export default function PackageDestinations() {
                 data-wow-duration="1500ms"
                 style={{ visibility: "visible", animationDuration: "1500ms", animationDelay: "200ms" }}
               >
-                <Link href={`/packages/destination-${dest.slug}`} className="destination-card2 position-relative">
+                <Link href={`/packages/${dest.slug}-tours-packages`} className="destination-card2 position-relative">
                   <div className="destination-img">
                     <img 
                       src={imgSrc} 

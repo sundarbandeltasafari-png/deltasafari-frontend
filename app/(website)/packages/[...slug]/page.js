@@ -14,24 +14,53 @@ import TouristGuideSection from '@/components/website/packages/TouristGuideSecti
 import Link from 'next/link';
 import CustomPackageWizardForm from '@/components/website/CustomPackageWizardForm';
 
-function parseSlugFilters(slugs) {
-  const filters = {};
-  if (!slugs) return filters;
+function parseRouteSlug(slugs) {
+  if (!slugs) return { type: 'all' };
   const slugArray = Array.isArray(slugs) ? slugs : [slugs];
-  slugArray.forEach((slug) => {
-    const hyphenIndex = slug.indexOf('-');
-    if (hyphenIndex === -1) {
-      filters['name'] = decodeURI(slug);
-      return;
-    }
-    const key = slug.substring(0, hyphenIndex);
-    const value = slug.substring(hyphenIndex + 1);
-    if (key && value) {
-      filters[key] = decodeURI(value);
-    }
-  });
-  return filters;
+  const primarySlug = slugArray[0] ? decodeURIComponent(slugArray[0]).trim() : '';
+
+  if (!primarySlug) return { type: 'all' };
+
+  // 1. Category filter: e.g. category-boat-tour
+  if (primarySlug.toLowerCase().startsWith('category-')) {
+    return {
+      type: 'category',
+      value: primarySlug.substring(9).trim(),
+    };
+  }
+
+  // 2. Name search: e.g. name-weekend
+  if (primarySlug.toLowerCase().startsWith('name-')) {
+    return {
+      type: 'name',
+      value: primarySlug.substring(5).trim(),
+    };
+  }
+
+  // 3. Entity (Destination / City / Tours-Packages):
+  let base = primarySlug;
+  let isLegacy = false;
+  if (/^destination-/i.test(base)) {
+    base = base.replace(/^destination-/i, '');
+    isLegacy = true;
+  } else if (/^city-/i.test(base)) {
+    base = base.replace(/^city-/i, '');
+    isLegacy = true;
+  }
+
+  const toursSuffixRegex = /-(?:tours?|tour)-packages?$/i;
+  if (toursSuffixRegex.test(base)) {
+    base = base.replace(toursSuffixRegex, '');
+  }
+
+  return {
+    type: 'entity',
+    baseName: base.toLowerCase().trim(),
+    rawName: base.trim(),
+    isLegacy,
+  };
 }
+
 
 export default function TravelPackageListPage() {
   const params = useParams();
@@ -89,7 +118,7 @@ export default function TravelPackageListPage() {
     }
   }, [maxAvailablePrice]);
 
-  // --- FETCH DATA & DESTINATION / CITY SEO ---
+  // --- FETCH DATA & RESOLVE DESTINATION / CITY (DESTINATION FIRST, THEN CITY) ---
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -97,59 +126,117 @@ export default function TravelPackageListPage() {
       document.body.scrollTop = 0;
     }
     setLoading(true);
-    const filter = params.slug && parseSlugFilters(params.slug);
-    axiosNormalPost(getFilterPackages, filter)
-      .then((res) => {
-        if (res && res.packages) {
-          const data = Array.isArray(res.packages) ? res.packages : [];
-          setDbPackages(data);
+    setDestinationInfo(null);
+    setCityInfo(null);
+
+    const parsed = parseRouteSlug(params.slug);
+
+    // If legacy URL (e.g. /packages/destination-sundarban or /packages/city-sundarban),
+    // update URL in browser history to standard /packages/${clean}-tours-packages
+    if (parsed.type === 'entity' && parsed.isLegacy && parsed.baseName) {
+      if (typeof window !== 'undefined') {
+        window.history.replaceState(null, '', `/packages/${parsed.baseName}-tours-packages`);
+      }
+    }
+
+    async function resolveAndFetch() {
+      try {
+        if (parsed.type === 'category') {
+          const res = await axiosNormalPost(getFilterPackages, { category: parsed.value });
+          setDbPackages(Array.isArray(res?.packages) ? res.packages : []);
+          return;
         }
-      })
-      .catch((err) => console.error("Error fetching packages:", err))
-      .finally(() => setLoading(false));
 
-    // Fetch Destination SEO details if destination filter is specified
-    const destSlugOrId = filter?.destination || filter?.zone;
-    if (destSlugOrId) {
-      const condition = isNaN(destSlugOrId) ? { slug: destSlugOrId } : { id: destSlugOrId };
-      axiosNormalPost(getDestinationsUrl, { condition })
-        .then((res) => {
-          if (res?.status && res?.destinations && res.destinations.length > 0) {
-            const dest = res.destinations[0];
-            setDestinationInfo(dest);
+        if (parsed.type === 'name') {
+          const res = await axiosNormalPost(getFilterPackages, { name: parsed.value });
+          setDbPackages(Array.isArray(res?.packages) ? res.packages : []);
+          return;
+        }
 
-            if (dest.meta_title) {
-              document.title = dest.meta_title;
-            } else if (dest.name) {
-              document.title = `${dest.name} Tour Packages & Safaris | Delta Safari`;
+        if (parsed.type === 'entity' && parsed.baseName) {
+          const baseSlug = parsed.baseName;
+
+          // Step 1: Check if there is any destination with this name/slug
+          let destMatch = null;
+          try {
+            const destRes = await axiosNormalPost(getDestinationsUrl, {
+              condition: isNaN(baseSlug) ? { slug: baseSlug } : { id: baseSlug }
+            });
+            if (destRes?.status && Array.isArray(destRes?.destinations) && destRes.destinations.length > 0) {
+              destMatch = destRes.destinations[0];
             }
+          } catch (destErr) {
+            console.error("Error checking destination:", destErr);
           }
-        })
-        .catch((err) => console.error("Error fetching destination SEO details:", err));
-    } else {
-      setDestinationInfo(null);
+
+          if (destMatch) {
+            setDestinationInfo(destMatch);
+            setCityInfo(null);
+            if (destMatch.meta_title) {
+              document.title = destMatch.meta_title;
+            } else if (destMatch.name) {
+              document.title = `${destMatch.name} Tour Packages & Safaris | Delta Safari`;
+            }
+            const pkgRes = await axiosNormalPost(getFilterPackages, { destination: destMatch.slug || destMatch.id });
+            setDbPackages(Array.isArray(pkgRes?.packages) ? pkgRes.packages : []);
+            return;
+          }
+
+          // Step 2: Destination not found -> search for city with this name/slug
+          let cityMatch = null;
+          try {
+            const cityRes = await axiosNormalPost(getAllCitiesUrl, {
+              condition: isNaN(baseSlug) ? { slug: baseSlug } : { id: baseSlug }
+            });
+            if (cityRes?.status && Array.isArray(cityRes?.cities) && cityRes.cities.length > 0) {
+              cityMatch = cityRes.cities[0];
+            }
+          } catch (cityErr) {
+            console.error("Error checking city:", cityErr);
+          }
+
+          if (cityMatch) {
+            setCityInfo(cityMatch);
+            setDestinationInfo(null);
+            if (cityMatch.meta_title) {
+              document.title = cityMatch.meta_title;
+            } else if (cityMatch.name) {
+              document.title = `${cityMatch.name} Tour Packages & Safaris | Delta Safari`;
+            }
+            const pkgRes = await axiosNormalPost(getFilterPackages, { city: cityMatch.slug || cityMatch.id });
+            setDbPackages(Array.isArray(pkgRes?.packages) ? pkgRes.packages : []);
+            return;
+          }
+
+          // Step 3: Neither destination nor city found -> check if category matches
+          try {
+            const catRes = await axiosNormalPost(getFilterPackages, { category: baseSlug });
+            if (catRes?.packages && catRes.packages.length > 0) {
+              setDbPackages(catRes.packages);
+              return;
+            }
+          } catch (catErr) {
+            console.error("Error checking category fallback:", catErr);
+          }
+
+          // Step 4: Fallback to package search by name
+          const pkgRes = await axiosNormalPost(getFilterPackages, { name: baseSlug });
+          setDbPackages(Array.isArray(pkgRes?.packages) ? pkgRes.packages : []);
+          return;
+        }
+
+        // Default: Fetch all packages
+        const res = await axiosNormalPost(getFilterPackages, {});
+        setDbPackages(Array.isArray(res?.packages) ? res.packages : []);
+      } catch (err) {
+        console.error("Error loading packages:", err);
+        setDbPackages([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    // Fetch City details if city filter is specified
-    const citySlugOrId = filter?.city;
-    if (citySlugOrId) {
-      const condition = isNaN(citySlugOrId) ? { slug: citySlugOrId } : { id: citySlugOrId };
-      axiosNormalPost(getAllCitiesUrl, { condition })
-        .then((res) => {
-          if (res?.status && res?.cities && res.cities.length > 0) {
-            const c = res.cities[0];
-            setCityInfo(c);
-            if (c.meta_title) {
-              document.title = c.meta_title;
-            } else if (c.name) {
-              document.title = `${c.name} Tour Packages & Safaris | Delta Safari`;
-            }
-          }
-        })
-        .catch((err) => console.error("Error fetching city details:", err));
-    } else {
-      setCityInfo(null);
-    }
+    resolveAndFetch();
   }, [params.slug]);
 
   // Dynamically sync DOM meta tags for Destination & City SEO
@@ -158,6 +245,8 @@ export default function TravelPackageListPage() {
     if (metaSource) {
       if (metaSource.meta_title) {
         document.title = metaSource.meta_title;
+      } else if (metaSource.name) {
+        document.title = `${metaSource.name} Tour Packages & Safaris | Delta Safari`;
       }
       if (metaSource.meta_description) {
         let metaDescEl = document.querySelector('meta[name="description"]');
@@ -168,15 +257,17 @@ export default function TravelPackageListPage() {
         }
         metaDescEl.setAttribute('content', metaSource.meta_description);
       }
-      if (metaSource.canonical_url) {
-        let canonicalEl = document.querySelector('link[rel="canonical"]');
-        if (!canonicalEl) {
-          canonicalEl = document.createElement('link');
-          canonicalEl.setAttribute('rel', 'canonical');
-          document.head.appendChild(canonicalEl);
-        }
-        canonicalEl.setAttribute('href', metaSource.canonical_url);
+      let canonicalUrl = metaSource.canonical_url;
+      if (!canonicalUrl || canonicalUrl.includes('/packages/destination-') || canonicalUrl.includes('/packages/city-')) {
+        canonicalUrl = `https://deltasafari.in/packages/${metaSource.slug}-tours-packages`;
       }
+      let canonicalEl = document.querySelector('link[rel="canonical"]');
+      if (!canonicalEl) {
+        canonicalEl = document.createElement('link');
+        canonicalEl.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalEl);
+      }
+      canonicalEl.setAttribute('href', canonicalUrl);
       if (metaSource.robots_meta) {
         let robotsEl = document.querySelector('meta[name="robots"]');
         if (!robotsEl) {
@@ -255,45 +346,6 @@ export default function TravelPackageListPage() {
       return [];
     }
   };
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (filterBarRef.current && !filterBarRef.current.contains(e.target)) {
-        setOpenDropdown(null);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Update dynamic max value when data loads
-  useEffect(() => {
-    if (maxAvailablePrice) {
-      setMaxPrice(maxAvailablePrice);
-    }
-  }, [maxAvailablePrice]);
-
-  // --- FETCH DATA ---
-  useEffect(() => {
-    setLoading(true);
-    const filter = params.slug && parseSlugFilters(params.slug);
-    axiosNormalPost(getFilterPackages, filter)
-      .then((res) => {
-        if (res && res.packages) {
-          const data = Array.isArray(res.packages) ? res.packages : [];
-          setDbPackages(data);
-        }
-      })
-      .catch((err) => console.error("Error fetching packages:", err))
-      .finally(() => setLoading(false));
-  }, []);
-
-
-  useEffect(() => {
-    if (inView && visibleCount < filteredPackages.length) {
-      setVisibleCount(prev => prev + 6);
-    }
-  }, [inView, filteredPackages.length, visibleCount]);
 
   const handleResetAll = () => {
     setSelectedPackageType('All');

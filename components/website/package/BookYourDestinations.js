@@ -45,7 +45,7 @@ export default function BookYourDestinations({ cities }) {
                 <div className="card border-0 shadow-sm bg-white rounded-4 overflow-hidden position-relative hover-lift transition-all p-2.5">
                   <div className="row g-2 align-items-center">
                     <div className="col-5">
-                      <Link href={`/packages/city-${city.slug}`} className="d-block overflow-hidden rounded-3" style={{ height: '110px' }}>
+                      <Link href={`/packages/${city.slug}-tours-packages`} className="d-block overflow-hidden rounded-3" style={{ height: '110px' }}>
                         <img
                           src={imgSrc}
                           alt={city.name}
@@ -57,7 +57,7 @@ export default function BookYourDestinations({ cities }) {
                       <div className="d-flex align-items-center gap-1.5 mb-2">
                         <i className="fa-solid fa-location-dot text-danger fs-5 me-0.5"></i>
                         <Link 
-                          href={`/packages/city-${city.slug}`} 
+                          href={`/packages/${city.slug}-tours-packages`} 
                           className="fw-bold text-dark text-decoration-none text-truncate hover-text-primary"
                           style={{ fontSize: '22px', lineHeight: '1.25', fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
                         >

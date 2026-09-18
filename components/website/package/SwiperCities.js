@@ -33,7 +33,7 @@ export default function SwiperCities({ cities }) {
                 <SwiperSlide key={city.id || index}>
                     <div className="hotel-card row m-1 border rounded-3 p-2 bg-white shadow-sm">
                         <div className="hotel-img-wrap p-0 col-5">
-                            <Link href={"/packages/" + 'city-' + city.slug} className="hotel-img d-block h-100">
+                            <Link href={`/packages/${city.slug}-tours-packages`} className="hotel-img d-block h-100">
                                 <img src={process.env.NEXT_PUBLIC_SERVER_URL + city.city_image} alt={city.name} style={{ height: "90px", width: "100%", objectFit: "cover" }} />
                             </Link>
                         </div>
@@ -43,7 +43,7 @@ export default function SwiperCities({ cities }) {
                                     <i className="fa-solid fa-location-dot text-danger me-1"></i>
                                     <h5 className="m-0 text-truncate">
                                         <Link 
-                                            href={"/packages/" + 'city-' + city.slug} 
+                                            href={`/packages/${city.slug}-tours-packages`} 
                                             style={{ fontSize: "18px", fontFamily: "'Poppins', sans-serif", fontWeight: 700 }} 
                                             className="text-dark text-decoration-none fw-bold"
                                         >

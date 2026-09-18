@@ -74,10 +74,10 @@ export default function Footer() {
             <div className="col-lg-3">
               <h6>Popular Destination</h6>
               <ul>
-                <li><Link href="/packages/group-packages">Group Packages</Link></li>
-                <li><Link href="/packages/domestic-packages">Domestic Packages</Link></li>
-                <li><Link href="/packages/international-packages">International Packages</Link></li>
-                <li><Link href="/packages/foreigners-corner">Foreigner&apos;s Packages</Link></li>
+                <li><Link href="/packages/category-group-packages">Group Packages</Link></li>
+                <li><Link href="/packages/category-domestic-packages">Domestic Packages</Link></li>
+                <li><Link href="/packages/category-international-packages">International Packages</Link></li>
+                <li><Link href="/packages/category-foreigners-corner">Foreigner&apos;s Packages</Link></li>
                 <li><Link href="/customized-package">Customized Packages</Link></li>
               </ul>
             </div>

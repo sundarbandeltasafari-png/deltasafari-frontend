@@ -71,9 +71,9 @@ function Filter() {
     function handleSelectResult(item) {
         setIsOpen(false);
         if (item.type === 'city') {
-            router.push(`/packages/city-${item.slug}`);
+            router.push(`/packages/${item.slug}-tours-packages`);
         } else if (item.type === 'zone') {
-            router.push(`/packages/destination-${item.slug}`);
+            router.push(`/packages/${item.slug}-tours-packages`);
         } else if (item.type === 'package') {
             const pkgSlug = item.slug || 'package';
             router.push(`/package/${pkgSlug}`);

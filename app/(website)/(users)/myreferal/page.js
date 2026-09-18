@@ -73,7 +73,7 @@ export default function MyReferralPage() {
     return (
       <div className="col-lg-8 col-xl-9">
         <div className="bg-white p-5 rounded-4 shadow-sm border text-center my-4">
-          <i className="fa-solid fa-user-lock text-warning display-4 mb-3"></i>
+          <i className="fa-solid fa-user-lock text-primary display-4 mb-3"></i>
           <h4 className="fw-bold text-dark mb-2">Customer Exclusive Feature</h4>
           <p className="text-secondary small mb-0">
             The Refer & Earn rewards program is available exclusively for Customer User accounts.
@@ -93,11 +93,11 @@ export default function MyReferralPage() {
                style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', color: '#fff' }}>
             <div className="row align-items-center p-4">
               <div className="col-lg-12">
-                <span className="badge bg-warning text-dark mb-2 px-3 py-2 fw-bold text-uppercase rounded-pill" style={{ fontSize: '0.75rem' }}>
+                <span className="badge mb-2 px-3 py-2 fw-bold text-uppercase rounded-pill" style={{ fontSize: '0.75rem', backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                   <i className="fa-solid fa-gift me-1"></i> Refer & Earn Program
                 </span>
                 <h2 className="fw-bold mb-2 text-white" style={{ fontSize: '1.75rem' }}>
-                  Invite Friends & <span style={{ color: '#fb923c' }}>Earn Package Commissions</span>
+                  Invite Friends & <span style={{ color: '#1781FE' }}>Earn Package Commissions</span>
                 </h2>
                 <p className="text-slate-300 small mb-4" style={{ opacity: 0.9 }}>
                   Share your personal referral link or referral code. When a friend signs up using your link/code and books any tour package, you earn the user commission set for that package credited directly to your wallet balance!
@@ -108,8 +108,8 @@ export default function MyReferralPage() {
                   <div className="col-md-6">
                     <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1 d-block">Your Referral Code</label>
                     <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
-                      <span className="fw-bold text-warning text-truncate me-2 ms-1 fs-6">{data.referralCode || 'LOADING...'}</span>
-                      <button onClick={handleCopyCode} className="btn btn-sm btn-warning ms-auto rounded-2 px-3 fw-bold">
+                      <span className="fw-bold text-truncate me-2 ms-1 fs-6" style={{ color: '#b8d7ff' }}>{data.referralCode || 'LOADING...'}</span>
+                      <button onClick={handleCopyCode} className="btn btn-sm btn-primary ms-auto rounded-2 px-3 fw-bold">
                         {copiedCode ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-regular fa-copy me-1"></i> Copy Code</>}
                       </button>
                     </div>
@@ -130,10 +130,10 @@ export default function MyReferralPage() {
 
               <div className="col-lg-12 pt-2 text-center mt-4 mt-lg-0">
                 <div className="p-4 bg-white bg-opacity-10 border border-white border-opacity-25 rounded-4 shadow-sm">
-                  <div className="display-4 text-warning mb-1"><i className="fa-solid fa-sack-dollar"></i></div>
+                  <div className="display-4 mb-1" style={{ color: '#b8d7ff' }}><i className="fa-solid fa-sack-dollar"></i></div>
                   <div className="text-uppercase text-light opacity-75 text-xs fw-bold tracking-wider">Total Earned Rewards</div>
                   <div className="display-6 fw-bold text-white my-1">₹{data.stats.totalCommissionEarned.toLocaleString('en-IN')}</div>
-                  <div className="text-success small fw-semibold mt-2">
+                  <div className="small fw-semibold mt-2" style={{ color: '#b8d7ff' }}>
                     <i className="fa-solid fa-wallet me-1"></i> Wallet Balance: ₹{data.walletBalance.toLocaleString('en-IN')}
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function MyReferralPage() {
             <div className="row g-2">
               <div className="col-6 col-sm-3">
                 <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Sign up on Delta Safari using my referral code ${data.referralCode} and explore amazing tour packages! ${data.referralUrl}`)}`}
-                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-success w-100 btn-sm fw-bold rounded-3">
+                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary w-100 btn-sm fw-bold rounded-3">
                   <i className="fa-brands fa-whatsapp me-1"></i> WhatsApp
                 </a>
               </div>
@@ -160,21 +160,20 @@ export default function MyReferralPage() {
                 </a>
               </div>
               <div className="col-6 col-sm-3">
-                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Sign up on Delta Safari using code ${data.referralCode} for exclusive travel packages! ${data.referralUrl}`)}`}
-                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-dark w-100 btn-sm fw-bold rounded-3">
-                  <i className="fa-brands fa-x-twitter me-1"></i> Twitter
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Sign up on Delta Safari with code ${data.referralCode} for exclusive sundarban safaris!`)}&url=${encodeURIComponent(data.referralUrl)}`}
+                   target="_blank" rel="noopener noreferrer" className="btn btn-outline-info w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-brands fa-twitter me-1"></i> Twitter
                 </a>
               </div>
               <div className="col-6 col-sm-3">
-                <a href={`mailto:?subject=${encodeURIComponent('Join Delta Safari')}&body=${encodeURIComponent(`Sign up using my referral link ${data.referralUrl} or referral code ${data.referralCode}`)}`}
-                   className="btn btn-outline-danger w-100 btn-sm fw-bold rounded-3">
-                  <i className="fa-solid fa-envelope me-1"></i> Email
-                </a>
+                <button onClick={handleCopyUrl} className="btn btn-outline-secondary w-100 btn-sm fw-bold rounded-3">
+                  <i className="fa-solid fa-share-nodes me-1"></i> Copy Link
+                </button>
               </div>
             </div>
           </div>
 
-          {/* 3 Stats Overview */}
+          {/* Quick Stats Grid */}
           <div className="row g-3 mb-4">
             <div className="col-md-4">
               <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
@@ -190,7 +189,7 @@ export default function MyReferralPage() {
 
             <div className="col-md-4">
               <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
-                <div className="rounded-3 p-3 bg-success bg-opacity-10 text-success me-3 fs-3">
+                <div className="rounded-3 p-3 me-3 fs-3" style={{ backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                   <i className="fa-solid fa-plane-departure"></i>
                 </div>
                 <div>
@@ -202,7 +201,7 @@ export default function MyReferralPage() {
 
             <div className="col-md-4">
               <div className="p-3 bg-white border rounded-4 shadow-sm d-flex align-items-center">
-                <div className="rounded-3 p-3 bg-warning bg-opacity-10 text-warning me-3 fs-3">
+                <div className="rounded-3 p-3 me-3 fs-3" style={{ backgroundColor: 'rgba(23, 129, 254, 0.12)', color: '#1781FE' }}>
                   <i className="fa-solid fa-coins"></i>
                 </div>
                 <div>
@@ -263,7 +262,7 @@ export default function MyReferralPage() {
                             {friend.total_bookings} Bookings
                           </span>
                         </td>
-                        <td className="fw-bold text-success">
+                        <td className="fw-bold text-primary">
                           +₹{Number(friend.commission_earned).toLocaleString('en-IN')}
                         </td>
                       </tr>
@@ -277,7 +276,7 @@ export default function MyReferralPage() {
           {/* Referral Reward Transactions History */}
           <div className="bg-white p-4 rounded-4 shadow-sm border mb-4">
             <h5 className="fw-bold text-dark mb-3">
-              <i className="fa-solid fa-receipt text-success me-2"></i> Referral Commission Transactions
+              <i className="fa-solid fa-receipt text-primary me-2"></i> Referral Commission Transactions
             </h5>
 
             {data.referralTransactions.length === 0 ? (
@@ -306,9 +305,9 @@ export default function MyReferralPage() {
                         <td className="fw-bold text-dark small">{tx.package_title || 'Tour Package'}</td>
                         <td className="small text-secondary">{tx.friend_first_name} {tx.friend_last_name}</td>
                         <td className="small text-muted">{new Date(tx.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                        <td className="fw-bold text-success">+₹{Number(tx.commission_amount).toLocaleString('en-IN')}</td>
+                        <td className="fw-bold text-primary">+₹{Number(tx.commission_amount).toLocaleString('en-IN')}</td>
                         <td>
-                          <span className="badge bg-success text-white px-2 py-1 rounded-pill">
+                          <span className="badge bg-primary text-white px-2 py-1 rounded-pill">
                             <i className="fa-solid fa-circle-check me-1"></i> {tx.status}
                           </span>
                         </td>

@@ -2,40 +2,121 @@ import axios from 'axios';
 import { getDestinationsUrl } from '@/routes/serviceRoutes';
 import { getAllCitiesUrl } from '@/routes/packageRoutes';
 
-function parseSlugFilters(slugs) {
-  const filters = {};
-  if (!slugs) return filters;
+function parseRouteSlug(slugs) {
+  if (!slugs) return { type: 'all' };
   const slugArray = Array.isArray(slugs) ? slugs : [slugs];
-  slugArray.forEach((slug) => {
-    const hyphenIndex = slug.indexOf('-');
-    if (hyphenIndex === -1) {
-      filters['name'] = decodeURI(slug);
-      return;
-    }
-    const key = slug.substring(0, hyphenIndex);
-    const value = slug.substring(hyphenIndex + 1);
-    if (key && value) {
-      filters[key] = decodeURI(value);
-    }
-  });
-  return filters;
+  const primarySlug = slugArray[0] ? decodeURIComponent(slugArray[0]).trim() : '';
+
+  if (!primarySlug) return { type: 'all' };
+
+  // 1. Category filter: e.g. category-boat-tour
+  if (primarySlug.toLowerCase().startsWith('category-')) {
+    return {
+      type: 'category',
+      value: primarySlug.substring(9).trim(),
+    };
+  }
+
+  // 2. Name search: e.g. name-weekend
+  if (primarySlug.toLowerCase().startsWith('name-')) {
+    return {
+      type: 'name',
+      value: primarySlug.substring(5).trim(),
+    };
+  }
+
+  // 3. Entity (Destination / City / Tours-Packages):
+  let base = primarySlug;
+  let isLegacy = false;
+  if (/^destination-/i.test(base)) {
+    base = base.replace(/^destination-/i, '');
+    isLegacy = true;
+  } else if (/^city-/i.test(base)) {
+    base = base.replace(/^city-/i, '');
+    isLegacy = true;
+  }
+
+  const toursSuffixRegex = /-(?:tours?|tour)-packages?$/i;
+  if (toursSuffixRegex.test(base)) {
+    base = base.replace(toursSuffixRegex, '');
+  }
+
+  return {
+    type: 'entity',
+    baseName: base.toLowerCase().trim(),
+    rawName: base.trim(),
+    isLegacy,
+  };
 }
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const slugs = resolvedParams?.slug;
-  const filter = parseSlugFilters(slugs);
+  const parsed = parseRouteSlug(slugs);
 
-  const destinationSlugOrId = filter?.destination || filter?.zone;
-  const citySlugOrId = filter?.city;
-  const siteUrl = (process.env.NEXT_PUBLIC_PUBLIC_URL || 'https://deltasafari.in').replace(/https?:\/\/(www\.)?sundarbandeltasafari\.com/gi, 'https://deltasafari.in').replace(/\/+$/, '') || 'https://deltasafari.in';
+  const siteUrl = (process.env.NEXT_PUBLIC_PUBLIC_URL || 'https://deltasafari.in')
+    .replace(/https?:\/\/(www\.)?sundarbandeltasafari\.com/gi, 'https://deltasafari.in')
+    .replace(/\/+$/, '') || 'https://deltasafari.in';
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || '';
 
-  // 1. Destination SEO Metadata
-  if (destinationSlugOrId) {
+  // 1. Category metadata
+  if (parsed.type === 'category') {
+    const formattedCat = parsed.value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const title = `${formattedCat} Tour Packages | Delta Safari`;
+    const description = `Explore handpicked ${formattedCat} tour packages, itineraries & holiday deals with Delta Safari.`;
+    const canonical = `${siteUrl}/packages/category-${parsed.value}`;
+
+    return {
+      title,
+      description,
+      alternates: {
+        canonical,
+      },
+      robots: 'index, follow',
+      openGraph: {
+        title,
+        description,
+        url: canonical,
+        siteName: 'Delta Safari',
+        type: 'website',
+        images: [`${siteUrl}/assets/images/fav-icon.png`],
+      },
+    };
+  }
+
+  // 2. Name search metadata
+  if (parsed.type === 'name') {
+    const searchName = parsed.value;
+    const title = `${searchName} Holiday Packages | Delta Safari`;
+    const description = `Discover tour packages matching ${searchName} with Delta Safari.`;
+    const canonical = `${siteUrl}/packages/name-${encodeURIComponent(searchName)}`;
+
+    return {
+      title,
+      description,
+      alternates: {
+        canonical,
+      },
+      robots: 'index, follow',
+      openGraph: {
+        title,
+        description,
+        url: canonical,
+        siteName: 'Delta Safari',
+        type: 'website',
+        images: [`${siteUrl}/assets/images/fav-icon.png`],
+      },
+    };
+  }
+
+  // 3. Destination First, then City Resolution
+  if (parsed.type === 'entity' && parsed.baseName) {
+    const baseSlug = parsed.baseName;
+
+    // Step A: Destination check
     try {
       const response = await axios.post(getDestinationsUrl, {
-        condition: isNaN(destinationSlugOrId) ? { slug: destinationSlugOrId } : { id: destinationSlugOrId }
+        condition: isNaN(baseSlug) ? { slug: baseSlug } : { id: baseSlug }
       });
 
       const destinations = response.data?.destinations;
@@ -45,7 +126,12 @@ export async function generateMetadata({ params }) {
         const title = destination.meta_title || `${destination.name} Tour Packages & Safaris | Delta Safari`;
         const description = destination.meta_description || destination.description || `Book authentic ${destination.name} wildlife safaris, boat cruises & customized tour packages with Delta Safari.`;
         const keywords = destination.meta_keywords || destination.tags || `${destination.name}, ${destination.name} tour packages, boat safari, delta safari`;
-        const canonical = destination.canonical_url || `${siteUrl}/packages/destination-${destination.slug || destinationSlugOrId}`;
+        
+        let canonical = destination.canonical_url;
+        if (!canonical || canonical.includes('/packages/destination-') || canonical.includes('/packages/city-')) {
+          canonical = `${siteUrl}/packages/${destination.slug || baseSlug}-tours-packages`;
+        }
+
         const ogImage = destination.og_image
           ? (destination.og_image.startsWith('http') ? destination.og_image : `${serverUrl}${destination.og_image.replace(/\\/g, '/')}`)
           : destination.image
@@ -79,13 +165,11 @@ export async function generateMetadata({ params }) {
     } catch (error) {
       console.error('Error generating metadata for destination:', error?.message);
     }
-  }
 
-  // 2. City SEO Metadata
-  if (citySlugOrId) {
+    // Step B: Destination not found -> City check
     try {
       const response = await axios.post(getAllCitiesUrl, {
-        condition: isNaN(citySlugOrId) ? { slug: citySlugOrId } : { id: citySlugOrId }
+        condition: isNaN(baseSlug) ? { slug: baseSlug } : { id: baseSlug }
       });
 
       const cities = response.data?.cities;
@@ -95,7 +179,12 @@ export async function generateMetadata({ params }) {
         const title = city.meta_title || `${city.name} Tour Packages & Safaris | Delta Safari`;
         const description = city.meta_description || `Book authentic ${city.name} tour packages, holiday trips & customized travel plans with Delta Safari.`;
         const keywords = city.tags || `${city.name}, ${city.name} tour packages, travel booking, delta safari`;
-        const canonical = city.canonical_url || `${siteUrl}/packages/city-${city.slug || citySlugOrId}`;
+        
+        let canonical = city.canonical_url;
+        if (!canonical || canonical.includes('/packages/destination-') || canonical.includes('/packages/city-')) {
+          canonical = `${siteUrl}/packages/${city.slug || baseSlug}-tours-packages`;
+        }
+
         const ogImage = city.og_image
           ? (city.og_image.startsWith('http') ? city.og_image : `${serverUrl}${city.og_image.replace(/\\/g, '/')}`)
           : city.city_image
@@ -131,11 +220,8 @@ export async function generateMetadata({ params }) {
     }
   }
 
-  // 3. Fallback for general packages page or filtered listings
-  const generalTitle = filter?.name
-    ? `${decodeURIComponent(filter.name)} Holiday Packages | Delta Safari`
-    : 'Explore Tour Packages & Wildlife Safaris | Delta Safari';
-
+  // 4. Fallback for general packages page or filtered listings
+  const generalTitle = 'Explore Tour Packages & Wildlife Safaris | Delta Safari';
   const generalDesc = 'Explore all-inclusive wildlife safaris, luxury boat tours, and personalized holiday packages with Delta Safari.';
 
   return {

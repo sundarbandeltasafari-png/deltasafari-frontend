@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 function PackageCard({ pkg }) {
-    const destinationUrl = `/packages/destination-${pkg?.slug}`;
+    const destinationUrl = `/packages/${pkg?.slug}-tours-packages`;
     const imageUrl = pkg?.image
         ? `${process.env.NEXT_PUBLIC_SERVER_URL}${pkg.image.replace(/\\/g, '/')}`
         : `${process.env.NEXT_PUBLIC_PUBLIC_URL}assets/images/noimage.jpg`;

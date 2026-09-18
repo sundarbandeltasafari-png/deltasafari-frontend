@@ -62,7 +62,7 @@ export default function BookingsPage() {
                     {isAgent && (
                         <button 
                             className="btn btn-primary rounded-pill px-4 py-2 fw-bold d-flex align-items-center gap-2 shadow-sm"
-                            onClick={() => router.push('/packages/destination-sundarban')}
+                            onClick={() => router.push('/packages/sundarban-tours-packages')}
                         >
                             <i className="fa-solid fa-plus"></i> New Client Booking
                         </button>
@@ -124,16 +124,16 @@ export default function BookingsPage() {
                                             </td>
                                             {isAgent && (
                                                 <td>
-                                                    <span className="badge bg-success-subtle text-success border border-success-subtle fw-bold px-2.5 py-1">
+                                                    <span className="badge bg-primary-subtle text-primary border border-primary-subtle fw-bold px-2.5 py-1">
                                                         +₹{comm.toLocaleString('en-IN')}
                                                     </span>
                                                 </td>
                                             )}
                                             <td>
                                                 {Number(b.booking_status) === 2 ? (
-                                                    <span className="badge bg-success rounded-pill px-2.5 py-1">Confirmed & Booked</span>
+                                                    <span className="badge bg-primary rounded-pill px-2.5 py-1">Confirmed & Booked</span>
                                                 ) : Number(b.booking_status) === 1 ? (
-                                                    <span className="badge bg-warning text-dark rounded-pill px-2.5 py-1">Pending Review</span>
+                                                    <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2.5 py-1">Pending Review</span>
                                                 ) : (
                                                     <span className="badge bg-danger rounded-pill px-2.5 py-1">Cancelled</span>
                                                 )}
@@ -211,7 +211,7 @@ export default function BookingsPage() {
                             {isAgent && (
                                 <div className="col-sm-6">
                                     <small className="text-muted d-block">Your Commission</small>
-                                    <strong className="text-success fs-6">+₹{Number(selectedBooking.commission_amount || 0).toLocaleString('en-IN')}</strong>
+                                    <strong className="text-primary fs-6">+₹{Number(selectedBooking.commission_amount || 0).toLocaleString('en-IN')}</strong>
                                 </div>
                             )}
                         </div>

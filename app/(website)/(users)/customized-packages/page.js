@@ -39,12 +39,12 @@ export default function UserCustomizedPackagesPage() {
   const getStatusBadge = (status) => {
     const s = (status || 'Pending').toUpperCase();
     if (s === 'CONFIRMED' || s === 'APPROVED') {
-      return <span className="badge bg-success text-white px-2.5 py-1.5 rounded-pill"><i className="fa-solid fa-circle-check me-1"></i> Quote Ready / Confirmed</span>;
+      return <span className="badge bg-primary text-white px-2.5 py-1.5 rounded-pill"><i className="fa-solid fa-circle-check me-1"></i> Quote Ready / Confirmed</span>;
     }
     if (s === 'UNDER REVIEW' || s === 'IN PROGRESS') {
       return <span className="badge bg-info text-dark px-2.5 py-1.5 rounded-pill"><i className="fa-solid fa-clock me-1"></i> Under Review</span>;
     }
-    return <span className="badge bg-warning text-dark px-2.5 py-1.5 rounded-pill"><i className="fa-solid fa-hourglass-half me-1"></i> Enquiry Received</span>;
+    return <span className="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1.5 rounded-pill"><i className="fa-solid fa-hourglass-half me-1"></i> Enquiry Received</span>;
   };
 
   return (
@@ -57,11 +57,11 @@ export default function UserCustomizedPackagesPage() {
                style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
             <div className="row align-items-center p-4">
               <div className="col-md-8">
-                <span className="badge bg-warning text-dark mb-2 px-3 py-1.5 fw-bold text-uppercase rounded-pill" style={{ fontSize: '0.75rem' }}>
+                <span className="badge rounded-pill mb-2 px-3 py-1.5 fw-bold text-uppercase" style={{ fontSize: '0.75rem', backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                   <i className="fa-solid fa-wand-magic-sparkles me-1"></i> Customized Trip Requests
                 </span>
                 <h3 className="fw-bold text-white mb-2" style={{ fontSize: '1.6rem' }}>
-                  My <span style={{ color: '#fb923c' }}>Custom Package</span> Enquiries
+                  My <span style={{ color: '#1781FE' }}>Custom Package</span> Enquiries
                 </h3>
                 <p className="text-slate-300 small mb-0" style={{ opacity: 0.9 }}>
                   View all tailored holiday itineraries and corporate offsite requests you have created. Our travel desk reviews your requirements and provides custom quotes.
@@ -72,7 +72,7 @@ export default function UserCustomizedPackagesPage() {
                 <button
                   type="button"
                   onClick={() => setShowWizardModal(true)}
-                  className="btn btn-warning fw-bold rounded-pill px-3 py-2 shadow-sm text-dark btn-sm"
+                  className="btn btn-primary fw-bold rounded-pill px-3 py-2 shadow-sm btn-sm"
                 >
                   <i className="fa-solid fa-plus me-1"></i> Create Custom Package
                 </button>
@@ -96,7 +96,7 @@ export default function UserCustomizedPackagesPage() {
 
             <div className="col-md-4">
               <div className="bg-white p-3 border rounded-4 shadow-sm d-flex align-items-center">
-                <div className="rounded-3 p-3 bg-success bg-opacity-10 text-success me-3 fs-3">
+                <div className="rounded-3 p-3 me-3 fs-3" style={{ backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                   <i className="fa-solid fa-location-dot"></i>
                 </div>
                 <div>
@@ -108,7 +108,7 @@ export default function UserCustomizedPackagesPage() {
 
             <div className="col-md-4">
               <div className="bg-white p-3 border rounded-4 shadow-sm d-flex align-items-center">
-                <div className="rounded-3 p-3 bg-warning bg-opacity-10 text-warning me-3 fs-3">
+                <div className="rounded-3 p-3 me-3 fs-3" style={{ backgroundColor: 'rgba(23, 129, 254, 0.12)', color: '#1781FE' }}>
                   <i className="fa-solid fa-building"></i>
                 </div>
                 <div>
@@ -168,7 +168,7 @@ export default function UserCustomizedPackagesPage() {
                       <tr key={`${item.enquiry_type}-${item.id}`}>
                         <td>
                           <div>
-                            <span className={`badge ${item.enquiry_type === 'CORPORATE' ? 'bg-primary' : 'bg-success'} text-white text-3xs px-2 py-1 rounded-pill fw-bold text-uppercase d-inline-block mb-1`}>
+                            <span className={`badge ${item.enquiry_type === 'CORPORATE' ? 'bg-primary text-white' : 'bg-primary-subtle text-primary border border-primary-subtle'} text-3xs px-2 py-1 rounded-pill fw-bold text-uppercase d-inline-block mb-1`}>
                               {item.enquiry_type === 'CORPORATE' ? 'Corporate' : 'Holiday'}
                             </span>
                             <div className="fw-bold text-dark small">#{item.id}</div>
@@ -236,7 +236,7 @@ export default function UserCustomizedPackagesPage() {
               <div className="bg-white rounded-4 shadow-lg overflow-hidden w-100" style={{ maxWidth: '640px', maxHeight: '90vh', overflowY: 'auto' }}>
                 <div className="p-4 bg-dark text-white d-flex justify-content-between align-items-center">
                   <div>
-                    <span className="badge bg-warning text-dark text-uppercase px-2.5 py-1 rounded-pill fw-bold text-2xs mb-1">
+                    <span className="badge text-uppercase px-2.5 py-1 rounded-pill fw-bold text-2xs mb-1" style={{ backgroundColor: '#e8f1fd', color: '#1781FE' }}>
                       {selectedEnquiry.enquiry_type} CUSTOM ENQUIRY #{selectedEnquiry.id}
                     </span>
                     <h5 className="fw-bold text-white m-0">{selectedEnquiry.destination}</h5>

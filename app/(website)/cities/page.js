@@ -47,7 +47,7 @@ async function CitiesPage() {
                             const imgUrl = city.city_image 
                                 ? `${process.env.NEXT_PUBLIC_SERVER_URL}${city.city_image}`
                                 : '/assets/images/noimage.jpg';
-                            const cityLink = `/packages/city-${city.slug}`;
+                            const cityLink = `/packages/${city.slug}-tours-packages`;
 
                             return (
                                 <div 

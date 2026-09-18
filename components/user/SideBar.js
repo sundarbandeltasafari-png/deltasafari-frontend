@@ -157,7 +157,7 @@ function SideBar() {
                         </button>
 
                         <button className={`nav-link ${pathname === '/customized-packages' ? 'active' : ''}`} onClick={() => navigateTo('/customized-packages')} type="button">
-                            <i className="fa-solid fa-wand-magic-sparkles me-2 text-warning"></i> Customized Packages
+                            <i className="fa-solid fa-wand-magic-sparkles me-2 text-primary"></i> Customized Packages
                         </button>
 
                         {/* Wallet and Withdraw (Customer & Agent Only - Corporate has NO wallet) */}

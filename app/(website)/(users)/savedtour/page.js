@@ -164,7 +164,7 @@ export default function SavedTourPage() {
                             You haven't saved any tour packages yet. Click the heart icon on any tour package card to save it for easy access later!
                         </p>
                         <Link 
-                            href="/packages/destination-sundarban" 
+                            href="/packages/sundarban-tours-packages" 
                             className="btn btn-primary rounded-pill px-4 py-2.5 fw-bold shadow-sm d-inline-flex align-items-center gap-2"
                             style={{ backgroundColor: '#ef6614', borderColor: '#ef6614' }}
                         >

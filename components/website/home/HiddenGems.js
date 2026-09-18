@@ -5,58 +5,58 @@ function HiddenGems() {
     const hiddenGems = [
         {
             "title": "Goa",
-            "image": "assets/img/home9/destination-img1.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-goa.jpg",
+            "link": "/packages/goa-tours-packages",
             "price": 8999,
             "currency": "₹"
         },
         {
             "title": "Rajasthan",
-            "image": "assets/img/home9/destination-img3.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-rajasthan.jpg",
+            "link": "/packages/rajasthan-tours-packages",
             "price": 12999,
             "currency": "₹"
         },
         {
             "title": "Mumbai",
-            "image": "assets/img/home9/destination-img2.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-mumbai.jpg",
+            "link": "/packages/mumbai-tours-packages",
             "price": 10999,
             "currency": "₹"
         },
         {
             "title": "Uttarakhand",
-            "image": "assets/img/home9/destination-img8.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-uttarakhand.jpg",
+            "link": "/packages/uttarakhand-tours-packages",
             "price": 14999,
             "currency": "₹"
         },
         {
             "title": "Assam",
-            "image": "assets/img/home9/destination-img6.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-assam.jpg",
+            "link": "/packages/assam-tours-packages",
             "price": 12999,
             "currency": "₹"
         },
         {
             "title": "Darjeeling",
-            "image": "assets/img/home9/destination-img7.jpg",
-            "link": "/",
+            "image": "assets/img/home9/destination-darjeeling.jpg",
+            "link": "/packages/darjeeling-tours-packages",
             "price": 7999,
             "currency": "₹"
         },
         {
-            "title": "Gujrat",
-            "image": "assets/img/home9/destination-img5.jpg",
-            "link": "/",
+            "title": "Gujarat",
+            "image": "assets/img/home9/destination-gujarat.jpg",
+            "link": "/packages/gujarat-tours-packages",
             "price": 11999,
             "currency": "₹"
         },
         {
-            "title": "Rajasthan",
-            "image": "assets/img/home9/destination-img4.jpg",
-            "link": "/",
-            "price": 15999,
+            "title": "Kerala",
+            "image": "assets/img/home9/destination-kerala.jpg",
+            "link": "/packages/kerala-tours-packages",
+            "price": 13999,
             "currency": "₹"
         }
     ]
