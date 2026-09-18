@@ -5,7 +5,7 @@ import "../users.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { axiosGet, axiosPost, axiosNormalPost } from '@/libs/axiosHelper';
-import { getUserDetailsURL, getAgentDashboardStatsURL, updateAgentBankDetailsURL, requestAgentWithdrawalURL } from '@/routes/authRoutes';
+import { getUserDetailsURL, getAgentDashboardStatsURL, updateAgentBankDetailsURL, requestAgentWithdrawalURL, changePasswordURL } from '@/routes/authRoutes';
 import { setUser } from '@/services/reducers/userAuthSlice';
 import { showMessage } from '@/libs/commonHelper';
 import { getSavedPackagesUrl, toggleSavePackageUrl } from '@/routes/serviceRoutes';
@@ -50,6 +50,26 @@ export default function ProfilePage() {
     // Saved Packages / Wishlist State
     const [savedPackages, setSavedPackages] = useState([]);
     const [savedLoading, setSavedLoading] = useState(false);
+
+    // Customer Referral Copy State
+    const [copiedRefCode, setCopiedRefCode] = useState(false);
+    const [copiedRefLink, setCopiedRefLink] = useState(false);
+
+    const handleCopyCustomerRefCode = (code) => {
+        if (!code) return;
+        navigator.clipboard.writeText(code);
+        setCopiedRefCode(true);
+        showMessage('success', 'Referral Code copied to clipboard!');
+        setTimeout(() => setCopiedRefCode(false), 3000);
+    };
+
+    const handleCopyCustomerRefLink = (link) => {
+        if (!link) return;
+        navigator.clipboard.writeText(link);
+        setCopiedRefLink(true);
+        showMessage('success', 'Referral Link copied to clipboard!');
+        setTimeout(() => setCopiedRefLink(false), 3000);
+    };
 
     const fetchSavedPackages = () => {
         let uid = user?.id;
@@ -218,8 +238,7 @@ export default function ProfilePage() {
         }
         setUpdatingPass(true);
         try {
-            const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/user/changePassword`;
-            const res = await axiosNormalPost(url, passForm, token);
+            const res = await axiosNormalPost(changePasswordURL, passForm, token);
             if (res.status) {
                 showMessage('Account password changed successfully!', 'success');
                 setPassForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
@@ -1424,6 +1443,9 @@ export default function ProfilePage() {
     });
 
     const userWalletBalance = statsData?.wallet_balance || (user?.wallet_balance ? Number(user.wallet_balance) : 0);
+    const customerRefCode = user?.referral_code || (statsData?.agent?.referral_code || `DS-${user?.id ? user.id * 837 : '101'}`);
+    const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+    const customerRefLink = `${currentOrigin}/login?ref=${customerRefCode}`;
 
     return (
         <div className="col-lg-8 col-xl-9">
@@ -1549,6 +1571,93 @@ export default function ProfilePage() {
                         </div>
                         <div className="text-muted small mt-2 pt-2 border-top" style={{ fontSize: '11px' }}>
                             Available for Bookings
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* REFERRAL PROGRAM & INVITE LINK CARD */}
+            <div 
+                className="card border-0 shadow-sm rounded-4 p-4 mb-4 text-white position-relative overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}
+            >
+                <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 pb-3 border-bottom border-secondary border-opacity-25 mb-3">
+                    <div>
+                        <div className="d-flex align-items-center gap-2 mb-1">
+                            <span className="badge px-3 py-1 rounded-pill fw-bold text-uppercase" style={{ backgroundColor: '#e8f1fd', color: '#1781FE', fontSize: '11px' }}>
+                                <i className="fa-solid fa-gift me-1"></i> Refer &amp; Earn Rewards
+                            </span>
+                            <span className="badge bg-white bg-opacity-10 text-white px-2.5 py-1 rounded-pill small">
+                                Instant Cashback Program
+                            </span>
+                        </div>
+                        <h4 className="fw-bold text-white mb-1">
+                            Invite Friends &amp; <span style={{ color: '#60a5fa' }}>Earn Tour Commissions</span>
+                        </h4>
+                        <p className="text-light text-opacity-75 small mb-0" style={{ maxWidth: '640px' }}>
+                            Share your personal referral link or code. When your invited friends register and embark on any Sundarban tour, you earn rewards credited directly into your wallet!
+                        </p>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-2 align-self-start align-self-md-center">
+                        <button 
+                            className="btn btn-sm btn-light rounded-pill px-3 py-2 fw-bold text-dark d-flex align-items-center gap-1.5 shadow-sm"
+                            onClick={() => router.push('/myreferal')}
+                        >
+                            <i className="fa-solid fa-chart-line text-primary"></i>
+                            <span>View Referral Stats</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="row g-3 align-items-center">
+                    {/* 1. Referral Code Box */}
+                    <div className="col-md-5">
+                        <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1.5 d-block">
+                            <i className="fa-solid fa-ticket me-1 text-primary"></i> Your Referral Code
+                        </label>
+                        <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
+                            <span className="fw-bold font-monospace fs-6 me-2 ms-1 text-truncate" style={{ color: '#93c5fd', letterSpacing: '1px' }}>
+                                {customerRefCode}
+                            </span>
+                            <button 
+                                onClick={() => handleCopyCustomerRefCode(customerRefCode)} 
+                                className={`btn btn-sm ms-auto rounded-2 px-3 fw-bold transition-all ${copiedRefCode ? 'btn-success text-white' : 'btn-primary'}`}
+                            >
+                                {copiedRefCode ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-regular fa-copy me-1"></i> Copy Code</>}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* 2. Referral Link Box */}
+                    <div className="col-md-7">
+                        <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1.5 d-block">
+                            <i className="fa-solid fa-link me-1 text-primary"></i> Direct Referral Link
+                        </label>
+                        <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2 gap-2">
+                            <input 
+                                type="text" 
+                                readOnly 
+                                value={customerRefLink} 
+                                className="form-control form-control-sm bg-transparent border-0 text-light text-opacity-75 small p-0 ms-1"
+                                style={{ outline: 'none', boxShadow: 'none' }}
+                            />
+                            <button 
+                                onClick={() => handleCopyCustomerRefLink(customerRefLink)} 
+                                className={`btn btn-sm text-nowrap rounded-2 px-3 fw-bold transition-all ${copiedRefLink ? 'btn-success text-white' : 'btn-light text-dark'}`}
+                            >
+                                {copiedRefLink ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-solid fa-link me-1"></i> Copy Link</>}
+                            </button>
+                            <a 
+                                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Plan your Sundarban Wildlife Safari with Delta Safari. Use my referral code *${customerRefCode}* to get an instant discount on your safari booking:\n${customerRefLink}`)}`} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn btn-sm btn-success rounded-2 px-2.5 d-flex align-items-center justify-content-center"
+                                style={{ backgroundColor: '#22c55e', borderColor: '#22c55e' }}
+                                title="Share via WhatsApp"
+                            >
+                                <i className="fa-brands fa-whatsapp fs-6"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

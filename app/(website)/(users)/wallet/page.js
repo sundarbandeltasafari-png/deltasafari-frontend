@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { axiosGet } from '@/libs/axiosHelper';
+import { getAgentDashboardStatsURL } from '@/routes/authRoutes';
 
 export default function WalletPage() {
     const router = useRouter();
@@ -16,8 +17,7 @@ export default function WalletPage() {
     useEffect(() => {
         if (token) {
             setLoading(true);
-            const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/user/getAgentDashboardStats`;
-            axiosGet(url, token)
+            axiosGet(getAgentDashboardStatsURL, token)
                 .then((res) => {
                     setLoading(false);
                     if (res?.status) {

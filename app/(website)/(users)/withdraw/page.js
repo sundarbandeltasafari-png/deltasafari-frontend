@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { axiosGet, axiosNormalPost } from '@/libs/axiosHelper';
 import { showMessage } from '@/libs/commonHelper';
+import { 
+    getAgentDashboardStatsURL, 
+    updateAgentBankDetailsURL, 
+    requestAgentWithdrawalURL 
+} from '@/routes/authRoutes';
 
 export default function WithdrawPage() {
     const token = useSelector((state) => state.userAuth?.token);
@@ -25,8 +30,7 @@ export default function WithdrawPage() {
     const loadData = () => {
         if (!token) return;
         setLoading(true);
-        const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/user/getAgentDashboardStats`;
-        axiosGet(url, token)
+        axiosGet(getAgentDashboardStatsURL, token)
             .then((res) => {
                 setLoading(false);
                 if (res?.status) {
@@ -55,8 +59,7 @@ export default function WithdrawPage() {
         e.preventDefault();
         setSavingBank(true);
         try {
-            const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/user/updateAgentBankDetails`;
-            const res = await axiosNormalPost(url, bankDetails, token);
+            const res = await axiosNormalPost(updateAgentBankDetailsURL, bankDetails, token);
             if (res.status) {
                 showMessage('Indian Bank Account & UPI details saved successfully!', 'success');
                 loadData();
@@ -84,12 +87,11 @@ export default function WithdrawPage() {
 
         setSubmitting(true);
         try {
-            const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/user/requestAgentWithdrawal`;
             const payload = {
                 amount: amt,
                 ...bankDetails
             };
-            const res = await axiosNormalPost(url, payload, token);
+            const res = await axiosNormalPost(requestAgentWithdrawalURL, payload, token);
             if (res.status) {
                 showMessage(`Withdrawal of ₹${amt.toLocaleString('en-IN')} requested successfully!`, 'success');
                 setAmount('');

@@ -51,23 +51,27 @@ export default function MyReferralPage() {
       });
   };
 
+  const userType = Number(authState?.user?.user_type) || 1;
+  const userRefCode = authState?.user?.referral_code || '';
+  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+  const effectiveRefCode = data.referralCode || userRefCode || '';
+  const effectiveRefUrl = data.referralUrl || (effectiveRefCode ? `${currentOrigin}/login?ref=${effectiveRefCode}` : '');
+
   const handleCopyCode = () => {
-    if (!data.referralCode) return;
-    navigator.clipboard.writeText(data.referralCode);
+    if (!effectiveRefCode) return;
+    navigator.clipboard.writeText(effectiveRefCode);
     setCopiedCode(true);
     showMessage('success', 'Referral Code copied to clipboard!');
     setTimeout(() => setCopiedCode(false), 3000);
   };
 
   const handleCopyUrl = () => {
-    if (!data.referralUrl) return;
-    navigator.clipboard.writeText(data.referralUrl);
+    if (!effectiveRefUrl) return;
+    navigator.clipboard.writeText(effectiveRefUrl);
     setCopiedUrl(true);
     showMessage('success', 'Referral Link copied to clipboard!');
     setTimeout(() => setCopiedUrl(false), 3000);
   };
-
-  const userType = Number(authState?.user?.user_type) || 1;
 
   if (userType !== 1) {
     return (
@@ -108,7 +112,7 @@ export default function MyReferralPage() {
                   <div className="col-md-6">
                     <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1 d-block">Your Referral Code</label>
                     <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
-                      <span className="fw-bold text-truncate me-2 ms-1 fs-6" style={{ color: '#b8d7ff' }}>{data.referralCode || 'LOADING...'}</span>
+                      <span className="fw-bold text-truncate me-2 ms-1 fs-6" style={{ color: '#b8d7ff' }}>{effectiveRefCode || 'LOADING...'}</span>
                       <button onClick={handleCopyCode} className="btn btn-sm btn-primary ms-auto rounded-2 px-3 fw-bold">
                         {copiedCode ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-regular fa-copy me-1"></i> Copy Code</>}
                       </button>
@@ -118,7 +122,7 @@ export default function MyReferralPage() {
                   <div className="col-md-6">
                     <label className="text-xs text-uppercase fw-bold text-light opacity-75 mb-1 d-block">Your Referral Link</label>
                     <div className="d-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-25 rounded-3 p-2">
-                      <span className="text-truncate text-white-50 me-2 ms-1 small" style={{ maxWidth: '140px' }}>{data.referralUrl || 'Loading...'}</span>
+                      <span className="text-truncate text-white-50 me-2 ms-1 small" style={{ maxWidth: '140px' }}>{effectiveRefUrl || 'Loading...'}</span>
                       <button onClick={handleCopyUrl} className="btn btn-sm btn-light ms-auto rounded-2 px-3 fw-bold text-dark">
                         {copiedUrl ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-solid fa-link me-1"></i> Copy Link</>}
                       </button>
@@ -148,19 +152,19 @@ export default function MyReferralPage() {
             </label>
             <div className="row g-2">
               <div className="col-6 col-sm-3">
-                <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Sign up on Delta Safari using my referral code ${data.referralCode} and explore amazing tour packages! ${data.referralUrl}`)}`}
+                <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Sign up on Delta Safari using my referral code ${effectiveRefCode} and explore amazing tour packages! ${effectiveRefUrl}`)}`}
                    target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary w-100 btn-sm fw-bold rounded-3">
                   <i className="fa-brands fa-whatsapp me-1"></i> WhatsApp
                 </a>
               </div>
               <div className="col-6 col-sm-3">
-                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(data.referralUrl)}`}
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(effectiveRefUrl)}`}
                    target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary w-100 btn-sm fw-bold rounded-3">
                   <i className="fa-brands fa-facebook me-1"></i> Facebook
                 </a>
               </div>
               <div className="col-6 col-sm-3">
-                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Sign up on Delta Safari with code ${data.referralCode} for exclusive sundarban safaris!`)}&url=${encodeURIComponent(data.referralUrl)}`}
+                <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Sign up on Delta Safari with code ${effectiveRefCode} for exclusive sundarban safaris!`)}&url=${encodeURIComponent(effectiveRefUrl)}`}
                    target="_blank" rel="noopener noreferrer" className="btn btn-outline-info w-100 btn-sm fw-bold rounded-3">
                   <i className="fa-brands fa-twitter me-1"></i> Twitter
                 </a>

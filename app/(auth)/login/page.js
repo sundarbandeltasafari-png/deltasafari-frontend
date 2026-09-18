@@ -68,7 +68,8 @@ function LoginContent() {
     setServerError('');
     const googlePayload = {
       ...authData,
-      type: userType // 1 = Customer, 2 = Corporate, 3 = Agent
+      type: userType, // 1 = Customer, 2 = Corporate, 3 = Agent
+      referral_code: userData.referral_code || undefined
     };
 
     axiosNormalPost(googleLoginURL, googlePayload)
@@ -531,6 +532,31 @@ function LoginContent() {
                     placeholder="Email or 10-digit WhatsApp Number" 
                   />
                   {error.email && <div className="db-error mt-2 col-12"><i className="bi bi-exclamation-circle-fill"></i> {error.email}</div>}
+                </div>
+              )}
+
+              {/* In Register Mode: Referral Code Input (Optional) */}
+              {!isLoginMode && (
+                <div className="input-group mb-3 col-12">
+                  <span className="input-group-text bg-white text-muted border-end-0">
+                    <i className="fa-solid fa-gift text-primary"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    value={userData.referral_code}
+                    onChange={(e) => { 
+                      setUserData({ ...userData, referral_code: e.target.value.toUpperCase() });
+                      if (serverError) setServerError('');
+                    }} 
+                    className="form-control border-start-0 ps-1" 
+                    placeholder="Referral Code (Optional)" 
+                    style={{ textTransform: 'uppercase', letterSpacing: '0.5px' }}
+                  />
+                  {userData.referral_code && (
+                    <span className="input-group-text bg-white border-start-0 text-success text-xs fw-semibold">
+                      <i className="bi bi-check-circle-fill me-1"></i> Applied
+                    </span>
+                  )}
                 </div>
               )}
 

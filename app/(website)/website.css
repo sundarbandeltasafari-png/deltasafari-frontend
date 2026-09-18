@@ -85,7 +85,11 @@
 .filter-wrapper {
     position: relative !important;
     margin-top: -125px !important;
-    z-index: 20 !important;
+    z-index: 999 !important;
+}
+
+.filter-wrapper:focus-within {
+    z-index: 1050 !important;
 }
 
 @media (max-width: 991px) {
@@ -241,6 +245,8 @@
 
  .home2-package-slider-section {
      background: none;
+     position: relative !important;
+     z-index: 2 !important;
  }
 
  .section-title h2 {
