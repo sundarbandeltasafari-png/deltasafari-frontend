@@ -188,7 +188,7 @@ export default function ReferralPage() {
                 </div>
                 
                 <i className="fa-solid fa-wallet text-info display-4 mb-2 d-block" style={{ color: '#38bdf8' }}></i>
-                <h3 className="text-white fw-bold h4 mb-1">₹500+ Commission</h3>
+                <h3 className="text-white fw-bold h4 mb-1">Upto ₹500 Commission</h3>
                 <p className="text-white opacity-75 small mb-3">Per Booked Holiday Package</p>
                 
                 <div className="border-top border-white border-opacity-25 pt-3 mt-2 text-white-50 text-xs">

@@ -1649,7 +1649,7 @@ export default function ProfilePage() {
                                 {copiedRefLink ? <><i className="fa-solid fa-check me-1"></i> Copied</> : <><i className="fa-solid fa-link me-1"></i> Copy Link</>}
                             </button>
                             <a 
-                                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Plan your Sundarban Wildlife Safari with Delta Safari. Use my referral code *${customerRefCode}* to get an instant discount on your safari booking:\n${customerRefLink}`)}`} 
+                                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Hey! Plan your Sundarban Wildlife Safari with Delta Safari. Use my referral code *${customerRefCode}* to get upto ₹500 discount on your safari booking:\n${customerRefLink}`)}`} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 className="btn btn-sm btn-success rounded-2 px-2.5 d-flex align-items-center justify-content-center"

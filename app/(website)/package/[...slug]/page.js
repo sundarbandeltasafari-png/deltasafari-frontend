@@ -248,7 +248,7 @@ export default async function PackageDetailsPage({ params }) {
                           )}
 
                           <div
-                            className="text-secondary text-xs mt-2 leading-relaxed"
+                            className="text-secondary text-xs mt-2 leading-relaxed package-description-content editor-content"
                             dangerouslySetInnerHTML={{ __html: detailsHtml }}
                           />
                         </div>
@@ -363,6 +363,38 @@ export default async function PackageDetailsPage({ params }) {
           }
           .text-3xs {
             font-size: 10px;
+          }
+          .package-description-content a,
+          .package-itinerary-timeline a,
+          .editor-content a {
+            color: #0d6efd !important;
+            font-weight: 600 !important;
+            text-decoration: underline !important;
+            text-decoration-thickness: 1.5px !important;
+            text-underline-offset: 3px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            display: inline !important;
+            cursor: pointer !important;
+            transition: color 0.15s ease-in-out, text-decoration-color 0.15s ease-in-out !important;
+          }
+          .package-description-content a:hover,
+          .package-itinerary-timeline a:hover,
+          .editor-content a:hover {
+            color: #0a58ca !important;
+            text-decoration: underline !important;
+            text-decoration-thickness: 2px !important;
+            background: transparent !important;
+          }
+          .package-description-content a:active,
+          .package-itinerary-timeline a:active,
+          .editor-content a:active {
+            color: #084298 !important;
           }
           @media print {
             body * {
